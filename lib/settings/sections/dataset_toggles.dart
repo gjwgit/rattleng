@@ -52,7 +52,6 @@ class DatasetToggles extends ConsumerWidget {
     final partition = ref.watch(partitionProvider);
     final keepInSync = ref.watch(keepInSyncProvider);
     final useValidation = ref.watch(useValidationSettingProvider);
-    final ignoreMissingTarget = ref.watch(ignoreMissingTargetProvider);
 
     Future<void> _saveToggleStates() async {
       final prefs = await SharedPreferences.getInstance();
@@ -281,21 +280,6 @@ class DatasetToggles extends ConsumerWidget {
               ''',
               child: Row(
                 children: [
-                  const Text(
-                    'Ignore observations with missing target',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  configRowGap,
-                  Switch(
-                    value: ignoreMissingTarget,
-                    onChanged: (value) async {
-                      ref.read(ignoreMissingTargetProvider.notifier).state =
-                          value;
-                      final prefs = await SharedPreferences.getInstance();
-                      await prefs.setBool('ignoreMissingTarget', value);
-                    },
-                  ),
-                  configRowGap,
                   MaxFactor(),
                   configRowGap,
                   MarkdownTooltip(

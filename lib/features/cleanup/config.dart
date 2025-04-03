@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2025-03-20 16:52:31 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-04-01 05:33:42 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -39,8 +39,10 @@ import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/get_inputs_and_ignore_transformed.dart';
 import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/get_obs_missing.dart';
+import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/show_under_construction.dart';
+import 'package:rattle/utils/target_missing_values.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/activity_button.dart';
@@ -72,6 +74,18 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
       **Obs with Missing:** Choose this chip to remove from the dataset all rows
       (observations) that have any missing values.
+
+      ''',
+    'Obs with Missing Target': '''
+
+      **Obs with Missing Target:** Choose this chip to remove from the dataset
+      all rows that have a missing value for the target vairiable. Some
+      algorithms do not handle missing targets and so this option can be useful
+      if that's the case. Or an algorithm may treat a missing target value as an
+      additionl class for categoric targets, which may be jsut fine, or else
+      perhaps not appropriate for your task, so you can remove them here. The
+      chip will be disabled if the target is not set or has no missing
+      observations.
 
       ''',
     'Ignored': '''
@@ -126,6 +140,12 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
         deleted. Continue?
 
         ''',
+      'Obs with Missing Target' => '''
+
+        There are ${targetMissingNumbeCount(ref)} rows with a missing value 
+        for the target variable "${getTarget(ref)}" that will be deleted. Continue?
+
+        ''',
       _ => '''
 
         This shouldn't happen in warningText
@@ -140,6 +160,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
       'Variable' => 'transform_clean_delete_selected',
       'Vars with Missing' => 'transform_clean_delete_vars_missing',
       'Obs with Missing' => 'transform_clean_delete_obs_missing',
+      'Obs with Missing Target' => 'transform_clean_delete_obs_missing_target',
       _ => '',
     };
   }
@@ -158,7 +179,12 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
       case 'Vars with Missing':
         varsToDelete.addAll(getMissing(ref));
       case 'Obs with Missing':
-        // variables won't be deleted so return directly
+        // variables won't be deleted so return directly.
+
+        return;
+      case 'Obs with Missing Target':
+        // variables won't be deleted so return directly.
+
         return;
       default:
         showUnderConstruction(context);
@@ -271,73 +297,82 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     return Column(
       spacing: configRowSpace,
       children: [
-        configTopGap,
-        Row(
-          spacing: configWidgetSpace,
-          children: [
-            configLeftGap,
-            ActivityButton(
-              onPressed: () {
-                ref.read(selectedProvider.notifier).state = selected;
-                takeAction(method);
-              },
-              child: const Text('Delete from Dataset'),
-            ),
+        configLabelGap,
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            spacing: configWidgetSpace,
+            children: [
+              ActivityButton(
+                onPressed: () {
+                  ref.read(selectedProvider.notifier).state = selected;
+                  takeAction(method);
+                },
+                child: const Text('Delete from Dataset'),
+              ),
 
-            ChoiceChipTip<String>(
-              options: multiMethods.keys.toList(),
-              selectedOption: method,
-              tooltips: multiMethods,
-              onSelected: (chosen) {
-                setState(() {
-                  if (chosen != null) {
-                    method = chosen;
-                    ref.read(cleanUpMethodProvider.notifier).state = chosen;
-                  }
-                });
-              },
-            ),
-
-            ChoiceChipTip<String>(
-              options: specificMethods.keys.toList(),
-              selectedOption: method,
-              tooltips: specificMethods,
-              onSelected: (chosen) {
-                setState(() {
-                  if (chosen != null) {
-                    method = chosen;
-                    ref.read(cleanUpMethodProvider.notifier).state = chosen;
-                  }
-                });
-              },
-            ),
-
-            // Use the variableChooser with enabled parameter.
-
-            variableChooser(
-              'Variable',
-              inputs,
-              selected,
-              ref,
-              selectedProvider,
-              tooltip: '''
-
-              Select the variable to be deleted from the dataset.
-              ${method != 'Variable' ? 'Choose the Variable chip to enable this option.' : ''}
-
-              ''',
-              // Enable only when method is 'Variable'.
-              enabled: method == 'Variable',
-              onChanged: (value) {
-                if (value != null && method != 'Variable') {
+              ChoiceChipTip<String>(
+                options: multiMethods.keys.toList(),
+                selectedOption: method,
+                tooltips: multiMethods,
+                onSelected: (chosen) {
                   setState(() {
-                    method = 'Variable';
-                    ref.read(cleanUpMethodProvider.notifier).state = 'Variable';
+                    if (chosen != null) {
+                      method = chosen;
+                      ref.read(cleanUpMethodProvider.notifier).state = chosen;
+                    }
                   });
-                }
-              },
-            ),
-          ],
+                },
+                // Check if the target variable has missing values.
+                // The check only applies to the "Obs with Missing Target" option.
+
+                isOptionDisabled: (option) =>
+                    option == multiMethods.keys.toList()[2] &&
+                    !hasTargetMissingValues(ref),
+              ),
+
+              ChoiceChipTip<String>(
+                options: specificMethods.keys.toList(),
+                selectedOption: method,
+                tooltips: specificMethods,
+                onSelected: (chosen) {
+                  setState(() {
+                    if (chosen != null) {
+                      method = chosen;
+                      ref.read(cleanUpMethodProvider.notifier).state = chosen;
+                    }
+                  });
+                },
+              ),
+
+              // Use the variableChooser with enabled parameter.
+
+              variableChooser(
+                'Variable',
+                inputs,
+                selected,
+                ref,
+                selectedProvider,
+                tooltip: '''
+
+                Select the variable to be deleted from the dataset.
+                ${method != 'Variable' ? 'Choose the Variable chip to enable this option.' : ''}
+
+                ''',
+                // Enable only when method is 'Variable'.
+                enabled: method == 'Variable',
+                onChanged: (value) {
+                  if (value != null && method != 'Variable') {
+                    setState(() {
+                      method = 'Variable';
+                      ref.read(cleanUpMethodProvider.notifier).state =
+                          'Variable';
+                    });
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ],
     );
