@@ -58,7 +58,7 @@ em_count_str <- capture.output(print(em_count))
 
 # Combine the prefix with the captured output and print in one statement.
 
-cat(paste0('> ', mtype, "_<DATASET_TYPE>_COUNT\n", paste(em_count_str, collapse="\n")), "\n")
+writeLines(paste0('> ', mtype, "_<DATASET_TYPE>_COUNT\n", paste(em_count_str, collapse="\n")))
 
 # Generate a confusion matrix with proportions (relative frequencies)
 # rather than counts.
@@ -71,14 +71,7 @@ em_prop_str <- capture.output(print(em_prop))
 
 # Combine the prefix with the captured output and print in one statement.
 
-# Windows and Unix console have different output formats.
-
-if (.Platform$OS.type == "windows") {
-  cat(paste0('> ', mtype, "_<DATASET_TYPE>_PROP\n", paste(em_prop_str, collapse="\n")))
-  cat("\n")
-} else {
-  cat(paste0('> ', mtype, "_<DATASET_TYPE>_PROP\n", paste(em_prop_str, collapse="\n")), "\n")
-}
+writeLines(paste0('> ', mtype, "_<DATASET_TYPE>_PROP\n", paste(em_prop_str, collapse="\n")))
 
 # Exclude the "Error" column in the confusion matrix if it exists
 # Assuming the confusion matrix is a data frame with the last column as "Error".
@@ -108,10 +101,6 @@ error_summary <- paste(
     sep = ""
 )
 
-# Log the error matrix type identifier.
-
-rat(paste('> ', mtype, "_<DATASET_TYPE>_ERROR_MATRIX_SUMMARY: ", sep = ""))
-
 # Log the formatted error summary showing overall and average error rates.
 
-cat(error_summary)
+writeLines(paste0('> ', mtype,  "_<DATASET_TYPE>_ERROR_MATRIX_SUMMARY: \n", paste(error_summary, collapse="\n")))
