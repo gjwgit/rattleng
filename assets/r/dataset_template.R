@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2025-03-25 16:11:57 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-04-03 12:20:57 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -95,7 +95,7 @@ vars   <- names(ds)
 
 # Make the target variable the last one.
 
-vars %<>% '['(vars != target) %>% c(., target)
+if (!is.null(target)) vars %<>% '['(vars != target) %>% c(., target)
 
 # Identify the input variables for modelling.
 
