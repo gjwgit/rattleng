@@ -1,6 +1,6 @@
 /// AUDIT -> CLASSIFICATION -> TRANSFORM -> MODEL -> NEURALNET -> EVALUATE -> ERROR MATRIX
 //
-// Time-stamp: <Monday 2025-03-24 12:20:31 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-04-03 18:35:44 +1100 >
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -105,6 +105,7 @@ void main() {
       await tapChip(tester, 'Ignored');
       await tapButton(tester, 'Delete from Dataset');
       await tapPopup(tester, 'Yes');
+      await addDelay(tester, 4);
 
       // MODEL -> CONFIGURE -> NNET
 
@@ -135,6 +136,7 @@ void main() {
 
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
+      await addDelay(tester, 4);
       await navigateToPage(tester, 1, back: 1, title: 'Error Matrix');
       await verifySelectableText(
         tester,
