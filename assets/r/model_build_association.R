@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-03-07 17:09:08 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-04-03 17:37:47 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -138,7 +138,7 @@ png("<TEMPDIR>/model_arules_viz.png")
 plot(top_rules, method="graph")
 dev.off()
 
-svg("<TEMPDIR>/model_arules_grouped.png")
+svg("<TEMPDIR>/model_arules_grouped.svg")
 plot(top_rules, method="grouped matrix")
 dev.off()
 
