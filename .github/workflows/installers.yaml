@@ -120,6 +120,12 @@ jobs:
 
       - name: Compile .ISS to .EXE Installer
         uses: gjwgit/Inno-Setup-Action@v1.2.5
+        #
+        # The github repo for the below github action has disappeared
+        # completely (user and repo). I found a recent fork from the
+        # Wayback machine and forked it myself and that seems to
+        # work as above. (gjw 20250403)
+        #
         # uses: Minionguyjpro/Inno-Setup-Action@v1.2.5
         with:
           path: installers/rattle-windows.iss
