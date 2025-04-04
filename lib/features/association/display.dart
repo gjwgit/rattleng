@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2025-03-07 11:05:36 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-04-03 17:39:31 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -194,37 +194,6 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
     //
-    // VISUALISE LIFT AND SUPPORT
-    //
-    // 20250204 gjw This SVG does not load into Flutter. Yet it can be displayed
-    // externally on Ubuntu. It uses the filter element that is not supported by
-    // flutter_svg. https://github.com/dnfield/flutter_svg/issues/53. We display
-    // the PNG version for now.
-    //
-    // 20250204 gjw Even the PNG is not loading for this one.
-
-    // image = '$tempDir/model_arules_grouped.svg';
-
-    // image = '$tempDir/model_arules_grouped.png';
-
-    // if (imageExists(image)) {
-    //   pages.add(
-    //     ImagePage(
-    //       title: '''
-
-    //       # Association Rules  &#8212; Matrix of Lift and Support
-
-    //       Generated using
-    //       [arulesViz::plot()](https://www.rdocumentation.org/packages/arulesViz/topics/plot).
-
-    //       ''',
-    //       path: image,
-    //     ),
-    //   );
-    // }
-
-    ////////////////////////////////////////////////////////////////////////
-    //
     // 20241212 gjw This SVG does load into Flutter and does not utilise the
     // filter element.
 
@@ -238,6 +207,40 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
           # Association Rules &#8212; Parrallel Coordinates Plot
 
           Visit $image.
+
+          ''',
+          path: image,
+        ),
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+    //
+    // VISUALISE LIFT AND SUPPORT
+    //
+    // 20250204 gjw This SVG does not load into Flutter. Yet it can be displayed
+    // externally on Ubuntu. It uses the filter element that is not supported by
+    // flutter_svg. https://github.com/dnfield/flutter_svg/issues/53. We display
+    // the PNG version for now.
+    //
+    // 20250204 gjw Even the PNG is not loading for this one.
+
+    image = '$tempDir/model_arules_grouped.svg';
+
+    // image = '$tempDir/model_arules_grouped.png';
+
+    if (imageExists(image)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+          # Association Rules  &#8212; Matrix of Lift and Support
+
+          Generated using
+          [arulesViz::plot()](https://www.rdocumentation.org/packages/arulesViz/topics/plot).
+
+          To view this associations plot please tap the **Open** button to the
+          right. Our current SVG viewer does not support all SVG features.
 
           ''',
           path: image,

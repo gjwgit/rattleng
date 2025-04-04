@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-03-19 21:37:34 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-04-03 17:23:14 +1100 Graham Williams>
 #
 # Rattle version <VERSION>.
 #
@@ -98,6 +98,7 @@ pkgs <- c(
   'corrplot',
   'descr',
   'fBasics',
+  'ggcorrplot',
   'ggtext',
   'ggplotify',
   'ggthemes',

@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2025-02-24 16:09:50 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-04-03 17:34:27 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -126,21 +126,26 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
     // GGCORRPLOT
     ////////////////////////////////////////////////////////////////////////
     //
-    // 20240815 gjw This only displays a black box in the app? The display of it
-    // using the external viewer is just fine?
+    // This only displays a black box in the app? The display of it using the
+    // external viewer is just fine? Add a note. THe problem is the unhandled
+    // element <filter/> for the Svg loader (gjw 20240815).
 
-    // pages.add(
-    //   ImagePage(
-    //     title: '''
+    pages.add(
+      ImagePage(
+        title: '''
 
-    //     # GGPlot Correlation
+        # GGPlot Correlation
 
-    //     Generated using [ggcorrplot::ggcorrplot(ds)](https://www.rdocumentation.org/packages/ggcorrplot/topics/ggcorrplot)
+        Generated using
+        [ggcorrplot::ggcorrplot(ds)](https://www.rdocumentation.org/packages/ggcorrplot/topics/ggcorrplot).
 
-    //     ''',
-    //     path: '$tempDir/explore_correlation_ggcorrplot.svg',
-    //   ),
-    // );
+        To view this correlation plot please tap the **Open** button to the
+        right. Our current SVG viewer does not support all SVG features.
+
+        ''',
+        path: '$tempDir/explore_correlation_ggcorrplot.svg',
+      ),
+    );
 
     ////////////////////////////////////////////////////////////////////////
 
