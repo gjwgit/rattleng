@@ -28,7 +28,7 @@ import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/clean_string.dart';
 
 String rExtractSummary(String txt) {
-  String content = rExtract(txt, 'summary(ds)');
+  String content = rExtract(txt, '> summary(ds)');
 
   // Add a blank line between each sub-table.
 
