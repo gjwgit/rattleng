@@ -1,6 +1,6 @@
 /// EXPLORE tab: Correlation Large Dataset Test.
 //
-// Time-stamp: <Friday 2025-03-21 08:58:47 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-04-03 17:19:49 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -35,7 +35,9 @@ import 'utils/load_dataset_by_path.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
+import 'utils/set_dataset_role.dart';
 import 'utils/tap_button.dart';
+import 'utils/verify_role.dart';
 import 'utils/verify_selectable_text.dart';
 
 void main() {
@@ -48,10 +50,16 @@ void main() {
       await tester.pump(interact);
 
       await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
+      await verifyRole('gender', 'Target');
       await navigateToTab(tester, 'Explore');
       await navigateToFeature(tester, 'Correlation');
       await tapButton(tester, 'Perform Correlation Analysis');
-      await navigateToPage(tester, 1, title: 'Correlation - Numeric Data');
+      await navigateToPage(
+        tester,
+        1,
+        back: 1,
+        title: 'Correlation - Numeric Data',
+      );
       await verifySelectableText(tester, [
         'smoking_status        0.00              0.01           1.00           0.04   0.05',
         'bmi                  -0.01              0.03           0.05           0.39   1.00',
@@ -64,7 +72,28 @@ void main() {
       //
       // Must be something we can do to confirm the image. Not sure what yet!
 
-      await navigateToPage(tester, 2, title: 'Variable Correlation Plot');
+      await navigateToPage(
+        tester,
+        2,
+        back: 1,
+        title: 'Variable Correlation Plot',
+      );
+
+      // Now set the dataset role of gender from TARGET to IGNORE to test when
+      // there is no target. (gjw 20250403)
+
+      await navigateToTab(tester, 'Dataset');
+      await navigateToPage(tester, 1, back: 1);
+      await setDatasetRole(tester, 'gender', 'Ignore');
+      await navigateToTab(tester, 'Explore');
+      await navigateToFeature(tester, 'Correlation');
+      await tapButton(tester, 'Perform Correlation Analysis');
+      await navigateToPage(tester, 1, back: 2);
+      await verifySelectableText(tester, [
+        'smoking_status        0.00              0.01           1.00           0.04   0.05',
+        'bmi                  -0.01              0.03           0.05           0.39   1.00',
+        'age_at_consultation   0.00              0.06           0.08           0.20   0.24',
+      ]);
     });
   });
 }
