@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-02-02 14:04:25 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-04-04 13:37:31 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -47,7 +47,8 @@ assign(dsname, readr::read_csv("<FILENAME>"))
 
 ds <- get(dsname)
 
-# Capture the original variable names for use in plots.
+# Capture the original variable names for use in plots and other
+# places if so desired.
 
 vnames <- names(ds)
 
