@@ -35,7 +35,9 @@ String rExtractSummary(String txt) {
   List<String> lines = content.split('\n');
 
   for (int i = 0; i < lines.length; i++) {
-    if (lines[i].startsWith('  ') && !lines[i].trimLeft().startsWith('NA')) {
+    if (lines[i].startsWith('  ') &&
+        !lines[i].trimLeft().startsWith('NA') &&
+        !lines[i].trimLeft().startsWith('(Other)')) {
       lines[i] = '\n${lines[i]}';
     }
   }
