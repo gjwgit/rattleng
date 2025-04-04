@@ -34,10 +34,21 @@ String rExtractSummary(String txt) {
 
   List<String> lines = content.split('\n');
 
+  // Process each line to add spacing between variable summaries.
+
   for (int i = 0; i < lines.length; i++) {
+    // Check if the line is a new variable by looking for:
+    // 1. Lines that start with 2-6 spaces (indented but not too far).
+    // 2. Lines that have content after the spaces.
+    // 3. Lines that don't start with 'NA' or '(Other)' (which are continuation lines)
+
     if (lines[i].startsWith('  ') &&
+        lines[i].trimLeft().length > 0 &&
+        lines[i].length - lines[i].trimLeft().length < 7 &&
         !lines[i].trimLeft().startsWith('NA') &&
         !lines[i].trimLeft().startsWith('(Other)')) {
+      // Add a blank line before this line to separate variable summaries.
+
       lines[i] = '\n${lines[i]}';
     }
   }
