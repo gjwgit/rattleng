@@ -28,7 +28,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/tree.dart';
-import 'package:rattle/r/clean_log.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/timestamp.dart';
 
@@ -106,11 +105,6 @@ String _basicTemplate(
   // Extract results from the log for each model's error matrices.
   // Extract the count data from the log and remove the first line.
 
-  // We begin by removing spurious text that can appear int he log that we need
-  // to fix before hunting for the required out (gjw 20250314).
-
-  log = rCleanLog(log);
-
   String crc = rExtract(
     log,
     '> rpart_${evaluateDataset}_COUNT',
@@ -120,6 +114,7 @@ String _basicTemplate(
     log,
     '> rpart_${evaluateDataset}_PROP',
   );
+
   String cc = rExtract(
     log,
     '> ctree_${evaluateDataset}_COUNT',
