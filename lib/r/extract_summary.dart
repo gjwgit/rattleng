@@ -33,7 +33,7 @@ import 'package:rattle/utils/clean_string.dart';
 
 String rExtractSummary(String txt) {
   String content = rExtract(txt, '> summary(ds)');
-  
+
   // Normalize line endings for platform independence.
 
   if (Platform.isWindows) {
@@ -41,23 +41,25 @@ String rExtractSummary(String txt) {
   }
 
   // Extract variable names from the dataset.
-  
+
   List<VariableInfo> vars = extractVariables(txt);
   List<String> varNames = vars.map((v) => v.name).toList();
 
   // Add a blank line between each sub-table.
-  
+
   List<String> lines = content.split('\n');
 
   // Process each line to add spacing between variable summaries.
-  
+
   for (int i = 0; i < lines.length; i++) {
     // Check if this appears to be a variable headers row by comparing with known variable names.
-    
-    if (i > 0 && lines[i].trim().isNotEmpty && !lines[i].trim().startsWith('> ')) {
+
+    if (i > 0 &&
+        lines[i].trim().isNotEmpty &&
+        !lines[i].trim().startsWith('> ')) {
       if (isHeaderRowWithVariables(lines[i], varNames)) {
         // Add an empty line before the variable header row.
-        
+
         lines[i] = '\n${lines[i]}';
         continue;
       }
@@ -65,12 +67,12 @@ String rExtractSummary(String txt) {
   }
 
   // Join lines with platform-appropriate line endings.
-  
+
   String separator = Platform.isWindows ? '\r\n' : '\n';
   content = lines.join(separator);
 
   // Replace multiple empty lines with a single empty line.
-  
+
   if (Platform.isWindows) {
     content = content.replaceAll(RegExp(r'\r\n\s*\r\n\s*\r\n+'), '\r\n\r\n');
   } else {
@@ -78,40 +80,40 @@ String rExtractSummary(String txt) {
   }
 
   // Clean the result.
-  
+
   content = cleanString(content);
 
   return content;
 }
 
 /// Checks if a line is a header row by matching its contents against known variable names.
-/// 
+///
 /// This compares the words in the line with the list of variable names extracted from the dataset.
 /// The line is considered a header row only if ALL words match variable names.
 
 bool isHeaderRowWithVariables(String line, List<String> varNames) {
   // Trim the line and split into words.
-  
+
   String trimmedLine = line.trim();
   List<String> words = trimmedLine.split(RegExp(r'\s+'));
-  
+
   // Check that every word matches a variable name.
-  
+
   for (String word in words) {
     // Clean up the word (remove any punctuation that might be present).
-    
+
     String cleanWord = word.replaceAll(RegExp(r'[^\w\d_]'), '');
-    
+
     if (cleanWord.isEmpty) continue;
-    
+
     // If any word doesn't match a variable name, this isn't a header row
-    
+
     if (!varNames.contains(cleanWord)) {
       return false;
     }
   }
-  
+
   // All words matched variable names (and we had at least one word).
-  
+
   return words.isNotEmpty;
 }
