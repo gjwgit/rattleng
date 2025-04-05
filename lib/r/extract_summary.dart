@@ -24,6 +24,8 @@
 
 library;
 
+import 'dart:io' show Platform;
+
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_vars.dart';
 
@@ -31,6 +33,12 @@ import 'package:rattle/utils/clean_string.dart';
 
 String rExtractSummary(String txt) {
   String content = rExtract(txt, '> summary(ds)');
+  
+  // Normalize line endings for platform independence.
+
+  if (Platform.isWindows) {
+    content = content.replaceAll('\r\n', '\n');
+  }
 
   // Extract variable names from the dataset.
   
@@ -56,11 +64,18 @@ String rExtractSummary(String txt) {
     }
   }
 
-  content = lines.join('\n');
+  // Join lines with platform-appropriate line endings.
+  
+  String separator = Platform.isWindows ? '\r\n' : '\n';
+  content = lines.join(separator);
 
   // Replace multiple empty lines with a single empty line.
   
-  content = content.replaceAll(RegExp(r'\n\s*\n\s*\n+'), '\n\n');
+  if (Platform.isWindows) {
+    content = content.replaceAll(RegExp(r'\r\n\s*\r\n\s*\r\n+'), '\r\n\r\n');
+  } else {
+    content = content.replaceAll(RegExp(r'\n\s*\n\s*\n+'), '\n\n');
+  }
 
   // Clean the result.
   
