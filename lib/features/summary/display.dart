@@ -34,6 +34,7 @@ import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_glimpse.dart';
 import 'package:rattle/r/extract_summary.dart';
+import 'package:rattle/utils/add_blank_lines.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -123,6 +124,10 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     // Replace multiple empty lines with a single empty line.
 
     content = content.replaceAll(RegExp(r'\n\s*\n\s*\n+'), '\n\n');
+
+    // Add blank line for each variables.
+
+    content = addBlankLinesBeforeHeaders(content);
 
     if (content.isNotEmpty) {
       pages.add(
