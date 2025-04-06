@@ -28,7 +28,6 @@ import 'dart:io' show Platform;
 
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_vars.dart';
-
 import 'package:rattle/utils/clean_string.dart';
 
 String rExtractSummary(String txt) {
