@@ -51,6 +51,7 @@ String cleanString(String txt) {
   txt = txt.replaceAll('[38;5;250m', '');
   txt = txt.replaceAll('[4m', '');
   txt = txt.replaceAll('[24m', '');
+  txt = txt.replaceAll('[110C', '');
 
   txt = txt.replaceAll('[3m[38;5;246m', '');
   txt = txt.replaceAll('[?2004l', '');
