@@ -27,6 +27,7 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/vars/roles.dart';
 
 List<String> getInputsAndIgnoreTransformed(WidgetRef ref) {
@@ -38,11 +39,43 @@ List<String> getInputsAndIgnoreTransformed(WidgetRef ref) {
   // Extract the input variable from the rolesProvider.
 
   List<String> inputs = [];
+
   roles.forEach((key, value) {
     if (value == Role.input || value == Role.ignoreAfterTransformed) {
       inputs.add(key);
     }
   });
 
+  Map<String, dynamic> metaData = ref.read(metaDataProvider);
+  if (metaData.isNotEmpty) {
+    String? targetVar = findTargetVariable(metaData);
+    if (targetVar != null && targetVar.isNotEmpty) {
+      inputs.add(targetVar);
+    }
+  }
+
   return inputs;
+}
+
+/// Finds the target variable from metadata based on factor datatype 
+/// with fewest unique values.
+/// 
+/// Method [getTarget] may get empty string. This method is used to 
+/// get the target variable from metadata.
+
+String? findTargetVariable(Map<String, dynamic> metaData) {
+  String? targetVar;
+  int minUnique = double.maxFinite.toInt();
+
+  metaData.forEach((varName, varData) {
+    if (varData['datatype']?.contains('factor') == true) {
+      final uniqueCount = varData['unique']?[0] ?? double.maxFinite.toInt();
+      if (uniqueCount <= minUnique) {
+        minUnique = uniqueCount;
+        targetVar = varName;
+      }
+    }
+  });
+
+  return targetVar;
 }
