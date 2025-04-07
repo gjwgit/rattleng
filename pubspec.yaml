@@ -89,13 +89,7 @@ dev_dependencies:
 
   flutter_lints: ^5.0.0
 
-  # Use our local lint until uploaded to pub.dev
-
-  import_order_lint:
-    git:
-      url: https://github.com/anusii/import-order-lint.git
-      ref: main
-
+  import_order_lint: ^0.1.0
   msix: ^3.16.2
   riverpod_generator: ^2.3.5
   riverpod_lint: ^2.3.2
