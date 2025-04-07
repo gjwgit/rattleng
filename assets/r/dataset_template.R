@@ -49,19 +49,6 @@ library(janitor)      # Cleanup: clean_names().
 ##
 ## names(ds)
 
-# Filter the variables in the dataset that are factors or ordered
-# factors with more than 20 levels.
-
-large_factors <- sapply(ds, is_large_factor)
-
-# Get the names of those variables.
-
-large_factor_vars <- names(large_factors)[large_factors]
-
-# Print the variable names.
-
-large_factor_vars
-
 # Identify variable roles. The identifier is usually the first
 # variable in the dataset that looks like an ID whilst all are
 # recoreded in identifiers. Association rules, for example, use
