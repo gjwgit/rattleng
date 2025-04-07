@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ RECODE: Allow TARGET to be recoded [6.4.58 20250408 zy]
 + SUMMARY: Improve summary() layout [6.4.57 20250407 zy]
 + Add SVG correlation/association though not displayable. [6.4.56 20250403 gjw]
 + CORRELATION: Bug fix when no TARGET identified [6.4.55 20250403 gjw]
