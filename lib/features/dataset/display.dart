@@ -170,7 +170,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   void _addDatasetPage(String stdout, List<Widget> pages) {
     Map<String, Role> currentRoles = ref.read(rolesProvider);
     List<VariableInfo> vars = extractVariables(stdout);
-    List<String> highVars = extractLargeFactors(stdout);
+    List<String> highVars = getLargeFactors(ref);
 
     _initializeRoles(vars, highVars, currentRoles);
 

@@ -1,6 +1,6 @@
 /// Utility to extract the large factors output from R.
 ///
-/// Copyright (C) 2023-2024, Togaware Pty Ltd.
+/// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -21,28 +21,34 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Zheyuan Xu
+
 library;
 
-import 'package:rattle/r/extract.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-List<String> extractLargeFactors(String txt) {
-  // Command used to locate the variable definitions in the text.
+import 'package:rattle/providers/cleanse.dart';
+import 'package:rattle/providers/meta_data.dart';
 
-  String cmd = '> large_factor_vars';
+/// Returns a list of factor variables that have more unique values than the maxFactor threshold.
+/// A factor is considered "large" if its number of unique values exceeds maxFactor.
 
-  // Extract the variables string from the text based on the command.
+List<String> getLargeFactors(WidgetRef ref) {
+  final Map<String, dynamic> metaData = ref.read(metaDataProvider);
 
-  String vars = rExtract(txt, cmd);
+  final int maxFactor = ref.read(maxFactorProvider);
 
-  // Regular expression to find all variable names enclosed in double quotes.
+  List<String> largeFactors = [];
 
-  RegExp regExp = RegExp(r'"(.*?)"');
+  metaData.forEach((varName, varData) {
+    if (varData['datatype']?.contains('factor') ||
+        varData['datatype']?.contains('character') ||
+        varData['datatype']?.contains('ordered')) {
+      final uniqueCount = varData['unique']?[0] ?? 0;
+      if (uniqueCount >= maxFactor) {
+        largeFactors.add(varName);
+      }
+    }
+  });
 
-  // Find all matches of the regular expression in the vars string.
-
-  Iterable<Match> matches = regExp.allMatches(vars);
-
-  List<String> variableList = matches.map((match) => match.group(1)!).toList();
-
-  return variableList;
+  return largeFactors;
 }
