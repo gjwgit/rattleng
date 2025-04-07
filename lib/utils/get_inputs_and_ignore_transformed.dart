@@ -57,10 +57,7 @@ List<String> getInputsAndIgnoreTransformed(WidgetRef ref) {
   return inputs;
 }
 
-/// Finds the target variable from metadata based on factor datatype 
-/// with fewest unique values.
-/// 
-/// Method [getTarget] may get empty string. This method is used to 
+/// Method [getTarget] may get empty string. This method is used to
 /// get the target variable from metadata.
 
 String? findTargetVariable(Map<String, dynamic> metaData) {
