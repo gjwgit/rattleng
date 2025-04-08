@@ -15,53 +15,16 @@ analyzer:
   exclude:
     - ignore/**
 
-  #  dart_code_metrics:
-  #
-  #  anti-patterns:
-  #    - long-method
-  #    - long-parameter-list
-  #
-  # metrics:
-  #   cyclomatic-complexity: 20
-  #   lines-of-executable-code: 50
-  #   maximum-nesting-level: 5
-  #   number-of-parameters: 5
-  #   source-lines-of-code: 200
-  #
-  # metrics-exclude:
-  #   - test/**
-  #   - integration_test/**
-  #   - lib/*.g.dart
-  #   - lib/*.freezed.dart
-  #
-  # rules:
-  #   - newline-before-return
-  #   - no-boolean-literal-compare
-  #   - no-empty-block
-  #   - prefer-trailing-comma
-  #   - prefer-conditional-expressions
-  #   - no-equal-then-else
-  #   # - avoid-dynamic
-  #   - avoid-nested-conditional-expressions:
-  #       acceptable-level: 2
-  #   - prefer-first
+custom_lint:
+  rules:
+    - import_order_lint
+  options:
+    import_order_lint:
+      project_name: rattle
 
 linter:
-
-  # Customise to enable/disable rules in
-  # `package:flutter_lints/flutter.yaml`.
-  #
-  # See https://dart-lang.github.io/linter/lints/index.html.
-  #
-  # A lint rule can be suppressed for a single line of code or a
-  # specific dart file by using the `// ignore: name_of_lint` and `//
-  # ignore_for_file: name_of_lint`
-
   rules:
     avoid_print: true
     prefer_single_quotes: true
     require_trailing_commas: true
     directives_ordering: false
-
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
