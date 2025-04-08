@@ -123,22 +123,3 @@ names(ds)
 
 glimpse(ds)
 #summary(ds)
-##
-## TODO 20241008 gjw MIGRATE TO META DATA
-##
-## Why is this here and in dataset_template. Should be just once I
-## think.
-
-# Filter the variables in the dataset that are factors or ordered
-# factors with more than 20 levels. This should be replaced by using
-# the meta data.
-
-large_factors <- sapply(ds, is_large_factor)
-
-# Get the names of those variables.
-
-large_factor_vars <- names(large_factors)[large_factors]
-
-# Print the variable names.
-
-large_factor_vars

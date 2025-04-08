@@ -47,9 +47,9 @@ import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/execute.dart';
 import 'package:rattle/r/extract.dart';
-import 'package:rattle/r/extract_large_factors.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/utils/debug_text.dart';
+import 'package:rattle/utils/get_large_factors.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/get_unique_columns.dart';
 import 'package:rattle/utils/is_numeric.dart';
@@ -170,7 +170,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   void _addDatasetPage(String stdout, List<Widget> pages) {
     Map<String, Role> currentRoles = ref.read(rolesProvider);
     List<VariableInfo> vars = extractVariables(stdout);
-    List<String> highVars = extractLargeFactors(stdout);
+    List<String> highVars = getLargeFactors(ref);
 
     _initializeRoles(vars, highVars, currentRoles);
 

@@ -171,23 +171,6 @@ if (username == "") username <- Sys.getenv("USERNAME")  # On Windows
 ##
 rat <- cat
 
-# Check if a variable is a factor (including ordered factors) and has
-# more than 20 levels.
-
-is_large_factor <- function(x, maxfactor = 20) {
-
-  if (is.factor(x)) {
-    num_levels <- length(levels(x))
-  } else if (is.character(x)) {
-    num_levels <- length(unique(x))
-  } else {
-    num_levels <- NA  # For non-categoric variables
-  }
-
-  return((is.factor(x) || is.character(x)) && num_levels > maxfactor)
-
-}
-
 # Check if values in a column are unique.
 
 check_unique <- function(x) {

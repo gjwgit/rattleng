@@ -27,10 +27,9 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/vars/types.dart';
-import 'package:rattle/r/extract_large_factors.dart';
+import 'package:rattle/utils/get_large_factors.dart';
 
 /// Return a list of categoric variables that are not ignored and do not have
 /// too many levels.
@@ -41,11 +40,7 @@ List<String> getCategoric(WidgetRef ref) {
 
   Map<String, Type> roles = ref.read(typesProvider);
 
-  // Watching stdout to get variables that are Ignored.
-
-  String stdout = ref.read(stdoutProvider);
-
-  List<String> largeFactors = extractLargeFactors(stdout);
+  List<String> largeFactors = getLargeFactors(ref);
 
   List<String> result = [];
 
