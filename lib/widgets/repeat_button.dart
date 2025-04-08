@@ -1,6 +1,6 @@
 /// A Button that repeats the onPressed action when held down.
 //
-// Time-stamp: <Sunday 2025-03-30 07:36:04 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-04-09 09:00:03 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -96,53 +96,32 @@ class RandomSeedRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        RepeatButton(
+          child: const Icon(Icons.remove),
+          onPressed: () {
+            final newSeed = randomSeed - 1;
+            if (newSeed >= 0) updateSeed(newSeed);
+          },
+        ),
+        buttonGap,
+        Text(
+          randomSeed.toString(),
+          style: const TextStyle(fontSize: 18),
+        ),
+        buttonGap,
+        RepeatButton(
+          child: const Icon(Icons.add),
+          onPressed: () {
+            final newSeed = randomSeed + 1;
+            updateSeed(newSeed);
+          },
+        ),
+        buttonGap,
         MarkdownTooltip(
           message: '''
-          **Decrease Random Seed:**
-          Tap here to decrease the random seed value by 1.
 
-          **Press:** Hold the button to continuously decrease the value.
-          ''',
-          child: RepeatButton(
-            child: const Icon(Icons.remove),
-            onPressed: () {
-              final newSeed = randomSeed - 1;
-              if (newSeed >= 0) updateSeed(newSeed);
-            },
-          ),
-        ),
-        buttonGap,
-        MarkdownTooltip(
-          message: '''
-          **Current Random Seed:**
-          Displays the current random seed value being used.
-          ''',
-          child: Text(
-            randomSeed.toString(),
-            style: const TextStyle(fontSize: 18),
-          ),
-        ),
-        buttonGap,
-        MarkdownTooltip(
-          message: '''
-          **Increase Random Seed:**
-          Tap here to increase the random seed value by 1.
+          **Generate New Random Seed:** Tap to generate a new random seed value.
 
-          **Press:** Hold the button to continuously increase the value.
-          ''',
-          child: RepeatButton(
-            child: const Icon(Icons.add),
-            onPressed: () {
-              final newSeed = randomSeed + 1;
-              updateSeed(newSeed);
-            },
-          ),
-        ),
-        buttonGap,
-        MarkdownTooltip(
-          message: '''
-          **Generate New Random Seed:**
-          Tap this button to generate a completely new random seed value.
           ''',
           child: ElevatedButton(
             onPressed: () {
