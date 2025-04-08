@@ -105,13 +105,33 @@ List<VariableInfo> extractVariables(String txt) {
   String cmd = '> glimpse(ds)';
   String vars = rExtract(txt, cmd);
 
-  final regex = RegExp(r'\$\s+(\w+)\s+<([^>]+)>\s+(.+)', multiLine: true);
+  // Rgex to capture variable names with special characters like '&'.
+  // It captures any characters non-greedily between '$ ' and ' <type>'.
+
+  final regex = RegExp(r'\$\s+([^<]+?)\s+<([^>]+)>\s+(.+)', multiLine: true);
   final matches = regex.allMatches(vars);
 
   return matches.map((match) {
-    final name = match.group(1)!;
-    final type = match.group(2)!;
-    final details = match.group(3)!;
+    // Trim potential trailing whitespace from the captured name.
+
+    var name = match.group(1)!.trim();
+    final type = match.group(2)!.trim();
+    final details = match.group(3)!.trim();
+
+    // Check if the name is wrapped in quotes and contains no internal whitespace.
+
+    if ((name.startsWith('"') && name.endsWith('"')) ||
+        (name.startsWith('\'') && name.endsWith('\'')) ||
+        (name.startsWith('`') && name.endsWith('`'))) {
+      // Extract the content inside the quotes.
+
+      var innerName = name.substring(1, name.length - 1);
+      // Remove quotes only if there's no whitespace inside.
+
+      if (!innerName.contains(RegExp(r'\s'))) {
+        name = innerName;
+      }
+    }
 
     return VariableInfo(name: name, type: type, details: details);
   }).toList();
