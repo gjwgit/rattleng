@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-10-12 18:52:02 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-04-09 09:25:06 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -35,11 +35,19 @@
 # https://survivor.togaware.com/datascience/ for further details.
 
 # Reset the random number seed to obtain the same results each
-# time. 20241012 gjw RattleV5 did not reset the seed so that we can
-# demonstrate that each time we get a different random start and then
-# a different model.
+# time.
+#
+# Note that RattleV5 did not reset the seed so that we can demonstrate
+# that each time we get a different random start and then a different
+# model. For RattleV6 we will reset the seed and students can explore
+# the effect of changing the seed by resetting the seed in
+# SETTINGS. (gjw 20241012)
+##
+## Note that as in dataset_template.R we need to account for the
+## SETTING that says to reset to use a different random seeed each
+## time. (gjw 20250409)
 
-# set.seed(<RANDOM_SEED>)
+set.seed(<RANDOM_SEED>)
 
 # Load required packages from the local library into the R session.
 
@@ -68,7 +76,7 @@ if (rescale) {
   # Use the data without rescaling.
 
   tds <- na.omit(ds[tr, numc])
-  
+
 }
 
 
@@ -78,7 +86,7 @@ model_kmeans <- kmeans(tds,
                        centers=<CLUSTER_NUM>,
                        nstart=<CLUSTER_RUN>)
 
-# Report on the cluster characteristics. 
+# Report on the cluster characteristics.
 
 # Cluster sizes:
 
