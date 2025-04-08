@@ -1,11 +1,11 @@
 /// Utility to extract the latest names(ds) output from R.
 ///
-/// Copyright (C) 2023-2024, Togaware Pty Ltd.
+/// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2024-05-19 07:07:31 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2025-04-09 08:31:55 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -21,9 +21,12 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 import 'package:rattle/r/extract.dart';
+
+// TODO 20250409 THIS IS NO LONGER USED IN THE CODE?
 
 List<String> rExtractVars(String txt) {
   // Command/string to identify start point of the extracttion.
@@ -100,8 +103,13 @@ List<String> rExtractVars(String txt) {
   return result;
 }
 
+// TODO 20250409 RENAME THIS AS rExtractVars In LINE WITH FILE NAME
+
 List<VariableInfo> extractVariables(String txt) {
-  // extract the variable information from the latest glimpse(ds)
+  // TODO 20250409 MIGRATE TO meta_data RATHER THAN `glimpse()`.
+
+  // Extract the variable information from the latest glimpse(ds)
+
   String cmd = '> glimpse(ds)';
   String vars = rExtract(txt, cmd);
 

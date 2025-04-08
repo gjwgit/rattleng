@@ -1,6 +1,6 @@
 /// Random seed section.
 //
-// Time-stamp: <Monday 2025-01-06 15:20:25 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-04-09 09:08:55 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -68,12 +68,11 @@ class RandomSeed extends ConsumerWidget {
             MarkdownTooltip(
               message: '''
 
-              **Random Seed Setting:**
-              The random seed is used to control the randomness.
-              Setting a specific seed ensures that results are reproducible.
-
-              - **Default Seed:** The default seed is 42.
-              - **Reset:** Use the "Reset" button to restore the default seed.
+              **Random Seed:** The random seed is used to control the randomness
+              of partitioning the dataset and building models.  Setting a
+              specific seed ensures that results are reproducible. The random
+              seed will be reset to this value each tome the dataset is
+              partitioned or the model is built.
 
               ''',
               child: const Text(
@@ -93,25 +92,19 @@ class RandomSeed extends ConsumerWidget {
             ),
             configRowGap,
 
-            MarkdownTooltip(
-              message: '''
-
-
-
-              ''',
-              child: const Text(
-                'Random Partition each Model Build',
-                style: TextStyle(fontSize: 16),
-              ),
+            const Text(
+              'Random Partition each Model Build',
+              style: TextStyle(fontSize: 16),
             ),
             configRowGap,
 
             MarkdownTooltip(
               message: '''
 
-              **Random Partition each Model Build:**
-              When enabled, the partition will be randomised each time a model is built.
-              This is useful if you want to ensure that the model is not biased towards a specific partition.
+              **Reset Random Seed each Model Build:** When enabled, the dataset
+              partition (if any) will be resetrandomised each time a model is built.
+              This is useful if you want to ensure that the model is not biased
+              towards a specific partition.
 
               ''',
               child: Switch(
