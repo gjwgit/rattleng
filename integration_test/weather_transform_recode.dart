@@ -1,6 +1,6 @@
 /// WEATHER dataset TRANSFORM tab RECODE feature.
 //
-// Time-stamp: <Friday 2025-03-21 08:54:04 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-04-09 08:43:29 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -34,15 +34,13 @@ import 'utils/check_variable_not_missing.dart';
 import 'utils/delays.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/scroll_down.dart';
-import 'utils/scroll_until_find_key.dart';
 import 'utils/set_selected_variable.dart';
 import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
 import 'utils/unify_on.dart';
 import 'utils/verify_imputed_variable.dart';
-import 'utils/verify_page.dart';
 import 'utils/verify_rescale_tap_chip.dart';
 import 'utils/verify_selectable_text.dart';
 
@@ -55,42 +53,31 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(interact);
       await unifyOn(tester);
-      await loadDemoDataset(tester);
-      await tester.pump(delay);
+      await loadDemoDataset(tester, 'Weather');
 
-      // 1. Default chip "Quantiles". Do not use verify_tap_chip because
-      // it is a special case.
+      // Default chip is "Quantiles".
 
       await navigateToTab(tester, 'Transform');
       await navigateToFeature(tester, 'Recode');
+      await setSelectedVariable(tester, 'min_temp');
       await tapButton(tester, 'Recode Variable Values');
-      await tester.pump(delay);
-
-      await verifyPage(
-        'Dataset Summary',
+      // await tester.pump(delay);
+      await navigateToPage(tester, 1, back: 1, title: 'Dataset Summary');
+      await verifySelectableText(tester, [
+        'min_temp',
         'BQT_min_temp_4',
-      );
-
-      await scrollUntilFindKey(tester, 'text_page');
-
-      // Verify specific statistical values for the imputed 'BQT_min_temp_4' variable.
-
-      await verifySelectableText(
-        tester,
-        [
-          '[-6.2,1.1] :94',
-          '(1.1,6.7]  :89',
-          '(6.7,12.2] :91',
-          '(12.2,20.8]:91',
-        ],
-      );
+        '[-6.2,1.1] :94',
+        '(1.1,6.7]  :89',
+        '(6.7,12.2] :91',
+        '(12.2,20.8]:91',
+      ]);
 
       await navigateToTab(tester, 'Dataset');
-      await scrollDown(tester);
+      await navigateToPage(tester, 1, back: 1);
       await verifyImputedVariable(tester, 'BQT_min_temp_4');
       await checkVariableNotMissing(tester, 'BQT_min_temp_4');
 
-      // 2. Select and test chip "KMeans"
+      // Select and test chip "KMeans"
 
       await navigateToTab(tester, 'Transform');
       await navigateToFeature(tester, 'Recode');
