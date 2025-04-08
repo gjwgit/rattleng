@@ -207,7 +207,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
       spacing: configWidgetSpace,
       children: [
         configLeftGap,
-        ChoiceChipTip(
+        ChoiceChipTip<String>(
           options: numericMethods,
           selectedOption: selectedTransform,
           enabled: isNumeric && selected != 'NULL',
@@ -307,18 +307,6 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     }
 
     selected = ref.watch(selectedProvider);
-    if (selected == 'NULL' && inputs.isNotEmpty) {
-      setState(() {
-        selected = inputs.first;
-
-        // Initialize the chip selection.
-
-        selectedTransform = ref.read(typesProvider)[selected] == Type.numeric
-            ? numericMethods.first
-            : categoricMethods.first;
-        debugPrint('selected changed to $selected');
-      });
-    }
 
     // This is to ensure if we come back later, the selection is not cleared.
 
