@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-03-13 08:08:17 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-04-09 09:48:32 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -203,3 +203,8 @@ if (!is.null(target)) {
   actual_tc <- NULL
   actual_numeric_tc <- NULL
 }
+##
+## Add a set.seed here if RANDOM_MODEL (a new setting) is FALSE. If
+## TRUE then we don't reset the seed for building a model. If it is
+## FALSE (i.e., no radmoniser) then we do set.seed() for the model
+## build. (gjw 20250409)
