@@ -29,7 +29,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/vars/types.dart';
-import 'package:rattle/r/extract_large_factors.dart';
+import 'package:rattle/r/get_large_factors.dart';
 
 /// Return a list of categoric variables that are not ignored and do not have
 /// too many levels.
