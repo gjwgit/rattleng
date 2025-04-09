@@ -120,22 +120,6 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               stateProvider: numberClusterProvider,
             ),
             NumberField(
-              label: 'Seed:',
-              key: const Key('random_seed'),
-              tooltip: '''
-
-              The seed is used to re-initiate the random number
-              generator. Changing the seed will randomly choose observations to
-              initiate the clustering.  To obtain the same results each time use
-              the same seed.
-
-              ''',
-              controller: _seedController,
-              inputFormatter: FilteringTextInputFormatter.digitsOnly,
-              validator: (value) => validateInteger(value, min: 1),
-              stateProvider: randomSeedSettingProvider,
-            ),
-            NumberField(
               label: 'Runs:',
               key: const Key('cluster_run'),
               tooltip: '''
