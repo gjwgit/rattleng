@@ -308,6 +308,14 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
 
     selected = ref.watch(selectedProvider);
 
+    // Set a default variable for RECODE.
+    // Choose the first variable to reduce potential issues since it's
+    // the most likely to be correctly loaded.
+
+    if (selected == 'NULL' && inputs.isNotEmpty) {
+      selected = inputs.first;
+    }
+
     // This is to ensure if we come back later, the selection is not cleared.
 
     if (selected != 'NULL' && selectedTransform == '') {
