@@ -13,7 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
-+ HEIRARCHICAL: UI bug fix. [6.4.21 20250409 gjw]
++ HIERARCHICAL: UI bug fix. [6.4.21 20250409 gjw]
 + KMEANS: Model build is repeatable [6.4.60 20250409 zy]
 + DATASET: Support special characters in var names [6.4.59 20250409 zy]
 + RECODE: Allow TARGET to be recoded [6.4.58 20250408 zy]
