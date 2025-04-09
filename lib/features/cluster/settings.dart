@@ -116,31 +116,9 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
 
               ''',
               controller: _clusterController,
-              enabled: type != 'Hierarchical',
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: numberClusterProvider,
-            ),
-            NumberField(
-              label: 'Seed:',
-              key: const Key('random_seed'),
-              tooltip: '''
-
-              **Seed:** Set a number to initialise/reset the random number
-              generator. Changing the seed will result in different observations
-              being chosen to initialise the K-Means clustering.  To obtain the
-              same results each time use the same seed. The value of the seed is
-              remembered between sessions. You can also set the value of the
-              seed under the **Settings** button.
-
-              Note that a random seed is not utilised for the **Hierarchical**
-              algorithm.
-
-              ''',
-              controller: _seedController,
-              inputFormatter: FilteringTextInputFormatter.digitsOnly,
-              validator: (value) => validateInteger(value, min: 1),
-              stateProvider: randomSeedSettingProvider,
             ),
             NumberField(
               label: 'Runs:',

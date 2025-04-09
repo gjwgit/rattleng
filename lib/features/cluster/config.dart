@@ -64,7 +64,8 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
       ''',
     'Hierarchical': '''
 
-      Build an agglomerative hierarchical cluster.
+      The number of clusters here is used to display the aggregated tree 
+      of clusters for the second plot.
 
       ''',
     'BiCluster': '''
