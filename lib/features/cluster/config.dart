@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2025-04-09 13:33:37 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2025-04-09 13:39:25 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -65,7 +65,8 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
     'Hierarchical': '''
 
       Build an agglomerative hierarchical cluster. The number of clusters here
-      is used to aggregate the hierarchy into k clusters.
+      is used to aggregate the hierarchy into k clusters. Also note that the
+      algorithm is deterministic and so not depenendent on the random seed.
 
       ''',
     'BiCluster': '''
