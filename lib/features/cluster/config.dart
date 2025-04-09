@@ -151,7 +151,6 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
 
               ''',
               label: 'Re-Scale',
-              enabled: type != 'Hierarchical',
               provider: reScaleClusterProvider,
             ),
           ],
