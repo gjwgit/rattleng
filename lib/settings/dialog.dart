@@ -80,6 +80,9 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     ref.read(partitionProvider.notifier).state =
         prefs.getBool('partition') ?? ref.read(partitionProvider);
 
+    ref.read(randomSeedSettingProvider.notifier).state =
+        prefs.getInt('randomSeed') ?? ref.read(randomSeedSettingProvider);
+
     // Update "Keep in Sync" state.
 
     ref.read(keepInSyncProvider.notifier).state =
@@ -129,7 +132,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     // Random seed.
 
     ref.read(randomSeedSettingProvider.notifier).state =
-        prefs.getInt('randomSeed') ?? 42;
+        prefs.getInt('randomSeed') ?? defaultRandomSeed;
 
     // Max factor.
 

@@ -73,7 +73,12 @@ final settingsGraphicThemeProvider =
   (ref) => SettingsGraphicThemeNotifier(),
 );
 
-final randomSeedSettingProvider = StateProvider<int>((ref) => 42);
+// Define the default value as a constant.
+
+const int defaultRandomSeed = 42;
+
+final randomSeedSettingProvider =
+    StateProvider<int>((ref) => defaultRandomSeed);
 
 final imageViewerSettingProvider =
     StateProvider<String>((ref) => Platform.isWindows ? 'start' : 'open');
