@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-04-09 09:25:06 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2025-04-09 10:34:22 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -47,7 +47,9 @@
 ## SETTING that says to reset to use a different random seeed each
 ## time. (gjw 20250409)
 
-set.seed(<RANDOM_SEED>)
+if (! <RANDOM_PARTITION>) {
+  set.seed(<RANDOM_SEED>)
+}
 
 # Load required packages from the local library into the R session.
 
