@@ -1,8 +1,8 @@
-/// <DESCRIPTION>
+/// Get the risk variable from the rolesProvider and metaDataProvider.
 //
 // Time-stamp: <Thursday 2024-06-06 05:58:50 +1000 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: <AUTHORS>
+/// Authors: Zheyuan Xu
 
 library;
 
@@ -33,7 +33,7 @@ import 'package:rattle/providers/vars/roles.dart';
 
 String getRisk(WidgetRef ref) {
 // The rolesProvider listes the roles for the different variables which we
-  // need to know for parsing the R scripts.
+// need to know for parsing the R scripts.
 
   Map<String, Role> roles = ref.read(rolesProvider);
 
