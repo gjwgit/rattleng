@@ -96,6 +96,12 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
       ref.read(partitionProvider.notifier).state =
           prefs.getBool('partition') ?? true;
+
+      // Set the initial state of the "Random Seed" toggle based on shared preferences,
+      // defaulting to [defaultRandomSeed] if no value is found.
+
+      ref.read(randomSeedSettingProvider.notifier).state =
+          prefs.getInt('randomSeed') ?? defaultRandomSeed;
     } else {
       // If this is not the first start and "Keep in Sync" is enabled.
 
@@ -118,6 +124,12 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
         ref.read(partitionProvider.notifier).state =
             prefs.getBool('partition') ?? ref.read(partitionProvider);
+
+        // Set the initial state of the "Random Seed" toggle based on shared preferences,
+        // defaulting to [defaultRandomSeed] if no value is found.
+
+        ref.read(randomSeedSettingProvider.notifier).state =
+            prefs.getInt('randomSeed') ?? ref.read(randomSeedSettingProvider);
       }
     }
   }
