@@ -1,6 +1,6 @@
 /// Set a dataset toggle option  on/off.
 ///
-// Time-stamp: <Thursday 2025-04-10 09:37:46 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-04-10 09:38:46 +1000 Graham Williams>
 ///
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -86,7 +86,7 @@ Future<void> setToggle(
       )
       .ref
       .read(prov);
-  //expect(updatedPartitionState, on);
+  expect(updatedPartitionState, on);
 
   await tester.pumpAndSettle();
 }
