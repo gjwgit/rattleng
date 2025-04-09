@@ -1,6 +1,6 @@
 /// Load one of the DEMO datasets.
 //
-// Time-stamp: <Monday 2025-03-24 11:03:10 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-04-10 09:28:09 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -36,6 +36,7 @@ import 'package:rattle/features/dataset/popup.dart';
 import 'delays.dart';
 import 'navigate_to_page.dart';
 import 'navigate_to_tab.dart';
+import 'set_toggle.dart';
 import 'test_print.dart';
 
 /// Load the dataset and undertake basic tests that it loaded just fine.
@@ -43,12 +44,28 @@ import 'test_print.dart';
 Future<void> loadDemoDataset(
   WidgetTester tester, [
   String dataset = 'Weather',
+  bool cleanse = true,
+  bool unify = true,
+  bool partition = true,
 ]) async {
   testPrint('Open the ${dataset.toUpperCase()} Dataset.');
 
   // Ensure we are on the DATASET tab.
 
   await navigateToTab(tester, 'Dataset');
+
+  // Set the toggles to expected values irrespective of the current user's
+  // settings.
+  //
+  // Currently there is a bug in that all are on at startup then get properly
+  // reset after the first tap, so for now tap the CLEANSE twice. Once the bug
+  // is fixed remove the extra CLEANSE and replace all setParittion,
+  // setUnifyon/Off setCleanseOn/Off with setToggle.
+
+  await setToggle(tester, 'Cleanse', true);
+  await setToggle(tester, 'Cleanse', true);
+  await setToggle(tester, 'Unify', true);
+  await setToggle(tester, 'Partition', true);
 
   final datasetButtonFinder = find.byType(DatasetButton);
   expect(datasetButtonFinder, findsOneWidget);

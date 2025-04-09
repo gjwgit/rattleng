@@ -1,6 +1,6 @@
 /// AUDIT -> CLASSIFICATION -> TRANSFORM -> MODEL -> NEURAL -> EVALUATE -> ERROR MATRIX
 //
-// Time-stamp: <Monday 2025-03-24 11:32:09 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-04-10 09:30:08 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -128,7 +128,7 @@ void main() {
 
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
-      await navigateToPage(tester, 1, back: 1, title: 'Error Matrix');
+      await navigateToPage(tester, 1, back: 2, title: 'Error Matrix');
       await verifySelectableText(
         tester,
         [
