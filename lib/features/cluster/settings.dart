@@ -1,6 +1,6 @@
 /// Cluster setting for different cluster types.
 ///
-/// Time-stamp: <Saturday 2024-12-14 21:27:46 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2025-04-09 11:15:23 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -118,6 +118,20 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: numberClusterProvider,
+            ),
+            NumberField(
+              label: 'Seed:',
+              key: const Key('random_seed'),
+              tooltip: '''
+              The seed is used to re-initiate the random number
+              generator. Changing the seed will randomly choose observations to
+              initiate the clustering.  To obtain the same results each time use
+              the same seed.
+              ''',
+              controller: _seedController,
+              inputFormatter: FilteringTextInputFormatter.digitsOnly,
+              validator: (value) => validateInteger(value, min: 1),
+              stateProvider: randomSeedSettingProvider,
             ),
             NumberField(
               label: 'Runs:',
