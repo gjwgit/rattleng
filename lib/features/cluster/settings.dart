@@ -1,6 +1,6 @@
 /// Cluster setting for different cluster types.
 ///
-/// Time-stamp: <Wednesday 2025-04-09 11:54:49 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2025-04-09 13:32:06 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -116,7 +116,6 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
 
               ''',
               controller: _clusterController,
-              enabled: type != 'Hierarchical',
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: numberClusterProvider,
@@ -138,6 +137,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
 
               ''',
               controller: _seedController,
+              enabled: type != 'Hierarchical',
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: randomSeedSettingProvider,
