@@ -1,6 +1,6 @@
 /// Cluster setting for different cluster types.
 ///
-/// Time-stamp: <Wednesday 2025-04-09 11:44:51 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2025-04-09 11:54:49 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -133,6 +133,9 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               remembered between sessions. You can also set the value of the
               seed under the **Settings** button.
 
+              Note that a random seed is not utilised for the **Hierarchical**
+              algorithm.
+
               ''',
               controller: _seedController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
@@ -178,9 +181,10 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               distanceClusterProvider,
               tooltip: '''
 
-              **Distance:** Choose a preferred alogirthm for measuring the
-              similarity/distance between observations, and so determining how
-              well they are grouped together in clusters.
+              **Distance:** For the **Hierachical** algorithm choose a preferred
+              alogirthm for measuring the similarity/distance between
+              observations, and so determining how well they are grouped
+              together in clusters.
 
               ''',
               enabled: type == 'Hierarchical',
@@ -198,9 +202,10 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               linkClusterProvider,
               tooltip: '''
 
-              **Link:** Choose a method for determining how the distance between
-              clusters is calculated when merging them, influencing the shape
-              and structure of the resulting clusters.
+              **Link:** For the **Hierachical** algorithm choose a method for
+              determining how the distance between clusters is calculated when
+              merging them, influencing the shape and structure of the resulting
+              clusters.
 
               ''',
               enabled: type == 'Hierarchical',
