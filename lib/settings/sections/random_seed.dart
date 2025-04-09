@@ -40,7 +40,6 @@ class RandomSeed extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final randomSeed = ref.watch(randomSeedSettingProvider);
     final randomPartition = ref.watch(randomPartitionSettingProvider);
 
     Future<void> _saveRandomSeed(int value) async {
@@ -84,7 +83,6 @@ class RandomSeed extends ConsumerWidget {
             ),
             configRowGap,
             RandomSeedRow(
-              randomSeed: randomSeed,
               updateSeed: (newSeed) {
                 ref.read(randomSeedSettingProvider.notifier).state = newSeed;
                 _saveRandomSeed(newSeed);
@@ -130,8 +128,9 @@ class RandomSeed extends ConsumerWidget {
               ''',
               child: ElevatedButton(
                 onPressed: () {
-                  ref.read(randomSeedSettingProvider.notifier).state = 42;
-                  _saveRandomSeed(42);
+                  ref.read(randomSeedSettingProvider.notifier).state =
+                      defaultRandomSeed;
+                  _saveRandomSeed(defaultRandomSeed);
 
                   ref
                       .read(

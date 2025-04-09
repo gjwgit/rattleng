@@ -32,9 +32,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/providers/settings.dart';
 
 class RepeatButton extends StatefulWidget {
   final Widget child;
@@ -82,18 +84,18 @@ class _RepeatButtonState extends State<RepeatButton> {
   }
 }
 
-class RandomSeedRow extends StatelessWidget {
-  final int randomSeed;
+class RandomSeedRow extends ConsumerWidget {
   final Function(int) updateSeed;
 
   const RandomSeedRow({
     Key? key,
-    required this.randomSeed,
     required this.updateSeed,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final randomSeed = ref.watch(randomSeedSettingProvider);
+
     return Row(
       children: [
         RepeatButton(

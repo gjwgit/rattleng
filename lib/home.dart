@@ -669,6 +669,14 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
                 color: Colors.blue,
               ),
               onPressed: () async {
+                // Save the current random seed to shared preferences before
+                // showing the settings dialog. This ensures that any changes
+                // made to the random seed in the dialog are properly persisted.
+
+                int randomSeed = ref.read(randomSeedSettingProvider);
+                final prefs = await SharedPreferences.getInstance();
+                prefs.setInt('randomSeed', randomSeed);
+
                 showSettingsDialog(context);
               },
             ),
