@@ -29,9 +29,8 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/vars/roles.dart';
-import 'package:rattle/r/extract.dart';
 
 String getTarget(WidgetRef ref) {
   // The rolesProvider lists the roles for the different variables which we
@@ -50,25 +49,67 @@ String getTarget(WidgetRef ref) {
   });
 
   if (target == 'NULL') {
-    String stdout = ref.watch(stdoutProvider);
+    Map<String, dynamic> metaData = ref.watch(metaDataProvider);
 
-    String defineTarget = rExtract(stdout, 'find_fewest_levels(ds)');
+    String candidateTarget = 'NULL';
 
-    defineTarget = defineTarget.replaceAll(RegExp(r'^ *\[[^\]]\] '), '');
+    // Initialize minLevels to null initially.
 
-    // Removes matching quotes from the start and end of a string.
+    int? minLevels;
 
-    if ((defineTarget.startsWith("'") && defineTarget.endsWith("'")) ||
-        (defineTarget.startsWith('"') && defineTarget.endsWith('"'))) {
-      if (defineTarget.length >= 3) {
-        defineTarget = defineTarget.substring(1, defineTarget.length - 1);
+    // Iterate through metadata to find factor variables.
+
+    metaData.forEach((varName, varData) {
+      // Ensure varData is a Map and contains 'datatype' and 'unique'.
+
+      if (varData is Map &&
+          varData.containsKey('datatype') &&
+          varData.containsKey('unique')) {
+        String dataType = varData['datatype'].first ?? '';
+        dynamic uniqueData = varData['unique'];
+
+        // Check if it's a factor/categoric type.
+
+        if (dataType.contains('factor') ||
+            dataType.contains('character') ||
+            dataType.contains('ordered')) {
+          // Ensure 'unique' is a list and not empty.
+
+          if (uniqueData is List && uniqueData.isNotEmpty) {
+            // Attempt to parse the unique count.
+
+            int? uniqueCount = int.tryParse(uniqueData[0].toString());
+
+            if (uniqueCount != null) {
+              // If this is the first suitable variable found, initialize minLevels.
+
+              if (minLevels == null) {
+                minLevels = uniqueCount;
+                candidateTarget = varName;
+              } else {
+                // Otherwise, compare with the current minimum.
+
+                if (uniqueCount <= minLevels!) {
+                  minLevels = uniqueCount;
+                  candidateTarget = varName;
+                }
+              }
+            }
+          }
+        }
       }
-    }
+    });
 
-    if (defineTarget.isNotEmpty && target != '""') {
-      return defineTarget;
+    // Return the best candidate found from metadata, or 'NULL' if none.
+    // This replaces the stdout parsing logic.
+
+    if (candidateTarget != 'NULL' && roles[candidateTarget] != Role.ident) {
+      return candidateTarget;
     }
   }
+
+  // If target was already set by rolesProvider, return it here.
+  // If the metadata search above didn't find anything, 'NULL' is returned from there.
 
   return target;
 }
