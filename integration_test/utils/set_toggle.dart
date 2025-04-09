@@ -1,6 +1,6 @@
 /// Set a dataset toggle option  on/off.
 ///
-// Time-stamp: <Thursday 2025-04-10 09:02:44 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-04-10 09:37:46 +1000 Graham Williams>
 ///
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -51,10 +51,6 @@ Future<void> setToggle(
   var button = find.byIcon(ic);
   expect(button, findsOneWidget);
 
-  print(toggle);
-  print(on);
-  print(button);
-
   // Identify the correct provider for the toggle.
 
   final prov = switch (toggle) {
@@ -63,8 +59,6 @@ Future<void> setToggle(
     'Unify' => normaliseProvider,
     _ => throw FormatException('Invalid toggle name $toggle'),
   };
-
-  print(prov);
 
   // Get initial partition state.
 
@@ -75,14 +69,11 @@ Future<void> setToggle(
       .ref
       .read(prov);
 
-  print(toggleState);
-
   // 20250206 gjw If partition is enabled and we want to turn it off, or the
   // partition is disabled and we want to turn it on, then tap the parition icon
   // to.
 
   if ((toggleState && !on) || (!toggleState && on)) {
-    print("TAP");
     await tester.tap(button);
     await tester.pumpAndSettle();
   }
@@ -95,7 +86,6 @@ Future<void> setToggle(
       )
       .ref
       .read(prov);
-  print(updatedPartitionState);
   //expect(updatedPartitionState, on);
 
   await tester.pumpAndSettle();
