@@ -1,6 +1,6 @@
 /// Cluster setting for different cluster types.
 ///
-/// Time-stamp: <Wednesday 2025-04-09 11:15:23 +1000 Graham Williams>
+/// Time-stamp: <Wednesday 2025-04-09 11:44:51 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -109,8 +109,10 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               key: const Key('cluster_number'),
               tooltip: '''
 
-              The number of clusters (k) or a set of initial (distinct) cluster
-              centers.
+              **Clusters:** Set the number of clusters (k) you would like to
+              create from the dataset. For the K-Means algorithm the k clusters
+              will be initialised from a random selection of k observations
+              (rows) from the dataset.
 
               ''',
               controller: _clusterController,
@@ -123,10 +125,14 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               label: 'Seed:',
               key: const Key('random_seed'),
               tooltip: '''
-              The seed is used to re-initiate the random number
-              generator. Changing the seed will randomly choose observations to
-              initiate the clustering.  To obtain the same results each time use
-              the same seed.
+
+              **Seed:** Set a number to initialise/reset the random number
+              generator. Changing the seed will result in different observations
+              being chosen to initialise the K-Means clustering.  To obtain the
+              same results each time use the same seed. The value of the seed is
+              remembered between sessions. You can also set the value of the
+              seed under the **Settings** button.
+
               ''',
               controller: _seedController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
@@ -138,8 +144,9 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               key: const Key('cluster_run'),
               tooltip: '''
 
-              The number of random starting partitions to explore when centers
-              is a number rather than specific centers.
+              **Runs:** Set the number of random starting partitions to
+              explore. The best clustering will be chosen from among those
+              built.
 
               ''',
               controller: _runController,
@@ -153,7 +160,8 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               key: const Key('cluster_processor'),
               tooltip: '''
 
-              Integer, number of subprocess for parallelization.
+              **Processors:** Set as an integer the number of subprocess for
+                parallelization.
 
               ''',
               controller: _processorController,
@@ -170,8 +178,9 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               distanceClusterProvider,
               tooltip: '''
 
-              Distance measures how similar or dissimilar data points are,
-              determining how they are grouped together in clusters.
+              **Distance:** Choose a preferred alogirthm for measuring the
+              similarity/distance between observations, and so determining how
+              well they are grouped together in clusters.
 
               ''',
               enabled: type == 'Hierarchical',
@@ -189,8 +198,9 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               linkClusterProvider,
               tooltip: '''
 
-              A link determines how the distance between clusters is calculated
-              when merging them, influencing the shape and structure of the resulting clusters.
+              **Link:** Choose a method for determining how the distance between
+              clusters is calculated when merging them, influencing the shape
+              and structure of the resulting clusters.
 
               ''',
               enabled: type == 'Hierarchical',
