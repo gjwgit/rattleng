@@ -62,6 +62,7 @@ class DatasetToggles extends ConsumerWidget {
       await prefs.setBool('normalise', ref.read(normaliseProvider));
       await prefs.setBool('partition', ref.read(partitionProvider));
       await prefs.setInt('maxFactor', ref.read(maxFactorProvider));
+      await prefs.setInt('randomSeed', ref.read(randomSeedSettingProvider));
     }
 
     void _resetToggleStates() {
