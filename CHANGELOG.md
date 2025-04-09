@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ KMEANS: Ensure model build is repeatable [6.4.60 20250409 zy]
 + DATASET: Support special characters in var names [6.4.59 20250409 zy]
 + RECODE: Allow TARGET to be recoded [6.4.58 20250408 zy]
 + SUMMARY: Improve summary() layout [6.4.57 20250407 zy]
