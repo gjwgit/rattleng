@@ -1,6 +1,6 @@
 /// COMP3425 W06 WEATHER dataset MODEL tab NNET feature.
 //
-// Time-stamp: <Thursday 2025-03-20 16:49:13 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-04-10 12:17:33 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -35,8 +35,8 @@ import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/set_dataset_role.dart';
-import 'utils/set_partition.dart';
 import 'utils/set_selected_variable.dart';
+import 'utils/set_toggle.dart';
 import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
 import 'utils/tap_popup.dart';
@@ -84,7 +84,6 @@ void main() {
       // Load the dataset and set variable roles.
 
       await tester.pumpAndSettle();
-      await setPartition(tester, true);
       await loadDemoDataset(tester, 'Weather');
       for (final v in varsToIgnore) {
         await setDatasetRole(tester, v, 'Ignore');
