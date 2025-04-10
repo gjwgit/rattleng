@@ -1,6 +1,6 @@
 /// Load one of the DEMO datasets.
 //
-// Time-stamp: <Thursday 2025-04-10 09:28:09 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-04-10 15:21:20 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -44,9 +44,9 @@ import 'test_print.dart';
 Future<void> loadDemoDataset(
   WidgetTester tester, [
   String dataset = 'Weather',
-  bool cleanse = true,
-  bool unify = true,
-  bool partition = true,
+  // bool cleanse = true,
+  // bool unify = true,
+  // bool partition = true,
 ]) async {
   testPrint('Open the ${dataset.toUpperCase()} Dataset.');
 
@@ -62,10 +62,10 @@ Future<void> loadDemoDataset(
   // is fixed remove the extra CLEANSE and replace all setParittion,
   // setUnifyon/Off setCleanseOn/Off with setToggle.
 
-  await setToggle(tester, 'Cleanse', true);
-  await setToggle(tester, 'Cleanse', true);
-  await setToggle(tester, 'Unify', true);
-  await setToggle(tester, 'Partition', true);
+  // await setToggle(tester, 'Cleanse', true);
+  // await setToggle(tester, 'Cleanse', true);
+  // await setToggle(tester, 'Unify', true);
+  // await setToggle(tester, 'Partition', true);
 
   final datasetButtonFinder = find.byType(DatasetButton);
   expect(datasetButtonFinder, findsOneWidget);
