@@ -98,7 +98,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
           prefs.getBool('partition') ?? true;
 
       // Set the initial state of the "Random Seed" toggle based on shared preferences,
-      // defaulting to `true` if no value is found.
+      // defaulting to [defaultRandomSeed] if no value is found.
 
       ref.read(randomSeedSettingProvider.notifier).state =
           prefs.getInt('randomSeed') ?? defaultRandomSeed;
@@ -125,8 +125,8 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         ref.read(partitionProvider.notifier).state =
             prefs.getBool('partition') ?? ref.read(partitionProvider);
 
-        // Update the "Random Seed" toggle state to match the value in shared preferences,
-        // falling back to the current provider state if no value is found.
+        // Set the initial state of the "Random Seed" toggle based on shared preferences,
+        // defaulting to [defaultRandomSeed] if no value is found.
 
         ref.read(randomSeedSettingProvider.notifier).state =
             prefs.getInt('randomSeed') ?? ref.read(randomSeedSettingProvider);
