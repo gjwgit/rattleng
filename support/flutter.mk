@@ -274,6 +274,8 @@ qtest.tmp: qtest.all
 
 .PHONY: qtest.all
 qtest.all:
+	@echo $(APP) `egrep '^version: ' pubspec.yaml`
+	@echo "flutter version:" `flutter --version | head -1 | cut -d ' ' -f 2`
 	make qtest > qtest_$(shell date +%Y%m%d%H%M%S).txt
 
 clean::
