@@ -44,13 +44,15 @@ import 'test_print.dart';
 Future<void> loadDemoDataset(
   WidgetTester tester, [
   String dataset = 'Weather',
+  bool resetSettings = true,
   // bool cleanse = true,
   // bool unify = true,
   // bool partition = true,
 ]) async {
-  testPrint('Set default settings.');
-
-  await setDefaultSetting(tester);
+  if (resetSettings) {
+    testPrint('Set default settings.');
+    await setDefaultSetting(tester);
+  }
 
   testPrint('Open the ${dataset.toUpperCase()} Dataset.');
 
