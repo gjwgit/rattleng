@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-04-11 09:19:32 +1000 Graham Williams>
+# Time-stamp: <Friday 2025-04-11 09:21:54 +1000 Graham Williams>
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -131,5 +131,5 @@ plot(model_hclust,
      # labels = ds[tr, identifier],
      xlab = "",
      ylab = "Height")
-rect.hclust(model_hclust_hclust, k=<CLUSTER_NUM>, border="red")
+rect.hclust(model_hclust, k=<CLUSTER_NUM>, border="red")
 dev.off()
