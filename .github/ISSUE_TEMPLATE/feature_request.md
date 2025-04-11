@@ -17,7 +17,9 @@ want to happen.]
 
 ## Closing Crieria
 
-- [ ] [Checklist for closing the issue]
+Checklist for closing the issue:
+
+- [ ] All tests pass
 
 ## Alternatives
 
