@@ -249,6 +249,7 @@ class DatasetToggles extends ConsumerWidget {
 
               ''',
               child: ElevatedButton(
+                key: const Key('dataset_toggles_reset_button'),
                 onPressed: _resetToggleStates,
                 child: const Text('Reset'),
               ),

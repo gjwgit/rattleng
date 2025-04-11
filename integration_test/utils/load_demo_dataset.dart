@@ -36,7 +36,7 @@ import 'package:rattle/features/dataset/popup.dart';
 import 'delays.dart';
 import 'navigate_to_page.dart';
 import 'navigate_to_tab.dart';
-//import 'set_toggle.dart';
+import 'set_default_setting.dart';
 import 'test_print.dart';
 
 /// Load the dataset and undertake basic tests that it loaded just fine.
@@ -44,10 +44,16 @@ import 'test_print.dart';
 Future<void> loadDemoDataset(
   WidgetTester tester, [
   String dataset = 'Weather',
+  bool resetSettings = true,
   // bool cleanse = true,
   // bool unify = true,
   // bool partition = true,
 ]) async {
+  if (resetSettings) {
+    testPrint('Set default settings.');
+    await setDefaultSetting(tester);
+  }
+
   testPrint('Open the ${dataset.toUpperCase()} Dataset.');
 
   // Ensure we are on the DATASET tab.
