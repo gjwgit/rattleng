@@ -25,4 +25,7 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final keepInSyncProvider = StateProvider<bool>((ref) => false);
+// Set default value to true, the same with default value
+// in dataset setting popup window.
+
+final keepInSyncProvider = StateProvider<bool>((ref) => true);
