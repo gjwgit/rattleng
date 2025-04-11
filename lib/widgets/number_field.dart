@@ -33,6 +33,7 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/constants/style.dart';
 
@@ -133,7 +134,7 @@ class NumberFieldState extends ConsumerState<NumberField> {
     );
   }
 
-  void increment() {
+  void increment() async {
     num currentValue = num.tryParse(widget.controller.text) ?? 0;
     currentValue += widget.interval;
 
@@ -146,9 +147,21 @@ class NumberFieldState extends ConsumerState<NumberField> {
     // Update the state provider directly.
 
     ref.read(widget.stateProvider.notifier).state = currentValue;
+
+    // This is not a nice way to handle the random seed specifically,
+    // but it's a temporary solution until we implement a more generic
+    // approach for saving field values to SharedPreferences.
+
+    if (widget.label == 'Seed:') {
+      // Update the shared preferences only for the seed field.
+
+      final prefs = await SharedPreferences.getInstance();
+
+      prefs.setInt('randomSeed', currentValue.toInt());
+    }
   }
 
-  void decrement() {
+  void decrement() async {
     num currentValue = num.tryParse(widget.controller.text) ?? 0;
     currentValue -= widget.interval;
 
@@ -161,6 +174,18 @@ class NumberFieldState extends ConsumerState<NumberField> {
     // Update state provider directly.
 
     ref.read(widget.stateProvider.notifier).state = currentValue;
+
+    // This is not a nice way to handle the random seed specifically,
+    // but it's a temporary solution until we implement a more generic
+    // approach for saving field values to SharedPreferences.
+
+    if (widget.label == 'Seed:') {
+      // Update the shared preferences only for the seed field.
+
+      final prefs = await SharedPreferences.getInstance();
+
+      prefs.setInt('randomSeed', currentValue.toInt());
+    }
   }
 
   // A timer for continuous incrementing/decrementing.
