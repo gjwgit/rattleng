@@ -35,7 +35,6 @@ import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/set_partition.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_checkbox.dart';
 import 'utils/verify_role.dart';
@@ -48,7 +47,6 @@ void main() {
     testWidgets('support = 0.001.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await setPartition(tester, false);
       await loadDemoDataset(tester, 'Movies');
       await verifyRole('basket', 'Ident');
       await verifyRole('item', 'Target');
@@ -63,7 +61,7 @@ void main() {
         title: 'Association Rules — Meta Summary',
       );
       await verifySelectableText(tester, ['support = 0.001']);
-      await verifySelectableText(tester, ['117']);
+      await verifySelectableText(tester, ['44']);
     });
   });
 }
