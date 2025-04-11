@@ -46,3 +46,9 @@ Where has the issue been observed:
 [Add any other context about the problem here.]
 
 Flutter Version:
+
+## Closing Crieria
+
+Checklist for closing the issue:
+
+- [ ] All tests pass
