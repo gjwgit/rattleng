@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Friday 2025-03-21 13:22:49 +1100 Graham Williams>
+# Time-stamp: <Saturday 2025-04-12 09:55:33 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -78,9 +78,6 @@ help::
 
 ########################################################################
 # LOCAL TARGETS
-
-locals:
-	@echo "This might be the instructions to install $(APP)"
 
 .PHONY: rtests
 rtests:
