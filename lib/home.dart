@@ -654,6 +654,7 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
           // Settings.
 
           MarkdownTooltip(
+            key: const Key('settings_button'),
             message: '''
 
             **Settings:** Tap here to update your default settings. Settings
