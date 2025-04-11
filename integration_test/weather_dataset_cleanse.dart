@@ -79,9 +79,9 @@ void main() {
 
         '192',
 
-        // Verify Type Values for wind_speed_9am Variable.
+        // Verify Type Values for date Variable.
 
-        'fct',
+        'date',
       ],
       multi: true,
     );
@@ -94,7 +94,7 @@ void main() {
 
     await cleanseOff(tester);
 
-    await loadDemoDataset(tester);
+    await loadDemoDataset(tester, 'Weather', false);
 
     await verifySelectableText(
       tester,

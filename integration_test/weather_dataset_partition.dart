@@ -67,7 +67,7 @@ void main() {
     await tester.pumpAndSettle();
     await unifyOn(tester);
     await setPartition(tester, false);
-    await loadDemoDataset(tester);
+    await loadDemoDataset(tester, 'Weather', false);
     await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Tree');
     await tapButton(tester, 'Build Decision Tree');
