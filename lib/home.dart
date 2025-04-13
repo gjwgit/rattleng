@@ -41,6 +41,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yaml/yaml.dart';
+import 'package:version_widget/version_widget.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/spacing.dart';
@@ -467,37 +468,12 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
             the **Version** text here in the title bar to visit the *CHANGELOG*
             in your browser and so see a list of all changes to Rattle.
             ''' : '*A newer version is available!* Visit [Rattle](https://rattle.togaware.com) for instructions on updating your installation.'}
+            
             ''',
-            child: GestureDetector(
-              onTap: () async {
-                // 20250107 gjw Always go to the CHANGELOG irrespective of
-                // latest version or not. That is where information about the
-                // version comes from. The original alternative was to go to the
-                // Rattle page if a new release is available, presumably to see
-                // the install instructions. I think it makes more sense for the
-                // user to see what has changed.
-
-                final Uri url = Uri.parse(_changelogUrl);
-
-                if (await canLaunchUrl(url)) {
-                  await launchUrl(url);
-                } else {
-                  debugPrint('Could not launch $_changelogUrl');
-                }
-              },
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: Text(
-                  // Only diplay the version string if we have a version from
-                  // the Internet. If we are not connected then simply display
-                  // nothing! (gjw 20250322)
-                  _appVersion.isEmpty ? '' : 'Version $_appVersion - $_appDate',
-                  style: TextStyle(
-                    color: _isLatest ? Colors.blue : Colors.red,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
+            child: VersionWidget(
+              changelogUrl: _changelogUrl,
+              showDate: true,
+              defaultDate: '20250101',
             ),
           ),
           const SizedBox(width: 50),
