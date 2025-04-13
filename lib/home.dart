@@ -176,10 +176,10 @@ class RattleHomeState extends ConsumerState<RattleHome>
   late TabController _tabController;
 
   // We will populate the app name and version.
+  // Keep the following variables for the about popup.
 
   var _appName = '';
   var _appVersion = '';
-  var _appDate = '';
   var _isLatest = true;
   final String _changelogUrl =
       'https://github.com/gjwgit/rattleng/blob/dev/CHANGELOG.md';
@@ -268,31 +268,17 @@ class RattleHomeState extends ConsumerState<RattleHome>
     final prefs = await SharedPreferences.getInstance();
     final savedVersion = prefs.getString('version') ?? '';
 
-    // Extract date from remote CHANGELOG.md in _changelogUrl
-    //- first date in [6.4.0 20250120 gjw] format : bracketed
-    // by square brackets.
-
-    final response = await http.get(Uri.parse(_changelogUrl));
-    final content = response.body;
-    String currentDate = '20250101'; // Default date
-    final match = RegExp(r'\[[\d.]+ (\d{8})').firstMatch(content);
-    if (match != null) {
-      currentDate = match.group(1)!;
-      debugText('  CHANGELOG', currentDate);
-    }
-
     setState(() {
+      // Set the app name and version from package_info_plus.
+
       _appName = packageInfo.packageName;
       _appVersion = packageInfo.version;
-      _appDate =
-          '${currentDate.substring(6, 8)} ${months[int.parse(currentDate.substring(4, 6)) - 1]} ${currentDate.substring(0, 4)}';
     });
 
     // Update saved version/date if version changed.
 
     if (savedVersion != _appVersion) {
       await prefs.setString('version', _appVersion);
-      await prefs.setString('version_date', currentDate);
     }
 
     checkForUpdate(_appVersion);
@@ -468,7 +454,7 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
             the **Version** text here in the title bar to visit the *CHANGELOG*
             in your browser and so see a list of all changes to Rattle.
             ''' : '*A newer version is available!* Visit [Rattle](https://rattle.togaware.com) for instructions on updating your installation.'}
-            
+
             ''',
             child: VersionWidget(
               changelogUrl: _changelogUrl,
