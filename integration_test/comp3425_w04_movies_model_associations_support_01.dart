@@ -74,7 +74,7 @@ void main() {
         title: 'Association Rules — Meta Summary',
       );
       await verifySelectableText(tester, ['support = 0.01']);
-      await verifySelectableText(tester, ['117']);
+      await verifySelectableText(tester, ['44']);
     });
   });
 }

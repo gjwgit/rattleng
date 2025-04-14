@@ -13,6 +13,8 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ SETTINGS: Debug SETTINGS and saved settings [6.4.63 20250411 zy]
++ CLUSTER: Update handling of seed on startup [6.4.62 20250410 zy]
 + HIERARCHICAL: UI bug fix. [6.4.21 20250409 gjw]
 + KMEANS: Model build is repeatable [6.4.60 20250409 zy]
 + DATASET: Support special characters in var names [6.4.59 20250409 zy]

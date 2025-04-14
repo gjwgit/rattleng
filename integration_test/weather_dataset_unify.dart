@@ -65,7 +65,7 @@ void main() {
     await tester.pumpAndSettle();
     await cleanseOn(tester);
     await unifyOff(tester);
-    await loadDemoDataset(tester);
+    await loadDemoDataset(tester, 'Weather', false);
     await verifyText(
       tester,
       [

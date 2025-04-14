@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-04-09 09:48:32 +1000 Graham Williams>
+# Time-stamp: <Thursday 2025-04-10 14:39:33 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -81,7 +81,7 @@ if (!is.null(target)) {
 # with the newer partykit package. Try not for now.
 
 # tcds <- tcds %>%
-#   mutate(across(where(is.character), as.factor))
+#   dplyr::mutate(across(where(is.character), as.factor))
 
 print(form)
 
@@ -89,25 +89,34 @@ print(form)
 
 tcnobs <- nrow(tcds)
 
-if (<SPLIT_DATASET>) {
+# Do we want to partition the dataset?
 
-  # Split the dataset into train, tune, and test, recording the indicies
-  # of the observations to be associated with each dataset. If the
-  # dataset is not to be partitioned, simply have the train, tune and
-  # test datasets as the whole dataset.
+partitioning <- <SPLIT_DATASET>
 
-  # To get the same model each time we partitin the dataset the same
+# Split the dataset into train, tune/validate, and test, recording
+# the indicies of the observations to be associated with each
+# dataset. If the dataset is not to be partitioned, simply have the
+# train, tune/validate and test datasets as the whole dataset.
+
+if (partitioning) {
+
+  # To get the same model each time we partition the dataset the same
   # way each time based on a fixed seed that the user can override to
   # explore the impact of different dataset paritioning on the
   # resulting model.
+  ##
+  ## TODO 20241202 gjw <REPLACE> THE <FIXED> 42 WITH A <SETTINGS> <VALUE> FOR THE SEED.
+  ##
+  ## TODO 20241202 gjw ADD <PROVIDER> FOR <RANDOM_PARTITION> TO <RANDOMISE> EACH TIME.
+  ##
+  ## TODO 20241202 gjw <MAYBE> IF <RANDOM_SEED> IS <EMPTY> WE <RANDOMISE> EACH TIME HERE.
 
-  # TODO 20241202 gjw <REPLACE> THE <FIXED> 42 WITH A <SETTINGS> <VALUE> FOR THE SEED.
+  # Do we want to have the different random partitioning each time,
+  # resulting in randomly different models?
 
-  # TODO 20241202 gjw ADD <PROVIDER> FOR <RANDOM_PARTITION> TO <RANDOMISE> EACH TIME.
+  randomly <- <RANDOM_PARTITION>
 
-  # TODO 20241202 gjw <MAYBE> IF <RANDOM_SEED> IS <EMPTY> WE <RANDOMISE> EACH TIME HERE.
-
-  if (! <RANDOM_PARTITION>) {
+  if (! randomly) {
     set.seed(<RANDOM_SEED>)
   }
 
@@ -177,16 +186,16 @@ if (!is.null(risk)) {
 # ensure feature names stored in `object` and `newdata` are the same.
 
 tcds <- tcds[tc, setdiff(vars, ignore)] %>%
-  mutate(across(where(is.character), as.factor))
+  dplyr::mutate(across(where(is.character), as.factor))
 
 trds <- tcds[tr, setdiff(vars, ignore)] %>%
-  mutate(across(where(is.character), as.factor))
+  dplyr::mutate(across(where(is.character), as.factor))
 
 tuds <- tcds[tu, setdiff(vars, ignore)] %>%
-  mutate(across(where(is.character), as.factor))
+  dplyr::mutate(across(where(is.character), as.factor))
 
 teds <- tcds[te, setdiff(vars, ignore)] %>%
-  mutate(across(where(is.character), as.factor))
+  dplyr::mutate(across(where(is.character), as.factor))
 
 # TODO 20250122 gjw REVIEW WHY IT IS NEEDED AND EXPLAIN IT.
 

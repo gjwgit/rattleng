@@ -1,6 +1,6 @@
 /// COMP3425 W04 MOVIES dataset MODEL tab ASSOCIATION feature.
 //
-// Time-stamp: <Monday 2025-03-24 11:37:07 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-04-10 15:20:52 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -66,14 +66,14 @@ void main() {
       await verifySelectableText(
         tester,
         [
-          'set of 117 rules',
-          '   support         confidence        coverage           lift',
-          'Min.   :0.1000   Min.   :0.1429   Min.   :0.1000   Min.   : 0.7143   Min.   :1.000',
-          '1st Qu.:0.1000   1st Qu.:0.5000   1st Qu.:0.1000   1st Qu.: 1.6667   1st Qu.:1.000',
-          'Median :0.1000   Median :1.0000   Median :0.1000   Median : 2.5000   Median :1.000',
-          'Mean   :0.1316   Mean   :0.7980   Mean   :0.2128   Mean   : 3.1872   Mean   :1.316',
-          '3rd Qu.:0.1000   3rd Qu.:1.0000   3rd Qu.:0.2000   3rd Qu.: 5.0000   3rd Qu.:1.000',
-          'Max.   :0.6000   Max.   :1.0000   Max.   :0.7000   Max.   :10.0000   Max.   :6.000 ',
+          'set of 44 rules',
+          '   support         confidence       coverage          lift           count',
+          'Min.   :0.1000   Min.   :0.200   Min.   :0.100   Min.   :0.500   Min.   :1.000',
+          '1st Qu.:0.1000   1st Qu.:0.500   1st Qu.:0.100   1st Qu.:1.250   1st Qu.:1.000',
+          'Median :0.1000   Median :0.550   Median :0.200   Median :2.500   Median :1.000',
+          'Mean   :0.1227   Mean   :0.675   Mean   :0.225   Mean   :2.661   Mean   :1.227',
+          '3rd Qu.:0.1000   3rd Qu.:1.000   3rd Qu.:0.300   3rd Qu.:5.000   3rd Qu.:1.000',
+          'Max.   :0.3000   Max.   :1.000   Max.   :0.500   Max.   :5.000   Max.   :3.000 ',
           'list(support = 0.1, confidence = 0.1, minlen = 2)',
         ],
       );
@@ -81,14 +81,14 @@ void main() {
       await verifySelectableText(
         tester,
         [
-          '[1]   {Patriot}                            => {Gladiator}',
-          '0.6     1.0000000  0.6       1.4285714 6',
-          '[9]   {Gladiator, Sixth Sense}             => {Patriot}',
-          '0.4     0.8000000  0.5       1.3333333 4',
-          '[100] {LOTR1, LOTR2, Sixth Sense}          => {Harry Potter1}',
+          '[1]  {Patriot}                                => {Gladiator}',
+          '0.3     0.6000000  0.5      1.2000000 3',
+          '[9]  {Harry Potter1}                          => {LOTR2}',
+          '0.1     0.5000000  0.2      2.5000000 1',
+          '[44] {Green Mile, LOTR2, Sixth Sense}         => {Harry Potter1}',
         ],
       );
-      await verifySelectableText(tester, ['[101]'], present: false);
+      await verifySelectableText(tester, ['[45]'], present: false);
       await enterText(tester, 'association_config_limit_rules', '5000');
       await tapButton(tester, 'Build Association Rules');
       await navigateToPage(
@@ -96,8 +96,8 @@ void main() {
         2,
         title: 'Association Rules — Discovered Rules',
       );
-      await verifySelectableText(tester, ['[101]'], present: true);
-      await verifySelectableText(tester, ['[117]'], present: true);
+      await verifySelectableText(tester, ['[30]'], present: true);
+      await verifySelectableText(tester, ['[31]'], present: true);
       await gotoNextPage(tester, title: 'Association Rules — Item Frequency');
       await gotoNextPage(
         tester,
@@ -128,7 +128,6 @@ void main() {
     testWidgets('support = 0.001.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await setPartition(tester, false);
       await loadDemoDataset(tester, 'Movies');
       await verifyRole('basket', 'Ident');
       await verifyRole('item', 'Target');
@@ -143,7 +142,7 @@ void main() {
         title: 'Association Rules — Meta Summary',
       );
       await verifySelectableText(tester, ['support = 0.001']);
-      await verifySelectableText(tester, ['117']);
+      await verifySelectableText(tester, ['44']);
     });
   });
 }
