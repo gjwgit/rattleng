@@ -86,7 +86,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     // Update "Keep in Sync" state.
 
     ref.read(keepInSyncProvider.notifier).state =
-        prefs.getBool('keepInSync') ?? true;
+        prefs.getBool('keepInSync') ?? ref.read(keepInSyncProvider);
 
     // Update "Session Control" state.
 

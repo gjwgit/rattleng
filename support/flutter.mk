@@ -31,6 +31,9 @@ flutter:
 
   docs	    Run `dart doc` to create documentation.
 
+  import_order      Run import order checking.
+  import_order_fix  Run import order fixing.
+
   fix             Run `dart fix --apply`.
   format          Run `dart format`.
   analyze         Run flutter analyze.
@@ -118,7 +121,7 @@ linux_config:
 	flutter config --enable-linux-desktop
 
 .PHONY: prep
-prep: analyze fix format ignore license todo
+prep: analyze fix import_order_fix format ignore license todo
 	@echo "ADVISORY: make tests docs"
 	@echo $(SEPARATOR)
 
@@ -162,19 +165,20 @@ analyze:
 .PHONY: ignore
 ignore:
 	@echo "Files that override lint checks with IGNORE:\n"
-	@-if rgrep -n ignore: lib; then exit 1; else exit 0; fi
+	@-if grep -r -n ignore: lib; then exit 1; else exit 0; fi
 	@echo $(SEPARATOR)
 
 .PHONY: todo
 todo:
 	@echo "Files that include TODO items to be resolved:\n"
-	@-if rgrep -n ' TODO ' lib; then exit 1; else exit 0; fi
+	@-if grep -r -n ' TODO ' lib; then exit 1; else exit 0; fi
 	@echo $(SEPARATOR)
 
 .PHONY: license
 license:
 	@echo "Files without a LICENSE:\n"
-	@-find lib -type f -name '*.dart' ! -exec grep -qE '^(/// .*|/// Copyright|/// Licensed)' {} \; -print | xargs printf "\t%s\n"
+	@-find lib -type f -not -name '*~' -not -name 'README*' \
+	! -exec grep -qE '^(/// .*|/// Copyright|/// Licensed)' {} \; -print | xargs printf "\t%s\n"
 	@echo $(SEPARATOR)
 
 .PHONY: riverpod
@@ -268,12 +272,10 @@ qtest:
 	fi; \
 	flutter test --dart-define=INTERACT=0 --device-id $$device_id --reporter failures-only integration_test/$*.dart 2>/dev/null
 
-
-.PHONY: qtest.tmp
-qtest.tmp: qtest.all
-
 .PHONY: qtest.all
 qtest.all:
+	@echo $(APP) `egrep '^version: ' pubspec.yaml`
+	@echo "flutter version:" `flutter --version | head -1 | cut -d ' ' -f 2`
 	make qtest > qtest_$(shell date +%Y%m%d%H%M%S).txt
 
 clean::
@@ -349,6 +351,18 @@ endif
 .PHONY: publish
 publish:
 	dart pub publish
+
+.PHONY: import_order
+import_order:
+	@echo "Dart: CHECK IMPORT ORDER"
+	dart run custom_lint
+	@echo $(SEPARATOR)
+
+.PHONY: import_order_fix
+import_order_fix:
+	@echo "Dart: FIX IMPORT ORDER"
+	dart run import_order_lint:fix_imports --project-name=rattle -r lib
+	@echo $(SEPARATOR)
 
 ### TODO THESE SHOULD BE CHECKED AND CLEANED UP
 
