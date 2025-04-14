@@ -36,6 +36,7 @@ import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/tree.dart';
 import 'package:rattle/r/extract_evaluate.dart';
+import 'package:rattle/utils/get_risk.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/multi_image_page.dart';
@@ -75,6 +76,10 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
 
     final content = rExtractEvaluate(stdout, datasetType, ref);
     final dtype = datasetType.toLowerCase();
+
+    // Get the risk variable setting to conditionally display charts.
+
+    String datasetRisk = getRisk(ref);
 
     // Process the content to ensure that we have the expected output to display
     // in Rattle and if so, add a new page to display the Error Matrix we have
@@ -162,6 +167,13 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     // ticked, we add the image file for display (gjw 20250309).
 
     for (var evalType in evaluationTypes) {
+      // Conditionally skip risk chart if datasetRisk is NULL or empty.
+
+      if (evalType == 'riskchart' &&
+          (datasetRisk == 'NULL' || datasetRisk.isEmpty)) {
+        continue;
+      }
+
       String prefix = 'evaluate';
 
       List<String> images = [];
