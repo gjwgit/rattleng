@@ -457,6 +457,7 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
 
             ''',
             child: VersionWidget(
+              version: _appVersion,
               changelogUrl: _changelogUrl,
               showDate: true,
               defaultDate: '20250101',
