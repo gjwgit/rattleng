@@ -444,24 +444,30 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
           // version visiable at all times so place it on the title bar. Users
           // have also noted it and seems useful to have it exposed.
 
-          MarkdownTooltip(
-            message: '''
+          // MarkdownTooltip(
+          //   message: '''
 
-            **Version:** ${_isLatest ? '''*Rattle* is regularly updated to bring you the best
-            experience for Data Science, AI and Machine Learning. The latest
-            version is always available from the
-            [Rattle](https://togaware.com/projects/rattle/) website. **Tap** on
-            the **Version** text here in the title bar to visit the *CHANGELOG*
-            in your browser and so see a list of all changes to Rattle.
-            ''' : '*A newer version is available!* Visit [Rattle](https://rattle.togaware.com) for instructions on updating your installation.'}
+          //   **Version:** ${_isLatest ? '''*Rattle* is regularly updated to bring you the best
+          //   experience for Data Science, AI and Machine Learning. The latest
+          //   version is always available from the
+          //   [Rattle](https://togaware.com/projects/rattle/) website. **Tap** on
+          //   the **Version** text here in the title bar to visit the *CHANGELOG*
+          //   in your browser and so see a list of all changes to Rattle.
+          //   ''' : '*A newer version is available!* Visit [Rattle](https://rattle.togaware.com) for instructions on updating your installation.'}
 
-            ''',
-            child: VersionWidget(
-              version: _appVersion,
-              changelogUrl: _changelogUrl,
-              showDate: true,
-              defaultDate: '20250101',
-            ),
+          //   ''',
+          //   child: VersionWidget(
+          //     version: _appVersion,
+          //     changelogUrl: _changelogUrl,
+          //     showDate: true,
+          //     defaultDate: '20250101',
+          //   ),
+          // ),
+          VersionWidget(
+            version: _appVersion,
+            changelogUrl: _changelogUrl,
+            showDate: true,
+            defaultDate: '20250101',
           ),
           const SizedBox(width: 50),
 
