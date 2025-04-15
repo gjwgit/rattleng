@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-12-20 08:17:01 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-04-15 14:56:30 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -89,6 +89,8 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           Visit the [Survival
           Guide](https://survivor.togaware.com/datascience/box-plot.html) and
           [ggplot2::geom_boxplot()](https://www.rdocumentation.org/packages/ggplot2/topics/geom_boxplot).
+
+          Asterisk is the **mean**. Horizontal line is the **median**.
 
               ''',
             path: image,
