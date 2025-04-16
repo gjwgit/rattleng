@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2025-01-29 14:33:09 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-04-16 12:13:07 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -146,9 +146,8 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
             Generated using
             [rattle::printRandomForest()](https://www.rdocumentation.org/packages/rattle/topics/printRandomForest).
 
-
             ''',
-            content: '\n$content',
+            content: content,
           ),
         );
       }
@@ -168,7 +167,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
             [randomForest::importance()](https://www.rdocumentation.org/packages/randomForest/topics/importance).
 
             ''',
-            content: '\n$content',
+            content: content,
           ),
         );
       }
@@ -241,7 +240,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
             Built using `cforest()`.
 
             ''',
-            content: '\n$content',
+            content: content,
           ),
         );
       }
@@ -263,7 +262,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
             Built using `party::prettytree()`.
 
             ''',
-            content: '\n$rulesContent',
+            content: rulesContent,
           ),
         );
       }
@@ -285,7 +284,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
             Built using `verification::cforest()`.
 
             ''',
-            content: '\n$content',
+            content: content,
           ),
         );
       }
