@@ -638,11 +638,11 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
             choice == Role.weight) {
           currentRoles.forEach((key, value) {
             if (value == choice) {
-              ref.read(rolesProvider.notifier).state[key] = Role.input;
+              ref.watch(rolesProvider.notifier).state[key] = Role.input;
             }
           });
         }
-        ref.read(rolesProvider.notifier).state[columnName] = choice;
+        ref.watch(rolesProvider.notifier).state[columnName] = choice;
         debugText('  $choice', columnName);
       }
     });
