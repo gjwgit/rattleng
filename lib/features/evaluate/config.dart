@@ -39,6 +39,7 @@ import 'package:rattle/providers/tree.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/check_function_executed.dart';
 import 'package:rattle/utils/check_target_numeric.dart';
+import 'package:rattle/utils/get_risk.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
@@ -319,7 +320,6 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   bool conditionalForestExecuted =
                       ref.watch(conditionalForestEvaluateProvider);
                   bool ctreeExecuted = ref.watch(cTreeEvaluateProvider);
-                  String datasetSplitType = ref.watch(datasetTypeProvider);
                   bool forestTicked = ref.watch(forestEvaluateProvider);
                   bool linearExecuted = ref.watch(linearEvaluateProvider);
                   bool nnetExecuted = ref.watch(nnetEvaluateProvider);
@@ -331,6 +331,12 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   bool svmExecuted = ref.watch(svmEvaluateProvider);
                   bool treeExecuted = ref.watch(treeEvaluateProvider);
                   bool xgBoostExecuted = ref.watch(xgBoostEvaluateProvider);
+
+                  String datasetSplitType = ref.watch(datasetTypeProvider);
+
+                  // [datasetRisk] can be 'NULL' if the risk variable is not set.
+
+                  String datasetRisk = getRisk(ref);
 
                   // 20241220 gjw Identify constants corresponding to the various
                   // evaluation commands for each model to generate the required
@@ -362,9 +368,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   // Execute evaluation for rpart model if it was executed and
                   // treeExecuted is true.
 
+                  List<String> rpartParams =
+                      datasetRisk == 'NULL' || datasetRisk.isEmpty
+                          ? [er, em, ro, hd, ero]
+                          : [er, em, ro, erc, hd, ero];
+
                   await executeEvaluation(
                     executed: rpartExecuted && treeExecuted,
-                    parameters: [er, em, ro, erc, hd, ero],
+                    parameters: rpartParams,
                     datasetSplitType: datasetSplitType,
                     context: context,
                     ref: ref,
@@ -373,9 +384,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   // Execute evaluation for ctree model if it was executed and
                   // treeExecuted is true.
 
+                  List<String> ctreeParams =
+                      datasetRisk == 'NULL' || datasetRisk.isEmpty
+                          ? [ec, em, ro, hd, ero]
+                          : [ec, em, ro, erc, hd, ero];
+
                   await executeEvaluation(
                     executed: ctreeExecuted && treeExecuted,
-                    parameters: [ec, em, ro, erc, hd, ero],
+                    parameters: ctreeParams,
                     datasetSplitType: datasetSplitType,
                     context: context,
                     ref: ref,
@@ -384,9 +400,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   // Execute evaluation for Random Forest model if executed and
                   // forest box is ticked.
 
+                  List<String> rforestParams =
+                      datasetRisk == 'NULL' || datasetRisk.isEmpty
+                          ? [erf, em, ro, hd, ero]
+                          : [erf, em, ro, erc, hd, ero];
+
                   await executeEvaluation(
                     executed: randomForestExecuted && forestTicked,
-                    parameters: [erf, em, ro, erc, hd, ero],
+                    parameters: rforestParams,
                     datasetSplitType: datasetSplitType,
                     context: context,
                     ref: ref,
@@ -395,9 +416,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   // Execute evaluation for Conditional Forest model if executed
                   // and forest box is ticked.
 
+                  List<String> cforestParams =
+                      datasetRisk == 'NULL' || datasetRisk.isEmpty
+                          ? [ecf, em, ro, hd, ero]
+                          : [ecf, em, ro, erc, hd, ero];
+
                   await executeEvaluation(
                     executed: conditionalForestExecuted && forestTicked,
-                    parameters: [ecf, em, ro, erc, hd, ero],
+                    parameters: cforestParams,
                     datasetSplitType: datasetSplitType,
                     context: context,
                     ref: ref,
@@ -406,9 +432,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   // Execute evaluation for AdaBoost model if executed and boost
                   // box is ticked.
 
+                  List<String> adaParams =
+                      datasetRisk == 'NULL' || datasetRisk.isEmpty
+                          ? [ea, em, ro, hd, ero]
+                          : [ea, em, ro, erc, hd, ero];
+
                   await executeEvaluation(
                     executed: adaBoostExecuted && boostTicked,
-                    parameters: [ea, em, ro, erc, hd, ero],
+                    parameters: adaParams,
                     datasetSplitType: datasetSplitType,
                     context: context,
                     ref: ref,
@@ -417,9 +448,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   // Execute evaluation for XGBoost model if executed and boost
                   // box is ticked.
 
+                  List<String> xgbParams =
+                      datasetRisk == 'NULL' || datasetRisk.isEmpty
+                          ? [ex, em, ro, hd, ero]
+                          : [ex, em, ro, erc, hd, ero];
+
                   await executeEvaluation(
                     executed: xgBoostExecuted && boostTicked,
-                    parameters: [ex, em, ro, erc, hd, ero],
+                    parameters: xgbParams,
                     datasetSplitType: datasetSplitType,
                     context: context,
                     ref: ref,
@@ -427,9 +463,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                   // Execute evaluation for SVM model if executed.
 
+                  List<String> svmParams =
+                      datasetRisk == 'NULL' || datasetRisk.isEmpty
+                          ? [es, em, ro, hd, ero]
+                          : [es, em, ro, erc, hd, ero];
+
                   await executeEvaluation(
                     executed: svmExecuted,
-                    parameters: [es, em, ro, erc, hd, ero],
+                    parameters: svmParams,
                     datasetSplitType: datasetSplitType,
                     context: context,
                     ref: ref,
@@ -437,9 +478,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                   // Execute evaluation for linear model if executed.
 
+                  List<String> linearParams =
+                      datasetRisk == 'NULL' || datasetRisk.isEmpty
+                          ? [el, em, ro, hd, ero]
+                          : [el, em, ro, erc, hd, ero];
+
                   await executeEvaluation(
                     executed: linearExecuted,
-                    parameters: [el, em, ro, erc, hd, ero],
+                    parameters: linearParams,
                     datasetSplitType: datasetSplitType,
                     context: context,
                     ref: ref,
@@ -448,9 +494,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   // Execute evaluation for Neural Network model if executed and
                   // neural network box is ticked.
 
+                  List<String> nnetParams =
+                      datasetRisk == 'NULL' || datasetRisk.isEmpty
+                          ? [en, em, ro, hd, ero]
+                          : [en, em, ro, erc, hd, ero];
+
                   await executeEvaluation(
                     executed: neuralTicked && nnetExecuted,
-                    parameters: [en, em, ro, erc, hd, ero],
+                    parameters: nnetParams,
                     datasetSplitType: datasetSplitType,
                     context: context,
                     ref: ref,
@@ -459,9 +510,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   // Execute evaluation for Neural Net model if executed and
                   // neural network box is ticked.
 
+                  List<String> neuralNetParams =
+                      datasetRisk == 'NULL' || datasetRisk.isEmpty
+                          ? [ent, em, ro, hd, ero]
+                          : [ent, em, ro, erc, hd, ero];
+
                   await executeEvaluation(
                     executed: neuralTicked && neuralNetExecuted,
-                    parameters: [ent, em, ro, erc, hd, ero],
+                    parameters: neuralNetParams,
                     datasetSplitType: datasetSplitType,
                     context: context,
                     ref: ref,
