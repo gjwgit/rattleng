@@ -75,6 +75,7 @@ ignore      <- <IGNORE_VARS>
 # Record the number of observations.
 
 nobs   <- nrow(ds)
+nobs
 
 # Note the variable names.
 

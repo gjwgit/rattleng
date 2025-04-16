@@ -33,6 +33,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/settings.dart';
+import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/number_field.dart';
 
@@ -97,6 +99,22 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
     String selectedLink = ref.watch(linkClusterProvider);
     String type = ref.watch(typeClusterProvider);
 
+    String stdout = ref.watch(stdoutProvider);
+   
+    String nobs = rExtract(stdout, '> nobs').split(' ').last;
+    
+    // Convert nobs to integer if possible.
+
+    int? nobsInt;
+    if (nobs.isNotEmpty) {
+      try {
+        nobsInt = int.parse(nobs);
+      } catch (e) {
+        // Keep nobsInt as null if parsing fails.
+      }
+    }
+
+
     return Column(
       children: [
         configTopGap,
@@ -117,7 +135,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               ''',
               controller: _clusterController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
-              validator: (value) => validateInteger(value, min: 1),
+              validator: (value) => validateInteger(value, min: 1, max: nobsInt != null && nobsInt > 1 ? nobsInt : null),
               stateProvider: numberClusterProvider,
             ),
             NumberField(
