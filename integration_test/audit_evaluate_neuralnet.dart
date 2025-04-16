@@ -43,7 +43,7 @@ import 'utils/set_text_field.dart';
 import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
 import 'utils/tap_popup.dart';
-import 'utils/verify_role.dart';
+import 'utils/verify_dataset_role.dart';
 import 'utils/verify_selectable_text.dart';
 
 /// Specific variables with ROLE set to 'Ignore'.
@@ -86,11 +86,11 @@ void main() {
         await setDatasetRole(tester, v, 'Ignore');
       }
       for (final v in inputVars) {
-        await verifyRole(v, 'Input');
+        await verifyDatasetRole(v, 'Input');
       }
       await setDatasetRole(tester, riskVar, 'Risk');
-      await verifyRole(targetVar, 'Target');
-      await verifyRole('id', 'Ident');
+      await verifyDatasetRole(targetVar, 'Target');
+      await verifyDatasetRole('id', 'Ident');
 
       // TRANSFORM -> RESCALE
 
