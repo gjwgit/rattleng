@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-12-18 08:08:53 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-04-17 09:10:10 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -85,6 +85,10 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
 
     String stdout = ref.watch(stdoutProvider);
 
+    // Store the path to the next image to display.
+
+    String image = '';
+
     List<Widget> pages = [
       showMarkdownFile(
         context,
@@ -118,14 +122,14 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
       }
     }
 
-    String discriminantImage = switch (type) {
+    image = switch (type) {
       'KMeans' => '$tempDir/model_cluster_discriminant.svg',
       'Ewkm' => '$tempDir/model_cluster_ewkm.svg',
       'Hierarchical' => '$tempDir/model_cluster_hierarchical.svg',
       _ => '',
     };
 
-    if (imageExists(discriminantImage)) {
+    if (imageExists(image)) {
       pages.add(
         ImagePage(
           title: '''
@@ -136,14 +140,14 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
           [$functionPackage::$functionName()]($functionUrl).
 
           ''',
-          path: discriminantImage,
+          path: image,
         ),
       );
     }
 
     if (type == 'Ewkm') {
-      String weightImage = '$tempDir/model_cluster_ewkm_weights.svg';
-      if (imageExists(weightImage)) {
+      image = '$tempDir/model_cluster_ewkm_weights.svg';
+      if (imageExists(image)) {
         pages.add(
           ImagePage(
             title: '''
@@ -154,13 +158,13 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
           [$functionPackage::$functionName()]($functionUrl).
 
           ''',
-            path: weightImage,
+            path: image,
           ),
         );
       }
     }
 
-    String plotPairImage = switch (type) {
+    image = switch (type) {
       'KMeans' => '$tempDir/model_cluster_pairs_KMeans.svg',
       'Ewkm' => '$tempDir/model_cluster_pairs_Ewkm.svg',
       'Hierarchical' => '$tempDir/model_cluster_pairs_Hierarchical.svg',
@@ -168,7 +172,7 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
       _ => '',
     };
 
-    if (imageExists(plotPairImage)) {
+    if (imageExists(image)) {
       pages.add(
         ImagePage(
           title: '''
@@ -179,7 +183,7 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
           [$functionPackage::$functionName()]($functionUrl).
 
           ''',
-          path: plotPairImage,
+          path: image,
         ),
       );
     }
