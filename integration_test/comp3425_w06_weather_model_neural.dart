@@ -39,8 +39,8 @@ import 'utils/set_selected_variable.dart';
 import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
 import 'utils/tap_popup.dart';
-import 'utils/verify_popup.dart';
 import 'utils/verify_dataset_role.dart';
+import 'utils/verify_popup.dart';
 
 /// Specific variables with ROLE set to 'Ignore'.
 
