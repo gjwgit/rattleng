@@ -40,9 +40,9 @@ import 'utils/scroll_down.dart';
 import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
 import 'utils/unify_on.dart';
+import 'utils/verify_dataset_role.dart';
 import 'utils/verify_imputed_variable.dart';
 import 'utils/verify_page.dart';
-import 'utils/verify_dataset_role.dart';
 import 'utils/verify_selectable_text.dart';
 
 void main() {
