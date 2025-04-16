@@ -37,7 +37,7 @@ import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/set_dataset_role.dart';
 import 'utils/tap_button.dart';
-import 'utils/verify_role.dart';
+import 'utils/verify_dataset_role.dart';
 import 'utils/verify_selectable_text.dart';
 
 void main() {
@@ -50,7 +50,7 @@ void main() {
       await tester.pump(interact);
 
       await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
-      await verifyRole('gender', 'Target');
+      await verifyDatasetRole('gender', 'Target');
       await navigateToTab(tester, 'Explore');
       await navigateToFeature(tester, 'Correlation');
       await tapButton(tester, 'Perform Correlation Analysis');

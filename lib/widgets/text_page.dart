@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Sunday 2025-03-30 07:34:59 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-04-16 12:11:41 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -131,6 +131,8 @@ class TextPage extends StatelessWidget {
               ),
             ],
           ),
+
+          configRowGap,
 
           Expanded(
             child: Scrollbar(

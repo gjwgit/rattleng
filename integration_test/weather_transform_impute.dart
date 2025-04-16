@@ -42,7 +42,7 @@ import 'utils/tap_chip.dart';
 import 'utils/unify_on.dart';
 import 'utils/verify_imputed_variable.dart';
 import 'utils/verify_page.dart';
-import 'utils/verify_role.dart';
+import 'utils/verify_dataset_role.dart';
 import 'utils/verify_selectable_text.dart';
 
 void main() {
@@ -146,20 +146,20 @@ void main() {
 
       await verifyImputedVariable(tester, 'IMN_rainfall');
       await checkVariableNotMissing(tester, 'IMN_rainfall');
-      await verifyRole('IMN_rainfall', 'Input');
-      await verifyRole('rainfall', 'Ignore');
+      await verifyDatasetRole('IMN_rainfall', 'Input');
+      await verifyDatasetRole('rainfall', 'Ignore');
 
       // Verify that the imputed variable 'IMO_rainfall' is present in the dataset.
 
       await verifyImputedVariable(tester, 'IMO_rainfall');
       await checkVariableNotMissing(tester, 'IMO_rainfall');
-      await verifyRole('IMO_rainfall', 'Input');
+      await verifyDatasetRole('IMO_rainfall', 'Input');
 
       // Verify that the imputed variable 'IMD_rainfall' is present in the dataset.
 
       await verifyImputedVariable(tester, 'IMD_rainfall');
       await checkVariableNotMissing(tester, 'IMD_rainfall');
-      await verifyRole('IMD_rainfall', 'Input');
+      await verifyDatasetRole('IMD_rainfall', 'Input');
     });
   });
 }
