@@ -62,7 +62,6 @@ import 'package:rattle/tabs/explore.dart';
 import 'package:rattle/tabs/model.dart';
 import 'package:rattle/tabs/script/tab.dart';
 import 'package:rattle/tabs/transform.dart';
-import 'package:rattle/utils/compare_varsions.dart';
 import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/reset.dart';
 import 'package:rattle/utils/show_dataset_alert_dialog.dart';
