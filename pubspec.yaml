@@ -1,7 +1,7 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 6.4.64+214
+version: 6.4.65+215
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
@@ -61,6 +61,7 @@ dependencies:
   shared_preferences: ^2.3.3
   universal_io: ^2.2.2
   url_launcher: ^6.3.0
+  version_widget: ^0.0.4
   window_manager: ^0.4.3
   xterm: ^4.0.0
   yaml: ^3.1.3
