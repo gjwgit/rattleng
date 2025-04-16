@@ -133,3 +133,8 @@ plot(model_hclust,
      ylab = "Height")
 rect.hclust(model_hclust, k=<CLUSTER_NUM>, border="red")
 dev.off()
+
+# Define the cluster assignments for the hierarchical clustering
+# This is needed for the pairs plot
+
+cluster_assignments <- cutree(model_hclust, k = <CLUSTER_NUM>)

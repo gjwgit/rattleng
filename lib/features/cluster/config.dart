@@ -105,15 +105,20 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                 String ew = 'model_build_ewkm';
                 String hi = 'model_build_hclust';
                 String bi = 'model_build_bicluster';
+                String pp = 'model_plot_cluster_pairs';
 
                 if (type == 'KMeans') {
-                  if (context.mounted) await rSource(context, ref, [mt, km]);
+                  if (context.mounted)
+                    await rSource(context, ref, [mt, km, pp]);
                 } else if (type == 'Ewkm') {
-                  if (context.mounted) await rSource(context, ref, [mt, ew]);
+                  if (context.mounted)
+                    await rSource(context, ref, [mt, ew, pp]);
                 } else if (type == 'Hierarchical') {
-                  if (context.mounted) await rSource(context, ref, [mt, hi]);
+                  if (context.mounted)
+                    await rSource(context, ref, [mt, hi, pp]);
                 } else if (type == 'BiCluster') {
-                  if (context.mounted) await rSource(context, ref, [mt, bi]);
+                  if (context.mounted)
+                    await rSource(context, ref, [mt, bi, pp]);
                 }
 
                 await ref.read(clusterPageControllerProvider).animateToPage(
