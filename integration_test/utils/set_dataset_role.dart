@@ -1,7 +1,6 @@
-/// Function goes to the DATASET tab and then the ROLES page and
-/// sets the given ROLE for the given VARIABLE.
+/// On  DATASET tab ROLES page set ROLE for given VARIABLE.
 //
-// Time-stamp: <Saturday 2024-12-28 06:23:43 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-04-16 12:00:03 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///

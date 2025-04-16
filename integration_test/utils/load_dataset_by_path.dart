@@ -1,6 +1,6 @@
 /// Load a dataset from its path.
 //
-// Time-stamp: <Thursday 2025-01-23 12:27:41 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-04-16 12:19:08 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2025, Togaware Pty Ltd
 ///
@@ -30,11 +30,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'delays.dart';
+import 'set_default_setting.dart';
 
 Future<void> loadDatasetByPath(
   WidgetTester tester,
   String path,
 ) async {
+  await setDefaultSetting(tester);
+
   // Locate the TextField where the file path is input.
 
   final filePathField = find.byType(TextField);
