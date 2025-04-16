@@ -588,6 +588,8 @@ Future<void> rSource(
   code =
       code.replaceAll('<CLUSTER_RESCALE>', clusterReScale ? 'TRUE' : 'FALSE');
   code = code.replaceAll('<CLUSTER_TYPE>', '"${clusterType.toString()}"');
+  code = code.replaceAll('<CLUSTER_TYPE_STR>', clusterType.toString());
+
   code =
       code.replaceAll('<CLUSTER_DISTANCE>', '"${clusterDistance.toString()}"');
   code = code.replaceAll('<CLUSTER_LINK>', '"${clusterLink.toString()}"');

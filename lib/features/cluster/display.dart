@@ -160,16 +160,18 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
       }
     }
 
-    if (type == 'KMeans') {
-      String plotPairImage = switch (type) {
-        'KMeans' => '$tempDir/model_cluster_pairs.svg',
-        _ => '',
-      };
+    String plotPairImage = switch (type) {
+      'KMeans' => '$tempDir/model_cluster_pairs_KMeans.svg',
+      'Ewkm' => '$tempDir/model_cluster_pairs_Ewkm.svg',
+      'Hierarchical' => '$tempDir/model_cluster_pairs_Hierarchical.svg',
+      'BiCluster' => '$tempDir/model_cluster_pairs_BiCluster.svg',
+      _ => '',
+    };
 
-      if (imageExists(plotPairImage)) {
-        pages.add(
-          ImagePage(
-            title: '''
+    if (imageExists(plotPairImage)) {
+      pages.add(
+        ImagePage(
+          title: '''
 
           # Plot Pair - Visual
 
@@ -177,10 +179,9 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
           [$functionPackage::$functionName()]($functionUrl).
 
           ''',
-            path: plotPairImage,
-          ),
-        );
-      }
+          path: plotPairImage,
+        ),
+      );
     }
 
     return PageViewer(
