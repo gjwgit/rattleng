@@ -31,34 +31,6 @@
 
 cluster_type <- '<CLUSTER_TYPE_STR>'
 
-# Extract the corresponding cluster assignments. (gjw 20250417)
-
-if (cluster_type == 'KMeans') {
-  cluster_assignments <- model_kmeans$cluster
-} else if (cluster_type == 'Ewkm') {
-  cluster_assignments <- model_ewkm$cluster
-} else if (cluster_type == 'Hierarchical') {
-  # For hierarchical clustering, we need to check if cluster assignments exist.
-
-  if (!exists("cluster_assignments")) {
-    # If cluster_assignments don't exist, cut the tree to get clusters.
-
-    cluster_assignments <- cutree(model_hclust, k = <CLUSTER_NUM>)
-  }
-} else if (cluster_type == 'BiCluster') {
-  # BiCluster does not support pairs plot.
-
-  cat("BiCluster does not support pairs plot.\n")
-
-  return(NULL)
-} else {
-  # No recognized clustering model found.
-
-  cat("Error: No clustering model found. Please run a clustering algorithm first.\n")
-
-  return(NULL)
-}
-
 # Select a sample from the dataset to make the plot more readable.
 # Use a fixed seed for reproducibility.
 

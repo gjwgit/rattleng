@@ -134,7 +134,6 @@ plot(model_hclust,
 rect.hclust(model_hclust, k=<CLUSTER_NUM>, border="red")
 dev.off()
 
-# Define the cluster assignments for the hierarchical clustering
-# This is needed for the pairs plot. (zh 20250417)
+# Extract the corresponding cluster assignments.
 
 cluster_assignments <- cutree(model_hclust, k=<CLUSTER_NUM>)
