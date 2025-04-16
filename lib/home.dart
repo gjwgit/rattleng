@@ -180,7 +180,6 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
   var _appName = '';
   var _appVersion = '';
-  var _isLatest = true;
   final String _changelogUrl =
       'https://github.com/gjwgit/rattleng/blob/dev/CHANGELOG.md';
 
@@ -222,15 +221,6 @@ class RattleHomeState extends ConsumerState<RattleHome>
         final latestVersion =
             yamlContent['version'].toString().split('+').first;
         debugText('  VERSION', 'Available $latestVersion');
-
-        // 20250129 gjw Compare with the current version and we will indicate
-        // through the UI if it is not up-to-date.
-
-        if (compareVersions(currentVersion, latestVersion) < 0) {
-          setState(() {
-            _isLatest = false;
-          });
-        }
       } else {
         debugPrint('Failed to fetch pubspec.yaml: ${response.statusCode}');
       }
