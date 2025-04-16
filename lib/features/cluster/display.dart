@@ -160,6 +160,29 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
       }
     }
 
+    if (type == 'KMeans') {
+      String plotPairImage = switch (type) {
+        'KMeans' => '$tempDir/model_cluster_pairs.svg',
+        _ => '',
+      };
+
+      if (imageExists(plotPairImage)) {
+        pages.add(
+          ImagePage(
+            title: '''
+
+          # Plot Pair - Visual
+
+          Visit
+          [$functionPackage::$functionName()]($functionUrl).
+
+          ''',
+            path: plotPairImage,
+          ),
+        );
+      }
+    }
+
     return PageViewer(
       pageController: pageController,
       pages: pages,

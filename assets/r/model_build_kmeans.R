@@ -123,3 +123,34 @@ tds_matrix <- as.matrix(tds)
 cluster::clusplot(tds_matrix, model_kmeans$cluster, color=TRUE, shade=TRUE,
                   labels=2, lines=0, main='Discriminant Coordinates Plot')
 dev.off()
+
+# Generate a simple scatterplot matrix to visualize the clustering results.
+# This follows the reference code approach.
+
+svg("<TEMPDIR>/model_cluster_pairs.svg")
+
+# Select a sample from the dataset to make the plot more readable.
+# Use a fixed seed for reproducibility.
+
+set.seed(<RANDOM_SEED>)
+smpl <- sample(nrow(tds))
+
+# Keep just the first 5 variables for the plot.
+
+vars <- 1:min(5, ncol(tds))
+
+# Generate a proper scatterplot matrix showing pairwise relationships.
+# This creates a grid of plots like the example image.
+
+pairs(tds[smpl, vars], 
+      col=model_kmeans$cluster[smpl],
+      main="KMeans Cluster Visualization",
+      pch=20,    # Use small filled circles for points
+      cex=0.6)   # Make points smaller for clearer visualization
+
+# Add a subtitle with timestamp.
+
+mtext(paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]),
+      side=1, line=4, cex=0.8)
+
+dev.off()
