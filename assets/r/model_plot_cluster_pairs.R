@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2025-04-15 15:21:42 +1000 Graham Williams>
+# Time-stamp: <Thursday 2025-04-17 08:58:50 +1000 Graham Williams>
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -24,12 +24,14 @@
 #
 # <TIMESTAMP>
 #
-# This script generates a scatterplot matrix (pairs plot) for any clustering model.
-# It works with KMeans, EWKM, Hierarchical, and BiCluster models.
+# This script generates a scatterplot matrix (pairs plot) for any
+# clustering model.  It works with KMeans, EWKM, Hierarchical, and
+# BiCluster models. We first identify the type of cluster we want a
+# pairs plot for. (zh 20250417)
 
 cluster_type <- '<CLUSTER_TYPE_STR>'
 
-# Determine which model type we're dealing with and extract the cluster assignments.
+# Extract the corresponding cluster assignments. (gjw 20250417)
 
 if (cluster_type == 'KMeans') {
   cluster_assignments <- model_kmeans$cluster
@@ -76,7 +78,7 @@ plot_title <- paste(cluster_type, "Cluster Visualization")
 
 # Generate the scatterplot matrix.
 
-pairs(tds[smpl, vars], 
+pairs(tds[smpl, vars],
       col = cluster_assignments[smpl],
       main = plot_title,
       pch = 20,  # Use small filled circles for points
