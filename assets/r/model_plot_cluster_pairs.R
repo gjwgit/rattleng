@@ -44,9 +44,11 @@ if (cluster_type == 'KMeans') {
     cluster_assignments <- cutree(model_hclust, k = <CLUSTER_NUM>)
   }
 } else if (cluster_type == 'BiCluster') {
-  # BiCluster requires special handling for cluster assignments.
+  # BiCluster does not support pairs plot.
 
-  cluster_assignments <- model_bicluster$rowxnum[,1]
+  cat("BiCluster does not support pairs plot.\n")
+
+  return(NULL)
 } else {
   # No recognized clustering model found.
 

@@ -117,8 +117,7 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                   if (context.mounted)
                     await rSource(context, ref, [mt, hi, pp]);
                 } else if (type == 'BiCluster') {
-                  if (context.mounted)
-                    await rSource(context, ref, [mt, bi, pp]);
+                  if (context.mounted) await rSource(context, ref, [mt, bi]);
                 }
 
                 await ref.read(clusterPageControllerProvider).animateToPage(
