@@ -40,7 +40,7 @@ import 'utils/navigate_to_tab.dart';
 import 'utils/set_dataset_role.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
-import 'utils/verify_role.dart';
+import 'utils/verify_dataset_role.dart';
 import 'utils/verify_selectable_text.dart';
 
 /// List of specific variables that should have their role automatically set to
@@ -76,10 +76,10 @@ void main() {
       await setDatasetRole(tester, 'smoking_status', 'Target');
       // 20250206 gjw gender is the default Target but after setting Target above
       // it should now be Input.
-      await verifyRole('gender', 'Input');
-      await verifyRole('rec_id', 'Ident');
-      await verifyRole('ssn', 'Ident');
-      await verifyRole('medicare_number', 'Ident');
+      await verifyDatasetRole('gender', 'Input');
+      await verifyDatasetRole('rec_id', 'Ident');
+      await verifyDatasetRole('ssn', 'Ident');
+      await verifyDatasetRole('medicare_number', 'Ident');
       for (final v in varsToIgnore) {
         await setDatasetRole(tester, v, 'Ignore');
       }
