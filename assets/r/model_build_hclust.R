@@ -140,3 +140,5 @@ dev.off()
 # The cutree function is used to cut the dendrogram at a specified number of clusters.
 
 cluster_assignments <- cutree(model_hclust, k=<CLUSTER_NUM>)
+
+pair_file <- "model_cluster_pairs_hierarchical.svg"

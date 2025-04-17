@@ -126,3 +126,5 @@ dev.off()
 # Extract the corresponding cluster assignments.
 
 cluster_assignments <- model_ewkm$cluster
+
+pair_file <- "model_cluster_pairs_ewkm.svg"
