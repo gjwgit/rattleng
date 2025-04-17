@@ -34,7 +34,7 @@ import 'package:rattle/main.dart' as app;
 
 import 'utils/load_dataset_by_path.dart';
 import 'utils/set_dataset_role.dart';
-import 'utils/verify_role.dart';
+import 'utils/verify_dataset_role.dart';
 
 /// Specific variables with ROLE set to 'Ignore'.
 
@@ -62,15 +62,15 @@ void main() {
     app.main();
     await tester.pumpAndSettle();
     await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
-    verifyRole('rec_id', 'Ident');
-    verifyRole('ssn', 'Ident');
-    verifyRole('gender', 'Target');
+    verifyDatasetRole('rec_id', 'Ident');
+    verifyDatasetRole('ssn', 'Ident');
+    verifyDatasetRole('gender', 'Target');
     for (final v in varsToIgnore) {
       await setDatasetRole(tester, v, 'Ignore');
     }
     final random = Random();
     String randomItem = varsToIgnore[random.nextInt(varsToIgnore.length)];
-    verifyRole(randomItem, 'Ignore');
-    verifyRole('gender', 'Target');
+    verifyDatasetRole(randomItem, 'Ignore');
+    verifyDatasetRole('gender', 'Target');
   });
 }

@@ -40,6 +40,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:version_widget/version_widget.dart';
 import 'package:yaml/yaml.dart';
 
 import 'package:rattle/constants/app.dart';
@@ -61,7 +62,6 @@ import 'package:rattle/tabs/explore.dart';
 import 'package:rattle/tabs/model.dart';
 import 'package:rattle/tabs/script/tab.dart';
 import 'package:rattle/tabs/transform.dart';
-import 'package:rattle/utils/compare_varsions.dart';
 import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/reset.dart';
 import 'package:rattle/utils/show_dataset_alert_dialog.dart';
@@ -175,11 +175,10 @@ class RattleHomeState extends ConsumerState<RattleHome>
   late TabController _tabController;
 
   // We will populate the app name and version.
+  // Keep the following variables for the about popup.
 
   var _appName = '';
   var _appVersion = '';
-  var _appDate = '';
-  var _isLatest = true;
   final String _changelogUrl =
       'https://github.com/gjwgit/rattleng/blob/dev/CHANGELOG.md';
 
@@ -221,15 +220,6 @@ class RattleHomeState extends ConsumerState<RattleHome>
         final latestVersion =
             yamlContent['version'].toString().split('+').first;
         debugText('  VERSION', 'Available $latestVersion');
-
-        // 20250129 gjw Compare with the current version and we will indicate
-        // through the UI if it is not up-to-date.
-
-        if (compareVersions(currentVersion, latestVersion) < 0) {
-          setState(() {
-            _isLatest = false;
-          });
-        }
       } else {
         debugPrint('Failed to fetch pubspec.yaml: ${response.statusCode}');
       }
@@ -267,31 +257,17 @@ class RattleHomeState extends ConsumerState<RattleHome>
     final prefs = await SharedPreferences.getInstance();
     final savedVersion = prefs.getString('version') ?? '';
 
-    // Extract date from remote CHANGELOG.md in _changelogUrl
-    //- first date in [6.4.0 20250120 gjw] format : bracketed
-    // by square brackets.
-
-    final response = await http.get(Uri.parse(_changelogUrl));
-    final content = response.body;
-    String currentDate = '20250101'; // Default date
-    final match = RegExp(r'\[[\d.]+ (\d{8})').firstMatch(content);
-    if (match != null) {
-      currentDate = match.group(1)!;
-      debugText('  CHANGELOG', currentDate);
-    }
-
     setState(() {
+      // Set the app name and version from package_info_plus.
+
       _appName = packageInfo.packageName;
       _appVersion = packageInfo.version;
-      _appDate =
-          '${currentDate.substring(6, 8)} ${months[int.parse(currentDate.substring(4, 6)) - 1]} ${currentDate.substring(0, 4)}';
     });
 
     // Update saved version/date if version changed.
 
     if (savedVersion != _appVersion) {
       await prefs.setString('version', _appVersion);
-      await prefs.setString('version_date', currentDate);
     }
 
     checkForUpdate(_appVersion);
@@ -452,54 +428,28 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
         // Deploy the buttons aligned to the top right for actions.
 
         actions: [
-          // 20250113 gjw The version number is reported in the About popup but
-          // for screenshots, during development it is useful to have the
-          // version visiable at all times so place it on the title bar. Users
-          // have also noted it and seems useful to have it exposed.
-
-          MarkdownTooltip(
-            message: '''
-
-            **Version:** ${_isLatest ? '''*Rattle* is regularly updated to bring you the best
+          VersionWidget(
+            version: _appVersion,
+            changelogUrl: _changelogUrl,
+            showDate: true,
+            defaultDate: '20250101',
+            isLatestTooltip: '''
+            
+            *Rattle* is regularly updated to bring you the best
             experience for Data Science, AI and Machine Learning. The latest
             version is always available from the
             [Rattle](https://togaware.com/projects/rattle/) website. **Tap** on
             the **Version** text here in the title bar to visit the *CHANGELOG*
             in your browser and so see a list of all changes to Rattle.
-            ''' : '*A newer version is available!* Visit [Rattle](https://rattle.togaware.com) for instructions on updating your installation.'}
+
             ''',
-            child: GestureDetector(
-              onTap: () async {
-                // 20250107 gjw Always go to the CHANGELOG irrespective of
-                // latest version or not. That is where information about the
-                // version comes from. The original alternative was to go to the
-                // Rattle page if a new release is available, presumably to see
-                // the install instructions. I think it makes more sense for the
-                // user to see what has changed.
+            notLatestTooltip: '''
 
-                final Uri url = Uri.parse(_changelogUrl);
-
-                if (await canLaunchUrl(url)) {
-                  await launchUrl(url);
-                } else {
-                  debugPrint('Could not launch $_changelogUrl');
-                }
-              },
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: Text(
-                  // Only diplay the version string if we have a version from
-                  // the Internet. If we are not connected then simply display
-                  // nothing! (gjw 20250322)
-                  _appVersion.isEmpty ? '' : 'Version $_appVersion - $_appDate',
-                  style: TextStyle(
-                    color: _isLatest ? Colors.blue : Colors.red,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ),
+            *A newer version is available!* Visit [Rattle](https://rattle.togaware.com) for instructions on updating your installation.
+            
+            ''',
           ),
+
           const SizedBox(width: 50),
 
           // Reset.

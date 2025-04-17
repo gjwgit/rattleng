@@ -39,8 +39,8 @@ import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/set_dataset_role.dart';
 import 'utils/tap_button.dart';
+import 'utils/verify_dataset_role.dart';
 import 'utils/verify_page.dart';
-import 'utils/verify_role.dart';
 import 'utils/verify_selectable_text.dart';
 
 void main() {
@@ -60,9 +60,9 @@ void main() {
       await tester.pump(delay);
       await tester.pump(delay);
       await tester.pump(delay);
-      await verifyRole('adjusted', 'Target');
-      await verifyRole('adjustment', 'Input');
-      await verifyRole('id', 'Ident');
+      await verifyDatasetRole('adjusted', 'Target');
+      await verifyDatasetRole('adjustment', 'Input');
+      await verifyDatasetRole('id', 'Ident');
       await setDatasetRole(tester, 'adjustment', 'Risk');
       await setDatasetRole(tester, 'marital', 'Ignore');
       await setDatasetRole(tester, 'education', 'Ignore');

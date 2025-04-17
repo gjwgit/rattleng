@@ -39,8 +39,8 @@ import 'utils/set_selected_variable.dart';
 import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
 import 'utils/tap_popup.dart';
+import 'utils/verify_dataset_role.dart';
 import 'utils/verify_popup.dart';
-import 'utils/verify_role.dart';
 
 /// Specific variables with ROLE set to 'Ignore'.
 
@@ -88,10 +88,10 @@ void main() {
         await setDatasetRole(tester, v, 'Ignore');
       }
       for (final v in inputVars) {
-        await verifyRole(v, 'Input');
+        await verifyDatasetRole(v, 'Input');
       }
       await setDatasetRole(tester, targetVar, 'Target');
-      await verifyRole(targetVar, 'Target');
+      await verifyDatasetRole(targetVar, 'Target');
 
       // Remove all IGNORED variables.
 

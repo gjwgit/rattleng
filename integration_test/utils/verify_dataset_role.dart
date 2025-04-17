@@ -1,6 +1,6 @@
 /// Verify a variables role on the ROLES page.
 //
-// Time-stamp: <Friday 2025-01-24 10:34:29 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-04-16 11:59:28 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
-Future<void> verifyRole(String variable, String role) async {
+Future<void> verifyDatasetRole(String variable, String role) async {
   // Find the Text widget containing the variable name.
 
   final variableFinder = find.text(variable).first;
