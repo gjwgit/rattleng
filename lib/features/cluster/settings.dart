@@ -100,9 +100,9 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
     String type = ref.watch(typeClusterProvider);
 
     String stdout = ref.watch(stdoutProvider);
-   
+
     String nobs = rExtract(stdout, '> nobs').split(' ').last;
-    
+
     // Convert nobs to integer if possible.
 
     int? nobsInt;
@@ -113,7 +113,6 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
         // Keep nobsInt as null if parsing fails.
       }
     }
-
 
     return Column(
       children: [
@@ -130,12 +129,17 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               **Clusters:** Set the number of clusters (k) you would like to
               create from the dataset. For the K-Means algorithm the k clusters
               will be initialised from a random selection of k observations
-              (rows) from the dataset.
+              (rows) from the dataset. The the maximum value is ${nobsInt != null ? nobsInt - 1 : "unknown"}, 
+              less than the number of rows in the dataset.
 
               ''',
               controller: _clusterController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
-              validator: (value) => validateInteger(value, min: 1, max: nobsInt != null && nobsInt > 1 ? nobsInt : null),
+              validator: (value) => validateInteger(
+                value,
+                min: 1,
+                max: nobsInt != null && nobsInt > 1 ? nobsInt - 1 : null,
+              ),
               stateProvider: numberClusterProvider,
             ),
             NumberField(
