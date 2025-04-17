@@ -123,3 +123,9 @@ tds_matrix <- as.matrix(tds)
 cluster::clusplot(tds_matrix, model_kmeans$cluster, color=TRUE, shade=TRUE,
                   labels=2, lines=0, main='Discriminant Coordinates Plot')
 dev.off()
+
+# Extract the corresponding cluster assignments.
+
+cluster_assignments <- model_kmeans$cluster
+
+pair_file <- "model_cluster_pairs_kmeans.svg"
