@@ -32,7 +32,10 @@ import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/features/cluster/settings.dart';
 import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
@@ -81,6 +84,26 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
   Widget build(BuildContext context) {
     String type = ref.read(typeClusterProvider.notifier).state;
 
+    // Get number of clusters from provider.
+
+    int clusterCount = ref.watch(numberClusterProvider);
+
+    // Get the number of observations from stdout.
+
+    String stdout = ref.watch(stdoutProvider);
+    String nobs = rExtract(stdout, '> nobs').split(' ').last;
+
+    // Convert nobs to integer if possible.
+
+    int? nobsInt;
+    if (nobs.isNotEmpty) {
+      try {
+        nobsInt = int.parse(nobs);
+      } catch (e) {
+        // Keep nobsInt as null if parsing fails.
+      }
+    }
+
     return Column(
       spacing: configRowSpace,
       children: [
@@ -97,7 +120,28 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
 
               ''',
               onPressed: () async {
-                // Identify the R scripts to run for the vcarious choices of
+                // Check if cluster count is valid.
+
+                if (nobsInt != null && clusterCount >= nobsInt) {
+                  // Show warning if cluster count exceeds observations.
+
+                  showOk(
+                    context: context,
+                    title: 'Invalid Cluster Count',
+                    content: '''
+                    
+                    The number of clusters **$clusterCount** cannot exceed 
+                    the number of observations in the dataset **$nobsInt**.
+                    
+                    Please reduce the number of clusters to continue.
+                    
+                    ''',
+                  );
+
+                  return;
+                }
+
+                // Identify the R scripts to run for the various choices of
                 // cluster analysis.
 
                 String mt = 'model_template';
