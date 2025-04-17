@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-10-12 18:45:49 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-04-17 14:23:26 +1000 Graham Williams>
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -123,8 +123,8 @@ plot(levelplot(model_ewkm))
 
 dev.off()
 
-# Extract the corresponding cluster assignments.
+# Extract the corresponding cluster assignments and model specific
+# names.
 
 cluster_assignments <- model_ewkm$cluster
-
 pair_file <- "model_cluster_pairs_ewkm.svg"
