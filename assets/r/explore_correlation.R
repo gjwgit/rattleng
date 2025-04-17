@@ -76,4 +76,7 @@ dev.off()
 
 svg("<TEMPDIR>/explore_correlation_ggcorrplot.svg")
 ggcorrplot::ggcorrplot(cor, method='circle')
+
+png("<TEMPDIR>/explore_correlation_ggcorrplot.png")
+ggcorrplot::ggcorrplot(cor, method='circle')
 dev.off()
