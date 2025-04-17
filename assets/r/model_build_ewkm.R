@@ -122,3 +122,9 @@ plot(levelplot(model_ewkm))
 # Close the SVG device for the weights plot.
 
 dev.off()
+
+# Extract the corresponding cluster assignments.
+
+cluster_assignments <- model_ewkm$cluster
+
+pair_file <- "model_cluster_pairs_ewkm.svg"
