@@ -268,16 +268,23 @@ class ImagePage extends ConsumerWidget {
                             color: Colors.blue,
                           ),
                           onPressed: () async {
-                            // Generate a unique file name for the new file in the
-                            // temporary directory.
+                            // Determine which image to open based on display parameter.
 
+                            final displayPath = display ?? path;
+                            final bool isSvg =
+                                displayPath.toLowerCase().endsWith('.svg');
+
+                            // Generate a unique file name for the new file in the
+                            // temporary directory with the correct extension.
+
+                            String extension = isSvg ? 'svg' : 'png';
                             String fileName =
-                                'plot_${Random().nextInt(10000)}.svg';
+                                'plot_${Random().nextInt(10000)}.$extension';
                             File tempFile = File('$tempDir/$fileName');
 
                             // Copy the original file to the temporary file.
 
-                            File(path).copy(tempFile.path);
+                            await File(displayPath).copy(tempFile.path);
 
                             // Get the image viewer app from SharedPreferences or use the provider default
                             // if not set.
@@ -322,7 +329,8 @@ class ImagePage extends ConsumerWidget {
                             color: Colors.blue,
                           ),
                           onPressed: () async {
-                            String fileName = path.split('/').last;
+                            final displayPath = display ?? path;
+                            String fileName = displayPath.split('/').last;
                             String? pathToSave = await selectFile(
                               defaultFileName: fileName,
                               allowedExtensions: ['svg', 'pdf', 'png'],
@@ -331,11 +339,19 @@ class ImagePage extends ConsumerWidget {
                               String extension =
                                   pathToSave.split('.').last.toLowerCase();
                               if (extension == 'svg') {
-                                await File(path).copy(pathToSave);
+                                await File(displayPath).copy(pathToSave);
                               } else if (extension == 'pdf') {
-                                await _exportToPdf(path, pathToSave);
+                                await _exportToPdf(displayPath, pathToSave);
                               } else if (extension == 'png') {
-                                await _exportToPng(path, pathToSave);
+                                if (displayPath
+                                    .toLowerCase()
+                                    .endsWith('.svg')) {
+                                  await _exportToPng(displayPath, pathToSave);
+                                } else {
+                                  // If source is already PNG, just copy it.
+
+                                  await File(displayPath).copy(pathToSave);
+                                }
                               } else {
                                 // If the user selected an unsupported file
                                 // extension show an error dialog.
