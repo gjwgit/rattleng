@@ -45,8 +45,9 @@ vars <- 1:min(5, ncol(tds))
 
 svg("<TEMPDIR>/model_cluster_pairs_<CLUSTER_TYPE_STR>.svg")
 
-# Create a title based on the model type
-plot_title <- paste(cluster_type, "Cluster Visualization")
+# Create a title based on the model type.
+
+plot_title <- paste(toupper(cluster_type), "Cluster Visualization")
 
 # Generate the scatterplot matrix.
 

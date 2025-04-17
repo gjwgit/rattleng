@@ -165,10 +165,10 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
     }
 
     image = switch (type) {
-      'KMeans' => '$tempDir/model_cluster_pairs_KMeans.svg',
-      'Ewkm' => '$tempDir/model_cluster_pairs_Ewkm.svg',
-      'Hierarchical' => '$tempDir/model_cluster_pairs_Hierarchical.svg',
-      'BiCluster' => '$tempDir/model_cluster_pairs_BiCluster.svg',
+      'KMeans' => '$tempDir/model_cluster_pairs_kmeans.svg',
+      'Ewkm' => '$tempDir/model_cluster_pairs_ewkm.svg',
+      'Hierarchical' => '$tempDir/model_cluster_pairs_hierarchical.svg',
+      'BiCluster' => '$tempDir/model_cluster_pairs_bicluster.svg',
       _ => '',
     };
 
