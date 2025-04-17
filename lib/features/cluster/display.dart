@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2025-04-17 09:10:10 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-04-17 14:15:00 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -177,10 +177,12 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
         ImagePage(
           title: '''
 
-          # Plot Pair - Visual
+          # Pairs Plot - Scatterplot Matrices
 
           Visit
-          [$functionPackage::$functionName()]($functionUrl).
+          [graphics::pairs()](https://www.rdocumentation.org/packages/graphics/topics/pairs).
+
+          Only the first 5 variables are shown. Use the **Console** to vary.
 
           ''',
           path: image,

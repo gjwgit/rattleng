@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-04-17 08:58:50 +1000 Graham Williams>
+# Time-stamp: <Thursday 2025-04-17 14:26:24 +1000 Graham Williams>
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -35,29 +35,24 @@
 set.seed(<RANDOM_SEED>)
 smpl <- sample(nrow(tds))
 
-# Keep just the first 5 variables for the plot.
+# RattleV5 would keep just the first 5 variables for the plot. More
+# than 5 is visually crowded. But we now have zoom so let's try no
+# limitation.
 
-vars <- 1:min(5, ncol(tds))
+vars <- 1:ncol(tds) # min(5, ncol(tds))
+
+# Create a title based on the model type.
+
+plot_title <- paste("Pairwise", mdesc, "Visualization -", mtype)
 
 # Generate the scatterplot matrix.
 
 svg(glue("<TEMPDIR>/{pair_file}"))
-
-# Create a title based on the model type.
-
-plot_title <- paste("<CLUSTER_TYPE_STR>", "Cluster Visualization")
-
-# Generate the scatterplot matrix.
-
 pairs(tds[smpl, vars],
-      col = cluster_assignments[smpl],
+      col  = cluster_assignments[smpl],
       main = plot_title,
-      pch = 20,  # Use small filled circles for points
-      cex = 0.6) # Make points smaller for clearer visualization
-
-# Add a subtitle with timestamp.
-
+      pch  = 20,  # Use small filled circles for points
+      cex  = 0.6) # Make points smaller for clearer visualization
 mtext(paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]),
       side = 1, line = 4, cex = 0.8)
-
 dev.off()
