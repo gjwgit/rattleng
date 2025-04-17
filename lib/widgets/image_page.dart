@@ -239,7 +239,12 @@ class ImagePage extends ConsumerWidget {
                             color: Colors.blue,
                           ),
                           onPressed: () {
-                            showImageDialog(context, bytes);
+                            // Determine which image to display based on file extension.
+
+                            final displayPath = display ?? path;
+                            final bool isSvg =
+                                displayPath.toLowerCase().endsWith('.svg');
+                            showImageDialog(context, bytes, isSvg: isSvg);
                           },
                         ),
                       ),
