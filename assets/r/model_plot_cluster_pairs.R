@@ -29,8 +29,6 @@
 # BiCluster models. We first identify the type of cluster we want a
 # pairs plot for. (zh 20250417)
 
-cluster_type <- '<CLUSTER_TYPE_STR>'
-
 # Select a sample from the dataset to make the plot more readable.
 # Use a fixed seed for reproducibility.
 
@@ -43,11 +41,11 @@ vars <- 1:min(5, ncol(tds))
 
 # Generate the scatterplot matrix.
 
-svg("<TEMPDIR>/model_cluster_pairs_<CLUSTER_TYPE_STR>.svg")
+svg(glue("<TEMPDIR>/{pair_file}"))
 
 # Create a title based on the model type.
 
-plot_title <- paste(toupper(cluster_type), "Cluster Visualization")
+plot_title <- paste("<CLUSTER_TYPE_STR>", "Cluster Visualization")
 
 # Generate the scatterplot matrix.
 

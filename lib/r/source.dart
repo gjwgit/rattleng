@@ -590,7 +590,7 @@ Future<void> rSource(
   code = code.replaceAll('<CLUSTER_TYPE>', '"${clusterType.toString()}"');
   code = code.replaceAll(
     '<CLUSTER_TYPE_STR>',
-    clusterType.toString().toLowerCase(),
+    clusterType.toString(),
   );
 
   code =
