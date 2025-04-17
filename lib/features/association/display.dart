@@ -225,9 +225,9 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
     //
     // 20250204 gjw Even the PNG is not loading for this one.
 
-    image = '$tempDir/model_arules_grouped.svg';
+    // image = '$tempDir/model_arules_grouped.svg';
 
-    // image = '$tempDir/model_arules_grouped.png';
+    image = '$tempDir/model_arules_grouped.png';
 
     if (imageExists(image)) {
       pages.add(
@@ -244,6 +244,7 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
 
           ''',
           path: image,
+          display: image,
         ),
       );
     }

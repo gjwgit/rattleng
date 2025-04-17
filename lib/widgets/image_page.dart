@@ -32,10 +32,11 @@ library;
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -56,39 +57,53 @@ import 'package:rattle/utils/show_ok.dart';
 class ImagePage extends ConsumerWidget {
   final String title;
   final String path;
+  final String? display;
 
   const ImagePage({
     super.key,
     required this.title,
     required this.path,
+    this.display,
   });
 
   /// Load the image bytes from the specified file path.
   ///
-  /// This method attempts to read the image file as bytes. It waits for the
-  /// file to exist, retrying up to 5 times with a 1-second delay between each
-  /// retry.  If the file does not exist after the retries, it returns `null`.
+  /// This method attempts to read the image file as bytes. If using the display parameter,
+  /// it will load from that path, otherwise it uses the original SVG path.
   ///
   /// Returns a [Future] that completes with the image bytes as a [Uint8List] if
   /// the file exists, or `null` if the file does not exist.
 
   Future<Uint8List?> _loadImageBytes() async {
-    var imageFile = File(path);
+    try {
+      final displayPath = display ?? path;
 
-    // Wait until the file exists, but limit the waiting period to avoid an infinite loop.
-    int retries = 5;
-    while (!await imageFile.exists() && retries > 0) {
-      await Future.delayed(const Duration(seconds: 1));
-      retries--;
-    }
+      // Wait for the file to exist.
 
-    // If the file doesn't exist, return null.
-    if (!await imageFile.exists()) {
+      final file = File(displayPath);
+      int retryCount = 0;
+      while (!await file.exists() && retryCount < 5) {
+        await Future.delayed(const Duration(seconds: 1));
+
+        retryCount++;
+      }
+
+      if (await file.exists()) {
+        return await file.readAsBytes();
+      } else {
+        if (kDebugMode) {
+          print('Image file not found: $displayPath');
+        }
+
+        return null;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error loading image: $e');
+      }
+
       return null;
     }
-
-    // Read file as bytes
-    return await imageFile.readAsBytes();
   }
 
   /// Convert the file [svgPath] return [Future] image bytes in PNG format.
@@ -155,7 +170,9 @@ class ImagePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    debugText('  IMAGE', path);
+    // Log the path being used for debugging.
+
+    debugText('  IMAGE', display ?? path);
 
     // Clear the image cache
     imageCache.clear();
@@ -350,13 +367,19 @@ class ImagePage extends ConsumerWidget {
                       final double maxHeight =
                           MediaQuery.of(context).size.height * 0.6;
 
+                      // Determine which image to display based on file extension.
+
+                      final String displayPath = display ?? path;
+                      final bool isSvg =
+                          displayPath.toLowerCase().endsWith('.svg');
+
                       return SizedBox(
                         height: maxHeight,
                         width: maxWidth,
                         child: InteractiveViewer(
                           maxScale: 5,
                           alignment: Alignment.topCenter,
-                          child: path.toLowerCase().endsWith('.svg')
+                          child: isSvg
                               ? SvgPicture.memory(
                                   bytes,
                                   fit: BoxFit.scaleDown,

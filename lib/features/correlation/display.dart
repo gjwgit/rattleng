@@ -144,6 +144,7 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
 
         ''',
         path: '$tempDir/explore_correlation_ggcorrplot.svg',
+        display: '$tempDir/explore_correlation_ggcorrplot.png',
       ),
     );
 
