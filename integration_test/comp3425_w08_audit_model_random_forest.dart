@@ -1,6 +1,6 @@
 /// COMP3425 W08 ADULT -> ADABOOST.
 //
-// Time-stamp: <Wednesday 2025-04-16 15:20:13 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-04-17 15:44:35 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -160,7 +160,7 @@ void main() {
       await navigateToFeature(tester, 'Boost');
       await tapChip(tester, 'Adaptive');
       await tapButton(tester, 'Build Boosted Trees');
-      await addDelay(tester, 30);
+      await addDelay(tester, 40);
 
       await navigateToPage(tester, 1, back: 2, title: 'AdaBoost - Summary');
       await verifySelectableText(
@@ -179,7 +179,7 @@ void main() {
 
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
-      await addDelay(tester, 30);
+      await addDelay(tester, 50);
 
       await navigateToPage(tester, 1, back: 1, title: 'Error Matrix');
       await verifySelectableText(
