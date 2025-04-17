@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-04-11 09:21:54 +1000 Graham Williams>
+# Time-stamp: <Thursday 2025-04-17 08:57:24 +1000 Graham Williams>
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -133,3 +133,12 @@ plot(model_hclust,
      ylab = "Height")
 rect.hclust(model_hclust, k=<CLUSTER_NUM>, border="red")
 dev.off()
+
+# Extract the corresponding cluster assignments.
+# Hierarchical clustering creates a tree-like structure (dendrogram) 
+# rather than directly assigning observations to clusters.
+# The cutree function is used to cut the dendrogram at a specified number of clusters.
+
+cluster_assignments <- cutree(model_hclust, k=<CLUSTER_NUM>)
+
+pair_file <- "model_cluster_pairs_hierarchical.svg"
