@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2024-12-18 08:08:53 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-04-17 14:15:00 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -85,6 +85,10 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
 
     String stdout = ref.watch(stdoutProvider);
 
+    // Store the path to the next image to display.
+
+    String image = '';
+
     List<Widget> pages = [
       showMarkdownFile(
         context,
@@ -118,14 +122,14 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
       }
     }
 
-    String discriminantImage = switch (type) {
+    image = switch (type) {
       'KMeans' => '$tempDir/model_cluster_discriminant.svg',
       'Ewkm' => '$tempDir/model_cluster_ewkm.svg',
       'Hierarchical' => '$tempDir/model_cluster_hierarchical.svg',
       _ => '',
     };
 
-    if (imageExists(discriminantImage)) {
+    if (imageExists(image)) {
       pages.add(
         ImagePage(
           title: '''
@@ -136,14 +140,14 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
           [$functionPackage::$functionName()]($functionUrl).
 
           ''',
-          path: discriminantImage,
+          path: image,
         ),
       );
     }
 
     if (type == 'Ewkm') {
-      String weightImage = '$tempDir/model_cluster_ewkm_weights.svg';
-      if (imageExists(weightImage)) {
+      image = '$tempDir/model_cluster_ewkm_weights.svg';
+      if (imageExists(image)) {
         pages.add(
           ImagePage(
             title: '''
@@ -154,10 +158,36 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
           [$functionPackage::$functionName()]($functionUrl).
 
           ''',
-            path: weightImage,
+            path: image,
           ),
         );
       }
+    }
+
+    image = switch (type) {
+      'KMeans' => '$tempDir/model_cluster_pairs_kmeans.svg',
+      'Ewkm' => '$tempDir/model_cluster_pairs_ewkm.svg',
+      'Hierarchical' => '$tempDir/model_cluster_pairs_hierarchical.svg',
+      'BiCluster' => '$tempDir/model_cluster_pairs_bicluster.svg',
+      _ => '',
+    };
+
+    if (imageExists(image)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+          # Pairs Plot - Scatterplot Matrices
+
+          Visit
+          [graphics::pairs()](https://www.rdocumentation.org/packages/graphics/topics/pairs).
+
+          Only the first 5 variables are shown. Use the **Console** to vary.
+
+          ''',
+          path: image,
+        ),
+      );
     }
 
     return PageViewer(
