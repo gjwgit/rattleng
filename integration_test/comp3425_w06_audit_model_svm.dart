@@ -37,7 +37,7 @@ import 'utils/navigate_to_tab.dart';
 import 'utils/set_dataset_role.dart';
 import 'utils/set_partition.dart';
 import 'utils/tap_button.dart';
-import 'utils/verify_role.dart';
+import 'utils/verify_dataset_role.dart';
 import 'utils/verify_selectable_text.dart';
 
 /// Specific variables with ROLE set to 'Ignore'.
@@ -65,12 +65,12 @@ void main() {
         await setDatasetRole(tester, v, 'Ignore');
       }
       for (final v in inputVars) {
-        await verifyRole(v, 'Input');
+        await verifyDatasetRole(v, 'Input');
       }
       await setDatasetRole(tester, riskVar, 'Risk');
       await setDatasetRole(tester, targetVar, 'Target');
-      await verifyRole(targetVar, 'Target');
-      await verifyRole('id', 'Ident');
+      await verifyDatasetRole(targetVar, 'Target');
+      await verifyDatasetRole('id', 'Ident');
 
       // Build svm.
 

@@ -38,7 +38,7 @@ import 'utils/navigate_to_tab.dart';
 import 'utils/set_partition.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_checkbox.dart';
-import 'utils/verify_role.dart';
+import 'utils/verify_dataset_role.dart';
 import 'utils/verify_selectable_text.dart';
 
 // Split into separate files instead of groups since the test is failing on
@@ -61,8 +61,8 @@ void main() {
       await tester.pumpAndSettle();
       await setPartition(tester, false);
       await loadDemoDataset(tester, 'Movies');
-      await verifyRole('basket', 'Ident');
-      await verifyRole('item', 'Target');
+      await verifyDatasetRole('basket', 'Ident');
+      await verifyDatasetRole('item', 'Target');
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Associations');
       await verifyCheckbox(tester, 'Baskets', true);
