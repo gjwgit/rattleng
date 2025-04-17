@@ -31,8 +31,11 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 
-void showImageDialog(BuildContext context, Uint8List bytes,
-    {bool isSvg = true}) {
+void showImageDialog(
+  BuildContext context,
+  Uint8List bytes, {
+  bool isSvg = true,
+}) {
   showGeneralDialog(
     context: context,
     pageBuilder: (context, animation, secondaryAnimation) {
