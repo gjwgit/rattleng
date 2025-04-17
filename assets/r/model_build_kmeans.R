@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-04-09 10:34:22 +1000 Graham Williams>
+# Time-stamp: <Thursday 2025-04-17 14:30:52 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -81,12 +81,11 @@ if (rescale) {
 
 }
 
-
 # Generate a kmeans cluster of size 10.
 
 model_kmeans <- kmeans(tds,
-                       centers=<CLUSTER_NUM>,
-                       nstart=<CLUSTER_RUN>)
+                       centers = <CLUSTER_NUM>,
+                       nstart  = <CLUSTER_RUN>)
 
 # Report on the cluster characteristics.
 
@@ -108,24 +107,23 @@ print(model_kmeans$withinss)
 
 cat("\n")
 
-# Plot the first two principal components, which serve as discriminant coordinates.
+# Plot the first two principal components, which serve as discriminant
+# coordinates. We convert tds to a matrix if it's not already.
 
 svg("<TEMPDIR>/model_cluster_discriminant.svg")
 
-# Generate a discriminant coordinates plot.
-
-# Convert tds to a matrix if it's not already.
-
 tds_matrix <- as.matrix(tds)
-
-# Generate the clusplot.
-
-cluster::clusplot(tds_matrix, model_kmeans$cluster, color=TRUE, shade=TRUE,
-                  labels=2, lines=0, main='Discriminant Coordinates Plot')
+cluster::clusplot(tds_matrix,
+                  model_kmeans$cluster,
+                  color  = TRUE,
+                  shade  = TRUE,
+                  labels = 2,
+                  lines  = 0,
+                  main   = paste(mdesc, 'Discriminant Coordinates Plot -', mtype))
 dev.off()
 
-# Extract the corresponding cluster assignments.
+# Extract the corresponding cluster assignments and model specific
+# names.
 
 cluster_assignments <- model_kmeans$cluster
-
-pair_file <- "model_cluster_pairs_kmeans.svg"
+pair_file  <- "model_cluster_pairs_kmeans.svg"

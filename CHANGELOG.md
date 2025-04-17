@@ -13,6 +13,8 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ CLUSTER: pairs plot on model build [6.4.66 20250417 zy]
++ Explain box plots. Code cleanup. [6.4.65 20250417 gjw]
 + RISK CHART: Ignore if there is no risk variable [6.4.64 20250415 zy]
 + SETTINGS: Debug SETTINGS and saved settings [6.4.63 20250411 zy]
 + CLUSTER: Update handling of seed on startup [6.4.62 20250410 zy]
