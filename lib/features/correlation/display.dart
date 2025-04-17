@@ -130,6 +130,8 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
     // external viewer is just fine? Add a note. THe problem is the unhandled
     // element <filter/> for the Svg loader (gjw 20240815).
 
+    String ggcorrplot = '$tempDir/explore_correlation_ggcorrplot.png';
+
     pages.add(
       ImagePage(
         title: '''
@@ -143,8 +145,8 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
         right. Our current SVG viewer does not support all SVG features.
 
         ''',
-        path: '$tempDir/explore_correlation_ggcorrplot.svg',
-        display: '$tempDir/explore_correlation_ggcorrplot.png',
+        path: ggcorrplot,
+        display: ggcorrplot,
       ),
     );
 
