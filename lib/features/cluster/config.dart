@@ -107,6 +107,11 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                 String bi = 'model_build_bicluster';
                 String pp = 'model_plot_cluster_pairs';
 
+                // Check if the widget is still in the tree before using its context.
+                // This prevents "setState() called after dispose()" errors that can occur
+                // when attempting to use a context after an asynchronous gap if the 
+                // widget was removed from the tree during that time.
+
                 if (type == 'KMeans') {
                   if (context.mounted)
                     await rSource(context, ref, [mt, km, pp]);
