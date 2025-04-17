@@ -109,7 +109,7 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
 
                 // Check if the widget is still in the tree before using its context.
                 // This prevents "setState() called after dispose()" errors that can occur
-                // when attempting to use a context after an asynchronous gap if the 
+                // when attempting to use a context after an asynchronous gap if the
                 // widget was removed from the tree during that time.
 
                 if (type == 'KMeans') {
