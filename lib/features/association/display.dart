@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2025-04-03 17:39:31 +1100 Graham Williams>
+// Time-stamp: <Saturday 2025-04-19 07:25:46 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -172,9 +172,8 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
     // flutter_svg. https://github.com/dnfield/flutter_svg/issues/53. We display
     // the PNG version for now.
 
-    // image = '$tempDir/model_arules_viz.svg';
-
-    image = '$tempDir/model_arules_viz.png';
+    String imageSVG = '$tempDir/model_arules_viz.svg';
+    String imagePNG = '$tempDir/model_arules_viz.png';
 
     if (imageExists(image)) {
       pages.add(
@@ -187,7 +186,8 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
           [arulesViz::plot()](https://www.rdocumentation.org/packages/arulesViz/topics/plot).
 
           ''',
-          path: image,
+          path: imageSVG,
+          display: imagePNG,
         ),
       );
     }
