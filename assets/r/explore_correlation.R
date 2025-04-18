@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-03-09 19:30:08 +1100 Graham Williams>
+# Time-stamp: <Saturday 2025-04-19 07:09:26 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -76,6 +76,7 @@ dev.off()
 
 svg("<TEMPDIR>/explore_correlation_ggcorrplot.svg")
 ggcorrplot::ggcorrplot(cor, method='circle')
+dev.off()
 
 png("<TEMPDIR>/explore_correlation_ggcorrplot.png")
 ggcorrplot::ggcorrplot(cor, method='circle')
