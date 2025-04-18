@@ -1,6 +1,6 @@
 /// A widget to build the a common single image based pages.
 //
-// Time-stamp: <Sunday 2025-03-30 07:45:33 +1100 Graham Williams>
+// Time-stamp: <Saturday 2025-04-19 07:10:02 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -54,6 +54,11 @@ import 'package:rattle/utils/select_file.dart';
 import 'package:rattle/utils/show_image_dialog.dart';
 import 'package:rattle/utils/show_ok.dart';
 
+/// The [path] is required. It is the path to a **svg** or **png** file to
+/// display in the app and to open/save externally. If [display] is also
+/// provided then this will be a **png** that is displayed in the app, while the
+/// [path] is an **svg** to open/save externally.
+
 class ImagePage extends ConsumerWidget {
   final String title;
   final String path;
@@ -66,13 +71,13 @@ class ImagePage extends ConsumerWidget {
     this.display,
   });
 
-  /// Load the image bytes from the specified file path.
-  ///
-  /// This method attempts to read the image file as bytes. If using the display parameter,
-  /// it will load from that path, otherwise it uses the original SVG path.
-  ///
-  /// Returns a [Future] that completes with the image bytes as a [Uint8List] if
-  /// the file exists, or `null` if the file does not exist.
+  // Load the image bytes from the specified file path.
+  //
+  // This method attempts to read the image file as bytes. If using the display parameter,
+  // it will load from that path, otherwise it uses the original SVG path.
+  //
+  // Returns a [Future] that completes with the image bytes as a [Uint8List] if
+  // the file exists, or `null` if the file does not exist.
 
   Future<Uint8List?> _loadImageBytes() async {
     try {
@@ -106,9 +111,9 @@ class ImagePage extends ConsumerWidget {
     }
   }
 
-  /// Convert the file [svgPath] return [Future] image bytes in PNG format.
-  ///
-  /// Throws an [Exception] if the conversion fails.
+  // Convert the file [svgPath] return [Future] image bytes in PNG format.
+  //
+  // Throws an [Exception] if the conversion fails.
 
   Future<ByteData> _svgToImageBytes(String svgPath) async {
     final svgString = await File(svgPath).readAsString();
@@ -137,7 +142,7 @@ class ImagePage extends ConsumerWidget {
     return byteData;
   }
 
-  /// Export the SVG file [svgPath] into a PDF file [pdfPath].
+  // Export the SVG file [svgPath] into a PDF file [pdfPath].
 
   Future<void> _exportToPdf(String svgPath, String pdfPath) async {
     final pngBytes = await _svgToImageBytes(svgPath);
@@ -159,7 +164,7 @@ class ImagePage extends ConsumerWidget {
     await file.writeAsBytes(await pdf.save());
   }
 
-  /// Export the SVG file [svgPath] into a PNG file [pngPath].
+  // Export the SVG file [svgPath] into a PNG file [pngPath].
 
   Future<void> _exportToPng(String svgPath, String pngPath) async {
     final pngBytes = await _svgToImageBytes(svgPath);
@@ -172,9 +177,11 @@ class ImagePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Log the path being used for debugging.
 
-    debugText('  IMAGE', display ?? path);
+    debugText('  PATH', path);
+    debugText('  DISPLAY', display ?? 'NULL');
 
-    // Clear the image cache
+    // Clear the image cache.
+
     imageCache.clear();
     imageCache.clearLiveImages();
 
@@ -239,7 +246,9 @@ class ImagePage extends ConsumerWidget {
                             color: Colors.blue,
                           ),
                           onPressed: () {
-                            // Determine which image to display based on file extension.
+                            // Determine which image to display. If a [display]
+                            // is provided then that overrides [path]. (gjw
+                            // 20250419)
 
                             final displayPath = display ?? path;
                             final bool isSvg =
@@ -268,9 +277,10 @@ class ImagePage extends ConsumerWidget {
                             color: Colors.blue,
                           ),
                           onPressed: () async {
-                            // Determine which image to open based on display parameter.
+                            // We always display the [path] extermally
+                            // irrespective of whether we have a [display].
 
-                            final displayPath = display ?? path;
+                            final displayPath = path;
                             final bool isSvg =
                                 displayPath.toLowerCase().endsWith('.svg');
 
@@ -302,10 +312,10 @@ class ImagePage extends ConsumerWidget {
                             Platform.isWindows
                                 ? Process.run(
                                     imageViewerApp!,
-                                    [tempFile.path],
+                                    [path],
                                     runInShell: true,
                                   )
-                                : Process.run(imageViewerApp!, [tempFile.path]);
+                                : Process.run(imageViewerApp!, [path]);
                           },
                         ),
                       ),
@@ -329,7 +339,7 @@ class ImagePage extends ConsumerWidget {
                             color: Colors.blue,
                           ),
                           onPressed: () async {
-                            final displayPath = display ?? path;
+                            final displayPath = path;
                             String fileName = displayPath.split('/').last;
                             String? pathToSave = await selectFile(
                               defaultFileName: fileName,
