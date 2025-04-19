@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2025-04-09 13:39:25 +1000 Graham Williams>
+// Time-stamp: <Saturday 2025-04-19 14:33:45 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -129,12 +129,12 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                     context: context,
                     title: 'Invalid Cluster Count',
                     content: '''
-                    
-                    The number of clusters **$clusterCount** cannot exceed 
+
+                    The number of clusters **$clusterCount** must be less than
                     the number of observations in the dataset **$nobsInt**.
-                    
+
                     Please reduce the number of clusters to continue.
-                    
+
                     ''',
                   );
 
