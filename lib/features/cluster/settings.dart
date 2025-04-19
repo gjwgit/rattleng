@@ -1,6 +1,6 @@
 /// Cluster setting for different cluster types.
 ///
-/// Time-stamp: <Wednesday 2025-04-09 13:32:06 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2025-04-19 14:34:58 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -129,8 +129,8 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               **Clusters:** Set the number of clusters (k) you would like to
               create from the dataset. For the K-Means algorithm the k clusters
               will be initialised from a random selection of k observations
-              (rows) from the dataset. The the maximum value is ${nobsInt != null ? nobsInt - 1 : "unknown"}, 
-              less than the number of rows in the dataset.
+              (rows) from the dataset. The value must be less than the number of
+              rows in the dataset ${nobsInt ?? ""}.
 
               ''',
               controller: _clusterController,
