@@ -32,6 +32,8 @@ import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/features/cluster/settings.dart';
 import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/providers/partition.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/source.dart';
@@ -88,6 +90,8 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
 
     int clusterCount = ref.watch(numberClusterProvider);
 
+    bool randomPartition = ref.watch(partitionProvider);
+
     // Get the number of observations from stdout.
 
     String stdout = ref.watch(stdoutProvider);
@@ -99,6 +103,10 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
     if (nobs.isNotEmpty) {
       try {
         nobsInt = int.parse(nobs);
+        if (randomPartition) {
+          int partitionPercent = ref.watch(partitionTrainProvider);
+          nobsInt = (nobsInt * partitionPercent) ~/ 100;
+        }
       } catch (e) {
         // Keep nobsInt as null if parsing fails.
       }
