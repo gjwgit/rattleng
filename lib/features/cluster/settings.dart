@@ -32,6 +32,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/cluster.dart';
+import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
@@ -99,6 +100,8 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
     String selectedLink = ref.watch(linkClusterProvider);
     String type = ref.watch(typeClusterProvider);
 
+    bool randomPartition = ref.watch(partitionProvider);
+
     String stdout = ref.watch(stdoutProvider);
 
     String nobs = rExtract(stdout, '> nobs').split(' ').last;
@@ -109,6 +112,10 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
     if (nobs.isNotEmpty) {
       try {
         nobsInt = int.parse(nobs);
+        if (randomPartition) {
+          int partitionPercent = ref.watch(partitionTrainProvider);
+          nobsInt = (nobsInt * partitionPercent) ~/ 100;
+        }
       } catch (e) {
         // Keep nobsInt as null if parsing fails.
       }
