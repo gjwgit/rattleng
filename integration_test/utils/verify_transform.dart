@@ -1,6 +1,6 @@
 /// Verify the Rescale feature on the DEMO dataset.
 //
-// Time-stamp: <Friday 2025-01-24 10:34:29 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-04-22 06:20:21 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -21,14 +21,13 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Kevin Wang
+/// Authors: Kevin Wang, Graham Williams
 
 library;
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'delays.dart';
-import 'goto_next_page.dart';
+import 'navigate_to_page.dart';
 import 'scroll_until_find_key.dart';
 import 'tap_button.dart';
 import 'tap_chip.dart';
@@ -43,7 +42,7 @@ import 'verify_selectable_text.dart';
 /// 3. Verifies the resulting dataset summary page shows the expected variable name
 /// 4. Verifies the statistical summary matches the expected values
 
-Future<void> verify_tap_chip(
+Future<void> verifyTransform(
   WidgetTester tester,
   String chipText,
   String buttonName,
@@ -55,9 +54,7 @@ Future<void> verify_tap_chip(
   await tapChip(tester, chipText);
 
   await tapButton(tester, buttonName);
-  await tester.pump(delay);
-  await gotoNextPage(tester);
-
+  await navigateToPage(tester, 1, back: 2, title: 'Dataset Summary');
   await verifyPage('Dataset Summary', variableName);
 
   // Scroll to find and verify the statistical summary.

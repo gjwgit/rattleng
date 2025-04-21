@@ -1,6 +1,6 @@
 /// WEATHER dataset TRANSFORM tab RECODE feature.
 //
-// Time-stamp: <Wednesday 2025-04-09 08:43:29 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2025-04-22 06:20:36 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors:  Kevin Wang
+/// Authors:  Kevin Wang, Graham Williams
 
 library;
 
@@ -30,6 +30,7 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
+import 'utils/add_delay.dart';
 import 'utils/check_variable_not_missing.dart';
 import 'utils/delays.dart';
 import 'utils/load_demo_dataset.dart';
@@ -41,7 +42,7 @@ import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
 import 'utils/unify_on.dart';
 import 'utils/verify_imputed_variable.dart';
-import 'utils/verify_rescale_tap_chip.dart';
+import 'utils/verify_transform.dart';
 import 'utils/verify_selectable_text.dart';
 
 void main() {
@@ -61,7 +62,7 @@ void main() {
       await navigateToFeature(tester, 'Recode');
       await setSelectedVariable(tester, 'min_temp');
       await tapButton(tester, 'Recode Variable Values');
-      // await tester.pump(delay);
+      await addDelay(tester, 10);
       await navigateToPage(tester, 1, back: 1, title: 'Dataset Summary');
       await verifySelectableText(tester, [
         'min_temp',
@@ -81,7 +82,7 @@ void main() {
 
       await navigateToTab(tester, 'Transform');
       await navigateToFeature(tester, 'Recode');
-      await verify_tap_chip(
+      await verifyTransform(
         tester,
         'KMeans',
         'Recode Variable Values',
@@ -96,7 +97,7 @@ void main() {
 
       // 3. Select and test chip "Equal Width"
 
-      await verify_tap_chip(
+      await verifyTransform(
         tester,
         'Equal Width',
         'Recode Variable Values',
@@ -111,7 +112,7 @@ void main() {
 
       // 4. Select and test chip "As Categoric"
 
-      await verify_tap_chip(
+      await verifyTransform(
         tester,
         'As Categoric',
         'Recode Variable Values',
@@ -134,7 +135,7 @@ void main() {
 
       // 5. Select and test chip "As Numeric"
 
-      await verify_tap_chip(
+      await verifyTransform(
         tester,
         'As Numeric',
         'Recode Variable Values',
@@ -152,7 +153,7 @@ void main() {
 
       // 6. Select and test chip "Indicator Variable"
 
-      await verify_tap_chip(
+      await verifyTransform(
         tester,
         'Indicator Variable',
         'Recode Variable Values',
@@ -169,7 +170,7 @@ void main() {
 
       // 7. Select and test chip "Join Categorics"
 
-      await verify_tap_chip(
+      await verifyTransform(
         tester,
         'Join Categorics',
         'Recode Variable Values',

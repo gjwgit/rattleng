@@ -1,6 +1,6 @@
 /// COMP3425 W06 AUDIT -> SVM.
 //
-// Time-stamp: <Monday 2025-04-21 15:10:10 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2025-04-22 06:25:21 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -36,7 +36,6 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/set_dataset_role.dart';
-import 'utils/set_partition.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_dataset_role.dart';
 import 'utils/verify_selectable_text.dart';
@@ -60,7 +59,6 @@ void main() {
       // Load the dataset.
 
       await tester.pumpAndSettle();
-      await setPartition(tester, true);
       await loadDemoDataset(tester, 'Audit');
 
       // Build a SVM with the defaults as on loading the dataset.
