@@ -1,6 +1,6 @@
 /// Cluster setting for different cluster types.
 ///
-/// Time-stamp: <Wednesday 2025-04-09 13:32:06 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2025-04-19 14:34:58 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -32,7 +32,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/cluster.dart';
+import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/settings.dart';
+import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/variable_chooser.dart';
 import 'package:rattle/widgets/number_field.dart';
 
@@ -97,6 +100,27 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
     String selectedLink = ref.watch(linkClusterProvider);
     String type = ref.watch(typeClusterProvider);
 
+    bool randomPartition = ref.watch(partitionProvider);
+
+    String stdout = ref.watch(stdoutProvider);
+
+    String nobs = rExtract(stdout, '> nobs').split(' ').last;
+
+    // Convert nobs to integer if possible.
+
+    int? nobsInt;
+    if (nobs.isNotEmpty) {
+      try {
+        nobsInt = int.parse(nobs);
+        if (randomPartition) {
+          int partitionPercent = ref.watch(partitionTrainProvider);
+          nobsInt = (nobsInt * partitionPercent) ~/ 100;
+        }
+      } catch (e) {
+        // Keep nobsInt as null if parsing fails.
+      }
+    }
+
     return Column(
       children: [
         configTopGap,
@@ -112,12 +136,17 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               **Clusters:** Set the number of clusters (k) you would like to
               create from the dataset. For the K-Means algorithm the k clusters
               will be initialised from a random selection of k observations
-              (rows) from the dataset.
+              (rows) from the dataset. The value must be less than the number of
+              rows in the dataset ${nobsInt ?? ""}.
 
               ''',
               controller: _clusterController,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
-              validator: (value) => validateInteger(value, min: 1),
+              validator: (value) => validateInteger(
+                value,
+                min: 1,
+                max: nobsInt != null && nobsInt > 1 ? nobsInt - 1 : null,
+              ),
               stateProvider: numberClusterProvider,
             ),
             NumberField(

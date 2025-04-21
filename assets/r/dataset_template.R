@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-04-03 12:20:57 +1100 Graham Williams>
+# Time-stamp: <Saturday 2025-04-19 09:55:46 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -75,6 +75,12 @@ ignore      <- <IGNORE_VARS>
 # Record the number of observations.
 
 nobs   <- nrow(ds)
+##
+## Output nobs for features/cluster config.dart and settings.dart. We
+## will need this in the meta data rather than query stdout. (gjw
+## 20250419)
+##
+nobs
 
 # Note the variable names.
 

@@ -322,6 +322,8 @@ class NumberFieldState extends ConsumerState<NumberField> {
                         ),
                       );
                     }
+
+                    updateField();
                   },
                   style: widget.enabled ? normalTextStyle : disabledTextStyle,
                   enabled: widget.enabled,
