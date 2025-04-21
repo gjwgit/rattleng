@@ -42,7 +42,7 @@ import 'utils/tap_button.dart';
 import 'utils/unify_on.dart';
 import 'utils/verify_imputed_variable.dart';
 import 'utils/verify_page.dart';
-import 'utils/verify_rescale_tap_chip.dart';
+import 'utils/verify_transform.dart';
 import 'utils/verify_selectable_text.dart';
 
 void main() {
@@ -94,7 +94,7 @@ void main() {
 
       await navigateToTab(tester, 'Transform');
       await navigateToFeature(tester, 'Rescale');
-      await verify_tap_chip(
+      await verifyTransform(
         tester,
         'Scale [0-1]',
         'Rescale Variable Values',
@@ -111,7 +111,7 @@ void main() {
 
       // 3. Select and test chip "-Median/MAD"
 
-      await verify_tap_chip(
+      await verifyTransform(
         tester,
         '-Median/MAD',
         'Rescale Variable Values',
@@ -128,7 +128,7 @@ void main() {
 
       // 4. Select and test chip "Natural Log"
 
-      await verify_tap_chip(
+      await verifyTransform(
         tester,
         'Natural Log',
         'Rescale Variable Values',
@@ -146,7 +146,7 @@ void main() {
 
       // 5. Select and test chip "Log 10"
 
-      await verify_tap_chip(
+      await verifyTransform(
         tester,
         'Log 10',
         'Rescale Variable Values',
@@ -164,7 +164,7 @@ void main() {
 
       // 6. Select and test chip "Rank"
 
-      await verify_tap_chip(
+      await verifyTransform(
         tester,
         'Rank',
         'Rescale Variable Values',
@@ -181,7 +181,7 @@ void main() {
 
       // 6. Select and test chip "Interval"
 
-      await verify_tap_chip(
+      await verifyTransform(
         tester,
         'Interval',
         'Rescale Variable Values',
