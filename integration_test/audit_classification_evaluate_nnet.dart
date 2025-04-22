@@ -1,6 +1,6 @@
 /// AUDIT -> TRANSFORM -> MODEL -> NEURAL -> EVALUATE -> ERROR MATRIX
 //
-// Time-stamp: <Tuesday 2025-04-22 10:06:06 +1000 >
+// Time-stamp: <Tuesday 2025-04-22 10:22:11 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -31,6 +31,7 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
+import 'utils/add_delay.dart';
 import 'utils/delays.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
