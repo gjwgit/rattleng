@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2025-04-09 13:39:25 +1000 Graham Williams>
+// Time-stamp: <Saturday 2025-04-19 14:33:45 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -32,6 +32,8 @@ import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/features/cluster/settings.dart';
 import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/page_controller.dart';
+import 'package:rattle/providers/partition.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/source.dart';
@@ -88,6 +90,8 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
 
     int clusterCount = ref.watch(numberClusterProvider);
 
+    bool randomPartition = ref.watch(partitionProvider);
+
     // Get the number of observations from stdout.
 
     String stdout = ref.watch(stdoutProvider);
@@ -99,6 +103,10 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
     if (nobs.isNotEmpty) {
       try {
         nobsInt = int.parse(nobs);
+        if (randomPartition) {
+          int partitionPercent = ref.watch(partitionTrainProvider);
+          nobsInt = (nobsInt * partitionPercent) ~/ 100;
+        }
       } catch (e) {
         // Keep nobsInt as null if parsing fails.
       }
@@ -129,12 +137,12 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                     context: context,
                     title: 'Invalid Cluster Count',
                     content: '''
-                    
-                    The number of clusters **$clusterCount** cannot exceed 
+
+                    The number of clusters **$clusterCount** must be less than
                     the number of observations in the dataset **$nobsInt**.
-                    
+
                     Please reduce the number of clusters to continue.
-                    
+
                     ''',
                   );
 
