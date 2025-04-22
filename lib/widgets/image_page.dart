@@ -1,6 +1,6 @@
 /// A widget to build the a common single image based pages.
 //
-// Time-stamp: <Sunday 2025-03-30 07:45:33 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-04-22 14:18:44 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -32,10 +32,11 @@ library;
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,52 +49,70 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/settings.dart';
-import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/select_file.dart';
 import 'package:rattle/utils/show_image_dialog.dart';
 import 'package:rattle/utils/show_ok.dart';
 
+/// The [path] is required. It is the path to a **svg** or **png** file to
+/// display in the app and to open/save externally. If [display] is also
+/// provided then this will be a **png** that is displayed in the app, while the
+/// [path] is an **svg** to open/save externally.
+
 class ImagePage extends ConsumerWidget {
   final String title;
   final String path;
+  final String? display;
 
   const ImagePage({
     super.key,
     required this.title,
     required this.path,
+    this.display,
   });
 
-  /// Load the image bytes from the specified file path.
-  ///
-  /// This method attempts to read the image file as bytes. It waits for the
-  /// file to exist, retrying up to 5 times with a 1-second delay between each
-  /// retry.  If the file does not exist after the retries, it returns `null`.
-  ///
-  /// Returns a [Future] that completes with the image bytes as a [Uint8List] if
-  /// the file exists, or `null` if the file does not exist.
+  // Load the image bytes from the specified file path.
+  //
+  // This method attempts to read the image file as bytes. If using the display parameter,
+  // it will load from [display], otherwise it uses the original SVG path.
+  //
+  // Returns a [Future] that completes with the image bytes as a [Uint8List] if
+  // the file exists, or `null` if the file does not exist.
 
   Future<Uint8List?> _loadImageBytes() async {
-    var imageFile = File(path);
+    try {
+      final displayPath = display ?? path;
 
-    // Wait until the file exists, but limit the waiting period to avoid an infinite loop.
-    int retries = 5;
-    while (!await imageFile.exists() && retries > 0) {
-      await Future.delayed(const Duration(seconds: 1));
-      retries--;
-    }
+      // Wait for the file to exist.
 
-    // If the file doesn't exist, return null.
-    if (!await imageFile.exists()) {
+      final file = File(displayPath);
+      int retryCount = 0;
+      while (!await file.exists() && retryCount < 5) {
+        await Future.delayed(const Duration(seconds: 1));
+
+        retryCount++;
+      }
+
+      if (await file.exists()) {
+        return await file.readAsBytes();
+      } else {
+        if (kDebugMode) {
+          print('Image file not found: $displayPath');
+        }
+
+        return null;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error loading image: $e');
+      }
+
       return null;
     }
-
-    // Read file as bytes
-    return await imageFile.readAsBytes();
   }
 
-  /// Convert the file [svgPath] return [Future] image bytes in PNG format.
-  ///
-  /// Throws an [Exception] if the conversion fails.
+  // Convert the file [svgPath] return [Future] image bytes in PNG format.
+  //
+  // Throws an [Exception] if the conversion fails.
 
   Future<ByteData> _svgToImageBytes(String svgPath) async {
     final svgString = await File(svgPath).readAsString();
@@ -122,7 +141,7 @@ class ImagePage extends ConsumerWidget {
     return byteData;
   }
 
-  /// Export the SVG file [svgPath] into a PDF file [pdfPath].
+  // Export the SVG file [svgPath] into a PDF file [pdfPath].
 
   Future<void> _exportToPdf(String svgPath, String pdfPath) async {
     final pngBytes = await _svgToImageBytes(svgPath);
@@ -144,7 +163,7 @@ class ImagePage extends ConsumerWidget {
     await file.writeAsBytes(await pdf.save());
   }
 
-  /// Export the SVG file [svgPath] into a PNG file [pngPath].
+  // Export the SVG file [svgPath] into a PNG file [pngPath].
 
   Future<void> _exportToPng(String svgPath, String pngPath) async {
     final pngBytes = await _svgToImageBytes(svgPath);
@@ -155,9 +174,8 @@ class ImagePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    debugText('  IMAGE', path);
+    // Clear the image cache.
 
-    // Clear the image cache
     imageCache.clear();
     imageCache.clearLiveImages();
 
@@ -190,6 +208,7 @@ class ImagePage extends ConsumerWidget {
                 children: [
                   Row(
                     // 20240726 gjw Ensure the Save button is aligned at the top.
+
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // 20240726 gjw Remove the Flexible for now. Perhaps avoid
@@ -200,6 +219,7 @@ class ImagePage extends ConsumerWidget {
                       // 20240725 gjw Introduce the Flexible wrapper to avoid the markdown
                       // text overflowing to the elevarted Export
                       // button.
+
                       MarkdownBody(
                         data: wordWrap(title),
                         selectable: true,
@@ -222,7 +242,14 @@ class ImagePage extends ConsumerWidget {
                             color: Colors.blue,
                           ),
                           onPressed: () {
-                            showImageDialog(context, bytes);
+                            // Determine which image to display. If a [display]
+                            // is provided then that overrides [path]. (gjw
+                            // 20250419)
+
+                            final bool isSvg = (display ?? path)
+                                .toLowerCase()
+                                .endsWith('.svg');
+                            showImageDialog(context, bytes, isSvg: isSvg);
                           },
                         ),
                       ),
@@ -246,16 +273,24 @@ class ImagePage extends ConsumerWidget {
                             color: Colors.blue,
                           ),
                           onPressed: () async {
-                            // Generate a unique file name for the new file in the
-                            // temporary directory.
+                            // We always display the [path] externally,
+                            // irrespective of whether we have a [display],
+                            // which is intended for in-app use only.
 
+                            final bool isSvg =
+                                path.toLowerCase().endsWith('.svg');
+
+                            // Generate a unique file name for the new file in the
+                            // temporary directory with the correct extension.
+
+                            String extension = isSvg ? 'svg' : 'png';
                             String fileName =
-                                'plot_${Random().nextInt(10000)}.svg';
+                                'plot_${Random().nextInt(10000)}.$extension';
                             File tempFile = File('$tempDir/$fileName');
 
                             // Copy the original file to the temporary file.
 
-                            File(path).copy(tempFile.path);
+                            await File(path).copy(tempFile.path);
 
                             // Get the image viewer app from SharedPreferences or use the provider default
                             // if not set.
@@ -273,10 +308,10 @@ class ImagePage extends ConsumerWidget {
                             Platform.isWindows
                                 ? Process.run(
                                     imageViewerApp!,
-                                    [tempFile.path],
+                                    [path],
                                     runInShell: true,
                                   )
-                                : Process.run(imageViewerApp!, [tempFile.path]);
+                                : Process.run(imageViewerApp!, [path]);
                           },
                         ),
                       ),
@@ -313,10 +348,17 @@ class ImagePage extends ConsumerWidget {
                               } else if (extension == 'pdf') {
                                 await _exportToPdf(path, pathToSave);
                               } else if (extension == 'png') {
-                                await _exportToPng(path, pathToSave);
+                                if (path.toLowerCase().endsWith('.svg')) {
+                                  await _exportToPng(path, pathToSave);
+                                } else {
+                                  // If source is already PNG, just copy it.
+
+                                  await File(path).copy(pathToSave);
+                                }
                               } else {
                                 // If the user selected an unsupported file
                                 // extension show an error dialog.
+
                                 showOk(
                                   title: 'Error',
                                   context: context,
@@ -350,13 +392,18 @@ class ImagePage extends ConsumerWidget {
                       final double maxHeight =
                           MediaQuery.of(context).size.height * 0.6;
 
+                      // Determine which image to display based on file extension.
+
+                      final bool isSvg =
+                          (display ?? path).toLowerCase().endsWith('.svg');
+
                       return SizedBox(
                         height: maxHeight,
                         width: maxWidth,
                         child: InteractiveViewer(
                           maxScale: 5,
                           alignment: Alignment.topCenter,
-                          child: path.toLowerCase().endsWith('.svg')
+                          child: isSvg
                               ? SvgPicture.memory(
                                   bytes,
                                   fit: BoxFit.scaleDown,
