@@ -1,6 +1,6 @@
 /// A widget to build the a common single image based pages.
 //
-// Time-stamp: <Saturday 2025-04-19 07:10:02 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2025-04-22 14:15:32 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -175,11 +175,6 @@ class ImagePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Log the path being used for debugging.
-
-    debugText('  PATH', path);
-    debugText('  DISPLAY', display ?? 'NULL');
-
     // Clear the image cache.
 
     imageCache.clear();
@@ -252,9 +247,9 @@ class ImagePage extends ConsumerWidget {
                             // is provided then that overrides [path]. (gjw
                             // 20250419)
 
-                            final displayPath = display ?? path;
-                            final bool isSvg =
-                                displayPath.toLowerCase().endsWith('.svg');
+                            final bool isSvg = (display ?? path)
+                                .toLowerCase()
+                                .endsWith('.svg');
                             showImageDialog(context, bytes, isSvg: isSvg);
                           },
                         ),
@@ -279,12 +274,12 @@ class ImagePage extends ConsumerWidget {
                             color: Colors.blue,
                           ),
                           onPressed: () async {
-                            // We always display the [path] extermally
-                            // irrespective of whether we have a [display].
+                            // We always display the [path] externally,
+                            // irrespective of whether we have a [display],
+                            // which is intended for in-app use only.
 
-                            final displayPath = path;
                             final bool isSvg =
-                                displayPath.toLowerCase().endsWith('.svg');
+                                path.toLowerCase().endsWith('.svg');
 
                             // Generate a unique file name for the new file in the
                             // temporary directory with the correct extension.
@@ -296,7 +291,7 @@ class ImagePage extends ConsumerWidget {
 
                             // Copy the original file to the temporary file.
 
-                            await File(displayPath).copy(tempFile.path);
+                            await File(path).copy(tempFile.path);
 
                             // Get the image viewer app from SharedPreferences or use the provider default
                             // if not set.
@@ -341,8 +336,7 @@ class ImagePage extends ConsumerWidget {
                             color: Colors.blue,
                           ),
                           onPressed: () async {
-                            final displayPath = path;
-                            String fileName = displayPath.split('/').last;
+                            String fileName = path.split('/').last;
                             String? pathToSave = await selectFile(
                               defaultFileName: fileName,
                               allowedExtensions: ['svg', 'pdf', 'png'],
@@ -351,18 +345,16 @@ class ImagePage extends ConsumerWidget {
                               String extension =
                                   pathToSave.split('.').last.toLowerCase();
                               if (extension == 'svg') {
-                                await File(displayPath).copy(pathToSave);
+                                await File(path).copy(pathToSave);
                               } else if (extension == 'pdf') {
-                                await _exportToPdf(displayPath, pathToSave);
+                                await _exportToPdf(path, pathToSave);
                               } else if (extension == 'png') {
-                                if (displayPath
-                                    .toLowerCase()
-                                    .endsWith('.svg')) {
-                                  await _exportToPng(displayPath, pathToSave);
+                                if (path.toLowerCase().endsWith('.svg')) {
+                                  await _exportToPng(path, pathToSave);
                                 } else {
                                   // If source is already PNG, just copy it.
 
-                                  await File(displayPath).copy(pathToSave);
+                                  await File(path).copy(pathToSave);
                                 }
                               } else {
                                 // If the user selected an unsupported file
@@ -403,9 +395,8 @@ class ImagePage extends ConsumerWidget {
 
                       // Determine which image to display based on file extension.
 
-                      final String displayPath = display ?? path;
                       final bool isSvg =
-                          displayPath.toLowerCase().endsWith('.svg');
+                          (display ?? path).toLowerCase().endsWith('.svg');
 
                       return SizedBox(
                         height: maxHeight,
