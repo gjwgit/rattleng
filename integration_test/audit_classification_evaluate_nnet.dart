@@ -1,6 +1,6 @@
 /// AUDIT -> TRANSFORM -> MODEL -> NEURAL -> EVALUATE -> ERROR MATRIX
 //
-// Time-stamp: <Tuesday 2025-04-22 10:22:11 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2025-04-22 10:23:53 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -79,7 +79,7 @@ void main() {
       // DATASET -> AUDIT -> ROLES
 
       await loadDemoDataset(tester, 'Audit');
-      await addDelay(1);
+      await addDelay(tester, 1);
       for (final v in varsToIgnore) {
         await setDatasetRole(tester, v, 'Ignore');
       }
