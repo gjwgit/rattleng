@@ -305,7 +305,7 @@ class NumberFieldState extends ConsumerState<NumberField> {
     }
 
     // Restore cursor position if needed.
-    
+
     if (_previousSelection != null && _focusNode.hasFocus) {
       widget.controller.selection = TextSelection.collapsed(
         offset:
