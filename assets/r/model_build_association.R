@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-04-03 17:37:47 +1100 Graham Williams>
+# Time-stamp: <Saturday 2025-04-19 07:23:12 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -132,7 +132,9 @@ dev.off()
 ## be to go with PNG for
 ## now. https://github.com/dnfield/flutter_svg/issues/53
 ##
-## svg("<TEMPDIR>/model_arules_viz.svg")
+svg("<TEMPDIR>/model_arules_viz.svg")
+plot(top_rules, method="graph")
+dev.off()
 
 png("<TEMPDIR>/model_arules_viz.png")
 plot(top_rules, method="graph")

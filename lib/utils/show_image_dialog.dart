@@ -31,7 +31,11 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 
-void showImageDialog(BuildContext context, Uint8List bytes) {
+void showImageDialog(
+  BuildContext context,
+  Uint8List bytes, {
+  bool isSvg = true,
+}) {
   showGeneralDialog(
     context: context,
     pageBuilder: (context, animation, secondaryAnimation) {
@@ -47,7 +51,7 @@ void showImageDialog(BuildContext context, Uint8List bytes) {
                 color: Colors.white,
                 child: InteractiveViewer(
                   maxScale: 5,
-                  child: SvgPicture.memory(bytes),
+                  child: isSvg ? SvgPicture.memory(bytes) : Image.memory(bytes),
                 ),
               ),
               Positioned(
