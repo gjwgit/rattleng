@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2025-04-03 17:34:27 +1100 Graham Williams>
+// Time-stamp: <Saturday 2025-04-19 06:46:25 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -126,9 +126,13 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
     // GGCORRPLOT
     ////////////////////////////////////////////////////////////////////////
     //
-    // This only displays a black box in the app? The display of it using the
-    // external viewer is just fine? Add a note. THe problem is the unhandled
-    // element <filter/> for the Svg loader (gjw 20240815).
+    // The **svg** only displays a black box in the app. The display of it using
+    // the external viewer is just fine. The problem is the unhandled element
+    // <filter/> for the Svg loader. So we pass both the **svg** and the **png**
+    // (gjw 20250419).
+
+    String imageSVG = '$tempDir/explore_correlation_ggcorrplot.svg';
+    String imagePNG = '$tempDir/explore_correlation_ggcorrplot.png';
 
     pages.add(
       ImagePage(
@@ -143,7 +147,8 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
         right. Our current SVG viewer does not support all SVG features.
 
         ''',
-        path: '$tempDir/explore_correlation_ggcorrplot.svg',
+        path: imageSVG,
+        display: imagePNG,
       ),
     );
 
