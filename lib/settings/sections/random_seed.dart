@@ -24,6 +24,7 @@
 /// Authors: Kevin Wang
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
@@ -31,7 +32,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/settings.dart';
-import 'package:rattle/widgets/repeat_button.dart';
+import 'package:rattle/widgets/number_field.dart';
 
 class RandomSeed extends ConsumerWidget {
   const RandomSeed({
@@ -41,6 +42,8 @@ class RandomSeed extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final randomPartition = ref.watch(randomPartitionSettingProvider);
+
+    final TextEditingController _seedController = TextEditingController();
 
     Future<void> _saveRandomSeed(int value) async {
       final prefs = await SharedPreferences.getInstance();
@@ -62,10 +65,10 @@ class RandomSeed extends ConsumerWidget {
       children: [
         Row(
           children: [
-            // Title.
-
-            MarkdownTooltip(
-              message: '''
+            NumberField(
+              label: 'Random Seed',
+              key: const Key('random_seed_settings'),
+              tooltip: '''
 
               **Random Seed:** The random seed is used to control the randomness
               of partitioning the dataset and building models.  Setting a
@@ -74,28 +77,18 @@ class RandomSeed extends ConsumerWidget {
               partitioned or the model is built.
 
               ''',
-              child: const Text(
-                'Random Seed',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              controller: _seedController,
+              inputFormatter: FilteringTextInputFormatter.digitsOnly,
+              validator: (value) => validateInteger(value, min: 1),
+              stateProvider: randomSeedSettingProvider,
+              sharedPrefsKey: 'randomSeed',
             ),
             configRowGap,
-            RandomSeedRow(
-              updateSeed: (newSeed) {
-                ref.read(randomSeedSettingProvider.notifier).state = newSeed;
-                _saveRandomSeed(newSeed);
-              },
-            ),
-            configRowGap,
-
             const Text(
               'Random Partition each Model Build',
               style: TextStyle(fontSize: 16),
             ),
             configRowGap,
-
             MarkdownTooltip(
               message: '''
 
