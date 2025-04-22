@@ -1,6 +1,6 @@
 /// COMP3425 W08 ADULT -> ADABOOST.
 //
-// Time-stamp: <Tuesday 2025-04-22 06:44:16 +1000 >
+// Time-stamp: <Tuesday 2025-04-22 10:10:57 +1000 >
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -60,7 +60,7 @@ void main() {
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Forest');
       await tapButton(tester, 'Build Random Forest');
-      await addDelay(tester, 50);
+      await addDelay(tester, 55);
 
       await navigateToPage(tester, 1, back: 1, title: 'Random Forest Model');
       await verifySelectableText(

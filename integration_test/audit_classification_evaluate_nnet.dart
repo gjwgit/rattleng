@@ -1,6 +1,6 @@
-/// AUDIT -> CLASSIFICATION -> TRANSFORM -> MODEL -> NEURAL -> EVALUATE -> ERROR MATRIX
+/// AUDIT -> TRANSFORM -> MODEL -> NEURAL -> EVALUATE -> ERROR MATRIX
 //
-// Time-stamp: <Thursday 2025-04-10 09:30:08 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2025-04-22 10:06:06 +1000 >
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -68,8 +68,7 @@ final String targetVar = 'adjusted';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('AUDIT -> CLASSIFICATION -> TRANSFORM -> MODEL -> NEURAL -> EVALUATE:',
-      () {
+  group('AUDIT -> TRANSFORM -> MODEL -> NEURAL -> EVALUATE:', () {
     testWidgets('ignore, rescale, configure, evaluate, error matrix.',
         (WidgetTester tester) async {
       app.main();
@@ -79,8 +78,12 @@ void main() {
       // DATASET -> AUDIT -> ROLES
 
       await loadDemoDataset(tester, 'Audit');
+      await addDelay(1);
       for (final v in varsToIgnore) {
         await setDatasetRole(tester, v, 'Ignore');
+      }
+      for (final v in varsToIgnore) {
+        await verifyDatasetRole(v, 'Ignore');
       }
       for (final v in inputVars) {
         await verifyDatasetRole(v, 'Input');

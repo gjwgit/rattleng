@@ -1,6 +1,6 @@
 /// COMP3425 W06 AUDIT -> SVM.
 //
-// Time-stamp: <Tuesday 2025-04-22 06:25:21 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2025-04-22 10:09:16 +1000 >
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -85,7 +85,7 @@ void main() {
 
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
-      await addDelay(tester, 20);
+      await addDelay(tester, 25);
       await navigateToPage(tester, 1, back: 2, title: 'Error Matrix');
       await verifySelectableText(
         tester,
