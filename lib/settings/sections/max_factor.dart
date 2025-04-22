@@ -25,29 +25,20 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:rattle/constants/spacing.dart';
-import 'package:rattle/constants/style.dart';
 import 'package:rattle/providers/cleanse.dart';
-import 'package:rattle/widgets/repeat_button.dart';
+import 'package:rattle/widgets/number_field.dart';
 
 class MaxFactor extends ConsumerWidget {
   const MaxFactor({super.key});
 
-  // Save the "Max Factor" state to SharedPreferences.
-
-  Future<void> _saveMaxFactor(int value) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('maxFactor', value);
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final int maxFactor = ref.watch(maxFactorProvider);
+    final TextEditingController _maxFactorController = TextEditingController();
 
     return MarkdownTooltip(
       message: '''
@@ -60,30 +51,14 @@ class MaxFactor extends ConsumerWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            'Max Factor',
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          configRowGap,
-          RepeatButton(
-            child: const Icon(Icons.remove),
-            onPressed: () {
-              final newValue = maxFactor - 1;
-              ref.read(maxFactorProvider.notifier).state = newValue;
-              _saveMaxFactor(newValue);
-            },
-          ),
-          Text(
-            ' $maxFactor ',
-            style: normalTextStyle,
-          ),
-          RepeatButton(
-            child: const Icon(Icons.add),
-            onPressed: () {
-              final newValue = maxFactor + 1;
-              ref.read(maxFactorProvider.notifier).state = newValue;
-              _saveMaxFactor(newValue);
-            },
+          NumberField(
+            label: 'Max Factor',
+            key: const Key('max_factor_settings'),
+            controller: _maxFactorController,
+            inputFormatter: FilteringTextInputFormatter.digitsOnly,
+            validator: (value) => validateInteger(value, min: 1),
+            stateProvider: maxFactorProvider,
+            sharedPrefsKey: 'maxFactor',
           ),
         ],
       ),

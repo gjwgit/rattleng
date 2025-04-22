@@ -51,6 +51,7 @@ class NumberField extends ConsumerStatefulWidget {
   final num? min;
   final num? max;
   final Future<void> Function(String? newValue)? onValueChanged;
+  final String? sharedPrefsKey;
 
   const NumberField({
     super.key,
@@ -66,10 +67,8 @@ class NumberField extends ConsumerStatefulWidget {
     this.maxWidth = 5,
     this.decimalPlaces = 0,
     this.interval = 1, // Default interval is 1, can be set as double or int
-
-    // Optional parameter for onValueChanged callback.
-
     this.onValueChanged,
+    this.sharedPrefsKey,
   });
 
   @override
@@ -104,6 +103,12 @@ class NumberFieldState extends ConsumerState<NumberField> {
     super.initState();
     _focusNode.addListener(_onFocusChange);
 
+    // Load initial value from SharedPreferences if key is provided.
+
+    if (widget.sharedPrefsKey != null) {
+      _loadFromSharedPrefs();
+    }
+
     // Listen to provider changes and update the controller.
 
     ref.listenManual(
@@ -134,6 +139,40 @@ class NumberFieldState extends ConsumerState<NumberField> {
     );
   }
 
+  Future<void> _loadFromSharedPrefs() async {
+    if (widget.sharedPrefsKey == null) return;
+
+    final prefs = await SharedPreferences.getInstance();
+
+    if (widget.decimalPlaces > 0) {
+      final savedValue = prefs.getDouble(widget.sharedPrefsKey!);
+      if (savedValue != null) {
+        _isInternalChange = true;
+        ref.read(widget.stateProvider.notifier).state = savedValue;
+        _isInternalChange = false;
+      }
+    } else {
+      final savedValue = prefs.getInt(widget.sharedPrefsKey!);
+      if (savedValue != null) {
+        _isInternalChange = true;
+        ref.read(widget.stateProvider.notifier).state = savedValue;
+        _isInternalChange = false;
+      }
+    }
+  }
+
+  Future<void> _saveToSharedPrefs(num value) async {
+    if (widget.sharedPrefsKey == null) return;
+
+    final prefs = await SharedPreferences.getInstance();
+
+    if (widget.decimalPlaces > 0) {
+      await prefs.setDouble(widget.sharedPrefsKey!, value.toDouble());
+    } else {
+      await prefs.setInt(widget.sharedPrefsKey!, value.toInt());
+    }
+  }
+
   void increment() async {
     num currentValue = num.tryParse(widget.controller.text) ?? 0;
     currentValue += widget.interval;
@@ -148,15 +187,16 @@ class NumberFieldState extends ConsumerState<NumberField> {
 
     ref.read(widget.stateProvider.notifier).state = currentValue;
 
-    // This is not a nice way to handle the random seed specifically,
-    // but it's a temporary solution until we implement a more generic
-    // approach for saving field values to SharedPreferences.
+    // Save to SharedPreferences if key is provided.
+
+    if (widget.sharedPrefsKey != null) {
+      await _saveToSharedPrefs(currentValue);
+    }
+
+    // Legacy code for backward compatibility.
 
     if (widget.label == 'Seed:') {
-      // Update the shared preferences only for the seed field.
-
       final prefs = await SharedPreferences.getInstance();
-
       prefs.setInt('randomSeed', currentValue.toInt());
     }
   }
@@ -175,15 +215,16 @@ class NumberFieldState extends ConsumerState<NumberField> {
 
     ref.read(widget.stateProvider.notifier).state = currentValue;
 
-    // This is not a nice way to handle the random seed specifically,
-    // but it's a temporary solution until we implement a more generic
-    // approach for saving field values to SharedPreferences.
+    // Save to SharedPreferences if key is provided.
+
+    if (widget.sharedPrefsKey != null) {
+      await _saveToSharedPrefs(currentValue);
+    }
+
+    // Legacy code for backward compatibility.
 
     if (widget.label == 'Seed:') {
-      // Update the shared preferences only for the seed field.
-
       final prefs = await SharedPreferences.getInstance();
-
       prefs.setInt('randomSeed', currentValue.toInt());
     }
   }
@@ -212,7 +253,7 @@ class NumberFieldState extends ConsumerState<NumberField> {
     timer?.cancel();
   }
 
-  void updateField() {
+  void updateField() async {
     // Store current cursor position.
 
     _previousSelection = widget.controller.selection;
@@ -251,8 +292,20 @@ class NumberFieldState extends ConsumerState<NumberField> {
     // Update the state.
     ref.read(widget.stateProvider.notifier).state = v;
 
-    // Restore cursor position if needed.
+    // Save to SharedPreferences if key is provided.
 
+    if (widget.sharedPrefsKey != null) {
+      await _saveToSharedPrefs(v);
+    }
+
+    // Call onValueChanged callback if provided.
+
+    if (widget.onValueChanged != null) {
+      await widget.onValueChanged!(v.toString());
+    }
+
+    // Restore cursor position if needed.
+    
     if (_previousSelection != null && _focusNode.hasFocus) {
       widget.controller.selection = TextSelection.collapsed(
         offset:
@@ -283,10 +336,11 @@ class NumberFieldState extends ConsumerState<NumberField> {
                   focusNode: _focusNode,
                   decoration: InputDecoration(
                     labelText: widget.label,
+                    labelStyle: const TextStyle(fontWeight: FontWeight.bold),
                     border: const UnderlineInputBorder(),
                     contentPadding: const EdgeInsets.only(
                       right: 40,
-                      left: 10,
+                      left: 0,
                     ),
                     errorText: widget.validator(widget.controller.text),
                     errorStyle: const TextStyle(
