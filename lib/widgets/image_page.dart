@@ -1,6 +1,6 @@
 /// A widget to build the a common single image based pages.
 //
-// Time-stamp: <Tuesday 2025-04-22 14:15:32 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2025-04-22 14:18:44 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -49,7 +49,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:rattle/constants/sunken_box_decoration.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/settings.dart';
-import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/select_file.dart';
 import 'package:rattle/utils/show_image_dialog.dart';
 import 'package:rattle/utils/show_ok.dart';
