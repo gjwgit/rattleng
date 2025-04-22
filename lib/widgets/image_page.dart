@@ -74,7 +74,7 @@ class ImagePage extends ConsumerWidget {
   // Load the image bytes from the specified file path.
   //
   // This method attempts to read the image file as bytes. If using the display parameter,
-  // it will load from that path, otherwise it uses the original SVG path.
+  // it will load from [display], otherwise it uses the original SVG path.
   //
   // Returns a [Future] that completes with the image bytes as a [Uint8List] if
   // the file exists, or `null` if the file does not exist.
@@ -214,6 +214,7 @@ class ImagePage extends ConsumerWidget {
                 children: [
                   Row(
                     // 20240726 gjw Ensure the Save button is aligned at the top.
+
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // 20240726 gjw Remove the Flexible for now. Perhaps avoid
@@ -224,6 +225,7 @@ class ImagePage extends ConsumerWidget {
                       // 20240725 gjw Introduce the Flexible wrapper to avoid the markdown
                       // text overflowing to the elevarted Export
                       // button.
+
                       MarkdownBody(
                         data: wordWrap(title),
                         selectable: true,
@@ -365,6 +367,7 @@ class ImagePage extends ConsumerWidget {
                               } else {
                                 // If the user selected an unsupported file
                                 // extension show an error dialog.
+
                                 showOk(
                                   title: 'Error',
                                   context: context,
