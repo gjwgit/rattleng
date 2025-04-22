@@ -1,6 +1,6 @@
 /// Test kmeans() cluster analysis with demo dataset.
 //
-// Time-stamp: <Saturday 2025-02-01 17:49:15 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-04-21 21:35:02 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -29,14 +29,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/widgets/image_page.dart';
 
+import 'utils/add_delay.dart';
 import 'utils/delays.dart';
-import 'utils/goto_next_page.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/tap_button.dart';
+import 'utils/verify_selectable_text.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -48,31 +49,18 @@ void main() {
     await loadDemoDataset(tester);
     await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Cluster');
-    await tester.pump(interact);
     await tapButton(tester, 'Build Clustering');
-    await tester.pump(delay);
-    await tapButton(tester, 'Build Clustering');
-    await tester.pump(interact);
+    await addDelay(tester, 10);
 
     // Find the text containing the number of default clusters.
 
-    final dataFinder =
-        find.textContaining("built using 'kmeans' with 10 clusters");
-    expect(dataFinder, findsOneWidget);
+    await navigateToPage(tester, 1, title: 'Cluster Analysis');
+    await verifySelectableText(
+      tester,
+      ["built using 'kmeans' with 10 clusters"],
+    );
 
     await tester.pump(interact);
-    await gotoNextPage(tester);
-    await tester.pump(interact);
-    await gotoNextPage(tester);
-    await tester.pump(interact);
-    final imagePageTitleFinder = find.text('Cluster Analysis - Visual');
-    expect(imagePageTitleFinder, findsOneWidget);
-    final imageFinder = find.byType(ImagePage);
-
-    // Assert that the image is present.
-
-    expect(imageFinder, findsOneWidget);
-
-    await tester.pump(interact);
+    await navigateToPage(tester, 2, title: 'Cluster Analysis - Visual');
   });
 }
