@@ -73,6 +73,7 @@ class DatasetToggles extends ConsumerWidget {
       ref.invalidate(partitionProvider);
       ref.invalidate(keepInSyncProvider);
       ref.invalidate(maxFactorProvider);
+      ref.invalidate(randomSeedSettingProvider);
 
       // Save the reset states to preferences.
 
