@@ -144,13 +144,14 @@ class NumberFieldState extends ConsumerState<NumberField> {
       currentValue = min(currentValue, widget.max!);
     }
 
-    // Update the state provider directly.
+    // Round to the specified decimal places if needed.
+
+    if (widget.decimalPlaces > 0) {
+      currentValue =
+          double.parse(currentValue.toStringAsFixed(widget.decimalPlaces));
+    }
 
     ref.read(widget.stateProvider.notifier).state = currentValue;
-
-    // This is not a nice way to handle the random seed specifically,
-    // but it's a temporary solution until we implement a more generic
-    // approach for saving field values to SharedPreferences.
 
     if (widget.label == 'Seed:') {
       // Update the shared preferences only for the seed field.
@@ -171,7 +172,12 @@ class NumberFieldState extends ConsumerState<NumberField> {
       currentValue = max(currentValue, widget.min!);
     }
 
-    // Update state provider directly.
+    // Round to the specified decimal places if needed.
+
+    if (widget.decimalPlaces > 0) {
+      currentValue =
+          double.parse(currentValue.toStringAsFixed(widget.decimalPlaces));
+    }
 
     ref.read(widget.stateProvider.notifier).state = currentValue;
 
