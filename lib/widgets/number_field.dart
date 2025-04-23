@@ -145,9 +145,10 @@ class NumberFieldState extends ConsumerState<NumberField> {
     }
 
     // Round to the specified decimal places if needed.
-    
+
     if (widget.decimalPlaces > 0) {
-      currentValue = double.parse(currentValue.toStringAsFixed(widget.decimalPlaces));
+      currentValue =
+          double.parse(currentValue.toStringAsFixed(widget.decimalPlaces));
     }
 
     ref.read(widget.stateProvider.notifier).state = currentValue;
@@ -172,9 +173,10 @@ class NumberFieldState extends ConsumerState<NumberField> {
     }
 
     // Round to the specified decimal places if needed.
-    
+
     if (widget.decimalPlaces > 0) {
-      currentValue = double.parse(currentValue.toStringAsFixed(widget.decimalPlaces));
+      currentValue =
+          double.parse(currentValue.toStringAsFixed(widget.decimalPlaces));
     }
 
     ref.read(widget.stateProvider.notifier).state = currentValue;
