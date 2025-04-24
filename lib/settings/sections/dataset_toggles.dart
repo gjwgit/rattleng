@@ -85,7 +85,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
     if (_randomSeedController.text != currentSeed) {
       _randomSeedController.text = currentSeed;
     }
-    
+
     final currentMaxFactor = ref.watch(maxFactorProvider).toString();
     if (_maxFactorController.text != currentMaxFactor) {
       _maxFactorController.text = currentMaxFactor;
@@ -104,12 +104,15 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
     }
 
     void _resetToggleStates(bool resetMaxFactor, bool resetRandomSeed) {
-      // Reset toggle providers to their defaults by invalidating them.
+      // Only reset toggle providers if reset button is not for random seed or max factor.
 
-      ref.invalidate(cleanseProvider);
-      ref.invalidate(normaliseProvider);
-      ref.invalidate(partitionProvider);
-      ref.invalidate(keepInSyncProvider);
+      if (!resetMaxFactor && !resetRandomSeed) {
+        ref.invalidate(cleanseProvider);
+        ref.invalidate(normaliseProvider);
+        ref.invalidate(partitionProvider);
+        ref.invalidate(keepInSyncProvider);
+      }
+
       if (resetMaxFactor) ref.invalidate(maxFactorProvider);
       if (resetRandomSeed) ref.invalidate(randomSeedSettingProvider);
 
