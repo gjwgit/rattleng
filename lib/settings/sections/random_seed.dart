@@ -35,15 +35,15 @@ import 'package:rattle/providers/settings.dart';
 import 'package:rattle/widgets/number_field.dart';
 
 class RandomSeed extends ConsumerWidget {
+  final TextEditingController controller;
   const RandomSeed({
     super.key,
+    required this.controller,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final randomPartition = ref.watch(randomPartitionSettingProvider);
-
-    final TextEditingController _seedController = TextEditingController();
 
     Future<void> _saveRandomSeed(int value) async {
       final prefs = await SharedPreferences.getInstance();
@@ -77,7 +77,7 @@ class RandomSeed extends ConsumerWidget {
               partitioned or the model is built.
 
               ''',
-              controller: _seedController,
+              controller: controller,
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: randomSeedSettingProvider,

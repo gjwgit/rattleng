@@ -12,8 +12,8 @@ assignees: ''
 
 ## Why
 
-As a [user] I would like to [clear and concise description of what you
-want to happen.]
+So that as a [user] I can [clear and concise description of
+what you want to happen and the benefit of it.]
 
 ## Closing Crieria
 

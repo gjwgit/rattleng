@@ -34,12 +34,14 @@ import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/widgets/number_field.dart';
 
 class MaxFactor extends ConsumerWidget {
-  const MaxFactor({super.key});
+  final TextEditingController controller;
+  const MaxFactor({
+    super.key,
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final TextEditingController _maxFactorController = TextEditingController();
-
     return MarkdownTooltip(
       message: '''
 
@@ -54,7 +56,7 @@ class MaxFactor extends ConsumerWidget {
           NumberField(
             label: 'Max Factor',
             key: const Key('max_factor_settings'),
-            controller: _maxFactorController,
+            controller: controller,
             inputFormatter: FilteringTextInputFormatter.digitsOnly,
             validator: (value) => validateInteger(value, min: 1),
             stateProvider: maxFactorProvider,
