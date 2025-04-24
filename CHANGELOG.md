@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ FOREST: Limit the number of rules listed [6.4.69 20250424 gjw]
 + SETTINGS: Use standard number chooser widget [6.4.68 20250424 zh]
 + IMAGE: Support png+svg when svg not display in flutter [6.4.67 20250424 zh]
 + CLUSTER: pairs plot on model build [6.4.66 20250417 zy]
