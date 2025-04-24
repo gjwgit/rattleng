@@ -42,16 +42,54 @@ import 'package:rattle/settings/sections/partition.dart';
 import 'package:rattle/settings/sections/random_seed.dart';
 import 'package:rattle/settings/widgets/toggle_row.dart';
 
-class DatasetToggles extends ConsumerWidget {
+class DatasetToggles extends ConsumerStatefulWidget {
   const DatasetToggles({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<DatasetToggles> createState() => _DatasetTogglesState();
+}
+
+class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
+  late final TextEditingController _randomSeedController;
+  late final TextEditingController _maxFactorController;
+
+  @override
+  void initState() {
+    super.initState();
+    _randomSeedController = TextEditingController(
+      text: ref.read(randomSeedSettingProvider).toString(),
+    );
+    _maxFactorController = TextEditingController(
+      text: ref.read(maxFactorProvider).toString(),
+    );
+  }
+
+  @override
+  void dispose() {
+    _randomSeedController.dispose();
+    _maxFactorController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final cleanse = ref.watch(cleanseProvider);
     final normalise = ref.watch(normaliseProvider);
     final partition = ref.watch(partitionProvider);
     final keepInSync = ref.watch(keepInSyncProvider);
     final useValidation = ref.watch(useValidationSettingProvider);
+
+    // Keep the controller in sync with provider if provider changes externally.
+
+    final currentSeed = ref.watch(randomSeedSettingProvider).toString();
+    if (_randomSeedController.text != currentSeed) {
+      _randomSeedController.text = currentSeed;
+    }
+    
+    final currentMaxFactor = ref.watch(maxFactorProvider).toString();
+    if (_maxFactorController.text != currentMaxFactor) {
+      _maxFactorController.text = currentMaxFactor;
+    }
 
     Future<void> _saveToggleStates() async {
       final prefs = await SharedPreferences.getInstance();
@@ -258,7 +296,7 @@ class DatasetToggles extends ConsumerWidget {
           ],
         ),
         settingsGroupGap,
-        RandomSeed(),
+        RandomSeed(controller: _randomSeedController),
 
         settingsGroupGap,
 
@@ -283,7 +321,7 @@ class DatasetToggles extends ConsumerWidget {
               ''',
               child: Row(
                 children: [
-                  MaxFactor(),
+                  MaxFactor(controller: _maxFactorController),
                   configRowGap,
                   MarkdownTooltip(
                     message: '''
