@@ -65,14 +65,15 @@ class DatasetToggles extends ConsumerWidget {
       await prefs.setInt('randomSeed', ref.read(randomSeedSettingProvider));
     }
 
-    void _resetToggleStates() {
+    void _resetToggleStates(bool resetMaxFactor, bool resetRandomSeed) {
       // Reset toggle providers to their defaults by invalidating them.
 
       ref.invalidate(cleanseProvider);
       ref.invalidate(normaliseProvider);
       ref.invalidate(partitionProvider);
       ref.invalidate(keepInSyncProvider);
-      ref.invalidate(maxFactorProvider);
+      if (resetMaxFactor) ref.invalidate(maxFactorProvider);
+      if (resetRandomSeed) ref.invalidate(randomSeedSettingProvider);
 
       // Save the reset states to preferences.
 
@@ -250,7 +251,7 @@ class DatasetToggles extends ConsumerWidget {
               ''',
               child: ElevatedButton(
                 key: const Key('dataset_toggles_reset_button'),
-                onPressed: _resetToggleStates,
+                onPressed: () => _resetToggleStates(false, false),
                 child: const Text('Reset'),
               ),
             ),
@@ -291,7 +292,7 @@ class DatasetToggles extends ConsumerWidget {
 
                     ''',
                     child: ElevatedButton(
-                      onPressed: _resetToggleStates,
+                      onPressed: () => _resetToggleStates(true, false),
                       child: const Text('Reset'),
                     ),
                   ),
