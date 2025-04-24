@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-03-26 08:47:53 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-04-24 16:59:11 +1000 Graham Williams>
 #
 # Rattle version <VERSION>.
 #
@@ -262,3 +262,112 @@ theme_rattle <- function(base_size = 11, base_family = "") {
 
 ## <MOVED> TO <USING> <SETTINGS_GRAPHIC_THEME> IN <SCRIPTS>
 ## theme_default <- theme_rattle
+
+## THE FOLLOWING NEEDS TO BE UPDATED IN RATTLE ITSELF
+
+# Override rattle::printRandomForest() to support max.rules.
+
+printRandomForest <- function(model, n=1, max.rules=10, include.class=NULL,
+                              format="", comment="")
+{
+  # include.class	Vector of predictions to include
+
+  if (!inherits(model, "randomForest"))
+    stop(Rtxt("the model is not of the 'randomForest' class"))
+
+  if (format=="VB") comment="'"
+
+  tr <- randomForest::getTree(model, n)
+  tr.paths <- rattle:::getRFPathNodesTraverse(tr)
+  tr.vars <- attr(model$terms, "dataClasses")[-1]
+
+  ## Initialise the output
+
+  cat(sprintf("%sRandom Forest Model %d", comment, n), "\n\n")
+
+  ## Generate a simple form for each rule.
+
+  cat(paste(comment,
+            "-------------------------------------------------------------\n",
+            sep=""))
+
+  if (format=="VB")
+    cat("IF FALSE THEN\n' This is a No Op to simplify the code\n\n")
+
+  ## Number of rules generated
+
+  nrules <- 0
+
+  for (i in seq_along(tr.paths))
+  {
+    tr.path <- tr.paths[[i]]
+    nodenum <- as.integer(names(tr.paths[i]))
+    # 090925 This needs work to make it apply in the case of a
+    # regression model. For now simply note this in the output.
+    target <- levels(model$y)[tr[nodenum,'prediction']]
+
+    if (! is.null(include.class) && target %notin% include.class) next()
+
+    nrules <- nrules + 1
+
+    if (i <= max.rules) {
+
+    cat(sprintf("%sTree %d Rule %d Node %d %s\n \n",
+                comment, n, i, nodenum,
+                ifelse(is.null(target), "Regression (to do - extract predicted value)",
+                       paste("Decision", target))))
+
+    if (format=="VB") cat("ELSE IF TRUE\n")
+
+    ## Indicies of variables in the path
+
+    var.index <- tr[,3][abs(tr.path)] # 3rd col is "split var"
+    var.names <- names(tr.vars)[var.index]
+    var.values <- tr[,4][abs(tr.path)] # 4th col is "split point"
+
+    for (j in 1:(length(tr.path)-1))
+    {
+      var.class <- tr.vars[var.index[j]]
+      if (var.class == "character" | var.class == "factor" | var.class == "ordered")
+      {
+        node.op <- "IN"
+
+        ## Convert the binary to a 0/1 list for the levels.
+
+        var.levels <- levels(eval(model$call$data)[[var.names[j]]])
+        bins <- rattle:::sdecimal2binary(var.values[j])
+        bins <- c(bins, rep(0, length(var.levels)-length(bins)))
+        if (tr.path[j] > 0)
+          node.value <- var.levels[bins==1]
+        else
+          node.value <- var.levels[bins==0]
+        node.value <- sprintf('("%s")', paste(node.value, collapse='", "'))
+      }
+      else if (var.class == "integer" | var.class == "numeric")
+      {
+        ## Assume spliting to the left means "<", and right ">=",
+        ## which is not what the man page for getTree claims!
+        if (tr.path[j]>0)
+          node.op <- "<="
+        else
+          node.op <- ">"
+        node.value <- var.values[j]
+      }
+      else
+        stop(sprintf("Rattle E234: getRFRuleSet: class %s not supported.",
+                     var.class))
+
+      if (format=="VB")
+        cat(sprintf("AND\n%s %s %s\n", var.names[j], node.op, node.value))
+      else
+        cat(sprintf("%d: %s %s %s\n", j, var.names[j], node.op, node.value))
+    }
+    if (format=="VB") cat("THEN Count = Count + 1\n")
+    cat("-----------------------------------------------------------------\n")
+ }
+  if (format=="VB") cat("END IF\n\n")
+  }
+  shown <- ""
+  if (max.rules < nrules) shown <- glue(". Only {max.rules} rules shown.")
+  cat(sprintf("%sNumber of rules in Tree %d: %d%s\n\n", comment, n, nrules, shown))
+}
