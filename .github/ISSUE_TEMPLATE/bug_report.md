@@ -45,6 +45,7 @@ Where has the issue been observed:
 
 [Add any other context about the problem here.]
 
+App Version:
 Flutter Version:
 
 ## Closing Crieria
