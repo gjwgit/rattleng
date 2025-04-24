@@ -183,7 +183,12 @@ class NumberFieldState extends ConsumerState<NumberField> {
       currentValue = min(currentValue, widget.max!);
     }
 
-    // Update the state provider directly.
+    // Round to the specified decimal places if needed.
+
+    if (widget.decimalPlaces > 0) {
+      currentValue =
+          double.parse(currentValue.toStringAsFixed(widget.decimalPlaces));
+    }
 
     ref.read(widget.stateProvider.notifier).state = currentValue;
 
@@ -192,8 +197,6 @@ class NumberFieldState extends ConsumerState<NumberField> {
     if (widget.sharedPrefsKey != null) {
       await _saveToSharedPrefs(currentValue);
     }
-
-    // Legacy code for backward compatibility.
 
     if (widget.label == 'Seed:') {
       final prefs = await SharedPreferences.getInstance();
@@ -211,7 +214,12 @@ class NumberFieldState extends ConsumerState<NumberField> {
       currentValue = max(currentValue, widget.min!);
     }
 
-    // Update state provider directly.
+    // Round to the specified decimal places if needed.
+
+    if (widget.decimalPlaces > 0) {
+      currentValue =
+          double.parse(currentValue.toStringAsFixed(widget.decimalPlaces));
+    }
 
     ref.read(widget.stateProvider.notifier).state = currentValue;
 
