@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-04-24 16:52:39 +1000 Graham Williams>
+# Time-stamp: <Thursday 2025-04-24 16:59:11 +1000 Graham Williams>
 #
 # Rattle version <VERSION>.
 #
@@ -263,7 +263,7 @@ theme_rattle <- function(base_size = 11, base_family = "") {
 ## <MOVED> TO <USING> <SETTINGS_GRAPHIC_THEME> IN <SCRIPTS>
 ## theme_default <- theme_rattle
 
-## THE FOLLWOING NEEDS TO BE UPDATED IN RATTLE ITSELF
+## THE FOLLOWING NEEDS TO BE UPDATED IN RATTLE ITSELF
 
 # Override rattle::printRandomForest() to support max.rules.
 
