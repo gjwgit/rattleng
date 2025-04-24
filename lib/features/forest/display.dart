@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2025-04-16 12:13:07 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-04-24 16:51:52 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -133,7 +133,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
       content = rExtract(
         stdout,
-        'printRandomForests(model_randomForest, ${forestNo})',
+        'printRandomForest(model_randomForest, ${forestNo}',
       );
 
       if (content.isNotEmpty) {
