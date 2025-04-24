@@ -12,19 +12,18 @@ on:
       - dev
 
 env:
-  FLUTTER_VERSION: '3.29.2'
+  FLUTTER_VERSION: '3.29.3'
 
 jobs:
 
   ########################################################################
-  #
-  # 20240801 gjw Originally I was building on Ubuntu 22.04 since
-  # builds on 24.04 would not run on Mint 21.3. Then I moved to an
-  # even older Ubuntu 20.04 to get it more widely available. Such
-  # builds seem to work on 22.04 and 24.04. Backwards the error was:
-  # "rattle: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.34' not
-  # found (required by rattle)" On Ubuntu 20.04 the highest version of
-  # GLIBC is GLIBC2.30.
+  # 20250110 gjw Originally for rattle I was building on Ubuntu 22.04
+  # since my 24.04 version would not run on Mint 21.3. Then moved even
+  # older to Ubuntu 20.04 to get it more widely available. Seems to
+  # work on 22.04 and 24.04. Backwards the error was: "rattle:
+  # /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.34' not found
+  # (required by rattle)" On Ubuntu 20.04 the highest version of GLIBC
+  # is GLIBC2.30.
   #
   # 20250311 gjw Support for Ubuntu 20.04 is being deprecated
   # https://github.com/gjwgit/rattleng/actions/runs/13753262146.
@@ -119,14 +118,16 @@ jobs:
           echo "APP_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Compile .ISS to .EXE Installer
-        uses: gjwgit/Inno-Setup-Action@v1.2.5
-        #
-        # The github repo for the below github action has disappeared
-        # completely (user and repo). I found a recent fork from the
+
+        # The github repo for the github action Minionguyjpro/Inno-Setup-Action@v1.2.5
+        # disappeared completely (user and repo). I found a recent fork from the
         # Wayback machine and forked it myself and that seems to
         # work as above. (gjw 20250403)
         #
-        # uses: Minionguyjpro/Inno-Setup-Action@v1.2.5
+        # Seems like it is now back. (gjw 20250423)
+        #
+        # uses: gjwgit/Inno-Setup-Action@v1.2.5
+        uses: Minionguyjpro/Inno-Setup-Action@v1.2.5
         with:
           path: installers/rattle-windows.iss
           options: /O+
