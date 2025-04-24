@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-24 12:25:24 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-04-24 16:48:56 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -78,7 +78,7 @@ rn[order(rn[,3], decreasing=TRUE),]
 
 # Display tree number 1.
 
-printRandomForests(model_randomForest, <RF_NO_TREE>)
+printRandomForest(model_randomForest, <RF_NO_TREE>)
 
 # Plot the relative importance of the variables.
 
