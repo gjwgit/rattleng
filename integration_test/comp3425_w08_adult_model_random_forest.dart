@@ -1,6 +1,6 @@
 /// COMP3425 W08 ADULT -> ADABOOST.
 //
-// Time-stamp: <Tuesday 2025-04-22 13:27:04 +1000 >
+// Time-stamp: <Saturday 2025-04-26 08:21:33 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -86,7 +86,7 @@ void main() {
           '4: capital_gain <= 4030',
           '5: workclass IN ("Federal-gov", "Self-emp-not-inc")',
           '6: age <= 31.5',
-          'Number of rules in Tree 1: 2186',
+          'Number of rules in Tree 1: 2186. Only 10 rules shown.',
         ],
       );
 
@@ -125,7 +125,7 @@ void main() {
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
 
-      await navigateToPage(tester, 1, back: 1, title: 'Error Matrix');
+      await navigateToPage(tester, 1, back: 2, title: 'Error Matrix');
       await verifySelectableText(
         tester,
         [
