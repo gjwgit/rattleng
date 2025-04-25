@@ -121,7 +121,6 @@ class DatasetPopup extends ConsumerWidget {
 
                   if (!context.mounted) return;
                   Navigator.pop(context, 'Local File');
-                  Navigator.of(context).pop();
 
                   // Access the PageController via Riverpod and move to the second page.
                   //
