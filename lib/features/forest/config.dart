@@ -86,6 +86,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
   final TextEditingController _treesController = TextEditingController();
   final TextEditingController _variablesController = TextEditingController();
   final TextEditingController _treeNoController = TextEditingController();
+  final TextEditingController _maxRulesController = TextEditingController();
   final TextEditingController _rfSampleSizeController = TextEditingController();
 
   @override
@@ -95,6 +96,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
     _treesController.dispose();
     _variablesController.dispose();
     _treeNoController.dispose();
+    _maxRulesController.dispose();
     _rfSampleSizeController.dispose();
     super.dispose();
   }
@@ -367,6 +369,22 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               inputFormatter:
                   FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
               stateProvider: treeNoForestProvider,
+            ),
+
+            NumberField(
+              label: 'Max Rules:',
+              key: const Key('maxRulesForest'),
+              controller: _maxRulesController,
+              tooltip: '''
+
+                **Max Rules:** Set this to the maximum number of rules to display
+                  in the output after building the model.
+
+                ''',
+              validator: validateVector,
+              inputFormatter:
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
+              stateProvider: maxRulesForestProvider,
             ),
 
             buildTextField(
