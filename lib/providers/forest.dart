@@ -34,6 +34,7 @@ final algorithmForestProvider =
     StateProvider<AlgorithmType>((ref) => AlgorithmType.traditional);
 final forestSampleSizeProvider = StateProvider<String?>((ref) => null);
 final imputeForestProvider = StateProvider<bool>((ref) => true);
+final maxRulesForestProvider = StateProvider<int>((ref) => 10);
 final predictorNumForestProvider = StateProvider<int>((ref) => 4);
 final treeNumForestProvider = StateProvider<int>((ref) => 500);
 final treeNoForestProvider = StateProvider<int>((ref) => 1);
