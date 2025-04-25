@@ -65,6 +65,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
     String stdout = ref.watch(stdoutProvider);
     bool useValidation = ref.watch(useValidationSettingProvider);
     int forestNo = ref.watch(treeNoForestProvider);
+    int forestMaxRules = ref.watch(maxRulesForestProvider);
     AlgorithmType forestAlgorithm =
         ref.watch(algorithmForestProvider.notifier).state;
 
@@ -133,7 +134,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
       content = rExtract(
         stdout,
-        'printRandomForest(model_randomForest, ${forestNo}',
+        'printRandomForest(model_randomForest, ${forestNo}, max.rules = ${forestMaxRules})',
       );
 
       if (content.isNotEmpty) {

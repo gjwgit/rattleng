@@ -251,6 +251,7 @@ Future<void> rSource(
   String? forestSampleSize = ref.read(forestSampleSizeProvider);
   int forestPredictorNum = ref.read(predictorNumForestProvider);
   int forestNo = ref.read(treeNoForestProvider);
+  int forestMaxRules = ref.read(maxRulesForestProvider);
   bool forestImpute = ref.read(imputeForestProvider);
 
   // LINEAR
@@ -621,6 +622,7 @@ Future<void> rSource(
   code = code.replaceAll('<RF_NUM_TREES>', forestTrees.toString());
   code = code.replaceAll('<RF_MTRY>', forestPredictorNum.toString());
   code = code.replaceAll('<RF_NO_TREE>', forestNo.toString());
+  code = code.replaceAll('<RF_MAX_SHOW_RULES>', forestMaxRules.toString());
   code = code.replaceAll(
     '<RF_NA_ACTION>',
     forestImpute ? 'randomForest::na.roughfix' : 'na.omit',

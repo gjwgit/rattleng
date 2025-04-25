@@ -72,7 +72,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       label: 'Forest',
       checkCommands: [
         ['print(model_conditionalForest)', 'print(importance_df)'],
-        ['print(model_randomForest)', 'printRandomForests'],
+        ['print(model_randomForest)', 'printRandomForest'],
       ],
       checkFiles: [
         ['model_conditional_forest.svg'],
