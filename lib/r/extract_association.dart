@@ -29,9 +29,8 @@ import 'package:rattle/utils/timestamp.dart';
 
 String _basicTemplate(String log, bool isSummary) {
   String hd = isSummary
-      ? 'Summary of the Association Rules'
-      : 'Interestingness Measures';
-  const String md = "(built using 'apriori'):";
+      ? 'Summary of the Association Rules.'
+      : 'Interestingness Measures.';
   final String sm = rExtract(
     log,
     isSummary ? '> print(summary(model_arules))' : '> print(measures)',
@@ -42,7 +41,7 @@ String _basicTemplate(String log, bool isSummary) {
   String result = '';
 
   if (sm != '') {
-    result = '$hd $md\n$sm\n\nRattle timestamp: $ts';
+    result = '$hd \n$sm\n\nRattle timestamp: $ts';
   }
 
   return result;
