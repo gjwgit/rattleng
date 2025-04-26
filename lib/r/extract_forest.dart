@@ -39,11 +39,8 @@ String _basicTemplate(
       ref.read(algorithmForestProvider.notifier).state;
 
   String hd = forestAlgorithm == AlgorithmType.traditional
-      ? 'Summary of the Random Forest model for Classification'
-      : 'Summary of the Conditional Forest model for Classification';
-  String md = forestAlgorithm == AlgorithmType.traditional
-      ? "(built using 'randomForest'):"
-      : "(built using 'cforest'):";
+      ? 'Summary of the Random Forest model.'
+      : 'Summary of the Conditional Forest model.';
   final String fm = forestAlgorithm == AlgorithmType.traditional
       ? rExtractFormula(log)
       : rExtract(log, '> print(model_conditionalForest)');
@@ -61,9 +58,9 @@ String _basicTemplate(
   String result = '';
 
   if (pr != '') {
-    result = '$hd $md\n\nFormula: $fm\n$pr \n$pe\n\nRattle timestamp: $ts';
+    result = '$hd \n\nFormula: $fm\n$pr \n$pe\n\nRattle timestamp: $ts';
   }
-  if (fm != '') result = '$hd $md\n\nFormula: $fm\n\nRattle timestamp: $ts';
+  if (fm != '') result = '$hd \n\nFormula: $fm\n\nRattle timestamp: $ts';
 
   return result;
 }
