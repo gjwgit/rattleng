@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-24 12:27:22 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-04-28 09:19:43 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -41,7 +41,7 @@ mdesc <- "Linear Model"
 model_glm <- glm(
   form,
   data   = trds,
-  family = binomial(link = <LINEAR_FAMILY>),
+  family = binomial(link=<LINEAR_FAMILY>),
 )
 
 # Output a textual view of the model for review.
@@ -62,12 +62,12 @@ cat(sprintf("Pseudo R-Square (optimistic): %.8f\n",
              cor(model_glm$y, model_glm$fitted.values)))
 
 cat('\n==== <ANOVA> ====\n\n')
-print(anova(model_glm, test = "Chisq"))
+print(anova(model_glm, test="Chisq"))
 cat("\n")
 
 # Display diagnostics the model for review.
 
 svg("<TEMPDIR>/model_glm_diagnostic_plots.svg")
-par(mfrow = c(2, 2))
+par(mfrow=c(2, 2))
 plot(model_glm)
 dev.off()
