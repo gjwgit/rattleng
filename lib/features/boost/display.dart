@@ -38,6 +38,7 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/r/extract_formula.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/image_page.dart';
@@ -72,6 +73,10 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
       String content =
           rExtract(stdout, 'print(importance_dt, row.names = FALSE)');
 
+      const String hd = 'Summary of the Extreme Boosting model.';
+      final String fm = rExtractFormula(stdout);
+      String displayContent = '$hd \n\nFormula: $fm\n\n$content';
+
       if (content.isNotEmpty) {
         pages.add(
           TextPage(
@@ -85,7 +90,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
           [xgb::xgboost()](https://www.rdocumentation.org/packages/xgboost/topics/xgb.train).
 
             ''',
-            content: '\n$content',
+            content: '$displayContent',
           ),
         );
       }
@@ -108,7 +113,15 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
         );
       }
     } else if (algorithm == 'Adaptive') {
+      const String scd = 'Summary of the AdaBoost model.';
+
+      final String fm = rExtractFormula(stdout);
+
       String content = rExtract(stdout, 'print(model_ada)');
+
+      content = content.replaceAll('Call:\n', '');
+
+      content = '$scd \n\nFormula: $fm\n\n$content';
 
       if (content.isNotEmpty) {
         pages.add(
@@ -123,7 +136,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
           [ada::ada()](https://www.rdocumentation.org/packages/ada/topics/ada).
 
             ''',
-            content: '\n$content',
+            content: '$content',
           ),
         );
       }

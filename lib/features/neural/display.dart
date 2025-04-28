@@ -36,6 +36,7 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/r/extract_formula.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/image_page.dart';
@@ -82,6 +83,8 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
 
     if (algorithm == 'nnet') {
       content = rExtract(stdout, 'print(model_nn)');
+      const String hd = 'Summary of the NNET model.';
+      final String fm = rExtractFormula(stdout);
 
       if (content.isNotEmpty) {
         // Capitalise each line and for the Input: line, wordwrap and comma
@@ -139,6 +142,7 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
 $weights
 
     ''';
+        String displayContent = '$hd \n\nFormula: $fm\n\n$content';
 
         pages.add(
           TextPage(
@@ -152,7 +156,7 @@ $weights
           [nnet::nnet()](https://www.rdocumentation.org/packages/nnet/topics/nnet).
 
             ''',
-            content: '\n$content',
+            content: '$displayContent',
           ),
         );
       }
@@ -168,6 +172,8 @@ $weights
 
     if (algorithm == 'neuralnet') {
       content = rExtract(stdout, 'print(model_neuralnet)');
+      const String hd = 'Summary of the NeuralNet model.';
+      final String fm = rExtractFormula(stdout);
 
       if (content.isNotEmpty) {
         // Capitalise each line and for the Input: line, wordwrap and comma
@@ -218,6 +224,7 @@ $weights
 $weights
 
     ''';
+        String displayContent = '$hd \n\nFormula: $fm\n\n$content';
 
         pages.add(
           TextPage(
@@ -231,7 +238,7 @@ $weights
             [nnet::neuralnet()](https://www.rdocumentation.org/packages/neuralnet/versions/1.44.2/topics/neuralnet).
 
             ''',
-            content: '\n$content',
+            content: '$displayContent',
           ),
         );
       }
