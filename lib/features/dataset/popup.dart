@@ -301,7 +301,7 @@ class DatasetPopup extends ConsumerWidget {
                           'data/weather_2007.csv',
                           '2007',
                         );
-                        
+
                         // Access the PageController via Riverpod and move to the second page.
 
                         await ref.read(pageControllerProvider).animateToPage(
