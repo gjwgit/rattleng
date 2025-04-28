@@ -50,6 +50,7 @@ List<Widget> ctreePages(
   // Temporary storage for page content or image.
 
   String content = '';
+  String displayContent = '';
   String image = '';
 
   ////////////////////////////////////////////////////////////////////////
@@ -62,7 +63,7 @@ List<Widget> ctreePages(
 
   content = rExtract(stdout, 'print(model_ctree)');
 
-  content = '$scd \n\nFormula: $fm\n$content';
+  displayContent = '$scd \n\nFormula: $fm\n$content';
 
   if (content.isNotEmpty) {
     pages.add(
@@ -74,7 +75,7 @@ List<Widget> ctreePages(
         Built using [partykit::ctree()](https://www.rdocumentation.org/packages/partykit/topics/ctree).
 
         ''',
-        content: '$content',
+        content: '$displayContent',
       ),
     );
   }
