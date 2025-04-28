@@ -1,7 +1,7 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 6.4.70+215
+version: 6.4.72+215
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
@@ -13,6 +13,8 @@ environment:
 # To see which dependencies have newer versions available:
 #
 # `flutter pub outdated`
+#
+# (gjw 20250429)
 
 dependencies:
   flutter:
