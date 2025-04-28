@@ -13,6 +13,8 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ MODEL: Always display formula in page 1 [6.4.72 20250429 zy]
++ DATASET: Always go to page 1 on load [6.4.71 20250429 zy]
 + FOREST: Add config option for max rules [6.4.70 20250425 zy]
 + FOREST: Limit the number of rules listed [6.4.69 20250424 gjw]
 + SETTINGS: Use standard number chooser widget [6.4.68 20250424 zy]
