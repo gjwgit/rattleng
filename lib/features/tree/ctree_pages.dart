@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/r/extract_formula.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -49,13 +50,20 @@ List<Widget> ctreePages(
   // Temporary storage for page content or image.
 
   String content = '';
+  String displayContent = '';
   String image = '';
 
   ////////////////////////////////////////////////////////////////////////
 
+  const String scd = 'Summary of the Conditional Decision Tree model.';
+
+  final String fm = rExtractFormula(stdout);
+
   // Default tree text.
 
   content = rExtract(stdout, 'print(model_ctree)');
+
+  displayContent = '$scd \n\nFormula: $fm\n$content';
 
   if (content.isNotEmpty) {
     pages.add(
@@ -67,7 +75,7 @@ List<Widget> ctreePages(
         Built using [partykit::ctree()](https://www.rdocumentation.org/packages/partykit/topics/ctree).
 
         ''',
-        content: '\n$content',
+        content: '$displayContent',
       ),
     );
   }

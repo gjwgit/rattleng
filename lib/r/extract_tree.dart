@@ -28,8 +28,7 @@ import 'package:rattle/r/extract_formula.dart';
 import 'package:rattle/utils/timestamp.dart';
 
 String _basicTemplate(String log) {
-  const String hd = 'Summary of the Decision Tree model for Classification';
-  const String md = "(built using 'rpart'):";
+  const String hd = 'Summary of the Traditional Decision Tree model.';
   final String fm = rExtractFormula(log);
   final String pr = rExtract(log, '> print(model_rpart)');
   final String cp = rExtract(log, '> printcp(model_rpart)');
@@ -38,7 +37,7 @@ String _basicTemplate(String log) {
   String result = '';
 
   if (pr != '') {
-    result = '$hd $md\n\nFormula: $fm\n\n$pr\n$cp\n\nRattle timestamp: $ts';
+    result = '$hd \n\nFormula: $fm\n\n$pr\n$cp\n\nRattle timestamp: $ts';
   }
 
   return result;

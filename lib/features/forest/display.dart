@@ -37,6 +37,7 @@ import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/tree.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_forest.dart';
+import 'package:rattle/r/extract_formula.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/image_page.dart';
@@ -78,6 +79,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
     ];
 
     String content = '';
+    String displayContent = '';
 
     ////////////////////////////////////////////////////////////////////////
 
@@ -97,6 +99,13 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
             .replaceFirst('Confusion', '\nConfusion')
         : content = rExtract(stdout, 'print(model_cforest)');
 
+    if (forestAlgorithm == AlgorithmType.traditional) {
+      const String scd = 'Summary of the Traditional Forest model.';
+
+      final String fm = rExtractFormula(stdout);
+      displayContent = '$scd \n\nFormula: $fm\n$content';
+    }
+
     if (content.isNotEmpty) {
       pages.add(
         TextPage(
@@ -108,7 +117,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
           [randomForest::randomForest()](https://www.rdocumentation.org/packages/randomForest/topics/randomForest).
 
           ''',
-          content: '$content',
+          content: '$displayContent',
         ),
       );
     }
