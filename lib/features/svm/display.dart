@@ -54,6 +54,7 @@ class _SvmDisplayState extends ConsumerState<SvmDisplay> {
     );
     String stdout = ref.watch(stdoutProvider);
     String content = '';
+    String displayContent = '';
 
     List<Widget> pages = [
       showMarkdownFile(
@@ -73,7 +74,7 @@ class _SvmDisplayState extends ConsumerState<SvmDisplay> {
 
     content = rExtract(stdout, 'print(model_svm)');
 
-    content = '$scd \n\nFormula: $fm\n\n$content';
+    displayContent = '$scd \n\nFormula: $fm\n\n$content';
 
     if (content.isNotEmpty) {
       pages.add(
@@ -86,7 +87,7 @@ class _SvmDisplayState extends ConsumerState<SvmDisplay> {
           [kernlab::ksvm()](https://www.rdocumentation.org/packages/kernlab/topics/ksvm.html)
 
           ''',
-          content: '$content',
+          content: '$displayContent',
         ),
       );
     }

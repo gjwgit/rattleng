@@ -79,6 +79,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
     ];
 
     String content = '';
+    String displayContent = '';
 
     ////////////////////////////////////////////////////////////////////////
 
@@ -102,7 +103,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
       const String scd = 'Summary of the Traditional Forest model.';
 
       final String fm = rExtractFormula(stdout);
-      content = '$scd \n\nFormula: $fm\n$content';
+      displayContent = '$scd \n\nFormula: $fm\n$content';
     }
 
     if (content.isNotEmpty) {
@@ -116,7 +117,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
           [randomForest::randomForest()](https://www.rdocumentation.org/packages/randomForest/topics/randomForest).
 
           ''',
-          content: '$content',
+          content: '$displayContent',
         ),
       );
     }
