@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Monday 2025-03-10 09:34:16 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-04-28 09:54:55 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -183,16 +183,25 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       'Ignore': '''
 
       For the selected variables in the data table below set their role to
-      **Ignore**. Ignored variables will not be used in any analysis and can be
-      removed from the dataset using the **Cleanup** feature under the
-      **Transform** tab.
+      **Ignore**.
+
+      To select or deselect **all variables** shift-click the checkbox in the
+      header row.
+
+      Ignored variables will not be used in any analysis and can be removed from
+      the dataset using the **Cleanup** feature under the **Transform** tab.
 
       ''',
       'Input': '''
 
       For the slected variables in the data table below set their role to
-      **Input**. Input variables are used for predictive modelling in the
-      **Model** tab, for example, to predict a **Target** variable.
+      **Input**.
+
+      To select or deselect **all variables** shift-click the checkbox in the
+      header row.
+
+      Input variables are used for predictive modelling in the **Model** tab,
+      for example, to predict a **Target** variable.
 
       ''',
     };
@@ -435,151 +444,138 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     return SizedBox(
       key: const Key('roles listView'),
       height: 800,
-      child: MarkdownTooltip(
-        message: '''
-        
-        To select or deselect all variables shift-click the checkbox to
-        the left here in the header row.
-        
-        ''',
-
-        // Use [_horizontalScrollController] twice to ensure that
-        // the Scrollbar is properly linked to a ScrollPosition.
-
-        child: Scrollbar(
+      child: Scrollbar(
+        controller: _horizontalScrollController,
+        thumbVisibility: true,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
           controller: _horizontalScrollController,
-          thumbVisibility: true,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            controller: _horizontalScrollController,
-            child: SizedBox(
-              width: 1300, // Set the width to avoid truncated label.
-              child: DataTable2(
-                dataRowHeight: 60.0,
-                checkboxAlignment: Alignment.centerLeft,
-                columns: [
-                  DataColumn2(
-                    label: Text(
-                      'Variable',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    size: ColumnSize.M,
+          child: SizedBox(
+            width: 1300, // Set the width to avoid truncated label.
+            child: DataTable2(
+              dataRowHeight: 60.0,
+              checkboxAlignment: Alignment.centerLeft,
+              columns: [
+                DataColumn2(
+                  label: Text(
+                    'Variable',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  DataColumn2(
-                    label: Text(
-                      'Role',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    fixedWidth: 450.0,
+                  size: ColumnSize.M,
+                ),
+                DataColumn2(
+                  label: Text(
+                    'Role',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  DataColumn2(
-                    label: Text(
-                      'Type',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    size: ColumnSize.S,
+                  fixedWidth: 450.0,
+                ),
+                DataColumn2(
+                  label: Text(
+                    'Type',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  DataColumn2(
-                    label: Text(
-                      'Unique',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    size: ColumnSize.S,
+                  size: ColumnSize.S,
+                ),
+                DataColumn2(
+                  label: Text(
+                    'Unique',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  DataColumn2(
-                    label: Text(
-                      'Missing',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    size: ColumnSize.S,
+                  size: ColumnSize.S,
+                ),
+                DataColumn2(
+                  label: Text(
+                    'Missing',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  DataColumn2(
-                    label: Text(
-                      'Sample',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    size: ColumnSize.L,
+                  size: ColumnSize.S,
+                ),
+                DataColumn2(
+                  label: Text(
+                    'Sample',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                ],
-                rows: vars.map((variable) {
-                  int rowIndex = vars.indexOf(variable);
-                  bool isSelected = selectedRows.contains(rowIndex);
+                  size: ColumnSize.L,
+                ),
+              ],
+              rows: vars.map((variable) {
+                int rowIndex = vars.indexOf(variable);
+                bool isSelected = selectedRows.contains(rowIndex);
 
-                  return DataRow(
-                    selected: isSelected,
-                    onSelectChanged: (bool? selected) {
-                      setState(() {
-                        if (selected == true) {
-                          if (_isShiftPressed) {
-                            // Shift-click: Add multiple selections from the last selected row.
+                return DataRow(
+                  selected: isSelected,
+                  onSelectChanged: (bool? selected) {
+                    setState(() {
+                      if (selected == true) {
+                        if (_isShiftPressed) {
+                          // Shift-click: Add multiple selections from the last selected row.
 
-                            selectedRows.add(rowIndex);
-                          } else if (_isCtrlPressed &&
-                              selectedRows.isNotEmpty) {
-                            // Ctrl-click: Auto-select range between the first selected row and this row.
+                          selectedRows.add(rowIndex);
+                        } else if (_isCtrlPressed && selectedRows.isNotEmpty) {
+                          // Ctrl-click: Auto-select range between the first selected row and this row.
 
-                            int firstSelectedRow = selectedRows.first;
-                            int lastSelectedRow = rowIndex;
+                          int firstSelectedRow = selectedRows.first;
+                          int lastSelectedRow = rowIndex;
 
-                            // Ensure that we have a start and end point correctly ordered.
+                          // Ensure that we have a start and end point correctly ordered.
 
-                            if (lastSelectedRow < firstSelectedRow) {
-                              int temp = firstSelectedRow;
-                              firstSelectedRow = lastSelectedRow;
-                              lastSelectedRow = temp;
-                            }
+                          if (lastSelectedRow < firstSelectedRow) {
+                            int temp = firstSelectedRow;
+                            firstSelectedRow = lastSelectedRow;
+                            lastSelectedRow = temp;
+                          }
 
-                            // Select all rows in the range between first and last selected rows.
+                          // Select all rows in the range between first and last selected rows.
 
-                            for (int i = firstSelectedRow;
-                                i <= lastSelectedRow;
-                                i++) {
-                              selectedRows.add(i);
-                            }
-                          } else {
-                            // Single click: Clear previous selection and select only the current row.
-
-                            selectedRows.clear();
-                            selectedRows.add(rowIndex);
+                          for (int i = firstSelectedRow;
+                              i <= lastSelectedRow;
+                              i++) {
+                            selectedRows.add(i);
                           }
                         } else {
-                          // Deselect the row if it was previously selected.
+                          // Single click: Clear previous selection and select only the current row.
 
-                          selectedRows.remove(rowIndex);
+                          selectedRows.clear();
+                          selectedRows.add(rowIndex);
                         }
-                      });
-                    },
-                    cells: [
-                      DataCell(Text(variable.name)),
-                      DataCell(
-                        _buildRoleChips(variable.name, currentRoles),
-                      ),
-                      DataCell(Text(variable.type)),
-                      DataCell(
-                        Text(
-                          formatter.format(
-                            ref.watch(metaDataProvider)[variable.name]
-                                    ?['unique']?[0] ??
-                                0,
-                          ),
+                      } else {
+                        // Deselect the row if it was previously selected.
+
+                        selectedRows.remove(rowIndex);
+                      }
+                    });
+                  },
+                  cells: [
+                    DataCell(Text(variable.name)),
+                    DataCell(
+                      _buildRoleChips(variable.name, currentRoles),
+                    ),
+                    DataCell(Text(variable.type)),
+                    DataCell(
+                      Text(
+                        formatter.format(
+                          ref.watch(metaDataProvider)[variable.name]?['unique']
+                                  ?[0] ??
+                              0,
                         ),
                       ),
-                      DataCell(
-                        Text(
-                          formatter.format(
-                            ref.watch(metaDataProvider)[variable.name]
-                                    ?['missing']?[0] ??
-                                0,
-                          ),
+                    ),
+                    DataCell(
+                      Text(
+                        formatter.format(
+                          ref.watch(metaDataProvider)[variable.name]?['missing']
+                                  ?[0] ??
+                              0,
                         ),
                       ),
-                      DataCell(
-                        SelectableText(_truncateContent(variable.details)),
-                      ),
-                    ],
-                  );
-                }).toList(),
-              ),
+                    ),
+                    DataCell(
+                      SelectableText(_truncateContent(variable.details)),
+                    ),
+                  ],
+                );
+              }).toList(),
             ),
           ),
         ),
