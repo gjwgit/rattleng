@@ -25,6 +25,7 @@
 library;
 
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/r/extract_formula.dart';
 import 'package:rattle/utils/timestamp.dart';
 
 String _basicTemplate(String log, bool isSummary) {
@@ -35,13 +36,13 @@ String _basicTemplate(String log, bool isSummary) {
     log,
     isSummary ? '> print(summary(model_arules))' : '> print(measures)',
   );
-
+  final String fm = rExtractFormula(log);
   final String ts = timestamp();
 
   String result = '';
 
   if (sm != '') {
-    result = '$hd \n$sm\n\nRattle timestamp: $ts';
+    result = '$hd \n\nFormula: $fm\n\n$sm\n\nRattle timestamp: $ts';
   }
 
   return result;
