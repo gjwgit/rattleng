@@ -71,7 +71,7 @@ List<Widget> rpartPages(
           [rpart::rpart.control()](https://www.rdocumentation.org/packages/rpart/topics/rpart.control).
 
           ''',
-        content: '\n$content',
+        content: '$content',
       ),
     );
   }

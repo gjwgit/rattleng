@@ -28,7 +28,7 @@ import 'package:rattle/r/extract_formula.dart';
 import 'package:rattle/utils/timestamp.dart';
 
 String _basicTemplate(String log) {
-  const String hd = 'Summary of the Decision Tree model.';
+  const String hd = 'Summary of the Traditional Decision Tree model.';
   final String fm = rExtractFormula(log);
   final String pr = rExtract(log, '> print(model_rpart)');
   final String cp = rExtract(log, '> printcp(model_rpart)');
