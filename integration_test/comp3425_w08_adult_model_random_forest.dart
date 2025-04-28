@@ -1,6 +1,6 @@
 /// COMP3425 W08 ADULT -> ADABOOST.
 //
-// Time-stamp: <Saturday 2025-04-26 11:16:28 +1000 >
+// Time-stamp: <Saturday 2025-04-26 11:59:48 +1000 >
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -179,7 +179,7 @@ void main() {
 
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
-      await addDelay(tester, 60);
+      await addDelay(tester, 70);
 
       await navigateToPage(tester, 1, back: 1, title: 'Error Matrix');
       await verifySelectableText(
