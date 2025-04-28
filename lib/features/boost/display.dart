@@ -113,7 +113,9 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
 
       final String fm = rExtractFormula(stdout);
 
-      String content = rExtract(stdout, 'print(model_ada)').replaceAll('Call:\n', '');
+      String content = rExtract(stdout, 'print(model_ada)');
+
+      content = content.replaceAll('Call:\n', '');
 
       content = '$scd \n\nFormula: $fm\n\n$content';
 
