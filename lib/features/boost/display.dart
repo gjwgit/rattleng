@@ -73,6 +73,10 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
       String content =
           rExtract(stdout, 'print(importance_dt, row.names = FALSE)');
 
+      const String hd = 'Summary of the Extreme Boosting model.';
+      final String fm = rExtractFormula(stdout);
+      String displayContent = '$hd \n\nFormula: $fm\n\n$content';
+
       if (content.isNotEmpty) {
         pages.add(
           TextPage(
@@ -86,7 +90,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
           [xgb::xgboost()](https://www.rdocumentation.org/packages/xgboost/topics/xgb.train).
 
             ''',
-            content: '\n$content',
+            content: '$displayContent',
           ),
         );
       }
