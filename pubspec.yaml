@@ -63,7 +63,7 @@ dependencies:
   shared_preferences: ^2.3.3
   universal_io: ^2.2.2
   url_launcher: ^6.3.0
-  version_widget: ^0.0.4
+  version_widget: ^0.0.7
   window_manager: ^0.4.3
   xterm: ^4.0.0
   yaml: ^3.1.3
