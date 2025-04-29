@@ -31,6 +31,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/cleanup_method.dart';
+import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/r/source.dart';
@@ -191,6 +192,20 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     }
     for (var v in varsToDelete) {
       if (deleteVar(ref, v)) {
+        // Get the current metadata, ensuring it's treated as Map<String, dynamic>
+        // Create a mutable copy to avoid modifying the state directly.
+
+        final currentMetaData = ref.watch(metaDataProvider);
+        final newMetaData = Map<String, dynamic>.from(currentMetaData);
+
+        // Remove the variable's metadata.
+
+        newMetaData.remove(v);
+
+        // Update the provider's state with the new map.
+
+        ref.watch(metaDataProvider.notifier).state = newMetaData;
+
         debugText('  DELETED', v);
       }
     }

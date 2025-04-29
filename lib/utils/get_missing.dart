@@ -29,8 +29,8 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/providers/stdout.dart';
-import 'package:rattle/r/extract.dart';
+import 'package:rattle/providers/meta_data.dart';
+import 'package:rattle/providers/vars/roles.dart';
 
 List<String> getMissing(WidgetRef ref) {
   // // The rolesProvider lists the roles for the different variables which we
@@ -49,21 +49,23 @@ List<String> getMissing(WidgetRef ref) {
 
   // ONLY INCLUDE THOSE WITH MISSING VALUES.
 
-  String stdout = ref.read(stdoutProvider);
+  Map metaData = ref.read(metaDataProvider.notifier).state;
+  Map roles = ref.read(rolesProvider.notifier).state;
 
-  String missing = rExtract(stdout, '> missing');
+  List<String> variables = [];
 
-  // Regular expression to match strings between quotes
+  metaData.forEach((key, value) {
+    if (value is Map && value.containsKey('missing')) {
+      List missing = value['missing'];
+      if (missing.isNotEmpty && missing[0] > 0) {
+        variables.add(key);
+      }
+    }
+  });
 
-  RegExp regExp = RegExp(r'"(.*?)"');
+  // Filter the variables list to only include those present in the roles map.
 
-  // Find all matches
-
-  Iterable<RegExpMatch> matches = regExp.allMatches(missing);
-
-  // Extract the matched strings
-
-  List<String> variables = matches.map((match) => match.group(1)!).toList();
+  variables.retainWhere((variable) => roles.containsKey(variable));
 
   return variables;
 }
