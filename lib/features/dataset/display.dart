@@ -600,7 +600,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           shadowColor: Colors.grey,
           pressElevation: 8.0,
           elevation: 2.0,
-          selected: remap(currentRoles[columnName]!, choice),
+          // Selected if this chip's role (`choice`) matches the variable's current role.
+          // Defaults to `Role.ignore` if the variable (`columnName`) has no assigned role.
+
+          selected: remap(currentRoles[columnName] ?? Role.ignore, choice),
           onSelected: (bool selected) => _handleRoleSelection(
             selected,
             choice,
