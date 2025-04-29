@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2025-04-01 05:33:42 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-04-29 15:27:02 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -31,6 +31,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/cleanup_method.dart';
+import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/r/source.dart';
@@ -142,7 +143,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
         ''',
       'Obs with Missing Target' => '''
 
-        There are ${targetMissingNumbeCount(ref)} rows with a missing value 
+        There are ${targetMissingNumbeCount(ref)} rows with a missing value
         for the target variable "${getTarget(ref)}" that will be deleted. Continue?
 
         ''',
@@ -191,6 +192,29 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     }
     for (var v in varsToDelete) {
       if (deleteVar(ref, v)) {
+        // Remove the deleted variables from the meta data.
+
+        // We were finding that a deleted variable remained in the valiable list
+        // for IMPUTE, for example. This was because the variable remained in
+        // the meta data structure. Her we remove it from the meta data, but
+        // perhaps we need a DELETED role and add a role to every variable to
+        // replace the roles variable. (gjw 20250429)
+
+        // Get the current metadata, ensuring it's treated as Map<String,
+        // dynamic>, and create a mutable copy to avoid modifying the state
+        // directly. (zy 20250429)
+
+        final currentMetaData = ref.watch(metaDataProvider);
+        final newMetaData = Map<String, dynamic>.from(currentMetaData);
+
+        // Remove the variable's metadata.
+
+        newMetaData.remove(v);
+
+        // Update the provider's state with the new map.
+
+        ref.watch(metaDataProvider.notifier).state = newMetaData;
+
         debugText('  DELETED', v);
       }
     }
