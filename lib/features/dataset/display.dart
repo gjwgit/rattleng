@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Monday 2025-04-28 09:54:55 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2025-04-29 15:28:35 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -600,7 +600,10 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           shadowColor: Colors.grey,
           pressElevation: 8.0,
           elevation: 2.0,
-          selected: remap(currentRoles[columnName]!, choice),
+          // Selected if this chip's role (`choice`) matches the variable's
+          // current role.  Defaults to `Role.ignore` if the variable
+          // (`columnName`) has no assigned role. (zy 20250429)
+          selected: remap(currentRoles[columnName] ?? Role.ignore, choice),
           onSelected: (bool selected) => _handleRoleSelection(
             selected,
             choice,
