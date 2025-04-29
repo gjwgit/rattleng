@@ -32,6 +32,7 @@ import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/r/extract_formula.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/text_page.dart';
@@ -53,6 +54,7 @@ class _SvmDisplayState extends ConsumerState<SvmDisplay> {
     );
     String stdout = ref.watch(stdoutProvider);
     String content = '';
+    String displayContent = '';
 
     List<Widget> pages = [
       showMarkdownFile(
@@ -66,7 +68,13 @@ class _SvmDisplayState extends ConsumerState<SvmDisplay> {
     //
     // Default model text.
 
+    const String scd = 'Summary of the SVM model.';
+
+    final String fm = rExtractFormula(stdout);
+
     content = rExtract(stdout, 'print(model_svm)');
+
+    displayContent = '$scd \n\nFormula: $fm\n\n$content';
 
     if (content.isNotEmpty) {
       pages.add(
@@ -79,7 +87,7 @@ class _SvmDisplayState extends ConsumerState<SvmDisplay> {
           [kernlab::ksvm()](https://www.rdocumentation.org/packages/kernlab/topics/ksvm.html)
 
           ''',
-          content: '\n$content',
+          content: '$displayContent',
         ),
       );
     }

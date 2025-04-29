@@ -37,6 +37,7 @@ import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/select_file.dart';
 import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
+import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/utils/copy_asset_to_tempdir.dart';
@@ -131,13 +132,13 @@ class DatasetPopup extends ConsumerWidget {
                   // problem. By staying on the OVERVIEW we mightreduce the
                   // liklihood?
 
-                  // ref.read(pageControllerProvider).animateToPage(
-                  //       // Index of the second page.
+                  await ref.read(pageControllerProvider).animateToPage(
+                        // Index of the second page.
 
-                  //       1,
-                  //       duration: const Duration(milliseconds: 300),
-                  //       curve: Curves.easeInOut,
-                  //     );
+                        1,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
                 },
                 child: MarkdownTooltip(
                   message: '''
@@ -264,6 +265,16 @@ class DatasetPopup extends ConsumerWidget {
                           'data/weather.csv',
                           'Weather',
                         );
+
+                        // Access the PageController via Riverpod and move to the second page.
+
+                        await ref.read(pageControllerProvider).animateToPage(
+                              // Index of the second page.
+
+                              1,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                            );
                       },
                       child: const Text('Weather'),
                     ),
@@ -290,6 +301,16 @@ class DatasetPopup extends ConsumerWidget {
                           'data/weather_2007.csv',
                           '2007',
                         );
+
+                        // Access the PageController via Riverpod and move to the second page.
+
+                        await ref.read(pageControllerProvider).animateToPage(
+                              // Index of the second page.
+
+                              1,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                            );
                       },
                       child: const Text('2007'),
                     ),
@@ -326,6 +347,16 @@ class DatasetPopup extends ConsumerWidget {
                           'data/audit.csv',
                           'Audit',
                         );
+
+                        // Access the PageController via Riverpod and move to the second page.
+
+                        await ref.read(pageControllerProvider).animateToPage(
+                              // Index of the second page.
+
+                              1,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                            );
                       },
                       child: const Text('Audit'),
                     ),
@@ -351,6 +382,16 @@ class DatasetPopup extends ConsumerWidget {
                           'data/protein.csv',
                           'Protein',
                         );
+
+                        // Access the PageController via Riverpod and move to the second page.
+
+                        await ref.read(pageControllerProvider).animateToPage(
+                              // Index of the second page.
+
+                              1,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                            );
                       },
                       child: const Text('Protein'),
                     ),
@@ -380,6 +421,16 @@ class DatasetPopup extends ConsumerWidget {
                           'data/movies.csv',
                           'Movies',
                         );
+
+                        // Access the PageController via Riverpod and move to the second page.
+
+                        await ref.read(pageControllerProvider).animateToPage(
+                              // Index of the second page.
+
+                              1,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                            );
                       },
                       child: const Text('Movies'),
                     ),
@@ -404,6 +455,16 @@ class DatasetPopup extends ConsumerWidget {
                           'data/sherlock.txt',
                           'Sherlock',
                         );
+
+                        // Access the PageController via Riverpod and move to the second page.
+
+                        await ref.read(pageControllerProvider).animateToPage(
+                              // Index of the second page.
+
+                              1,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                            );
                       },
                       child: const Text('Sherlock'),
                     ),
@@ -429,6 +490,16 @@ class DatasetPopup extends ConsumerWidget {
                           'data/co-est2016-alldata.csv',
                           'US Population',
                         );
+
+                        // Access the PageController via Riverpod and move to the second page.
+
+                        await ref.read(pageControllerProvider).animateToPage(
+                              // Index of the second page.
+
+                              1,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                            );
                       },
                       child: const Text('US Population'),
                     ),
