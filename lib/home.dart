@@ -264,7 +264,6 @@ class RattleHomeState extends ConsumerState<RattleHome>
       _appName = packageInfo.packageName;
       _appVersion = packageInfo.version;
       _isVersionLoaded = true;
-      print('packageInfo.version: $_appVersion');
     });
 
     // Update saved version/date if version changed.
