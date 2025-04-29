@@ -117,17 +117,18 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
       // Run the R scripts.
 
-      // Choose which visualisations to run depending on the
-      // selected variable.
+      // Check if no grouping variable is selected. This can happen if the user
+      // explicitly selects 'None', if the provider's initial state 'NULL' is
+      // still active, or potentially if it's an empty string.
 
       if (ref.read(typesProvider.notifier).state[selected] == Type.numeric) {
-        if (groupBy == 'None' || groupBy == 'NULL' || groupBy == '') {
+        if (groupBy == 'None' || groupBy == 'NULL' || groupBy.isEmpty) {
           rSource(context, ref, ['explore_visual_numeric_nogroupby']);
         } else {
           rSource(context, ref, ['explore_visual_numeric']);
         }
       } else {
-        if (groupBy == 'None' || groupBy == 'NULL' || groupBy == '') {
+        if (groupBy == 'None' || groupBy == 'NULL' || groupBy.isEmpty) {
           rSource(context, ref, ['explore_visual_categoric_nogroupby']);
         } else {
           rSource(context, ref, ['explore_visual_categoric']);
