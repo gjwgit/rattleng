@@ -181,6 +181,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
   var _appVersion = '';
   final String _changelogUrl =
       'https://github.com/gjwgit/rattleng/blob/dev/CHANGELOG.md';
+  bool _isVersionLoaded = false;
 
   // Helper function to cleanup any wordcloud leftover files.
 
@@ -262,6 +263,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
       _appName = packageInfo.packageName;
       _appVersion = packageInfo.version;
+      _isVersionLoaded = true;
     });
 
     // Update saved version/date if version changed.
@@ -428,27 +430,28 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
         // Deploy the buttons aligned to the top right for actions.
 
         actions: [
-          VersionWidget(
-            version: _appVersion,
-            changelogUrl: _changelogUrl,
-            showDate: true,
-            defaultDate: '20250101',
-            isLatestTooltip: '''
-            
-            *Rattle* is regularly updated to bring you the best
-            experience for Data Science, AI and Machine Learning. The latest
-            version is always available from the
-            [Rattle](https://togaware.com/projects/rattle/) website. **Tap** on
-            the **Version** text here in the title bar to visit the *CHANGELOG*
-            in your browser and so see a list of all changes to Rattle.
+          if (_isVersionLoaded)
+            VersionWidget(
+              version: _appVersion,
+              changelogUrl: _changelogUrl,
+              showDate: true,
+              defaultDate: '20250101',
+              isLatestTooltip: '''
+              
+              *Rattle* is regularly updated to bring you the best
+              experience for Data Science, AI and Machine Learning. The latest
+              version is always available from the
+              [Rattle](https://togaware.com/projects/rattle/) website. **Tap** on
+              the **Version** text here in the title bar to visit the *CHANGELOG*
+              in your browser and so see a list of all changes to Rattle.
 
-            ''',
-            notLatestTooltip: '''
+              ''',
+              notLatestTooltip: '''
 
-            *A newer version is available!* Visit [Rattle](https://rattle.togaware.com) for instructions on updating your installation.
-            
-            ''',
-          ),
+              *A newer version is available!* Visit [Rattle](https://rattle.togaware.com) for instructions on updating your installation.
+              
+              ''',
+            ),
 
           const SizedBox(width: 50),
 
