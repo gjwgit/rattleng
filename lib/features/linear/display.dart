@@ -33,6 +33,7 @@ import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/r/extract_formula.dart';
 import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/image_page.dart';
@@ -65,14 +66,21 @@ class _LinearDisplayState extends ConsumerState<LinearDisplay> {
       ),
     ];
 
+    const String hd = 'Summary of the Linear Model.';
+
+    final String fm = rExtractFormula(stdout);
+
     content = rExtract(stdout, 'print(summary(model_glm))');
+    content = content.replaceAll('Call:\n', '');
+
+    String displayContent = '$hd \n\nFormula: $fm\n$content';
 
     if (content.isNotEmpty) {
       pages.add(
         TextPage(
           title: '# Linear Model\n\n'
               'Built using `glm()`.\n\n',
-          content: '\n$content',
+          content: '$displayContent',
         ),
       );
     }
