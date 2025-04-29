@@ -73,7 +73,7 @@ final List<Map<String, dynamic>> explorePanels = [
   },
   // TODO ADD WORDCLOUD HERE
   // {
-  //   'title': 'Word Cloud',
+  //   'title': 'Text',
   //   'widget': const WordCloudPanel(),
   // },
 ];

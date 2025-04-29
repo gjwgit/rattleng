@@ -126,7 +126,7 @@ Currently implemented features as of version 6.3.48 (2025-01-06):
   + SVM
   + Linear
   + Neural
-  + Word Cloud
+  + Text
 + Evaluate
   + Error Matrix
   + ROC Chart

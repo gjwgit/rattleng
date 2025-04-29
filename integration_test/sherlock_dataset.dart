@@ -58,7 +58,7 @@ void main() {
       ]);
       await tester.pump(interact);
       await navigateToTab(tester, 'Model');
-      await navigateToFeature(tester, 'Word Cloud');
+      await navigateToFeature(tester, 'Text');
       await tapButton(tester, 'Display Word Cloud');
       await gotoNextPage(tester);
       await gotoNextPage(tester);

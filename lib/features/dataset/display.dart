@@ -145,7 +145,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
   ////////////////////////////////////////////////////////////////////////
 
-  // Add a page for text file (a .txt file) content for Word Cloud.
+  // Add a page for text file (a .txt file) content for Text.
 
   void _addTextFilePage(String stdout, List<Widget> pages) {
     String content = rExtract(stdout, '> cat(txt,');

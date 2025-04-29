@@ -85,7 +85,7 @@ final List<Map<String, dynamic>> modelPanels = [
     'widget': const NeuralPanel(),
   },
   {
-    'title': 'Word Cloud',
+    'title': 'Text',
     'widget': const WordCloudPanel(),
   },
 ];
@@ -113,16 +113,16 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
 
     // Filter tabs based on the file type in the path
     if (currentPath.endsWith('.txt')) {
-      // Only show the Word Cloud tab for .txt files
+      // Only show the Text tab for .txt files
       filteredModelPanels =
-          modelPanels.where((panel) => panel['title'] == 'Word Cloud').toList();
+          modelPanels.where((panel) => panel['title'] == 'Text').toList();
     } else if (currentPath.endsWith('.csv') ||
         currentPath.endsWith('.xlsx') ||
         // TODO 20250310 gjw Remove the deprecated weatherDemoFile
         currentPath == weatherDemoFile) {
-      // For csv files and demo, show all tabs except the Word Cloud tab
+      // For csv files and demo, show all tabs except the Text tab
       filteredModelPanels =
-          modelPanels.where((panel) => panel['title'] != 'Word Cloud').toList();
+          modelPanels.where((panel) => panel['title'] != 'Text').toList();
     } else {
       // For other files including no files
       filteredModelPanels = modelPanels;
@@ -168,17 +168,17 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
           unselectedLabelColor: Colors.grey,
           controller: _tabController,
           onTap: (int index) {
-            // 20241123 gjw Ignore the features except for Word Cloud if the
+            // 20241123 gjw Ignore the features except for Text if the
             // data type of the loaded dataset is 'text' (i.e., not
             // 'table'). The features are implemented assuming a table as the
-            // dataset except for Word Cloud which can handle text. So if the
+            // dataset except for Text which can handle text. So if the
             // data type is not 'table' or the default '' then disable the other
             // features by moving to the Overview feature. I tried wrapping Tab
             // with an IgnorePointer but the ignore would not take. In fact I
-            // want to ignore Word Cloud if the data type is table.
+            // want to ignore Text if the data type is table.
 
             final wcIndex =
-                modelPanels.indexWhere((item) => item['title'] == 'Word Cloud');
+                modelPanels.indexWhere((item) => item['title'] == 'Text');
             if (!['', 'table'].contains(ref.watch(datatypeProvider)) &&
                 index != wcIndex) {
               _tabController.index = 0;
