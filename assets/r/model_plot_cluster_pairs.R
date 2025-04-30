@@ -35,11 +35,38 @@
 set.seed(<RANDOM_SEED>)
 smpl <- sample(nrow(tds))
 
-# RattleV5 would keep just the first 5 variables for the plot. More
-# than 5 is visually crowded. But we now have zoom so let's try no
-# limitation.
+# Attempt to convert the input pair size setting (<CLUSTER_PAIR_SIZE>)
+# to a usable numeric value.
 
-vars <- 1:ncol(tds) # min(5, ncol(tds))
+raw_pair_size_input <- <CLUSTER_PAIR_SIZE>
+
+# Convert to numeric, suppressing warnings for non-numeric input (which becomes NA).
+# Use floor() to ensure we have an integer value if conversion is successful.
+
+pair_size_num <- suppressWarnings(floor(as.numeric(raw_pair_size_input)))
+
+# Validate the converted number:
+# 1. Check length: Must be exactly 1. This handles cases like NULL input,
+#    where as.numeric(NULL) results in numeric(0) which has length 0.
+#    It passes for valid single numbers (e.g., length(5) is 1, length(12) is 1).
+# 2. Check for NA: Must not be NA. This handles non-numeric string inputs.
+# 3. Check value: Must be at least 1 (pair size must be positive).
+
+is_valid_input <- length(pair_size_num) == 1 && !is.na(pair_size_num) && pair_size_num >= 1
+
+# Determine the final pair size using ifelse (avoids explicit if/else block):
+# - If input is valid: use the minimum of the validated input number and the
+#   total number of columns in the dataset (tds).
+# - If input is invalid (e.g., NULL, non-numeric string, zero, negative):
+#   use the total number of columns as the fallback pair size.
+
+pair_size <- ifelse(is_valid_input,min(pair_size_num, ncol(tds)), ncol(tds))
+
+# Ensure the final pair_size is not negative (important if ncol(tds) could be 0).
+
+pair_size <- max(1, pair_size)
+
+vars <- 1:pair_size
 
 # Create a title based on the model type.
 
