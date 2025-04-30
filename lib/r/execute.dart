@@ -1,12 +1,13 @@
-// DON'T USE THIS FOR NOW. WHILE THE EXECUTE IN R WORKSTHE RESULT DOESE NOT GET
-// INTO THE STDOUT UNTIL LATER ON AND SO I CAN'T IMMEDIATELY CHECK THE
-// VALUE. NEEDS TO BE FIXED.
-
 /// R Scripts: Support for running an R command.
 ///
-/// Time-stamp: <Tuesday 2024-08-20 06:04:17 +1000 Graham Williams>
+// REVIEW WHEN USING THIS FOR NOW. WHILE THE EXECUTE IN R WORKS THE RESULT DOES
+// NOT GET INTO THE STDOUT UNTIL LATER ON AND SO I CAN'T IMMEDIATELY CHECK THE
+// VALUE. MIGHT BE OKAY FOR A WIDGET WATCHING A VARIABLE TO CHANGE AS IN forest
+// config AND display THROUGH THE PROVIDER forestMaxRules.
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+/// Time-stamp: <Thursday 2025-05-01 09:17:53 +1000 Graham Williams>
+///
+/// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -42,16 +43,16 @@ import 'package:rattle/utils/update_script.dart';
 /// Run the R [code] and append to the [rattle] script.
 
 void rExecute(WidgetRef ref, String code) {
-  debugPrint("R EXECUTE:\t\t'$code'");
+  debugPrint('R EXECUTE\t$code');
 
   // Add the code to the script provider so it will be displayed in the script
   // tab.
 
   updateScript(
     ref,
-    "\n${'#' * 72}\n## -- Extra Code --\n${'#' * 72}"
-    '\n$code}\n',
+    "\n${'#' * 72}\n## -- Extra Code --\n${'#' * 72}\n"
+    '\n$code\n',
   );
 
-  ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
+  ref.read(ptyProvider).write(const Utf8Encoder().convert('$code\n'));
 }

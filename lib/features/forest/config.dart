@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2025-05-01 08:17:03 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-05-01 08:53:00 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -398,7 +398,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
                   ref,
                   'printRandomForest(model_randomForest, '
                   '${_treeNoController.text}, '
-                  'max.rules = ${_maxRulesController.text})\n',
+                  'max.rules = ${_maxRulesController.text})',
                 );
               },
             ),
