@@ -52,6 +52,7 @@ class NumberField extends ConsumerStatefulWidget {
   final num? max;
   final Future<void> Function(String? newValue)? onValueChanged;
   final String? sharedPrefsKey;
+  final VoidCallback? onUpDownPressed;
 
   const NumberField({
     super.key,
@@ -69,6 +70,7 @@ class NumberField extends ConsumerStatefulWidget {
     this.interval = 1, // Default interval is 1, can be set as double or int
     this.onValueChanged,
     this.sharedPrefsKey,
+    this.onUpDownPressed,
   });
 
   @override
@@ -202,6 +204,10 @@ class NumberFieldState extends ConsumerState<NumberField> {
       final prefs = await SharedPreferences.getInstance();
       prefs.setInt('randomSeed', currentValue.toInt());
     }
+
+    // Call the onIncrement callback if provided.
+
+    widget.onUpDownPressed?.call();
   }
 
   void decrement() async {
@@ -235,6 +241,10 @@ class NumberFieldState extends ConsumerState<NumberField> {
       final prefs = await SharedPreferences.getInstance();
       prefs.setInt('randomSeed', currentValue.toInt());
     }
+
+    // Call the onDecrement callback if provided.
+    
+    widget.onUpDownPressed?.call();
   }
 
   // A timer for continuous incrementing/decrementing.
