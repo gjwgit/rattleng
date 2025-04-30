@@ -40,7 +40,6 @@ import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_catergoric.dart';
 import 'package:rattle/utils/get_inputs.dart';
 import 'package:rattle/utils/get_target.dart';
-import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
@@ -116,44 +115,23 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
     void buildAction() {
       // Business logic for building a tree.
 
-      // Require a target variable which is used to categorise the plots.
+      // Run the R scripts.
 
-      String target = getTarget(ref);
+      // Check if no grouping variable is selected. This can happen if the user
+      // explicitly selects 'None', if the provider's initial state 'NULL' is
+      // still active, or potentially if it's an empty string.
 
-      if (target == 'NULL') {
-        showOk(
-          context: context,
-          title: 'No Target Specified',
-          content: '''
-
-                    Please choose a variable from amongst those variables in the
-                    dataset as the **Target**. This will be used to visualise
-                    the selected **Risk** variable against the target
-                    outcomes/categories. Within some of the visualisations you
-                    can then see its relationship with the risk variable that
-                    you have under review. You can choose the target variable
-                    from the **Dataset** tab **Roles** feature.
-
-                    ''',
-        );
-      } else {
-        // Run the R scripts.
-
-        // Choose which visualisations to run depending on the
-        // selected variable.
-
-        if (ref.read(typesProvider.notifier).state[selected] == Type.numeric) {
-          if (groupBy == 'None') {
-            rSource(context, ref, ['explore_visual_numeric_nogroupby']);
-          } else {
-            rSource(context, ref, ['explore_visual_numeric']);
-          }
+      if (ref.read(typesProvider.notifier).state[selected] == Type.numeric) {
+        if (groupBy == 'None' || groupBy == 'NULL' || groupBy.isEmpty) {
+          rSource(context, ref, ['explore_visual_numeric_nogroupby']);
         } else {
-          if (groupBy == 'None') {
-            rSource(context, ref, ['explore_visual_categoric_nogroupby']);
-          } else {
-            rSource(context, ref, ['explore_visual_categoric']);
-          }
+          rSource(context, ref, ['explore_visual_numeric']);
+        }
+      } else {
+        if (groupBy == 'None' || groupBy == 'NULL' || groupBy.isEmpty) {
+          rSource(context, ref, ['explore_visual_categoric_nogroupby']);
+        } else {
+          rSource(context, ref, ['explore_visual_categoric']);
         }
       }
     }
