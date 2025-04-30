@@ -35,6 +35,7 @@ import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/forest.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/tree.dart';
+import 'package:rattle/r/execute.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/build_text_field.dart';
 import 'package:rattle/utils/get_target.dart';
@@ -390,6 +391,12 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               inputFormatter:
                   FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
               stateProvider: maxRulesForestProvider,
+              onUpDownPressed: () {
+                rExecute(
+                  ref,
+                  'printRandomForest(model_randomForest, ${_treeNoController.text}, max.rules = ${_maxRulesController.text})\n',
+                );
+              },
             ),
 
             buildTextField(

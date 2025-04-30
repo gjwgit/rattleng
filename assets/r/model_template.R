@@ -325,5 +325,4 @@ printRandomForest <- function(model, n=1, max.rules=10, include.class=NULL,
   shown <- ""
   if (max.rules < nrules) shown <- glue(". Only {max.rules} rules shown.")
   cat(sprintf("%sNumber of rules in Tree %d: %d%s\n\n", comment, n, nrules, shown))
-  cat(sprintf("> Number of Tree %d and Number of rules %d\n", n, nrules))
 }
