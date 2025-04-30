@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-04-30 14:43:15 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2025-04-30 15:21:33 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -82,8 +82,6 @@ printRandomForest(model_randomForest, <RF_NO_TREE>, max.rules = <RF_MAX_SHOW_RUL
 
 # Plot the relative importance of the variables.
 
-svg("<TEMPDIR>/model_random_forest_varimp.svg")
-
 # Assuming `model_randomForest` is already trained.
 # Extract variable importance for each class.
 
@@ -101,6 +99,7 @@ importance_long <- melt(importance_df,
                         variable.name = "Class",
                         value.name    = "Importance")
 
+svg("<TEMPDIR>/model_random_forest_varimp.svg", height=4.5, width=10)
 ggplot(importance_long, aes(x    = reorder(Variable, Importance),
                             y    = Importance,
                             fill = Class)) +
@@ -113,13 +112,12 @@ ggplot(importance_long, aes(x    = reorder(Variable, Importance),
     y     = "Importance"
   )  +
   <SETTINGS_GRAPHIC_THEME>()
-
 dev.off()
 
 
 # Plot the error rate against the number of trees.
 
-svg("<TEMPDIR>/model_random_forest_error_rate.svg")
+svg("<TEMPDIR>/model_random_forest_error_rate.svg", height=5, width=9)
 
 plot(model_randomForest, main="")
 legend("topright", c("OOB", "No", "Yes"),
@@ -133,7 +131,7 @@ dev.off()
 
 # Plot the OOB ROC curve.
 
-svg("<TEMPDIR>/model_random_forest_oob_roc_curve.svg")
+svg("<TEMPDIR>/model_random_forest_oob_roc_curve.svg", height=5, width=5)
 
 # Extract observed class labels from the Random Forest model.
 
@@ -258,7 +256,7 @@ summary(rf_tree_info$leaf_nodes)
 
 # Plot the distribution of leaf nodes.
 
-svg("<TEMPDIR>/model_random_forest_leaf_node_distribution.svg", width=9)
+svg("<TEMPDIR>/model_random_forest_leaf_node_distribution.svg", height=5, width=10)
 rf_tree_info %>%
   ggplot2::ggplot(aes(x=leaf_nodes)) +
   ggplot2::geom_histogram(binwidth = 1,

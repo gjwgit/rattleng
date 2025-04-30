@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2025-04-30 14:36:34 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2025-04-30 15:19:20 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -108,13 +108,20 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
       displayContent = '$scd \n\nFormula: $fm\n$content';
 
       // Extract the list of tree sizes for the trees of the forest. From the
-      // print command output we remove the first 4 characters from each
-      // line. Hopefully enough and not too much! (gjw 20250430)
+      // print command output we remove the first n space characters from each
+      // line. The value of n is determined dynamically from the number of
+      // spaces before the tree_number. (gjw 20250430)
 
       String sizes = rExtract(stdout, '> print(rf_tree_info)');
+      RegExp regex = RegExp(r'^\s*');
+      String matches = regex.stringMatch(sizes) ?? '';
       sizes = sizes
           .split('\n')
-          .map((line) => line.length >= 4 ? line.substring(4) : line)
+          .map(
+            (line) => line.length >= matches.length
+                ? line.substring(matches.length)
+                : line,
+          )
           .join('\n');
 
       displayContent = '$content\n\nTree Sizes:\n\n$sizes';
