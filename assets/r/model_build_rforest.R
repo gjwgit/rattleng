@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-04-24 16:48:56 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2025-04-30 14:37:18 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -224,4 +224,59 @@ if (min_class_size >= 3 && length(unique(predicted_probs)) > 1) {
              length(unique(predicted_probs))),
        cex = 1.2)
 }
+dev.off()
+
+# Now we generate details about the different tree sizes in the
+# forest.
+
+# A support function to count leaf nodes in a tree.
+
+count_leaf_nodes <- function(tree) {
+  tree_struct <- getTree(model_randomForest, k=tree, labelVar=FALSE)
+  leaf_count <- sum(tree_struct[, "status"] == -1)
+  return(leaf_count)
+}
+
+# Get the number of trees in our model.
+
+num_trees <- model_randomForest$ntree
+
+# Create a data frame with tree number and leaf count.
+
+rf_tree_info <- data.frame(
+  tree_number = 1:num_trees,
+  leaf_nodes = sapply(1:num_trees, count_leaf_nodes)
+)
+
+# View the results.
+
+print(rf_tree_info)
+
+# Summary statistics of leaf nodes across trees.
+
+summary(rf_tree_info$leaf_nodes)
+
+# Plot the distribution of leaf nodes.
+
+svg("<TEMPDIR>/model_random_forest_leaf_node_distribution.svg", width=9)
+rf_tree_info %>%
+  ggplot2::ggplot(aes(x=leaf_nodes)) +
+  ggplot2::geom_histogram(binwidth = 1,
+                          fill     = "steelblue",
+                          color    = "white",
+                          alpha    = 0.7) +
+  ggplot2::geom_density(aes(y = after_stat(count)),
+                        color = "darkred",
+                        linewidth = 1) +
+  ggplot2::labs(
+    title    = "Distribution of Tree Sizes in the Random Forest",
+    subtitle = paste("Based on", num_trees, "trees"),
+    x        = "Number of Leaf Nodes/Rules",
+    y        = "Count"
+  ) +
+  <SETTINGS_GRAPHIC_THEME>() +
+  theme(
+    plot.title = element_text(face="bold"),
+    axis.title = element_text(face="bold")
+  )
 dev.off()
