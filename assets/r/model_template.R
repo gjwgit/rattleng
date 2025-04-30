@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-04-10 14:39:33 +1000 Graham Williams>
+# Time-stamp: <Thursday 2025-05-01 08:12:48 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -323,6 +323,7 @@ printRandomForest <- function(model, n=1, max.rules=10, include.class=NULL,
   if (format=="VB") cat("END IF\n\n")
   }
   shown <- ""
-  if (max.rules < nrules) shown <- glue(". Only {max.rules} rules shown.")
+  rule <- ifelse(max.rules == 1, "rule", "rules")
+  if (max.rules < nrules) shown <- glue(". Only {max.rules} {rule} shown.")
   cat(sprintf("%sNumber of rules in Tree %d: %d%s\n\n", comment, n, nrules, shown))
 }

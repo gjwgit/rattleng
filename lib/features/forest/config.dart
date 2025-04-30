@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2025-04-30 12:37:22 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-05-01 08:17:03 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -35,6 +35,7 @@ import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/forest.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/tree.dart';
+import 'package:rattle/r/execute.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/build_text_field.dart';
 import 'package:rattle/utils/get_target.dart';
@@ -357,6 +358,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
             NumberField(
               label: 'Display Tree:',
               key: const Key('treeNoForest'),
+              min: 1,
               controller: _treeNoController,
               tooltip: '''
 
@@ -377,6 +379,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
             NumberField(
               label: 'Max Rules:',
               key: const Key('maxRulesForest'),
+              min: 1,
               controller: _maxRulesController,
               tooltip: '''
 
@@ -390,6 +393,14 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               inputFormatter:
                   FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
               stateProvider: maxRulesForestProvider,
+              onUpDownPressed: () {
+                rExecute(
+                  ref,
+                  'printRandomForest(model_randomForest, '
+                  '${_treeNoController.text}, '
+                  'max.rules = ${_maxRulesController.text})\n',
+                );
+              },
             ),
 
             buildTextField(
