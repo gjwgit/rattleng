@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Tuesday 2025-03-25 13:23:08 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2025-04-30 13:40:40 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -437,19 +437,25 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
               showDate: true,
               defaultDate: '20250101',
               isLatestTooltip: '''
-              
-              *Rattle* is regularly updated to bring you the best
-              experience for Data Science, AI and Machine Learning. The latest
-              version is always available from the
-              [Rattle](https://togaware.com/projects/rattle/) website. **Tap** on
-              the **Version** text here in the title bar to visit the *CHANGELOG*
-              in your browser and so see a list of all changes to Rattle.
+
+              *Rattle* is regularly updated to bring you the best experience for
+              Data Science, AI and Machine Learning. The latest version is
+              always available from the [Rattle](https://rattle.togaware.com)
+              website where you can find installation and update information.
+
+              **Tap** on the Version text here in the title bar to visit the
+              CHANGELOG in your browser to review the changes to Rattle.
 
               ''',
               notLatestTooltip: '''
 
-              *A newer version is available!* Visit [Rattle](https://rattle.togaware.com) for instructions on updating your installation.
-              
+              A **newer version** of Rattle is available! Visit the
+              [Rattle](https://rattle.togaware.com) website for instructions on
+              updating your installation.
+
+              **Tap** on the Version text here in the title bar to visit the
+              CHANGELOG in your browser to review the changes to Rattle.
+
               ''',
             ),
 
