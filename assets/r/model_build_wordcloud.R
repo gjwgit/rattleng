@@ -31,6 +31,7 @@ library(dplyr)
 library(readr)
 library(tm)
 library(wordcloud)
+library(wordVectors)
 
 # The text data will have been loaded into the `txt` variable. If that
 # does not exist then convert ds into txt.
@@ -100,3 +101,94 @@ dev.off()
 # Show the top words
 
 d %>% filter(freq >= <MINFREQ>) %>%  dplyr::slice_head(n = <MAXWORD>) %>%  print(row.names = FALSE)
+
+# --- Train Word Vectors ---
+# This section trains a Word2Vec model using the 'txt' variable.
+
+cat("> WordVectors: Preparing text data for training...\n")
+
+# Define temporary file paths.
+
+temp_dir         <- "<TEMPDIR>" # Ensure <TEMPDIR> is replaced with the actual temp directory path.
+text_file_path   <- file.path(temp_dir, "w2v_input_for_training.txt")
+model_output_path <- file.path(temp_dir, "w2v_model_trained.bin") # Output as binary.
+
+# Parameters for training (adjust as needed).
+
+vector_size      <- 100
+window_size      <- 5
+min_count        <- 5 # Minimum word frequency
+
+trained_model <- tryCatch({
+    # Write the 'txt' variable content to the temporary file.
+    # Assuming 'txt' is a character vector where each element is a document/line.
+
+    writeLines(as.character(txt), text_file_path)
+    cat("> WordVectors: Starting model training...\n")
+
+    # Train the model.
+
+    train_word2vec(train_file = text_file_path,
+                   output_file = model_output_path,
+                   vectors = vector_size,
+                   window = window_size,
+                   min_count = min_count,
+                   threads = 1) # Use 1 thread generally
+
+    cat(sprintf("> WordVectors: Model training complete. Model saved to %s\n", model_output_path))
+
+}, error = function(e) {
+    cat(sprintf("> WordVectors Error: Failed during training - %s\n", e$message))
+    NULL
+})
+
+# Optional: Clean up the temporary input file
+# if (file.exists(text_file_path)) file.remove(text_file_path)
+
+# --- Term Occurrence/Frequency ---
+# The 'd' data frame contains word frequencies (occurrences).
+# Print the top terms based on frequency settings.
+
+cat("> Top Term Frequencies:\n")
+d %>%
+  filter(freq >= <MINFREQ>) %>%
+  dplyr::slice_head(n = <MAXWORD>) %>%
+  print(row.names = FALSE)
+cat("\n") # Add a newline for separation
+
+# --- Term Associations ---
+# Find terms associated with a specific target term.
+
+cat("> Term Associations:\n")
+
+# Placeholder for the term you want associations for
+target_term <- "Yes"
+# Placeholder for the minimum correlation limit
+cor_limit   <- 0.01 # e.g., 0.01
+
+# Check if dtm exists and has terms.
+
+if (exists("dtm") && length(dimnames(dtm)$Terms) > 0) {
+  # Find associations using the TermDocumentMatrix
+  associations <- tryCatch({
+      findAssocs(dtm, terms = target_term, corlimit = cor_limit)
+  }, error = function(e) {
+      # Handle case where term might not be found or other errors
+      cat(sprintf("  - Error finding associations for '%s': %s\n", target_term, e$message))
+      list() # Return an empty list on error
+  })
+
+  # Print the associations if found
+  if (length(associations) > 0 && length(associations[[1]]) > 0) {
+      cat(sprintf("  - Associations for '%s' (cor >= %.2f):\n", target_term, cor_limit))
+      # Use capture.output to format the list nicely
+      formatted_output <- capture.output(print(associations))
+      cat(paste("    ", formatted_output, collapse = "\n"), "\n")
+  } else if (!inherits(associations, "error")) {
+      cat(sprintf("  - No terms found associated with '%s' (correlation >= %.2f)\n", target_term, cor_limit))
+  }
+
+} else {
+  cat("  - TermDocumentMatrix 'dtm' not available or empty for association analysis.\n")
+}
+cat("\n") # Add a newline
