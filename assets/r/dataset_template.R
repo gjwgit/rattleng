@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2025-04-19 09:55:46 +1000 Graham Williams>
+# Time-stamp: <Thursday 2025-05-01 09:05:55 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -37,10 +37,12 @@
 # @williams:2017:essentials Chapter 3
 #
 # https://survivor.togaware.com/datascience/data-template.html
-
-library(dplyr)        # Wrangling: select() sample_frac().
-library(janitor)      # Cleanup: clean_names().
-
+##
+## Are these library still required??? (gjw 20250501)
+##
+##library(dplyr)        # Wrangling: select() sample_frac().
+##library(janitor)      # Cleanup: clean_names().
+##
 ## # Index the original variable names by the new names.
 ##
 ## names(vnames) <- names(ds)
@@ -106,7 +108,7 @@ inputs <- setdiff(vars, target)  %>%
 # variables.
 
 ds %>%
-  select(-all_of(ignore)) %>%
+  dplyr::select(-tidyselect::all_of(ignore)) %>%
   sapply(is.numeric) %>%
   which()  %>%
   names() %>%
@@ -118,7 +120,7 @@ numc
 # variables.
 
 ds %>%
-  select(-all_of(ignore)) %>%
+  dplyr::select(-tidyselect::all_of(ignore)) %>%
   sapply(is.factor) %>%
   which() %>%
   names() %>%
