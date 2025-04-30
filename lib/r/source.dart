@@ -236,6 +236,7 @@ Future<void> rSource(
   int clusterNum = ref.read(numberClusterProvider);
   int clusterRun = ref.read(runClusterProvider);
   int clusterProcessor = ref.read(processorClusterProvider);
+  int clusterPairSize = ref.read(pairSizeClusterProvider);
   bool clusterReScale = ref.read(reScaleClusterProvider);
   String clusterDistance = ref.read(distanceClusterProvider);
   String clusterLink = ref.read(linkClusterProvider);
@@ -598,7 +599,7 @@ Future<void> rSource(
       code.replaceAll('<CLUSTER_DISTANCE>', '"${clusterDistance.toString()}"');
   code = code.replaceAll('<CLUSTER_LINK>', '"${clusterLink.toString()}"');
   code = code.replaceAll('<CLUSTER_PROCESSOR>', clusterProcessor.toString());
-
+  code = code.replaceAll('<CLUSTER_PAIR_SIZE>', clusterPairSize.toString());
   ////////////////////////////////////////////////////////////////////////
   // EXPLORE - VISUAL - BOXPLOT
 

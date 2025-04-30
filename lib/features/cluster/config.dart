@@ -24,7 +24,10 @@
 
 library;
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -41,6 +44,7 @@ import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/choice_chip_tip.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
+import 'package:rattle/widgets/number_field.dart';
 
 /// A StatefulWidget to pass the ref across to the rSouorce.
 
@@ -82,6 +86,8 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
       ''',
   };
 
+  final TextEditingController _pairSizeController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     String type = ref.read(typeClusterProvider.notifier).state;
@@ -96,6 +102,7 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
 
     String stdout = ref.watch(stdoutProvider);
     String nobs = rExtract(stdout, '> nobs').split(' ').last;
+    String ncolumns = rExtract(stdout, '> ncolumns').split(' ').last;
 
     // Convert nobs to integer if possible.
 
@@ -109,6 +116,16 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
         }
       } catch (e) {
         // Keep nobsInt as null if parsing fails.
+      }
+    }
+
+    int? ncolumnsInt;
+    if (ncolumns.isNotEmpty) {
+      try {
+        ncolumnsInt = int.parse(ncolumns);
+        debugPrint('ncolumnsInt: $ncolumnsInt');
+      } catch (e) {
+        // Keep ncolumnsInt as null if parsing fails.
       }
     }
 
@@ -199,7 +216,6 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                 });
               },
             ),
-            configWidgetGap,
             LabelledCheckbox(
               key: const Key('re_scale'),
               tooltip: '''
@@ -214,6 +230,26 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
               ''',
               label: 'Re-Scale',
               provider: reScaleClusterProvider,
+            ),
+            NumberField(
+              label: 'Pair Size:',
+              key: const Key('cluster_pair_size'),
+              tooltip: '''
+
+              **Pair Size:** Set the number of pairs to display in the pairwise
+              plot.
+
+              ''',
+              controller: _pairSizeController,
+              inputFormatter: FilteringTextInputFormatter.digitsOnly,
+              validator: (value) => validateInteger(
+                value,
+                min: defaultClusterPairSize,
+                max: (ncolumnsInt != null && ncolumnsInt > 1)
+                    ? math.max(defaultClusterPairSize, ncolumnsInt - 1)
+                    : null, // -1 for the Ident variable.
+              ),
+              stateProvider: pairSizeClusterProvider,
             ),
           ],
         ),

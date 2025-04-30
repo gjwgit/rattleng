@@ -28,10 +28,28 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final linkClusterProvider = StateProvider<String>((ref) => 'ward');
-final numberClusterProvider = StateProvider<int>((ref) => 10);
-final processorClusterProvider = StateProvider<int>((ref) => 1);
-final reScaleClusterProvider = StateProvider<bool>((ref) => true);
-final runClusterProvider = StateProvider<int>((ref) => 1);
-final typeClusterProvider = StateProvider<String>((ref) => 'KMeans');
-final distanceClusterProvider = StateProvider<String>((ref) => 'euclidean');
+/// The default values for the parameters for cluster.
+
+const defaultClusterDistance = 'euclidean';
+const defaultClusterLink = 'ward';
+const defaultClusterNumber = 10;
+const defaultClusterPairSize = 2;
+const defaultClusterProcessor = 1;
+const defaultClusterReScale = true;
+const defaultClusterRun = 1;
+const defaultClusterType = 'KMeans';
+
+/// Providers for the parameters for cluster.
+
+final linkClusterProvider = StateProvider<String>((ref) => defaultClusterLink);
+final numberClusterProvider = StateProvider<int>((ref) => defaultClusterNumber);
+final pairSizeClusterProvider =
+    StateProvider<int>((ref) => defaultClusterPairSize);
+final processorClusterProvider =
+    StateProvider<int>((ref) => defaultClusterProcessor);
+final reScaleClusterProvider =
+    StateProvider<bool>((ref) => defaultClusterReScale);
+final runClusterProvider = StateProvider<int>((ref) => defaultClusterRun);
+final typeClusterProvider = StateProvider<String>((ref) => defaultClusterType);
+final distanceClusterProvider =
+    StateProvider<String>((ref) => defaultClusterDistance);
