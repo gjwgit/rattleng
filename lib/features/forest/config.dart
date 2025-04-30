@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2025-03-24 08:54:43 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-04-30 12:37:22 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -355,13 +355,16 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
             ),
 
             NumberField(
-              label: 'Display:',
+              label: 'Display Tree:',
               key: const Key('treeNoForest'),
               controller: _treeNoController,
               tooltip: '''
 
-                **Display:** Set this to the tree number to display as a sample
-                  of the output after building the model.
+                **Display Tree:** Set this to the tree number whose rules are to
+                  be displayed after building the model. You can change this
+                  value after the forest has been built to display the rules
+                  generated from a different tree without having to rebuild the
+                  forest.
 
                 ''',
               max: treeNum,
@@ -377,8 +380,10 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               controller: _maxRulesController,
               tooltip: '''
 
-                **Max Rules:** Set this to the maximum number of rules to display
-                  in the output after building the model.
+                **Max Rules:** Set this to the maximum number of rules to
+                  display in the output after building the model. You can change
+                  this value after the forest has been built to display more or
+                  fewer rules without having to rebuild the forest.
 
                 ''',
               validator: validateVector,
