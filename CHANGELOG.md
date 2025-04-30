@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ FOREST: Show tree size distribution. [6.4.76 20250430 gjw]
 + CLUSTER: Choose number of vars in a PAIRS PLOT [6.4.75 20250430 zy]
 + VISUAL: Allow plots when there is no target. [6.4.74 20250430 zy]
 + APP: Bug fixes and cleanup [6.4.73 20250430 gjw]
