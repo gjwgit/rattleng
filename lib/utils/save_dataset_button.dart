@@ -1,6 +1,6 @@
 /// CSV Save button.
 //
-// Time-stamp: <Sunday 2025-03-30 08:47:45 +1100 Graham Williams>
+// Time-stamp: <Thursday 2025-05-01 09:07:49 +1000 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///
@@ -95,7 +95,7 @@ class SaveDatasetButton extends ConsumerWidget {
 
           // Build the R command to save the dataset to the selected path.
 
-          rExecute(ref, 'write.csv(ds, file="$rSafePath", row.names=FALSE)\n');
+          rExecute(ref, 'write.csv(ds, file="$rSafePath", row.names=FALSE)');
         },
       ),
     );

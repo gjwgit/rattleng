@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Tuesday 2025-04-29 15:28:35 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-05-01 09:09:19 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -318,7 +318,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                         ''',
                       );
                     } else {
-                      rExecute(ref, 'View(ds)\n');
+                      rExecute(ref, 'View(ds)');
                     }
                   },
                 ),
