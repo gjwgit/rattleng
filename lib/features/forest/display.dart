@@ -101,6 +101,8 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
             .replaceFirst('Confusion matrix:', '\nConfusion Matrix:\n')
         : content = rExtract(stdout, 'print(model_cforest)');
 
+    content = content.replaceAll('Call:\n', '');
+
     if (forestAlgorithm == AlgorithmType.traditional) {
       const String scd = 'Summary of the Traditional Forest model.';
 
@@ -166,6 +168,13 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
         stdout,
         'printRandomForest(model_randomForest, ${forestNo}, max.rules = ${forestMaxRules})',
       );
+
+      // Changing parameters makes Sample Rules disappear.
+      // Keep the previous record.
+
+      if (content.isEmpty) {
+        content = rExtract(stdout, 'printRandomForest(model_randomForest');
+      }
 
       if (content.isNotEmpty) {
         pages.add(
