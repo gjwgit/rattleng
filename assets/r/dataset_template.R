@@ -82,6 +82,12 @@ nobs   <- nrow(ds)
 ##
 nobs
 
+# Record the number of columns.
+
+ncolumns <- ncol(ds)
+
+ncolumns
+
 # Note the variable names.
 
 vars   <- names(ds)
