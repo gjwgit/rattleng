@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-04-24 16:48:56 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2025-04-30 15:21:33 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -82,8 +82,6 @@ printRandomForest(model_randomForest, <RF_NO_TREE>, max.rules = <RF_MAX_SHOW_RUL
 
 # Plot the relative importance of the variables.
 
-svg("<TEMPDIR>/model_random_forest_varimp.svg")
-
 # Assuming `model_randomForest` is already trained.
 # Extract variable importance for each class.
 
@@ -101,6 +99,7 @@ importance_long <- melt(importance_df,
                         variable.name = "Class",
                         value.name    = "Importance")
 
+svg("<TEMPDIR>/model_random_forest_varimp.svg", height=4.5, width=10)
 ggplot(importance_long, aes(x    = reorder(Variable, Importance),
                             y    = Importance,
                             fill = Class)) +
@@ -111,15 +110,14 @@ ggplot(importance_long, aes(x    = reorder(Variable, Importance),
     title = "Variable Importance for Different Target Classes",
     x     = "Variable",
     y     = "Importance"
-  ) +
-  theme_minimal()
-
+  )  +
+  <SETTINGS_GRAPHIC_THEME>()
 dev.off()
 
 
 # Plot the error rate against the number of trees.
 
-svg("<TEMPDIR>/model_random_forest_error_rate.svg")
+svg("<TEMPDIR>/model_random_forest_error_rate.svg", height=5, width=9)
 
 plot(model_randomForest, main="")
 legend("topright", c("OOB", "No", "Yes"),
@@ -133,7 +131,7 @@ dev.off()
 
 # Plot the OOB ROC curve.
 
-svg("<TEMPDIR>/model_random_forest_oob_roc_curve.svg")
+svg("<TEMPDIR>/model_random_forest_oob_roc_curve.svg", height=5, width=5)
 
 # Extract observed class labels from the Random Forest model.
 
@@ -224,4 +222,59 @@ if (min_class_size >= 3 && length(unique(predicted_probs)) > 1) {
              length(unique(predicted_probs))),
        cex = 1.2)
 }
+dev.off()
+
+# Now we generate details about the different tree sizes in the
+# forest.
+
+# A support function to count leaf nodes in a tree.
+
+count_leaf_nodes <- function(tree) {
+  tree_struct <- getTree(model_randomForest, k=tree, labelVar=FALSE)
+  leaf_count <- sum(tree_struct[, "status"] == -1)
+  return(leaf_count)
+}
+
+# Get the number of trees in our model.
+
+num_trees <- model_randomForest$ntree
+
+# Create a data frame with tree number and leaf count.
+
+rf_tree_info <- data.frame(
+  tree_number = 1:num_trees,
+  leaf_nodes = sapply(1:num_trees, count_leaf_nodes)
+)
+
+# View the results.
+
+print(rf_tree_info)
+
+# Summary statistics of leaf nodes across trees.
+
+summary(rf_tree_info$leaf_nodes)
+
+# Plot the distribution of leaf nodes.
+
+svg("<TEMPDIR>/model_random_forest_leaf_node_distribution.svg", height=5, width=10)
+rf_tree_info %>%
+  ggplot2::ggplot(aes(x=leaf_nodes)) +
+  ggplot2::geom_histogram(binwidth = 1,
+                          fill     = "steelblue",
+                          color    = "white",
+                          alpha    = 0.7) +
+  ggplot2::geom_density(aes(y = after_stat(count)),
+                        color = "darkred",
+                        linewidth = 1) +
+  ggplot2::labs(
+    title    = "Distribution of Tree Sizes in the Random Forest",
+    subtitle = paste("Based on", num_trees, "trees"),
+    x        = "Number of Leaf Nodes/Rules",
+    y        = "Count"
+  ) +
+  <SETTINGS_GRAPHIC_THEME>() +
+  theme(
+    plot.title = element_text(face="bold"),
+    axis.title = element_text(face="bold")
+  )
 dev.off()
