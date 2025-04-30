@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2025-04-24 16:51:52 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2025-04-30 12:43:54 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -95,7 +95,9 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
               '                     Number of trees',
               '\nNumber of trees',
             )
+            .replaceAll(' = ', '=')
             .replaceFirst('        OOB', 'OOB')
+            .replaceFirst('of  error', 'of error')
             .replaceFirst('Confusion', '\nConfusion')
         : content = rExtract(stdout, 'print(model_cforest)');
 
