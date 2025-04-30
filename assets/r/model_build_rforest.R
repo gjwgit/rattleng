@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-04-30 14:37:18 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2025-04-30 14:43:15 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -111,8 +111,8 @@ ggplot(importance_long, aes(x    = reorder(Variable, Importance),
     title = "Variable Importance for Different Target Classes",
     x     = "Variable",
     y     = "Importance"
-  ) +
-  theme_minimal()
+  )  +
+  <SETTINGS_GRAPHIC_THEME>()
 
 dev.off()
 
