@@ -243,7 +243,7 @@ class NumberFieldState extends ConsumerState<NumberField> {
     }
 
     // Call the onDecrement callback if provided.
-    
+
     widget.onUpDownPressed?.call();
   }
 
@@ -332,7 +332,7 @@ class NumberFieldState extends ConsumerState<NumberField> {
     }
 
     // Trigger the callback after all updates are done.
-    
+
     widget.onUpDownPressed?.call();
 
     _isInternalChange = false;
@@ -376,8 +376,6 @@ class NumberFieldState extends ConsumerState<NumberField> {
 
                     _previousSelection = widget.controller.selection;
                     updateField();
-
-                    
                   },
                   onChanged: (value) {
                     // Store the current selection.
