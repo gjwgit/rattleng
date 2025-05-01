@@ -173,6 +173,7 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
     };
 
     if (imageExists(image)) {
+      int pairSize = ref.read(pairSizeClusterProvider);
       pages.add(
         ImagePage(
           title: '''
@@ -182,7 +183,7 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
           Visit
           [graphics::pairs()](https://www.rdocumentation.org/packages/graphics/topics/pairs).
 
-          Only the first 5 variables are shown. Use the **Console** to vary.
+          Only the first $pairSize variables are shown. Use the **Console** to vary.
 
           ''',
           path: image,
