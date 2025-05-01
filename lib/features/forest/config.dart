@@ -374,6 +374,14 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               inputFormatter:
                   FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
               stateProvider: treeNoForestProvider,
+              onUpDownPressed: () {
+                rExecute(
+                  ref,
+                  'printRandomForest(model_randomForest, '
+                  '${_treeNoController.text}, '
+                  'max.rules = ${_maxRulesController.text})',
+                );
+              },
             ),
 
             NumberField(
