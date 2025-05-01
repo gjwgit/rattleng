@@ -1,0 +1,703 @@
+ACSys and CSIRO Data Mining
+
+Outline
+The Challenge
+The Process
+
+An Introduction to Data Mining
+
+Privacy
+Graham.Williams@cmis.csiro.au
+ACSys Data Mining
+CSIRO Australia
+23 September 1999
+
+Copyright c 1999 by Graham J Williams
+
+Copyright c 1999 by Graham J Williams
+
+ACSys and CSIRO Data Mining
+
+1
+
+ACSys and CSIRO Data Mining
+
+What Exactly is Being Mined?
+
+And Where Has it Come From?
+
+The non-trivial extraction of novel, implicit, and actionable
+knowledge from large datasets.
+Information
+Data
+
+Machine
+Learning
+High
+Performance
+Computers
+
+Knowledge
+
+Copyright c 1999 by Graham J Williams
+
+3
+
+Visualisation
+Data Mining
+
+Computational
+Mathematics
+
+- Extremely large datasets (GB now and approaching TB)
+- Discovery of the non-obvious
+- Useful knowledge that can improve processes
+- Can not be done manually
+Technology to enable data exploration, data analysis, and data
+visualisation of very large databases at a high level of abstraction, without
+a specific hypothesis in mind.
+
+ACSys and CSIRO Data Mining
+
+Database
+
+Applied
+Statistics
+
+Pattern
+Recognition
+
+Copyright c 1999 by Graham J Williams
+
+4
+
+ACSys and CSIRO Data Mining
+
+Typical Approaches to Data Mining
+
+Data Mining is a Process
+A standard six step iterative process:
+
+Predictive Modelling
+tree induction, neural nets, regression
+
+1. Business Understanding (25%)
+2. Data Understanding (20%)
+3. Data Preparation (25%)
+4. Modelling (10%)
+5. Evaluation (20%)
+6. Deployment
+
+Database Segmentation
+clustering, k-means, Kohonen maps,
+Link Analysis
+associations, sequential patterns, similar time sequences
+
+The "fun" has been in the modelling but the hard yakka is in
+the other steps
+
+Deviation Detection
+visualisation, statistics, outlier detection
+
+Can Computational Mathematics help us here?
+
+Copyright c 1999 by Graham J Williams
+
+6
+
+ACSys and CSIRO Data Mining
+
+Copyright c 1999 by Graham J Williams
+ACSys and CSIRO Data Mining
+
+The CRISP-DM
+developed by NCR, Daimler-Benz, SPSS, OHRA
+Cross Industry Standard Process for Data Mining
+http://www.crisp-dm.org
+
+Is Big Brother Watching
+Privacy is an important issue that must be addressed in
+most Data Mining exercises.
+Laws in many countries directly affect Data Mining and are
+required knowledge--penalties are often severe.
+
+Goal: Define and validate a Data Mining Process Model
+- applicable in diverse industry sectors
+- industry and tool neutral
+- large data mining projects executed faster, cheaper, more
+reliably and more manageably
+
+The OECD Principles of Data Collection.
+
+9
+
+ACSys and CSIRO Data Mining
+
+ACSys and CSIRO Data Mining
+
+OECD Principles of Data Collection
+
+OECD Principles of Data Collection
+
+Collection limitation:
+
+Use limitation:
+
+Data should be obtained lawfully and fairly, while certain very sensitive
+data should not be held at all
+
+Use of data for purposes other than specified is forbidden, except with
+the consent of the data subject or by authority of law
+
+Data quality:
+
+Security safeguards:
+
+Data should be relevant to the stated purposes, accurate, complete and
+up-to-date; proper precautions should be taken to ensure this accuracy
+
+Agencies should establish procedures to guard against loss, corruption,
+destruction, or misuse of data
+
+Purpose specification:
+
+Openness:
+It must be possible to acquire information about the
+collection, storage, and use of personal data
+
+The purposes for which data will be used should be identified, and the
+data should be destroyed if it no longer serves the given purpose
+
+Copyright c 1999 by Graham J Williams
+
+13
+
+ACSys and CSIRO Data Mining
+
+Copyright c 1999 by Graham J Williams
+
+14
+
+ACSys and CSIRO Data Mining
+
+OECD Principles of Data Collection
+
+Amazon.com IS Watching?
+Favourite Books by Area
+
+Individual participation:
+The data subject has a right to access and challenge the
+data related to him or her
+
+- San Jose
+Bay Area Backroads
+Eat, Drink, and Be Merry...
+- New York City
+For the Relief of Unbearable Urges
+- Intel
+Pentium Pro and Pentium II System Architecture
+- U.S. Government
+Mastering Microsoft Outlook 98
+
+Accountability:
+A data controller should be accountable for complying with
+measures giving effect to all these principles
+
+Making assessment by association ....
+
+Copyright c 1999 by Graham J Williams
+
+15
+
+ACSys and CSIRO Data Mining
+
+Copyright c 1999 by Graham J Williams
+
+16
+
+ACSys and CSIRO Data Mining
+
+Advanced Computational Systems
+(ACSYS)
+
+ACSys Data Mining
+
+Algorithm
+Development
+
+ANU
+CSIRO
+
+Insurance
+
+Virtual
+Environments
+
+Data Mining
+
+Taxation
+
+Data
+Mining
+
+Industry
+Health
+
+Digital
+Virtual Environments
+
+Industry
+
+Object
+Technologies
+
+Fujitsu
+
+Banking
+
+Object Technologies
+SGI
+SUN
+(TMC)
+
+Associates
+
+Copyright c 1999 by Graham J Williams
+
+18
+
+ACSys and CSIRO Data Mining
+
+Copyright c 1999 by Graham J Williams
+
+19
+
+ACSys and CSIRO Data Mining
+
+Research Projects
+
+ACSys Parallel Algorithms
+
+Temporal Logics for Data Mining
+BMARS
+
+Intelligent Agents for Interestingness
+
+Gamming
+Revolver
+
+Parallel Algorithms
+Data Management
+
+Thin
+Plate
+Splines
+
+Algorithm
+Development
+DART
+
+Integrated Delivery
+
+C5.0
+CART
+PRIM
+
+ACSys and CSIRO Data Mining
+
+ACSys and CSIRO Data Mining
+
+Application Projects
+
+Commercial Collaborators
+
+Mt Stromlo Observatory
+
+NRMA Insurance Ltd
+Large database of motor vehicle insurance policy histories (millions of
+records with over 30 usable variables). Decision trees and regression
+splines form part of the toolkit. Interest in risk rating and premium
+setting.
+
+Australian Taxation Office
+
+Mt Stromlo Observatory
+Nightly observations of the intensity of millions of stars over several
+years. Using Fourier, wavelet and auto regression techniques to extract
+features. Searching for MACHO events, to detect the missing dark
+matter of the universe, and performing clustering to find unusual stars.
+
+NRMA Insurance Limited
+
+Health Insurance Commission
+
+Copyright c 1999 by Graham J Williams
+
+22
+
+ACSys and CSIRO Data Mining
+
+Copyright c 1999 by Graham J Williams
+
+23
+
+ACSys and CSIRO Data Mining
+
+Commercial Collaborators
+
+Example: Search for Interesting Patterns
+
+Health Insurance Commission: Medicare
+Terabytes of patient claims since the inception of Medicare. Using
+visualisation and hot spot analysis. Exploring public fraud, including
+doctor shoppers and other inappropriate practices. Moving on to Health
+Management.
+
+A distinct group of behaviour identified as Medicare Claim Hoarders
+pin17300440631
+
+pin17305130174
+
+700
+
+pin17305600270
+
+35
+
+30
+
+Service-Claim
+
+Service-Claim
+
+600
+
+30
+
+500
+
+25
+
+400
+
+20
+
+300
+
+15
+
+200
+
+10
+
+100
+
+5
+
+Service-Claim
+
+25
+
+20
+
+15
+
+10
+
+Australian Taxation Office - ATO
+Initial project hosted ATO Fraud Prevention and Control employee for
+18 months. Assisted evaluation of data mining for fraud detection.
+Provided ATO with data mining tools developed in the program. Inspired
+development with VE Program of a profile visualisation tool. Led to a
+number of investigations by ATO auditors.
+
+Copyright c 1999 by Graham J Williams
+
+24
+
+ACSys and CSIRO Data Mining
+
+0
+12600
+
+12700
+
+12800
+
+12900
+
+13000
+
+13100
+
+13200
+
+13300
+
+13400
+
+0
+12600
+
+5
+
+12700
+
+12800
+
+12900
+
+13000
+
+13100
+
+13200
+
+13300
+
+13400
+
+0
+12600
+
+12700
+
+12800
+
+12900
+
+13000
+
+13100
+
+13200
+
+13300
+
+13400
+
+But there are millions of these plots
+(plot visit to doctor versus dollar)
+
+Copyright c 1999 by Graham J Williams
+
+25
+
+ACSys and CSIRO Data Mining
+
+Inappropriate: Cash Only Regulars
+
+Hunting for Statistical Outliers: Sofie
+Current collaborative work with NEC Japan
+
+Group of patients with very regular activity
+pina17307520484
+
+Parametric Statistical Outlier Detection
+
+pin17307520484
+
+300
+
+45
+Service-Claim
+
+Service-Claim
+40
+
+- Gaussian mixture model using Sequentially Discounting
+EM algorithm
+
+250
+35
+
+200
+
+30
+
+25
+150
+20
+
+Non Parametric Statistical Outlier Detection
+
+15
+
+100
+
+10
+
+- Kernel mixture model using Sequentially Discounting EM
+
+50
+5
+
+0
+12600
+
+12700
+
+12800
+
+12900
+
+13000
+
+13100
+
+13200
+
+13300
+
+13400
+
+0
+12600
+
+12700
+
+12800
+
+12900
+
+13000
+
+13100
+
+13200
+
+13300
+
+13400
+
+Application of these on
+development of algorithm
+
+All Medicare payments versus Cash only payments
+(plot visit to doctor versus dollar)
+
+Copyright c 1999 by Graham J Williams
+ACSys and CSIRO Data Mining
+
+Visualisations with Virtual Environments
+
+26
+
+real
+
+data
+
+feeding
+
+further
+
+Copyright c 1999 by Graham J Williams
+
+27
+
+ACSys and CSIRO Data Mining
+
+Data Management
+
+Traditional mouse-keyboard-screen well explored
+
+Data comes in many forms from many locations
+
+VE dramatically increases workspace
+
+Data regularly updated (versioning)
+
+Immersive presentation with new interactive mechanisms
+
+Data Cleansing, Feature Extraction, Feature Derivation
+(versioning)
+
+Requires considerable compute power
+Require tuned, fast access to data
+Algorithms want a consistent data model?
+
+ACSys and CSIRO Data Mining
+
+ACSys and CSIRO Data Mining
+
+Data Management
+
+Java Semantic Extension Framework
+
+Is it possible to separate the algorithm from the data?
+
+Previous work in data management
+(Application Oriented DB, ODBC/JDBC)
+
+Are there classes of data interaction that suit different
+algorithms?
+
+The "right" abstraction for Data Mining
+
+How do we best interact with heterogeneous sources of
+data?
+
+Research: Use of the Java SEF (and Persistent Java?) to
+provide an abstraction for accessing and manipulating data
+directly suited to the algorithms requirements. (Columnbased access vs Row-based access)
+SEF: seamless access to data, wherever it may be?
+
+Copyright c 1999 by Graham J Williams
+
+33
+
+ACSys and CSIRO Data Mining
+
+Copyright c 1999 by Graham J Williams
+
+34
+
+ACSys and CSIRO Data Mining
+
+Delivering the Integrated Application
+
+Delivering the Integrated Application
+Data Miner's Arcade
+
+Use emerging standards to support delivery of tuned
+systems:
+
+- Java-based prototype environment
+- Provides Dataset API (move towards SEF)
+- Provides algorithm independent GUIs
+- GUIs tuned for algorithms (based on XML/XSL)
+- Scalable algorithms and scalable data management
+- Distributed data not (yet) a focus
+
+Pluggable data mining:
+- Standard API to access data tuned for Data Mining
+- Standard model representations (PMML)
+- Suite of tools to process XML/PMML
+- XML Meta Descriptions of Analysis Tools
+Input requirements, Tuning Parameters, etc.
+
+Copyright c 1999 by Graham J Williams
+
+35
+
+ACSys and CSIRO Data Mining
+
+Summary: The Data Mining Resource
+ACSys through ANU and CSIRO has developed a significant
+data mining facility
+Sun Enterprise: 10 processor; 5GB memory; TB disk
+
+
+Large data sets from NRMA, ATO, HIC, Stromlo, for testing
+algorithms
+Datasets millions of rows, tens to hundreds of columns
+http://www.cmis.csiro.au/alcd
+
+Copyright c 1999 by Graham J Williams
+
+37
+
+Copyright c 1999 by Graham J Williams
+
+36
+
