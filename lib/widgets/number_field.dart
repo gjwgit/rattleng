@@ -53,6 +53,7 @@ class NumberField extends ConsumerStatefulWidget {
   final Future<void> Function(String? newValue)? onValueChanged;
   final String? sharedPrefsKey;
   final VoidCallback? onUpDownPressed;
+  final int tapDelay;
 
   const NumberField({
     super.key,
@@ -71,6 +72,7 @@ class NumberField extends ConsumerStatefulWidget {
     this.onValueChanged,
     this.sharedPrefsKey,
     this.onUpDownPressed,
+    this.tapDelay = 1000,
   });
 
   @override
@@ -84,10 +86,33 @@ class NumberFieldState extends ConsumerState<NumberField> {
 
   bool _isInternalChange = false;
 
+  // Timer for debouncing the onUpDownPressed callback.
+
+  Timer? _debounceTimer;
+
   @override
   void dispose() {
     _focusNode.dispose();
+    _debounceTimer?.cancel(); // Cancel any pending debounce timers
     super.dispose();
+  }
+
+  // Call the onUpDownPressed callback with debouncing if needed.
+
+  void _triggerUpDownCallback() {
+    // If no callback is provided, do nothing.
+
+    if (widget.onUpDownPressed == null) return;
+
+    // Cancel any existing timer to reset the delay.
+
+    _debounceTimer?.cancel();
+
+    // If a delay is specified, use debouncing.
+
+    _debounceTimer = Timer(Duration(milliseconds: widget.tapDelay), () {
+      widget.onUpDownPressed?.call();
+    });
   }
 
   // Stores the current cursor position to maintain it during updates.
@@ -205,9 +230,9 @@ class NumberFieldState extends ConsumerState<NumberField> {
       prefs.setInt('randomSeed', currentValue.toInt());
     }
 
-    // Call the onIncrement callback if provided.
+    // Trigger the callback with debouncing.
 
-    widget.onUpDownPressed?.call();
+    _triggerUpDownCallback();
   }
 
   void decrement() async {
@@ -242,9 +267,9 @@ class NumberFieldState extends ConsumerState<NumberField> {
       prefs.setInt('randomSeed', currentValue.toInt());
     }
 
-    // Call the onDecrement callback if provided.
+    // Trigger the callback with debouncing.
 
-    widget.onUpDownPressed?.call();
+    _triggerUpDownCallback();
   }
 
   // A timer for continuous incrementing/decrementing.
@@ -308,6 +333,7 @@ class NumberFieldState extends ConsumerState<NumberField> {
     _isInternalChange = true;
 
     // Update the state.
+
     ref.read(widget.stateProvider.notifier).state = v;
 
     // Save to SharedPreferences if key is provided.
@@ -333,7 +359,7 @@ class NumberFieldState extends ConsumerState<NumberField> {
 
     // Trigger the callback after all updates are done.
 
-    widget.onUpDownPressed?.call();
+    _triggerUpDownCallback();
 
     _isInternalChange = false;
   }
