@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-08-17 06:40:50 +1000 Graham Williams>
+# Time-stamp: <Thursday 2025-05-01 09:49:15 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -30,16 +30,16 @@
 
 if (is.numeric(ds$<SELECTED_VAR>)) {
   ds %<>%
-    mutate(IMP_<SELECTED_VAR> = ifelse(is.na(<SELECTED_VAR>),
-                                     <IMPUTED_VALUE>,
-                                     <SELECTED_VAR>))
+    dplyr::mutate(IMP_<SELECTED_VAR> = ifelse(is.na(<SELECTED_VAR>),
+                                              <IMPUTED_VALUE>,
+                                              <SELECTED_VAR>))
 } else {
   ds %<>%
-    mutate(IMP_<SELECTED_VAR> = as.character(<SELECTED_VAR>)) %>%
-    mutate(IMP_<SELECTED_VAR> = ifelse(is.na(IMP_<SELECTED_VAR>),
+    dplyr::mutate(IMP_<SELECTED_VAR> = as.character(<SELECTED_VAR>)) %>%
+    dplyr::mutate(IMP_<SELECTED_VAR> = ifelse(is.na(IMP_<SELECTED_VAR>),
                                      "<IMPUTED_VALUE>",
                                      IMP_<SELECTED_VAR>)) %>%
-    mutate(IMP_<SELECTED_VAR> = as.factor(IMP_<SELECTED_VAR>))
+    dplyr::mutate(IMP_<SELECTED_VAR> = as.factor(IMP_<SELECTED_VAR>))
 }
 
 glimpse(ds)

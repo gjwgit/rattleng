@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-05-01 08:12:48 +1000 Graham Williams>
+# Time-stamp: <Thursday 2025-05-01 10:02:58 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -147,17 +147,17 @@ if (partitioning) {
 # for use in model training and evaluation later on.
 
 if (!is.null(target)) {
-  actual_tc <- tcds %>% dplyr::slice(tc) %>% pull(target)
-  actual_tr <- tcds %>% dplyr::slice(tr) %>% pull(target)
-  actual_tu <- tcds %>% dplyr::slice(tu) %>% pull(target)
-  actual_te <- tcds %>% dplyr::slice(te) %>% pull(target)
+  actual_tc <- tcds %>% dplyr::slice(tc) %>% dplyr::pull(target)
+  actual_tr <- tcds %>% dplyr::slice(tr) %>% dplyr::pull(target)
+  actual_tu <- tcds %>% dplyr::slice(tu) %>% dplyr::pull(target)
+  actual_te <- tcds %>% dplyr::slice(te) %>% dplyr::pull(target)
 }
 
 if (!is.null(risk)) {
-  risk_tc <- tcds %>% dplyr::slice(tc) %>% pull(risk)
-  risk_tr <- tcds %>% dplyr::slice(tr) %>% pull(risk)
-  risk_tu <- tcds %>% dplyr::slice(tu) %>% pull(risk)
-  risk_te <- tcds %>% dplyr::slice(te) %>% pull(risk)
+  risk_tc <- tcds %>% dplyr::slice(tc) %>% dplyr::pull(risk)
+  risk_tr <- tcds %>% dplyr::slice(tr) %>% dplyr::pull(risk)
+  risk_tu <- tcds %>% dplyr::slice(tu) %>% dplyr::pull(risk)
+  risk_te <- tcds %>% dplyr::slice(te) %>% dplyr::pull(risk)
 }
 
 # Check if the risk variable exists and create `risk_tc`. We do this
@@ -167,7 +167,7 @@ if (!is.null(risk)) {
   # Retrieve the risk values for the full dataset.
 
   risk_tc <- tcds %>%
-    pull(risk) %>%
+    dplyr::pull(risk) %>%
     as.numeric()  # Ensure it's numeric.
 
   # 20250108 gjw We used to handle NA risk values by replacing them

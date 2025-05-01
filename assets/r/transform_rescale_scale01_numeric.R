@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-07-30 13:47:31 +1000 Graham Williams>
+# Time-stamp: <Thursday 2025-05-01 09:49:42 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -28,7 +28,7 @@
 # to be in the range 0-1.
 
 ds %<>%
-  mutate(R01_<SELECTED_VAR> = reshape::rescaler(<SELECTED_VAR>, "range"))
+  dplyr::mutate(R01_<SELECTED_VAR> = reshape::rescaler(<SELECTED_VAR>, "range"))
 
 glimpse(ds)
 summary(ds)

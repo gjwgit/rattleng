@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-07-30 13:48:01 +1000 Graham Williams>
+# Time-stamp: <Thursday 2025-05-01 09:47:51 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -28,9 +28,9 @@
 # Treat -Inf as NA.
 
 ds %<>%
-  mutate(R10_<SELECTED_VAR> = log10(<SELECTED_VAR>),
-         R10_<SELECTED_VAR> = ifelse(is.infinite(R10_<SELECTED_VAR>),
-                                   NA, R10_<SELECTED_VAR>))
+  dplyr::mutate(R10_<SELECTED_VAR> = log10(<SELECTED_VAR>),
+                R10_<SELECTED_VAR> = ifelse(is.infinite(R10_<SELECTED_VAR>),
+                                            NA, R10_<SELECTED_VAR>))
 
 glimpse(ds)
 summary(ds)
