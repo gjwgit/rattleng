@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2025-03-30 11:47:06 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-05-02 07:56:19 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -85,7 +85,7 @@ final List<Map<String, dynamic>> modelPanels = [
     'widget': const NeuralPanel(),
   },
   {
-    'title': 'Word Cloud',
+    'title': 'Text',
     'widget': const WordCloudPanel(),
   },
 ];
@@ -115,14 +115,14 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
     if (currentPath.endsWith('.txt')) {
       // Only show the Word Cloud tab for .txt files
       filteredModelPanels =
-          modelPanels.where((panel) => panel['title'] == 'Word Cloud').toList();
+          modelPanels.where((panel) => panel['title'] == 'Text').toList();
     } else if (currentPath.endsWith('.csv') ||
         currentPath.endsWith('.xlsx') ||
         // TODO 20250310 gjw Remove the deprecated weatherDemoFile
         currentPath == weatherDemoFile) {
       // For csv files and demo, show all tabs except the Word Cloud tab
       filteredModelPanels =
-          modelPanels.where((panel) => panel['title'] != 'Word Cloud').toList();
+          modelPanels.where((panel) => panel['title'] != 'Text').toList();
     } else {
       // For other files including no files
       filteredModelPanels = modelPanels;
@@ -178,7 +178,7 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
             // want to ignore Word Cloud if the data type is table.
 
             final wcIndex =
-                modelPanels.indexWhere((item) => item['title'] == 'Word Cloud');
+                modelPanels.indexWhere((item) => item['title'] == 'Text');
             if (!['', 'table'].contains(ref.watch(datatypeProvider)) &&
                 index != wcIndex) {
               _tabController.index = 0;
