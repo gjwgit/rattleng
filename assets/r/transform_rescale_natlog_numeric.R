@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-07-30 13:47:50 +1000 Graham Williams>
+# Time-stamp: <Thursday 2025-05-01 09:48:31 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -27,9 +27,9 @@
 # Transform "<SELECTED_VAR>" into "<RLG_SELETED_VAR>" by applying log().
 
 ds %<>%
-  mutate(RLG_<SELECTED_VAR> = log(<SELECTED_VAR>),
-         RLG_<SELECTED_VAR> = ifelse(is.infinite(RLG_<SELECTED_VAR>),
-                                   NA, RLG_<SELECTED_VAR>)) 
+  dplyr::mutate(RLG_<SELECTED_VAR> = log(<SELECTED_VAR>),
+                RLG_<SELECTED_VAR> = ifelse(is.infinite(RLG_<SELECTED_VAR>),
+                                            NA, RLG_<SELECTED_VAR>))
 
 glimpse(ds)
 summary(ds)

@@ -1,6 +1,6 @@
 /// AUDIT -> TRANSFORM -> MODEL -> NEURAL -> EVALUATE -> ERROR MATRIX
 //
-// Time-stamp: <Tuesday 2025-04-22 10:23:53 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-05-01 09:43:44 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -65,6 +65,7 @@ final List<String> inputVars = [
 
 final String riskVar = 'adjustment';
 final String targetVar = 'adjusted';
+final String idVar = 'id';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -91,7 +92,7 @@ void main() {
       }
       await setDatasetRole(tester, riskVar, 'Risk');
       await verifyDatasetRole(targetVar, 'Target');
-      await verifyDatasetRole('id', 'Ident');
+      await verifyDatasetRole(idVar, 'Ident');
 
       // TRANSFORM -> RESCALE
 

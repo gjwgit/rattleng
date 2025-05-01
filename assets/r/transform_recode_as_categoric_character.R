@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-03-26 05:35:38 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-05-01 09:50:46 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,7 +24,7 @@
 #
 # Author: Graham Williams
 
-ds %<>% mutate(TFC_<SELECTED_VAR> = as.factor(<SELECTED_VAR>))
+ds %<>% dplyr::mutate(TFC_<SELECTED_VAR> = as.factor(<SELECTED_VAR>))
 
 glimpse(ds)
 summary(ds)

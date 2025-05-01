@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2024-10-08 09:12:26 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-05-01 09:46:55 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -28,8 +28,8 @@
 #
 # Transform "<SELECTED_VAR>" by replacing NA with zero or 'Missing'.
 
-library(dplyr)        # Wrangling: mutate().
-library(tidyr)        # Wrangling: replace_na().
+#library(dplyr)        # Wrangling: mutate().
+#library(tidyr)        # Wrangling: replace_na().
 
 if (is.numeric(ds$<SELECTED_VAR>))
 {

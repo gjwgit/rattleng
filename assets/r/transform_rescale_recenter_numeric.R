@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2025-01-20 15:45:22 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-05-01 09:51:35 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -28,7 +28,7 @@
 # values and rescaling around 0 so that the mean is 0 and the standard
 # deviation is 1.
 
-ds %<>% mutate(RRC_<SELECTED_VAR> = scale(<SELECTED_VAR>)[,1])
+ds %<>% dplyr::mutate(RRC_<SELECTED_VAR> = scale(<SELECTED_VAR>)[,1])
 
 glimpse(ds)
 summary(ds)
