@@ -32,12 +32,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/features/cluster/settings.dart';
 import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/r/execute.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/show_ok.dart';
@@ -251,9 +253,30 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
               ),
               stateProvider: pairSizeClusterProvider,
               onUpDownPressed: () async {
-                String pp = 'model_plot_cluster_pairs';
+                rExecute(
+                  ref,
+                  'vars <- 1:${_pairSizeController.text}',
+                );
+                
+                rExecute(
+                  ref,
+                  'svg(glue("${tempDir}/{pair_file}"))',
+                );
 
-                await rSource(context, ref, [pp]);
+                rExecute(
+                  ref,
+                  'pairs(tds[smpl, vars], col  = cluster_assignments[smpl], main = plot_title, pch  = 20, cex  = 0.6)',
+                );
+
+                rExecute(
+                  ref,
+                  'mtext(paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]), side = 1, line = 4, cex = 0.8)',
+                );
+
+                rExecute(
+                  ref,
+                  'dev.off()',
+                );
               },
             ),
           ],
