@@ -250,6 +250,11 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                     : null, // -1 for the Ident variable.
               ),
               stateProvider: pairSizeClusterProvider,
+              onUpDownPressed: () async {
+                String pp = 'model_plot_cluster_pairs';
+
+                await rSource(context, ref, [pp]);
+              },
             ),
           ],
         ),
