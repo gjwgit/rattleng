@@ -255,26 +255,10 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
               onUpDownPressed: () async {
                 rExecute(
                   ref,
-                  'vars <- 1:${_pairSizeController.text}',
-                );
-                
-                rExecute(
-                  ref,
-                  'svg(glue("${tempDir}/{pair_file}"))',
-                );
-
-                rExecute(
-                  ref,
-                  'pairs(tds[smpl, vars], col  = cluster_assignments[smpl], main = plot_title, pch  = 20, cex  = 0.6)',
-                );
-
-                rExecute(
-                  ref,
-                  'mtext(paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]), side = 1, line = 4, cex = 0.8)',
-                );
-
-                rExecute(
-                  ref,
+                  'vars <- 1:${_pairSizeController.text}\n'
+                  'svg(glue("${tempDir}/{pair_file}"))\n'
+                  'pairs(tds[smpl, vars], col  = cluster_assignments[smpl], main = plot_title, pch  = 20, cex  = 0.6)\n'
+                  'mtext(paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]), side = 1, line = 4, cex = 0.8)\n'
                   'dev.off()',
                 );
               },
