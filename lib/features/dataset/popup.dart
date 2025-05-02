@@ -155,6 +155,24 @@ class DatasetPopup extends ConsumerWidget {
               buttonGap,
 
               ElevatedButton(
+                onPressed: (){
+
+                },
+                child: const MarkdownTooltip(
+                  message: '''
+
+                  **Local Corpus:** Tap here to popup a window so that you can
+                  browse to a local folder containing text documents (**txt**, **pdf**, 
+                  or **odt** files) that you would like to **Text Mine**.
+
+                  ''',
+                  child: Text('Local Corpus'),
+                ),
+              ),
+
+              buttonGap,
+
+              ElevatedButton(
                 // 20250205 gjw Disable the PACKAGE button for now until we move
                 // the generation of the list of available datasets in R
                 // packages from home.dart on startup to here with the button
