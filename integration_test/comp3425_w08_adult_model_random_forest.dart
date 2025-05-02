@@ -1,6 +1,6 @@
 /// COMP3425 W08 ADULT -> ADABOOST.
 //
-// Time-stamp: <Friday 2025-05-02 13:34:02 +1000 Graham Williams>
+// Time-stamp: <Friday 2025-05-02 13:41:21 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -67,8 +67,8 @@ void main() {
         tester,
         [
           'randomForest(formula=form, data=trds',
-          'OOB estimate of  error rate: 13.76%',
-          'Confusion matrix:',
+          'OOB estimate of error rate: 13.76%',
+          'Confusion Matrix:',
           '<=50K >50K class.error',
           '<=50K 16111 1157  0.06700255',
         ],
