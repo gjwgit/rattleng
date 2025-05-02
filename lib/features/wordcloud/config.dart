@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Thursday 2025-01-23 09:06:18 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-05-02 13:49:55 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -124,7 +124,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
                 ref.read(wordCloudBuildProvider.notifier).state = timestamp();
               },
-              child: const Text('Display Word Cloud'),
+              child: const Text('Build Word Cloud'),
             ),
           ],
         ),
