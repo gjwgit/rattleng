@@ -1,6 +1,6 @@
 /// COMP3425 W08 ADULT -> ADABOOST.
 //
-// Time-stamp: <Monday 2025-04-28 17:12:26 +1000 >
+// Time-stamp: <Friday 2025-05-02 13:34:02 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -66,7 +66,7 @@ void main() {
       await verifySelectableText(
         tester,
         [
-          'randomForest(formula = form, data = trds',
+          'randomForest(formula=form, data=trds',
           'OOB estimate of  error rate: 13.76%',
           'Confusion matrix:',
           '<=50K >50K class.error',
