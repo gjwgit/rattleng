@@ -1,6 +1,6 @@
 # Rattle Scripts: Generate a Word Cloud image.
 #
-# Time-stamp: <Friday 2025-01-17 16:19:26 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-05-02 14:45:50 +1000 Graham Williams>
 #
 # Copyright (C) 2024, Togaware Pty Ltd
 #
@@ -49,7 +49,11 @@ docs <- Corpus(VectorSource(txt))
 # Preprocessing.  Note that the order matters!
 
 if (<PUNCTUATION>) {
-  docs <- tm_map(docs, removePunctuation, ucp = TRUE)
+  docs <- tm_map(docs,
+                 removePunctuation,
+                 ucp=TRUE,
+                 preserve_intra_word_contractions=TRUE,
+                 preserve_intra_word_dashes=TRUE)
 }
 
 if (<STOPWORD>) {
