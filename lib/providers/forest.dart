@@ -1,6 +1,6 @@
 /// A provider for the parameters for forest.
 ///
-/// Time-stamp: <Wednesday 2024-10-30 10:59:48 +1100 Graham Williams>
+/// Time-stamp: <Monday 2025-05-05 09:02:07 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -35,6 +35,9 @@ final algorithmForestProvider =
 final forestSampleSizeProvider = StateProvider<String?>((ref) => null);
 final imputeForestProvider = StateProvider<bool>((ref) => true);
 final maxRulesForestProvider = StateProvider<int>((ref) => 10);
-final predictorNumForestProvider = StateProvider<int>((ref) => 4);
+// The following should be 10 as in RattleV5 but was accidently set as 4 in
+// RattleV6 and 3 for COMP3425 labs. For now set to 3 for the lab and then after
+// the course revert to 10. (gjw 20250505)
+final predictorNumForestProvider = StateProvider<int>((ref) => 3);
 final treeNumForestProvider = StateProvider<int>((ref) => 500);
 final treeNoForestProvider = StateProvider<int>((ref) => 1);
