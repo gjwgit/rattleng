@@ -24,23 +24,6 @@
 #
 # Author: Zheyuan Xu, Graham Williams
 
-# The file `<FILENAME>` is loaded as a CSV file into the template
-# variable `ds` (dataset), intialising the `dsname` (a printable name
-# for the dataset) and `vnames` (the variable names).
-#
-# <TIMESTAMP>
-#
-# The data contained in the file `<FILENAME>`
-# is loaded as a CSV file into the template variable `ds` (dataset),
-# intialising the `dsname` (a printable name for the dataset) and
-# `vnames` (the variable names).
-#
-# References:
-#
-# @williams:2017:essentials Chapter 3
-#
-# https://survivor.togaware.com/datascience/csv-data-reading.html
-
 # Load required packages from the local library into the R session.
 
 library(tm)
@@ -48,7 +31,6 @@ library(tm)
 # Get the path from FILENAME placeholder and extract the basename.
 
 corpus_path <- "<FILENAME>"
-dsname <- basename(corpus_path)
 
 # Create a proper source for the Corpus from the directory.
 
