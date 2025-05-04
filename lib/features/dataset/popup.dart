@@ -34,12 +34,13 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/status.dart';
-import 'package:rattle/features/dataset/select_file.dart';
+import 'package:rattle/features/dataset/file_folder_picker.dart';
 import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
+import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/copy_asset_to_tempdir.dart';
 import 'package:rattle/utils/set_status.dart';
 
@@ -155,8 +156,37 @@ class DatasetPopup extends ConsumerWidget {
               buttonGap,
 
               ElevatedButton(
-                onPressed: (){
+                onPressed: () async {
+                  String? folderPath = await datasetSelectFolder();
+                  debugPrint('FOLDER PATH: $folderPath');
+                  if (folderPath != null && folderPath.isNotEmpty) {
+                    // Store the folder path for later use.
 
+                    ref.read(pathProvider.notifier).state = folderPath;
+                    
+                    // Call the corpus loading code.
+
+                    String lc = 'dataset_load_corpus';
+                    await rSource(context, ref, [
+                      lc,
+                    ]);
+
+                    if (!context.mounted) return;
+                    Navigator.pop(context, 'Local Corpus');
+
+                    // Set appropriate status.
+
+                    setStatus(ref, statusChooseVariableRoles);
+                    datasetLoadedUpdate(ref);
+
+                    // Access the PageController via Riverpod and move to the second page.
+                    await ref.read(pageControllerProvider).animateToPage(
+                          // Index of the second page.
+                          1,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        );
+                  }
                 },
                 child: const MarkdownTooltip(
                   message: '''
