@@ -47,6 +47,11 @@ assign(dsname, readxl::read_excel("<FILENAME>"))
 
 ds <- get(dsname)
 
+# Replace hyphens with underscores in column names to avoid R interpretation issues.
+# Always perform the renaming operation.
+
+names(ds) <- gsub("-", "_", names(ds))
+
 # Capture the original variable names for use in plots.
 
 vnames <- names(ds)
