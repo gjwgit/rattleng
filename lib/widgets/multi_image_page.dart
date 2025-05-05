@@ -1,6 +1,6 @@
 /// Widget for multiple images across the page.
 //
-// Time-stamp: <Sunday 2025-03-30 07:44:22 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-05-06 07:36:53 +1000 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -201,7 +201,7 @@ class MultiImagePage extends ConsumerWidget {
                           snapshot.data!.isEmpty) {
                         return const Center(
                           child: Text(
-                            'Image not available',
+                            'Image not (yet) available',
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
