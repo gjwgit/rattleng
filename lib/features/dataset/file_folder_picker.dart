@@ -59,16 +59,16 @@ Future<String?> datasetSelectFolder() async {
     String? selectedDirectory = await FilePicker.platform.getDirectoryPath(
       dialogTitle: 'Choose a folder to load as your dataset source.',
     );
-    
+
     if (selectedDirectory == null) {
       // User canceled the picker.
 
       return null;
     }
-    
+
     return selectedDirectory;
   } catch (e) {
     debugPrint('Error selecting folder: $e');
     return null;
   }
-} 
+}
