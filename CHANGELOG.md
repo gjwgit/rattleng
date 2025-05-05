@@ -13,6 +13,8 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ BOOST: Bug fix class predictions. [6.4.78 20250505 gjw]
++ DISPLAY: Allow response for NumericField [6.4.77 20250505 zy]
 + FOREST: Show tree size distribution. [6.4.76 20250430 gjw]
 + CLUSTER: Choose number of vars in a PAIRS PLOT [6.4.75 20250430 zy]
 + VISUAL: Allow plots when there is no target. [6.4.74 20250430 zy]
