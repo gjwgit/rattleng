@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2025-03-08 16:24:24 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-05-05 16:49:56 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -34,7 +34,7 @@
 title <- glue(
     "ROC Curve &#8212; {mdesc} &#8212; ",
     "{mtype} {basename('<FILENAME>')} ",
-    "*{dtype}* ", <TARGET_VAR>
+    "**{dtype}** ", <TARGET_VAR>
 )
 
 # Remove observations with missing target values.
