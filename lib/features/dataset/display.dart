@@ -107,6 +107,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     if (path.endsWith('.txt')) {
       _addTextFilePage(stdout, pages);
+    } else if (path.endsWith('/corpus')) {
+      _addCorpusPage(stdout, pages);
     } else if (path == weatherDemoFile ||
         // TODO 20250310 gjw Remo the deprecated weatherDemoFile
 
@@ -160,6 +162,27 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     if (content.isNotEmpty) {
       pages.add(TextPage(title: title, content: '\n$content'));
+    }
+  }
+
+  // Add a page for corpus content.
+
+  void _addCorpusPage(String stdout, List<Widget> pages) {
+    String corpusContent = rExtract(stdout, '> tm::inspect(dtm)');
+
+    if (corpusContent.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: '''
+
+        # Text mining
+
+        Built using [tm::inspect()](https://www.rdocumentation.org/packages/tm/topics/Corpus).
+
+        ''',
+          content: corpusContent,
+        ),
+      );
     }
   }
 

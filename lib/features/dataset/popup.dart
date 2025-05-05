@@ -163,7 +163,7 @@ class DatasetPopup extends ConsumerWidget {
                     // Store the folder path for later use.
 
                     ref.read(pathProvider.notifier).state = folderPath;
-                    
+
                     // Call the corpus loading code.
 
                     String lc = 'dataset_load_corpus';
