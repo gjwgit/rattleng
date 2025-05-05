@@ -1,6 +1,6 @@
 /// A widget to build the a common single image based pages.
 //
-// Time-stamp: <Tuesday 2025-04-22 14:18:44 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2025-05-06 07:37:03 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -190,7 +190,7 @@ class ImagePage extends ConsumerWidget {
         } else if (bytes == null || bytes.isEmpty) {
           return const Center(
             child: Text(
-              'Image not available',
+              'Image not (yet) available',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
