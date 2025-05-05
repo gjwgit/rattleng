@@ -1,11 +1,11 @@
 # Load the corpus from the integration_test/corpus directory.
 #
-# Copyright (C) 2024-2025, Togaware Pty Ltd.
+# Copyright (C) 2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-03-26 05:49:38 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-05-06 09:43:08 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -23,10 +23,6 @@
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # Author: Zheyuan Xu, Graham Williams
-
-# Load required packages from the local library into the R session.
-
-library(tm)
 
 # Get the path from FILENAME placeholder and extract the basename.
 
