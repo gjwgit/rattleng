@@ -49,18 +49,10 @@ assign(dsname, readr::read_csv("<FILENAME>"))
 
 ds <- get(dsname)
 
-# Store original variable names before any modification.
-
-original_vnames <- names(ds)
-
 # Replace hyphens with underscores in column names to avoid R interpretation issues.
 # Always perform the renaming operation.
 
 names(ds) <- gsub("-", "_", names(ds))
-
-# Update the object with the renamed dataset.
-
-assign(dsname, ds, envir = .GlobalEnv)
 
 # Capture the final variable names for use in plots and other places.
 
