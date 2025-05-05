@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ Misc refinements [6.4.80 20250506 gjw]
 + EVALUATE: Improved plot titles. [6.4.79 20250505 gjw]
 + BOOST: Bug fix class predictions. [6.4.78 20250505 gjw]
 + DISPLAY: Allow response for NumericField [6.4.77 20250505 zy]
