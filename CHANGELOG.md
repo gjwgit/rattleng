@@ -13,7 +13,8 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
-+ EVALUATE: Improved titles. [6.4.79 20250505 gjw]
++ Misc refinements [6.4.80 20250506 gjw]
++ EVALUATE: Improved plot titles. [6.4.79 20250505 gjw]
 + BOOST: Bug fix class predictions. [6.4.78 20250505 gjw]
 + DISPLAY: Allow response for NumericField [6.4.77 20250505 zy]
 + FOREST: Show tree size distribution. [6.4.76 20250430 gjw]

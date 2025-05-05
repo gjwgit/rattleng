@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2025-05-05 16:49:45 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2025-05-06 09:38:02 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -56,11 +56,12 @@ auc <- ROCR::performance(pred, "auc")@y.values[[1]]
 
 generate_plot <- function(pred, measure, y_label, title_label) {
   perf <- ROCR::performance(pred, measure)
-  tdf <- data.frame(
+  data.frame(
     threshold = unlist(perf@x.values),
     value     = unlist(perf@y.values)
-  )
-  ggplot(tdf, aes(x = threshold, y = value)) +
+  ) %>%
+    dplyr::filter(!is.nan(value)) %>%
+    ggplot(aes(x = threshold, y = value)) +
     geom_line(color = "red") +
     labs(x = "Threshold", y = y_label, title = title_label) +
     annotate("text",
@@ -70,8 +71,8 @@ generate_plot <- function(pred, measure, y_label, title_label) {
              vjust = 0,
              size  = 5,
              label = sprintf('AUC = %.2f', auc)) +
-  <SETTINGS_GRAPHIC_THEME>() +
-  theme(plot.title = element_markdown())
+    <SETTINGS_GRAPHIC_THEME>() +
+    theme(plot.title = element_markdown())
 }
 
 svg(glue("<TEMPDIR>/evaluate_{mtype}_rocr_{dtype}.svg"), width=11)

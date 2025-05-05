@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-05-01 10:02:58 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2025-05-06 05:58:29 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -158,6 +158,8 @@ if (!is.null(risk)) {
   risk_tr <- tcds %>% dplyr::slice(tr) %>% dplyr::pull(risk)
   risk_tu <- tcds %>% dplyr::slice(tu) %>% dplyr::pull(risk)
   risk_te <- tcds %>% dplyr::slice(te) %>% dplyr::pull(risk)
+} else {
+  risk_tc <- risk_tr <- risk_tu <- risk_te <- NULL
 }
 
 # Check if the risk variable exists and create `risk_tc`. We do this
