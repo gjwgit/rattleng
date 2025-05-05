@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-03-09 08:41:23 +1100 Graham Williams>
+# Time-stamp: <Monday 2025-05-05 16:49:45 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -30,6 +30,12 @@
 #
 # @williams:2017:essentials Chapter 7.
 # https://survivor.togaware.com/datascience/ for further details.
+
+title <- glue(
+  "ROC Metrics - {mdesc} - ",
+  "{mtype} {basename('<FILENAME>')} ",
+  "**{dtype}** ", <TARGET_VAR>
+)
 
 # Remove observations with missing target values.
 
@@ -69,22 +75,15 @@ generate_plot <- function(pred, measure, y_label, title_label) {
 }
 
 svg(glue("<TEMPDIR>/evaluate_{mtype}_rocr_{dtype}.svg"), width=11)
-
-# Generate plots individually.
-
 plot_cost <- generate_plot(pred, "ecost", "Expected Cost", "Cost Curve")
 plot_lift <- generate_plot(pred, "lift", "Lift", "Lift Curve")
 plot_sens <- generate_plot(pred, "sens", "Sensitivity", "Sensitivity Curve")
 plot_prec <- generate_plot(pred, "prec", "Precision", "Precision Curve")
-
 combined_plot <- gridExtra::grid.arrange(
   plot_cost, plot_lift,
   plot_sens, plot_prec,
   ncol = 2,
-  top  = "Model Performance Metrics"
+  top  = title
 )
-
-# Save the combined plot to SVG image.
-
 print(combined_plot)
 dev.off()
