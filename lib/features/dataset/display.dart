@@ -1,8 +1,8 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Thursday 2025-05-01 09:09:19 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2025-05-06 12:25:43 +1000 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd.
+/// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -165,22 +165,24 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     }
   }
 
+  ////////////////////////////////////////////////////////////////////////
+
   // Add a page for corpus content.
 
   void _addCorpusPage(String stdout, List<Widget> pages) {
-    String corpusContent = rExtract(stdout, '> tm::inspect(dtm)');
+    String content = rExtract(stdout, '> tm::inspect(dtm)');
 
-    if (corpusContent.isNotEmpty) {
+    if (content.isNotEmpty) {
       pages.add(
         TextPage(
           title: '''
 
-        # Text mining
+        # Corpus Content
 
         Built using [tm::inspect()](https://www.rdocumentation.org/packages/tm/topics/Corpus).
 
         ''',
-          content: corpusContent,
+          content: content,
         ),
       );
     }
