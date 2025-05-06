@@ -129,134 +129,155 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           ],
         ),
 
-        // Options for the current functionality.
-
         Row(
-          spacing: configWidgetSpace,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            configBotGap,
-            const Text('Cleaning Options:  '),
-            LabelledCheckbox(
-              key: const Key('stem'),
-              tooltip: '''
-
-                Stemming reduces words to their base or root form.  Two
-                different words, when stemmed, can become the same and so can
-                reduce unnecessary clutter in the wordcloud.
-
-              ''',
-              label: 'Stem',
-              provider: stemProvider,
+            configRowGap,
+            const Padding(
+              padding: EdgeInsets.only(top: 10),
+              child: Text('Data Cleaning Options:'),
             ),
-            LabelledCheckbox(
-              key: const Key('remove_punctuation'),
-              tooltip: '''
-
-                Remove punctuation marks such as periods.
-
-              ''',
-              label: 'Remove Punctuation',
-              provider: punctuationProvider,
-            ),
-            LabelledCheckbox(
-              key: const Key('remove_stopwords'),
-              tooltip: '''
-
-                Remove common language words for the wordcloud.
-
-              ''',
-              label: 'Remove Stopwords',
-              provider: stopwordProvider,
-            ),
+            configRowGap,
             Expanded(
-              child: MarkdownTooltip(
-                message: '''
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Options for the current functionality.
 
-                Select the language to filter out common stopwords from the word
-                cloud.  'SMART' covers English stopwords from the SMART
-                information retrieval system (as documented in Appendix 11 of
-                https://jmlr.csail.mit.edu/papers/volume5/lewis04a/)
+                  Row(
+                    spacing: configWidgetSpace,
+                    children: [
+                      configBotGap,
+                      LabelledCheckbox(
+                        key: const Key('stem'),
+                        tooltip: '''
 
-                ''',
-                child: DropdownMenu<String>(
-                  label: const Text('Language'),
-                  leadingIcon: const Icon(Icons.language),
-                  initialSelection: stopwordLanguages.first,
-                  dropdownMenuEntries: stopwordLanguages.map((s) {
-                    return DropdownMenuEntry(value: s, label: s);
-                  }).toList(),
-                  onSelected: (String? value) {
-                    ref.read(languageProvider.notifier).state = value!;
-                  },
-                ),
+                        Stemming reduces words to their base or root form.  Two
+                        different words, when stemmed, can become the same and so can
+                        reduce unnecessary clutter in the wordcloud.
+
+                        ''',
+                        label: 'Stem',
+                        provider: stemProvider,
+                      ),
+                      LabelledCheckbox(
+                        key: const Key('remove_punctuation'),
+                        tooltip: '''
+
+                        Remove punctuation marks such as periods.
+
+                        ''',
+                        label: 'Remove Punctuation',
+                        provider: punctuationProvider,
+                      ),
+                      LabelledCheckbox(
+                        key: const Key('remove_stopwords'),
+                        tooltip: '''
+
+                        Remove common language words for the wordcloud.
+
+                        ''',
+                        label: 'Remove Stopwords',
+                        provider: stopwordProvider,
+                      ),
+                      Expanded(
+                        child: MarkdownTooltip(
+                          message: '''
+
+                          Select the language to filter out common stopwords from the word
+                          cloud.  'SMART' covers English stopwords from the SMART
+                          information retrieval system (as documented in Appendix 11 of
+                          https://jmlr.csail.mit.edu/papers/volume5/lewis04a/)
+
+                          ''',
+                          child: DropdownMenu<String>(
+                            label: const Text('Language'),
+                            leadingIcon: const Icon(Icons.language),
+                            initialSelection: stopwordLanguages.first,
+                            dropdownMenuEntries: stopwordLanguages.map((s) {
+                              return DropdownMenuEntry(value: s, label: s);
+                            }).toList(),
+                            onSelected: (String? value) {
+                              ref.read(languageProvider.notifier).state =
+                                  value!;
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  panelGap,
+
+                  Row(
+                    spacing: configWidgetSpace,
+                    children: [
+                      configBotGap,
+                      LabelledCheckbox(
+                        key: const Key('lower_case'),
+                        tooltip: '''
+
+                        Convert all words to lower case.
+
+                        ''',
+                        label: 'Lower Case',
+                        provider: lowerCaseProvider,
+                      ),
+                      LabelledCheckbox(
+                        key: const Key('remove_numbers'),
+                        tooltip: '''
+
+                        Remove numbers from the text.
+
+                        ''',
+                        label: 'Remove Numbers',
+                        provider: removeNumbersProvider,
+                      ),
+                      LabelledCheckbox(
+                        key: const Key('strip_whitespace'),
+                        tooltip: '''
+
+                        Remove whitespace from the text.
+
+                        ''',
+                        label: 'Strip Whitespace',
+                        provider: stripWhitespaceProvider,
+                      ),
+                      LabelledCheckbox(
+                        key: const Key('remove_sparse'),
+                        tooltip: '''
+
+                        Remove sparse terms from the text.
+
+                        ''',
+                        label: 'Remove Sparse',
+                        provider: removeSparseProvider,
+                      ),
+                      NumberField(
+                        label: 'Sparse:',
+                        key: const Key('sparse'),
+                        tooltip: '''
+
+                        The maximum number of words plotted.  Drop least frequent words.
+
+                        ''',
+                        controller: sparseTextController,
+                        inputFormatter: FilteringTextInputFormatter.allow(
+                          RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
+                        ),
+                        interval: 0.01,
+                        decimalPlaces: 2,
+                        validator: (value) => validateDecimal(value),
+                        stateProvider: sparseMaxProvider,
+                        enabled: ref.watch(removeSparseProvider),
+                        min: 0.0,
+                        max: 1.0,
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
-
-        Row(
-          spacing: configWidgetSpace,
-          children: [
-            configBotGap,
-            LabelledCheckbox(
-              key: const Key('lower_case'),
-              tooltip: '''
-
-                Convert all words to lower case.
-
-              ''',
-              label: 'Lower Case',
-              provider: lowerCaseProvider,
-            ),
-            LabelledCheckbox(
-              key: const Key('remove_numbers'),
-              tooltip: '''
-
-                Remove numbers from the text.
-
-              ''',
-              label: 'Remove Numbers',
-              provider: removeNumbersProvider,
-            ),
-            LabelledCheckbox(
-              key: const Key('strip_whitespace'),
-              tooltip: '''
-
-                Remove whitespace from the text.
-
-              ''',
-              label: 'Strip Whitespace',
-              provider: stripWhitespaceProvider,
-            ),
-            LabelledCheckbox(
-              key: const Key('remove_sparse'),
-              tooltip: '''
-
-                Remove sparse terms from the text.
-
-              ''',
-              label: 'Remove Sparse',
-              provider: removeSparseProvider,
-            ),
-            NumberField(
-              label: 'Sparse:',
-              key: const Key('sparse'),
-              tooltip: '''
-
-              The maximum number of words plotted.  Drop least frequent words.
-
-              ''',
-              controller: sparseTextController,
-              inputFormatter: FilteringTextInputFormatter.allow(
-                RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
-              ),
-              interval: 0.01,
-              decimalPlaces: 2,
-              validator: (value) => validateDecimal(value),
-              stateProvider: sparseMaxProvider,
-              enabled: ref.watch(removeSparseProvider),
-              min: 0.0,
-              max: 1.0,
             ),
           ],
         ),
