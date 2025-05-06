@@ -48,6 +48,9 @@ clean_punctuation <- <PUNCTUATION>
 clean_stopwords   <- <STOPWORD>
 clean_stem        <- <STEM>
 clean_lower_case  <- <LOWER_CASE>
+clean_remove_numbers <- <REMOVE_NUMBERS>
+clean_strip_whitespace <- <STRIP_WHITESPACE>
+text_sparse_max <- <TEXT_SPARSE_MAX>
 
 if (clean_punctuation) {
   docs %<>% tm::tm_map(tm::removePunctuation,
@@ -69,7 +72,19 @@ if (clean_lower_case) {
   docs %<>% tm::tm_map(tm::content_transformer(tolower))
 }
 
+if (clean_remove_numbers) {
+  docs %<>% tm::tm_map(tm::removeNumbers)
+}
+
+if (clean_strip_whitespace) {
+  docs %<>% tm::tm_map(tm::stripWhitespace)
+}
+
+
 dtm <- tm::TermDocumentMatrix(docs)
+
+tm::removeSparseTerms(dtm, text_sparse_max)
+
 m <- as.matrix(dtm)
 v <- sort(rowSums(m), decreasing=TRUE)
 d <- data.frame(word=names(v), freq=v)

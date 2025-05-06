@@ -21,13 +21,14 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Yixiang Yin, Graham Williams
+/// Authors: Yixiang Yin, Graham Williams, Zheyuan Xu
 
 library;
 
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
@@ -42,12 +43,16 @@ import 'package:rattle/providers/wordcloud/lower_case.dart';
 import 'package:rattle/providers/wordcloud/maxword.dart';
 import 'package:rattle/providers/wordcloud/minfreq.dart';
 import 'package:rattle/providers/wordcloud/punctuation.dart';
+import 'package:rattle/providers/wordcloud/remove_numbers.dart';
 import 'package:rattle/providers/wordcloud/stem.dart';
 import 'package:rattle/providers/wordcloud/stopword.dart';
+import 'package:rattle/providers/wordcloud/stripe_whitespace.dart';
+import 'package:rattle/providers/wordcloud/text_sparse_max.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
+import 'package:rattle/widgets/number_field.dart';
 
 class WordCloudConfig extends ConsumerStatefulWidget {
   const WordCloudConfig({super.key});
@@ -59,6 +64,7 @@ class WordCloudConfig extends ConsumerStatefulWidget {
 class _ConfigState extends ConsumerState<WordCloudConfig> {
   final maxWordTextController = TextEditingController();
   final minFreqTextController = TextEditingController();
+  final sparseTextController = TextEditingController();
 
   String dropdownValue = stopwordLanguages.first;
 
@@ -67,12 +73,14 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
     super.initState();
     maxWordTextController.addListener(_updateMaxWordProvider);
     minFreqTextController.addListener(_updateMinFreqProvider);
+    sparseTextController.addListener(_updateSparseProvider);
   }
 
   @override
   void dispose() {
     maxWordTextController.dispose();
     minFreqTextController.dispose();
+    sparseTextController.dispose();
     super.dispose();
   }
 
@@ -82,6 +90,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
     maxWordTextController.text = ref.read(maxWordProvider);
     minFreqTextController.text = ref.read(minFreqProvider).toString();
+    sparseTextController.text = ref.read(textSparseMaxProvider).toString();
 
     // Layout the config bar.
 
@@ -169,6 +178,14 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               label: 'Remove Stopwords',
               provider: stopwordProvider,
             ),
+            
+          ],
+        ),
+
+        Row(
+          spacing: configWidgetSpace,
+          children: [
+            configBotGap,
             LabelledCheckbox(
               key: const Key('lower_case'),
               tooltip: '''
@@ -178,6 +195,43 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               ''',
               label: 'Lower Case',
               provider: lowerCaseProvider,
+            ),
+            LabelledCheckbox(
+              key: const Key('remove_numbers'),
+              tooltip: '''
+
+                Remove numbers from the text.
+
+              ''',
+              label: 'Remove Numbers',
+              provider: removeNumbersProvider,
+            ),
+            LabelledCheckbox(
+              key: const Key('strip_whitespace'),
+              tooltip: '''
+
+                Remove whitespace from the text.
+
+              ''',
+              label: 'Strip Whitespace',
+              provider: stripWhitespaceProvider,
+            ),
+            NumberField(
+              label: 'Sparse:',
+              key: const Key('sparse'),
+              tooltip: '''
+
+              The maximum number of words plotted.  Drop least frequent words.
+
+              ''',
+              controller: sparseTextController,
+              inputFormatter: FilteringTextInputFormatter.allow(
+                RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
+              ),
+              interval: 0.01,
+              decimalPlaces: 2,
+              validator: (value) => validateDecimal(value),
+              stateProvider: textSparseMaxProvider,
             ),
           ],
         ),
@@ -288,5 +342,10 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
   void _updateMinFreqProvider() {
     ref.read(minFreqProvider.notifier).state =
         int.tryParse(minFreqTextController.text) ?? 1;
+  }
+
+  void _updateSparseProvider() {
+    ref.read(textSparseMaxProvider.notifier).state =
+        double.tryParse(sparseTextController.text) ?? 0.99;
   }
 }

@@ -1,4 +1,4 @@
-/// A provider manages the state of lower case checkbox.
+/// A provider manages the state of text sparse max.
 //
 // Time-stamp: <Thursday 2024-09-26 17:04:03 +1000 Graham Williams>
 //
@@ -27,4 +27,4 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final lowerCaseProvider = StateProvider<bool>((ref) => false);
+final textSparseMaxProvider = StateProvider<double>((ref) => 0.9);
