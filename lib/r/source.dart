@@ -700,7 +700,8 @@ Future<void> rSource(
   code = code.replaceAll('<MAXWORD>', maxWord);
   code = code.replaceAll('<LOWER_CASE>', lowerCase ? 'TRUE' : 'FALSE');
   code = code.replaceAll('<REMOVE_NUMBERS>', removeNumbers ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('<STRIP_WHITESPACE>', stripWhitespace ? 'TRUE' : 'FALSE');
+  code =
+      code.replaceAll('<STRIP_WHITESPACE>', stripWhitespace ? 'TRUE' : 'FALSE');
   code = code.replaceAll('<TEXT_SPARSE_MAX>', textSparseMax.toString());
 
   ////////////////////////////////////////////////////////////////////////

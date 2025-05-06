@@ -178,7 +178,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               label: 'Remove Stopwords',
               provider: stopwordProvider,
             ),
-            
           ],
         ),
 
