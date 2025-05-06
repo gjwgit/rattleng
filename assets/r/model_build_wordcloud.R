@@ -47,6 +47,7 @@ if (exists('txt') && ! exists('docs')) {
 clean_punctuation <- <PUNCTUATION>
 clean_stopwords   <- <STOPWORD>
 clean_stem        <- <STEM>
+clean_lower_case  <- <LOWER_CASE>
 
 if (clean_punctuation) {
   docs %<>% tm::tm_map(tm::removePunctuation,
@@ -62,6 +63,10 @@ if (clean_stopwords) {
 
 if (clean_stem) {
   docs %<>% tm::tm_map(tm::stemDocument)
+}
+
+if (clean_lower_case) {
+  docs %<>% tm::tm_map(tm::content_transformer(tolower))
 }
 
 dtm <- tm::TermDocumentMatrix(docs)

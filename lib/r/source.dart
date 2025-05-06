@@ -64,6 +64,7 @@ import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/visualise.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
 import 'package:rattle/providers/wordcloud/language.dart';
+import 'package:rattle/providers/wordcloud/lower_case.dart';
 import 'package:rattle/providers/wordcloud/maxword.dart';
 import 'package:rattle/providers/wordcloud/minfreq.dart';
 import 'package:rattle/providers/wordcloud/punctuation.dart';
@@ -183,6 +184,7 @@ Future<void> rSource(
   bool punctuation = ref.read(punctuationProvider);
   bool stem = ref.read(stemProvider);
   bool stopword = ref.read(stopwordProvider);
+  bool lowerCase = ref.read(lowerCaseProvider);
 
   String groupBy = ref.read(groupByProvider);
   String imputed = ref.read(imputedProvider);
@@ -690,6 +692,7 @@ Future<void> rSource(
   code = code.replaceAll('<LANGUAGE>', language);
   code = code.replaceAll('<MINFREQ>', minFreq);
   code = code.replaceAll('<MAXWORD>', maxWord);
+  code = code.replaceAll('<LOWER_CASE>', lowerCase ? 'TRUE' : 'FALSE');
 
   ////////////////////////////////////////////////////////////////////////
 
