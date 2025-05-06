@@ -136,19 +136,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           children: [
             configBotGap,
             const Text('Cleaning Options:  '),
-            // Checkbox for random order of words in the cloud.
-
-            LabelledCheckbox(
-              key: const Key('random_order'),
-              tooltip: '''
-
-               Plot words in random order, otherwise in decreasing frequency.
-
-              ''',
-              label: 'Random Order',
-              provider: checkboxProvider,
-            ),
-
             LabelledCheckbox(
               key: const Key('stem'),
               tooltip: '''
@@ -161,7 +148,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               label: 'Stem',
               provider: stemProvider,
             ),
-
             LabelledCheckbox(
               key: const Key('remove_punctuation'),
               tooltip: '''
@@ -172,7 +158,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               label: 'Remove Punctuation',
               provider: punctuationProvider,
             ),
-
             LabelledCheckbox(
               key: const Key('remove_stopwords'),
               tooltip: '''
@@ -183,7 +168,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               label: 'Remove Stopwords',
               provider: stopwordProvider,
             ),
-
             Expanded(
               child: MarkdownTooltip(
                 message: '''
@@ -258,6 +242,19 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                     ),
                   ),
                 ),
+              ),
+
+              // Checkbox for random order of words in the cloud.
+
+              LabelledCheckbox(
+                key: const Key('random_order'),
+                tooltip: '''
+
+               Plot words in random order, otherwise in decreasing frequency.
+
+              ''',
+                label: 'Random Order',
+                provider: checkboxProvider,
               ),
             ],
           ),
