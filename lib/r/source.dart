@@ -62,17 +62,7 @@ import 'package:rattle/providers/svm.dart';
 import 'package:rattle/providers/tree.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/visualise.dart';
-import 'package:rattle/providers/wordcloud/checkbox.dart';
-import 'package:rattle/providers/wordcloud/language.dart';
-import 'package:rattle/providers/wordcloud/lower_case.dart';
-import 'package:rattle/providers/wordcloud/maxword.dart';
-import 'package:rattle/providers/wordcloud/minfreq.dart';
-import 'package:rattle/providers/wordcloud/punctuation.dart';
-import 'package:rattle/providers/wordcloud/remove_numbers.dart';
-import 'package:rattle/providers/wordcloud/stem.dart';
-import 'package:rattle/providers/wordcloud/stopword.dart';
-import 'package:rattle/providers/wordcloud/stripe_whitespace.dart';
-import 'package:rattle/providers/wordcloud/text_sparse_max.dart';
+import 'package:rattle/providers/wordcloud/text.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
 import 'package:rattle/r/strip_todo.dart';
@@ -190,7 +180,7 @@ Future<void> rSource(
   bool lowerCase = ref.read(lowerCaseProvider);
   bool removeNumbers = ref.read(removeNumbersProvider);
   bool stripWhitespace = ref.read(stripWhitespaceProvider);
-  double textSparseMax = ref.read(textSparseMaxProvider);
+  double textSparseMax = ref.read(sparseMaxProvider);
 
   String groupBy = ref.read(groupByProvider);
   String imputed = ref.read(imputedProvider);
@@ -699,9 +689,14 @@ Future<void> rSource(
   code = code.replaceAll('<MINFREQ>', minFreq);
   code = code.replaceAll('<MAXWORD>', maxWord);
   code = code.replaceAll('<TEXT_LOWER_CASE>', lowerCase ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('<TEXT_REMOVE_NUMBERS>', removeNumbers ? 'TRUE' : 'FALSE');
-  code =
-      code.replaceAll('<TEXT_STRIP_WHITESPACE>', stripWhitespace ? 'TRUE' : 'FALSE');
+  code = code.replaceAll(
+    '<TEXT_REMOVE_NUMBERS>',
+    removeNumbers ? 'TRUE' : 'FALSE',
+  );
+  code = code.replaceAll(
+    '<TEXT_STRIP_WHITESPACE>',
+    stripWhitespace ? 'TRUE' : 'FALSE',
+  );
   code = code.replaceAll('<TEXT_SPARSE_MAX>', textSparseMax.toString());
 
   ////////////////////////////////////////////////////////////////////////

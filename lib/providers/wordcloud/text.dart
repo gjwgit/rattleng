@@ -1,4 +1,4 @@
-/// A provider manages the state of text sparse max.
+/// Providers for wordcloud.
 //
 // Time-stamp: <Thursday 2024-09-26 17:04:03 +1000 Graham Williams>
 //
@@ -27,4 +27,18 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final textSparseMaxProvider = StateProvider<double>((ref) => 0.9);
+import 'package:rattle/constants/wordcloud.dart';
+
+final checkboxProvider = StateProvider<bool>((ref) => false);
+final languageProvider =
+    StateProvider<String>((ref) => stopwordLanguages.first);
+final maxWordProvider = StateProvider<String>((ref) => '100');
+final minFreqProvider = StateProvider<int>((ref) => 2);
+final removeSparseProvider = StateProvider<bool>((ref) => false);
+final sparseMaxProvider = StateProvider<double>((ref) => 0.9);
+final punctuationProvider = StateProvider<bool>((ref) => false);
+final stopwordProvider = StateProvider<bool>((ref) => false);
+final stemProvider = StateProvider<bool>((ref) => false);
+final lowerCaseProvider = StateProvider<bool>((ref) => false);
+final removeNumbersProvider = StateProvider<bool>((ref) => false);
+final stripWhitespaceProvider = StateProvider<bool>((ref) => false);
