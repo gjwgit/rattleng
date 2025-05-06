@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-04-24 16:59:11 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2025-05-07 08:48:30 +1000 Graham Williams>
 #
 # Rattle version <VERSION>.
 #
@@ -34,29 +34,6 @@
 # (https://bit.ly/essentials_data_science). On-line examples are
 # available from the Data Science Desktop Survival Guide
 # https://survivor.togaware.com/datascience/.
-
-####################################
-# Load/Install Required Packages
-####################################
-
-# We begin most scripts by loading the required packages.  Here are
-# some initial packages to load and others will be identified as we
-# proceed through the script. When writing our own scripts we often
-# collect together the library commands at the beginning of the script
-# here.
-
-# Loading packages requires they are already installed
-# into a local library. The RattleNG installation instructions
-# recommends installing these packages before running rattle for the
-# first time. From within RattleNG, tap the <DOWNLOAD> button in the top
-# right button bar which will run the `packages.R` script to check and
-# install any missing packages. (20241007 gjw)
-
-library(ggplot2)      # To support a local rattle theme.
-library(ggtext)       # To support markdown text in ggplot title.
-library(glue)         # To glue strings together.
-library(rattle)       # Support functions used throughout data science.
-library(magrittr)     # Data pipelines: %>% %<>% %T>% equals().
 
 ####################################
 # Default settings
