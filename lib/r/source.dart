@@ -690,7 +690,8 @@ Future<void> rSource(
   code = code.replaceAll('<MINFREQ>', minFreq);
   code = code.replaceAll('<MAXWORD>', maxWord);
   code = code.replaceAll('<TEXT_LOWER_CASE>', lowerCase ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('<TEXT_REMOVE_SPARSE>', removeSparse ? 'TRUE' : 'FALSE');
+  code =
+      code.replaceAll('<TEXT_REMOVE_SPARSE>', removeSparse ? 'TRUE' : 'FALSE');
   code = code.replaceAll(
     '<TEXT_REMOVE_NUMBERS>',
     removeNumbers ? 'TRUE' : 'FALSE',
