@@ -1,6 +1,6 @@
 # Rattle Scripts: Generate a Word Cloud image.
 #
-# Time-stamp: <Tuesday 2025-05-06 14:19:44 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2025-05-07 09:28:40 +1000 Graham Williams>
 #
 # Copyright (C) 2024-2025, Togaware Pty Ltd
 #
@@ -64,8 +64,8 @@ if (clean_stem) {
   docs %<>% tm::tm_map(tm::stemDocument)
 }
 
-dtm <- tm::TermDocumentMatrix(docs)
-m <- as.matrix(dtm)
+tdm <- tm::TermDocumentMatrix(docs)
+m <- as.matrix(tdm)
 v <- sort(rowSums(m), decreasing=TRUE)
 d <- data.frame(word=names(v), freq=v)
 
