@@ -135,7 +135,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
           spacing: configWidgetSpace,
           children: [
             configBotGap,
-            const Text('Tuning Options:  '),
+            const Text('Cleaning Options:  '),
             // Checkbox for random order of words in the cloud.
 
             LabelledCheckbox(
