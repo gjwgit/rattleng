@@ -1,6 +1,6 @@
 # Rattle Scripts: Generate a Word Cloud image.
 #
-# Time-stamp: <Tuesday 2025-05-06 12:36:08 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2025-05-06 12:41:31 +1000 Graham Williams>
 #
 # Copyright (C) 2024-2025, Togaware Pty Ltd
 #
@@ -26,16 +26,17 @@
 # <TIMESTAMP>
 
 # The text data will have been loaded into the `txt` variable. If that
-# does not exist then convert ds into txt.
+# does not exist, because we have a tabular dataset probably loaded
+# for predictive modelling or clusters, then convert `ds` into `txt`.
 
 if (! exists('txt')) {
   txt <- readr::format_delim(ds, delim=' ')
 }
-
-# Convert the data data to a single character string rather than a
-# list of strings, if required.
-#
-# txt <- paste(txt, collapse = " ")
+##
+## Convert the data to a single character string rather than a list of
+## strings, if required.
+##
+## txt <- paste(txt, collapse = " ")
 
 docs <- tm::Corpus(tm::VectorSource(txt))
 
@@ -66,9 +67,14 @@ m <- as.matrix(dtm)
 v <- sort(rowSums(m), decreasing=TRUE)
 d <- data.frame(word=names(v), freq=v)
 
-# Set seed for reproducibility.
+# Set seed for reproducibility.  Do we want to have the different
+# random results each time, resulting in randomly different models?
 
-set.seed(<RANDOM_SEED>)
+randomly <- <RANDOM_PARTITION>
+
+if (! randomly) {
+  set.seed(<RANDOM_SEED>)
+}
 ##
 ## TODO STEM=T|F
 ## if STEM: text <- tm_map(text, stemDocument)
