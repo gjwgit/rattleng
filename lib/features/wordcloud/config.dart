@@ -38,6 +38,7 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
 import 'package:rattle/providers/wordcloud/checkbox.dart';
 import 'package:rattle/providers/wordcloud/language.dart';
+import 'package:rattle/providers/wordcloud/lower_case.dart';
 import 'package:rattle/providers/wordcloud/maxword.dart';
 import 'package:rattle/providers/wordcloud/minfreq.dart';
 import 'package:rattle/providers/wordcloud/punctuation.dart';
@@ -168,28 +169,15 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               label: 'Remove Stopwords',
               provider: stopwordProvider,
             ),
-            Expanded(
-              child: MarkdownTooltip(
-                message: '''
+            LabelledCheckbox(
+              key: const Key('lower_case'),
+              tooltip: '''
 
-                Select the language to filter out common stopwords from the word
-                cloud.  'SMART' covers English stopwords from the SMART
-                information retrieval system (as documented in Appendix 11 of
-                https://jmlr.csail.mit.edu/papers/volume5/lewis04a/)
+                Convert all words to lower case.
 
-                ''',
-                child: DropdownMenu<String>(
-                  label: const Text('Language'),
-                  leadingIcon: const Icon(Icons.language),
-                  initialSelection: stopwordLanguages.first,
-                  dropdownMenuEntries: stopwordLanguages.map((s) {
-                    return DropdownMenuEntry(value: s, label: s);
-                  }).toList(),
-                  onSelected: (String? value) {
-                    ref.read(languageProvider.notifier).state = value!;
-                  },
-                ),
-              ),
+              ''',
+              label: 'Lower Case',
+              provider: lowerCaseProvider,
             ),
           ],
         ),
@@ -255,6 +243,29 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               ''',
                 label: 'Random Order',
                 provider: checkboxProvider,
+              ),
+              Expanded(
+                child: MarkdownTooltip(
+                  message: '''
+
+                Select the language to filter out common stopwords from the word
+                cloud.  'SMART' covers English stopwords from the SMART
+                information retrieval system (as documented in Appendix 11 of
+                https://jmlr.csail.mit.edu/papers/volume5/lewis04a/)
+
+                ''',
+                  child: DropdownMenu<String>(
+                    label: const Text('Language'),
+                    leadingIcon: const Icon(Icons.language),
+                    initialSelection: stopwordLanguages.first,
+                    dropdownMenuEntries: stopwordLanguages.map((s) {
+                      return DropdownMenuEntry(value: s, label: s);
+                    }).toList(),
+                    onSelected: (String? value) {
+                      ref.read(languageProvider.notifier).state = value!;
+                    },
+                  ),
+                ),
               ),
             ],
           ),
