@@ -1,6 +1,6 @@
 /// Initiate the R sub-process and setup the capture of its output.
 //
-// Time-stamp: <Thursday 2024-12-12 16:49:35 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-05-07 08:49:48 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -70,12 +70,12 @@ void rStart(BuildContext context, WidgetRef ref) async {
 
   // Run the main R startup code from the script file.
 
-  rSource(context, ref, ['session_setup']);
+  rSource(context, ref, ['session_library', 'session_setup']);
 
-  // 20241212 gjw I used to do the following rather than the above
+  // I used to do the following rather than the above
   // rSource(). However, rSource seems to work so go with that (since it expands
   // the TEMPLATE variables properly. Monitor it to see if there was a reason we
-  // needed to mimic rSource() as below.
+  // needed to mimic rSource() as below. (gjw 20241212)
 
   // const asset = 'assets/r/session_setup.R';
   // String code = await DefaultAssetBundle.of(context).loadString(asset);

@@ -1,6 +1,6 @@
 /// Load a dataset through the appropriate R script.
 ///
-/// Time-stamp: <Monday 2025-03-10 09:33:04 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2025-05-07 08:50:59 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -68,6 +68,7 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
 
   // R Scripts.
 
+  String sl = 'session_library';
   String ss = 'session_setup';
   // String dw = 'dataset_load_weather';
   String dc = 'dataset_load_csv';
@@ -88,19 +89,19 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
 
   if (isFromPackage(path)) {
     // load from package first
-    if (context.mounted) await rSource(context, ref, [ss, dfp, dp]);
+    if (context.mounted) await rSource(context, ref, [sl, ss, dfp, dp]);
   } else if (path.endsWith('.csv')) {
     // 20241007 gjw We will load a CSV file into the R process. Note that we do
     // not yet run the DATA TEMPLATE as we need to first set up the ROLES. The
     // dataset template is run in `home.dart` on leaving the DATASET tab.
 
-    if (context.mounted) await rSource(context, ref, [ss, dc, dp]);
+    if (context.mounted) await rSource(context, ref, [sl, ss, dc, dp]);
 
     ref.read(datatypeProvider.notifier).state = 'table';
   } else if (path.endsWith('.xlsx')) {
     // 20250309 gjw Load an Excel file into Rattle.
 
-    if (context.mounted) await rSource(context, ref, [ss, dxl, dp]);
+    if (context.mounted) await rSource(context, ref, [sl, ss, dxl, dp]);
 
     ref.read(datatypeProvider.notifier).state = 'table';
   } else if (path.endsWith('.txt')) {
@@ -108,7 +109,7 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
     // functionality as a stop gap toward implementing more complete text mining
     // and language capabilities.
 
-    if (context.mounted) await rSource(context, ref, [ss, dx]);
+    if (context.mounted) await rSource(context, ref, [sl, ss, dx]);
 
     ref.read(datatypeProvider.notifier).state = 'text';
   } else {
