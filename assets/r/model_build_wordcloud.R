@@ -1,8 +1,8 @@
 # Rattle Scripts: Generate a Word Cloud image.
 #
-# Time-stamp: <Friday 2025-05-02 14:45:50 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2025-05-06 12:47:32 +1000 Graham Williams>
 #
-# Copyright (C) 2024, Togaware Pty Ltd
+# Copyright (C) 2024-2025, Togaware Pty Ltd
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -25,82 +25,85 @@
 
 # <TIMESTAMP>
 
-# Load required libraries.
-
-library(dplyr)
-library(readr)
-library(tm)
-library(wordcloud)
-
 # The text data will have been loaded into the `txt` variable. If that
-# does not exist then convert ds into txt.
+# does not exist, because we have a tabular dataset probably loaded
+# for predictive modelling or clusters, then convert `ds` into `txt`.
 
 if (! exists('txt')) {
   txt <- readr::format_delim(ds, delim=' ')
 }
+##
+## Convert the data to a single character string rather than a list of
+## strings, if required.
+##
+## txt <- paste(txt, collapse = " ")
 
-# Convert the data data to a single character string rather than a
-# list of strings, if required.
-#
-# txt <- paste(txt, collapse = " ")
-
-docs <- Corpus(VectorSource(txt))
+docs <- tm::Corpus(tm::VectorSource(txt))
 
 # Preprocessing.  Note that the order matters!
 
-if (<PUNCTUATION>) {
-  docs <- tm_map(docs,
-                 removePunctuation,
-                 ucp=TRUE,
-                 preserve_intra_word_contractions=TRUE,
-                 preserve_intra_word_dashes=TRUE)
+clean_punctuation <- <PUNCTUATION>
+clean_stopwords   <- <STOPWORD>
+clean_stem        <- <STEM>
+
+if (clean_punctuation) {
+  docs %<>% tm::tm_map(tm::removePunctuation,
+                       ucp=TRUE,
+                       preserve_intra_word_contractions=TRUE,
+                       preserve_intra_word_dashes=TRUE)
 }
 
-if (<STOPWORD>) {
-  docs <- tm_map(docs, removeWords, stopwords("<LANGUAGE>"))
+if (clean_stopwords) {
+  docs %<>% tm::tm_map(tm::removeWords,
+                       tm::stopwords("<LANGUAGE>"))
 }
 
-if (<STEM>) {
-  docs <- tm_map(docs, stemDocument)
+if (clean_stem) {
+  docs %<>% tm::tm_map(tm::stemDocument)
 }
 
-dtm <- TermDocumentMatrix(docs)
+dtm <- tm::TermDocumentMatrix(docs)
 m <- as.matrix(dtm)
 v <- sort(rowSums(m), decreasing=TRUE)
 d <- data.frame(word=names(v), freq=v)
 
-# Set seed for reproducibility.
+# Set seed for reproducibility.  Do we want to have the different
+# random results each time, resulting in randomly different models?
 
-set.seed(123)
+randomly <- <RANDOM_PARTITION>
 
-# TODO STEM=T|F
-# if STEM: text <- tm_map(text, stemDocument)
-
-# TODO 20240618 gjw MOVE TO <GENERATING> SVG OR PDF <FORMAT>.
-
-# TODO 20240618 gjw <REPALCE> `<WORDCLOUDPATH>` WITH `<TEMPDIR>` FOR ALL
-# <TEMPARARY> <FILES>.
+if (! randomly) {
+  set.seed(<RANDOM_SEED>)
+}
+##
+## TODO STEM=T|F
+## if STEM: text <- tm_map(text, stemDocument)
+##
+## TODO 20240618 gjw MOVE TO <GENERATING> SVG OR PDF <FORMAT>.
+##
+## TODO 20240618 gjw <REPALCE> `<WORDCLOUDPATH>` WITH `<TEMPDIR>` FOR ALL
+## <TEMPARARY> <FILES>.
 
 svg("<TEMPDIR>/wordcloud.svg")
-
-# Generate word cloud.
-
-wordcloud(words        = d$word,
-          freq         = d$freq,
-          scale        = c(5,0.5),
-          min.freq     = <MINFREQ>,
-          max.word     = <MAXWORD>,
-          random.order = <RANDOMORDER>,
-          colors       = brewer.pal(8, "Dark2"))
-
+wordcloud::wordcloud(
+  words        = d$word,
+  freq         = d$freq,
+  scale        = c(5,0.5),
+  min.freq     = <MINFREQ>,
+  max.word     = <MAXWORD>,
+  random.order = <RANDOMORDER>,
+  colors       = RColorBrewer::brewer.pal(8, "Dark2")
+)
 dev.off()
-
-# Trim the white space using magick.
-
-# image <- image_read("<TEMPDIR>/tmp_wordcloud.png")
-# trimmed_image <- image_trim(image)
-# image_write(trimmed_image, path = "<TEMPDIR>/wordcloud.png")
+##
+## Trim the white space using magick.
+##
+## image <- image_read("<TEMPDIR>/tmp_wordcloud.png")
+## trimmed_image <- image_trim(image)
+## image_write(trimmed_image, path = "<TEMPDIR>/wordcloud.png")
 
 # Show the top words
 
-d %>% filter(freq >= <MINFREQ>) %>%  dplyr::slice_head(n = <MAXWORD>) %>%  print(row.names = FALSE)
+d %>% dplyr::filter(freq >= <MINFREQ>) %>%
+  dplyr::slice_head(n = <MAXWORD>) %>%
+  print(row.names = FALSE)

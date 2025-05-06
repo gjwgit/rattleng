@@ -1,6 +1,6 @@
 /// Display for word cloud.
 //
-// Time-stamp: <Thursday 2024-12-19 21:30:44 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-05-06 12:53:21 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -87,8 +87,14 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
 
       pages.add(
         ImagePage(
-          title: '# Word Cloud\n\n'
-              'Generated using `wordcloud::wordcloud()`',
+          title: '''
+
+          # Word Cloud
+
+          Generated using
+          [wordcloud::wordcloud()](https://www.rdocumentation.org/packages/wordcloud/topics/wordcloud).
+
+          ''',
           path: wordCloudImagePath,
         ),
       );
@@ -96,13 +102,23 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, 'd %>% filter(freq >=');
+    content = rExtract(stdout, 'd %>% dplyr::filter(freq >=');
 
     if (content.isNotEmpty) {
+      // Drop the first two lines which are still the R command.
+
+      content = content.split('\n').skip(2).join('\n');
+
       pages.add(
         TextPage(
-          title: '# Word Frequency\n\n'
-              'Generated using `TermDocumentMatrix()`',
+          title: '''
+
+          # Word Frequency
+
+          Generated using
+          [tm::TermDocumentMatrix()](https://www.rdocumentation.org/packages/tm/topics/TermDocumentMatrix).
+
+          ''',
           content: content,
         ),
       );

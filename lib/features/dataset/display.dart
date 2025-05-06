@@ -1,8 +1,8 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Thursday 2025-05-01 09:09:19 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2025-05-06 12:25:43 +1000 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd.
+/// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -107,6 +107,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     if (path.endsWith('.txt')) {
       _addTextFilePage(stdout, pages);
+    } else if (path.endsWith('/corpus')) {
+      _addCorpusPage(stdout, pages);
     } else if (path == weatherDemoFile ||
         // TODO 20250310 gjw Remo the deprecated weatherDemoFile
 
@@ -160,6 +162,29 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     if (content.isNotEmpty) {
       pages.add(TextPage(title: title, content: '\n$content'));
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////
+
+  // Add a page for corpus content.
+
+  void _addCorpusPage(String stdout, List<Widget> pages) {
+    String content = rExtract(stdout, '> tm::inspect(dtm)');
+
+    if (content.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: '''
+
+        # Corpus Content
+
+        Built using [tm::inspect()](https://www.rdocumentation.org/packages/tm/topics/Corpus).
+
+        ''',
+          content: content,
+        ),
+      );
     }
   }
 
