@@ -1,6 +1,6 @@
 /// A provider manages the state of min frequency text field
 //
-// Time-stamp: <Thursday 2024-09-26 17:04:48 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2025-05-07 09:57:44 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -27,4 +27,4 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final minFreqProvider = StateProvider<int>((ref) => 2);
+final minFreqProvider = StateProvider<int>((ref) => 10);
