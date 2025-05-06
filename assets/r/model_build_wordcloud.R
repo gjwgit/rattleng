@@ -44,12 +44,12 @@ if (exists('txt') && ! exists('docs')) {
 
 # Preprocessing.  Note that the order matters!
 
-clean_punctuation <- <PUNCTUATION>
-clean_stopwords   <- <STOPWORD>
-clean_stem        <- <STEM>
-clean_lower_case  <- <LOWER_CASE>
-clean_remove_numbers <- <REMOVE_NUMBERS>
-clean_strip_whitespace <- <STRIP_WHITESPACE>
+clean_punctuation <- <TEXT_PUNCTUATION>
+clean_stopwords   <- <TEXT_STOPWORD>
+clean_stem        <- <TEXT_STEM>
+clean_lower_case  <- <TEXT_LOWER_CASE>
+clean_remove_numbers <- <TEXT_REMOVE_NUMBERS>
+clean_strip_whitespace <- <TEXT_STRIP_WHITESPACE>
 text_sparse_max <- <TEXT_SPARSE_MAX>
 
 if (clean_punctuation) {

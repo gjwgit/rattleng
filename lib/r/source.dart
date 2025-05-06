@@ -692,16 +692,16 @@ Future<void> rSource(
   // WORD CLOUD
 
   code = code.replaceAll('<RANDOMORDER>', checkbox.toString().toUpperCase());
-  code = code.replaceAll('<STEM>', stem ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('<PUNCTUATION>', punctuation ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('<STOPWORD>', stopword ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('<TEXT_STEM>', stem ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('<TEXT_PUNCTUATION>', punctuation ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('<TEXT_STOPWORD>', stopword ? 'TRUE' : 'FALSE');
   code = code.replaceAll('<LANGUAGE>', language);
   code = code.replaceAll('<MINFREQ>', minFreq);
   code = code.replaceAll('<MAXWORD>', maxWord);
-  code = code.replaceAll('<LOWER_CASE>', lowerCase ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('<REMOVE_NUMBERS>', removeNumbers ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('<TEXT_LOWER_CASE>', lowerCase ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('<TEXT_REMOVE_NUMBERS>', removeNumbers ? 'TRUE' : 'FALSE');
   code =
-      code.replaceAll('<STRIP_WHITESPACE>', stripWhitespace ? 'TRUE' : 'FALSE');
+      code.replaceAll('<TEXT_STRIP_WHITESPACE>', stripWhitespace ? 'TRUE' : 'FALSE');
   code = code.replaceAll('<TEXT_SPARSE_MAX>', textSparseMax.toString());
 
   ////////////////////////////////////////////////////////////////////////
