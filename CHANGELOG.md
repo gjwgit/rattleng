@@ -13,6 +13,7 @@ Binaries to download latest version:
 
 ## 6.5 Complete Models and Evaluations
 
++ TEXT: Load a folder as a corpus [6.4.81 20250506 zy]
 + Misc refinements [6.4.80 20250506 gjw]
 + EVALUATE: Improved plot titles. [6.4.79 20250505 gjw]
 + BOOST: Bug fix class predictions. [6.4.78 20250505 gjw]
