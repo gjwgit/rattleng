@@ -235,7 +235,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 Remove sparse terms from the text.
 
               ''',
-              label: 'Remove Sparse Terms',
+              label: 'Remove Sparse',
               provider: removeSparseProvider,
             ),
             NumberField(
@@ -254,6 +254,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               decimalPlaces: 2,
               validator: (value) => validateDecimal(value),
               stateProvider: sparseMaxProvider,
+              enabled: ref.watch(removeSparseProvider),
               min: 0.0,
               max: 1.0,
             ),
