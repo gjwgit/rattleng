@@ -1,6 +1,6 @@
 /// COMP3425 W04 MOVIES dataset MODEL tab ASSOCIATION feature.
 //
-// Time-stamp: <Thursday 2025-04-10 15:20:52 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2025-05-06 14:00:51 +1000 >
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -30,6 +30,7 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
+import 'utils/add_delay.dart';
 import 'utils/enter_text.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/load_demo_dataset.dart';
@@ -143,6 +144,7 @@ void main() {
       );
       await verifySelectableText(tester, ['support = 0.001']);
       await verifySelectableText(tester, ['44']);
+      await addDelay(tester, 10);
     });
   });
 }
