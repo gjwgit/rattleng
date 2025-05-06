@@ -4,14 +4,14 @@ Recorded here are the high level changes for the RattleNG app.
 
 Guide: Each version update is recorded here with a short user-oriented
 description of the update. Updates in the 6.4.n series are heading
-toward a 6.5 release.
+toward a 6.5 release and listed under the 6.4 series.
 
 Binaries to download latest version:
 [**GNU/Linux**](https://access.togaware.com/rattle-dev-linux.zip) -
 [**MacOS**](https://access.togaware.com/rattle-dev-macos.zip) -
 [**Windows**](https://access.togaware.com/rattle-dev-windows-inno.exe).
 
-## 6.5 Complete Models and Evaluations
+## 6.4 Complete Models and Evaluations
 
 + TEXT: Load a folder as a corpus [6.4.81 20250506 zy]
 + Misc refinements [6.4.80 20250506 gjw]
@@ -96,7 +96,7 @@ Binaries to download latest version:
 + Update EVALUATION error matrix and roc [6.4.1 20250129 zy]
 + Migrate to using delimited PARAMETERS in R templates [6.4.0 20250120 gjw]
 
-## 6.4 Models and Evaluation
+## 6.3 Models and Evaluation
 
 + Add PACKAGES list to available DATASETS [6.3.54 20250120 yyx]
 + Support links in tooltips [6.3.53 20250113 gjw]
@@ -160,7 +160,7 @@ Binaries to download latest version:
 + Update NEURAL. [6.3.1 20240923 gjw]
 + Remove unused Android/iOS/Web support. [6.3.1 20240923 lutra]
 
-## 6.3 Wrangle tab implementation, interface updates, extensive testing.
+## 6.2 Wrangle tab implementation, interface updates, extensive testing.
 
 + DATASET updated weather.csv to 2023-2024 [6.3.0 20240921 gjw]
 + INSTALL update windows build using Inno. Bug fixes for Windows [6.2.78 20240919 gjw]
@@ -250,7 +250,7 @@ Binaries to download latest version:
 + Initial R code and integration of exploration plots [6.2.2 20240715 gjw]
 + Add EXPORT to ImagePage() [6.2.1 20240712 gjw]
 
-## 6.2 Dataset Roles, Display Pages.
+## 6.1 Dataset Roles, Display Pages.
 
 + Move to SVG images [20240711 yyx]
 + Implement ImagePage() [20240711 yyx]
@@ -280,7 +280,7 @@ Binaries to download latest version:
 + Add wordcloud introductory message [6.1.2]
 + WordCloud cleanup. Improve image display. [6.1.1]
 
-## 6.1 Word Clouds, Basic Trees, and Basic Forests
+## 6.0 Word Clouds, Basic Trees, and Basic Forests
 
 + Comprehensive cleanup with dart code metrics [6.1.0]
 + Wordcloud -> WordCloud - it is generally two words [6.0.7]
