@@ -1,6 +1,6 @@
 # Rattle Scripts: Generate a Word Cloud image.
 #
-# Time-stamp: <Tuesday 2025-05-06 12:47:32 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2025-05-06 14:19:44 +1000 Graham Williams>
 #
 # Copyright (C) 2024-2025, Togaware Pty Ltd
 #
@@ -29,7 +29,7 @@
 # does not exist, because we have a tabular dataset probably loaded
 # for predictive modelling or clusters, then convert `ds` into `txt`.
 
-if (! exists('txt')) {
+if (! exists('txt') && ! exists('docs')) {
   txt <- readr::format_delim(ds, delim=' ')
 }
 ##
@@ -38,7 +38,9 @@ if (! exists('txt')) {
 ##
 ## txt <- paste(txt, collapse = " ")
 
-docs <- tm::Corpus(tm::VectorSource(txt))
+if (exists('txt') && ! exists('docs')) {
+  docs <- tm::Corpus(tm::VectorSource(txt))
+}
 
 # Preprocessing.  Note that the order matters!
 
