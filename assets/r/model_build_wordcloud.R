@@ -50,6 +50,7 @@ clean_stem        <- <TEXT_STEM>
 clean_lower_case  <- <TEXT_LOWER_CASE>
 clean_remove_numbers <- <TEXT_REMOVE_NUMBERS>
 clean_strip_whitespace <- <TEXT_STRIP_WHITESPACE>
+clean_remove_sparse <- <TEXT_REMOVE_SPARSE>
 text_sparse_max <- <TEXT_SPARSE_MAX>
 
 if (clean_punctuation) {
@@ -80,10 +81,11 @@ if (clean_strip_whitespace) {
   docs %<>% tm::tm_map(tm::stripWhitespace)
 }
 
-
 dtm <- tm::TermDocumentMatrix(docs)
 
-tm::removeSparseTerms(dtm, text_sparse_max)
+if (clean_remove_sparse) {
+  tm::removeSparseTerms(dtm, text_sparse_max)
+}
 
 m <- as.matrix(dtm)
 v <- sort(rowSums(m), decreasing=TRUE)

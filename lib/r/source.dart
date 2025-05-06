@@ -180,6 +180,7 @@ Future<void> rSource(
   bool lowerCase = ref.read(lowerCaseProvider);
   bool removeNumbers = ref.read(removeNumbersProvider);
   bool stripWhitespace = ref.read(stripWhitespaceProvider);
+  bool removeSparse = ref.read(removeSparseProvider);
   double textSparseMax = ref.read(sparseMaxProvider);
 
   String groupBy = ref.read(groupByProvider);
@@ -689,6 +690,7 @@ Future<void> rSource(
   code = code.replaceAll('<MINFREQ>', minFreq);
   code = code.replaceAll('<MAXWORD>', maxWord);
   code = code.replaceAll('<TEXT_LOWER_CASE>', lowerCase ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('<TEXT_REMOVE_SPARSE>', removeSparse ? 'TRUE' : 'FALSE');
   code = code.replaceAll(
     '<TEXT_REMOVE_NUMBERS>',
     removeNumbers ? 'TRUE' : 'FALSE',
