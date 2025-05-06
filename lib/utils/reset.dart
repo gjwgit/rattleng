@@ -59,7 +59,7 @@ import 'package:rattle/providers/terminal.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
-import 'package:rattle/providers/wordcloud/text.dart';
+import 'package:rattle/providers/wordcloud/wordcloud.dart';
 import 'package:rattle/r/start.dart';
 import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/timestamp.dart';

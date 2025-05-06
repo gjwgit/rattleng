@@ -37,7 +37,7 @@ import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
-import 'package:rattle/providers/wordcloud/text.dart';
+import 'package:rattle/providers/wordcloud/wordcloud.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/widgets/activity_button.dart';

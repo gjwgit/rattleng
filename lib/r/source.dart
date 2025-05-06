@@ -62,7 +62,7 @@ import 'package:rattle/providers/svm.dart';
 import 'package:rattle/providers/tree.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/visualise.dart';
-import 'package:rattle/providers/wordcloud/text.dart';
+import 'package:rattle/providers/wordcloud/wordcloud.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
 import 'package:rattle/r/strip_todo.dart';
