@@ -232,6 +232,8 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               decimalPlaces: 2,
               validator: (value) => validateDecimal(value),
               stateProvider: textSparseMaxProvider,
+              min: 0.0,
+              max: 1.0,
             ),
           ],
         ),
