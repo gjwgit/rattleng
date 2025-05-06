@@ -1,6 +1,6 @@
 # Rattle Scripts: Generate a Word Cloud image.
 #
-# Time-stamp: <Tuesday 2025-05-06 12:41:31 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2025-05-06 12:47:32 +1000 Graham Williams>
 #
 # Copyright (C) 2024-2025, Togaware Pty Ltd
 #
@@ -42,9 +42,9 @@ docs <- tm::Corpus(tm::VectorSource(txt))
 
 # Preprocessing.  Note that the order matters!
 
-clean_puntuation <- <PUNCTUATION>
-clean_stopwords  <- <STOPWORD>
-clean_stem       <- <STEM>
+clean_punctuation <- <PUNCTUATION>
+clean_stopwords   <- <STOPWORD>
+clean_stem        <- <STEM>
 
 if (clean_punctuation) {
   docs %<>% tm::tm_map(tm::removePunctuation,
@@ -92,7 +92,7 @@ wordcloud::wordcloud(
   min.freq     = <MINFREQ>,
   max.word     = <MAXWORD>,
   random.order = <RANDOMORDER>,
-  colors       = brewer.pal(8, "Dark2")
+  colors       = RColorBrewer::brewer.pal(8, "Dark2")
 )
 dev.off()
 ##
