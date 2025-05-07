@@ -1,6 +1,6 @@
 # Rattle Scripts: Generate a Word Cloud image.
 #
-# Time-stamp: <Wednesday 2025-05-07 09:28:40 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2025-05-07 10:03:10 +1000 Graham Williams>
 #
 # Copyright (C) 2024-2025, Togaware Pty Ltd
 #
@@ -109,3 +109,5 @@ dev.off()
 d %>% dplyr::filter(freq >= <MINFREQ>) %>%
   dplyr::slice_head(n = <MAXWORD>) %>%
   print(row.names = FALSE)
+
+# Plot the frequency of the top words.
