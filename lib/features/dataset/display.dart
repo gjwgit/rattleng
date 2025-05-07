@@ -110,7 +110,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       _addTextFilePage(stdout, pages);
     } else if (Directory(path).existsSync()) {
       // Process as corpus if the path exists and is a directory.
-      
+
       _addCorpusPage(stdout, pages);
     } else if (path == weatherDemoFile ||
         // TODO 20250310 gjw Remo the deprecated weatherDemoFile
