@@ -42,6 +42,6 @@ final stemProvider = StateProvider<bool>((ref) => true);
 final lowerCaseProvider = StateProvider<bool>((ref) => false);
 final removeNumbersProvider = StateProvider<bool>((ref) => false);
 final stripWhitespaceProvider = StateProvider<bool>((ref) => false);
-final textCorWordProvider = StateProvider<String>((ref) => '');
+final textCorWordProvider = StateProvider<String>((ref) => 'the');
 final textCorLimitProvider = StateProvider<double>((ref) => 0.8);
 final textCorFreqProvider = StateProvider<int>((ref) => 100);

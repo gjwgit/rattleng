@@ -144,4 +144,8 @@ tm::findAssocs(dtm, '<TEXT_COR_WORD>', corlimit=<TEXT_COR_LIMIT>)
 
 # Find word associations and prepare to plot term correlations.
 
+# Display the model visually for review.
+
+svg("<TEMPDIR>/model_wordcloud_cor.svg")
 plot(dtm, terms=tm::findFreqTerms(dtm, lowfreq=<TEXT_COR_FREQ>), corThreshold=<TEXT_COR_LIMIT>)
+dev.off()
