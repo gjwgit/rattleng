@@ -33,6 +33,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
+import 'package:universal_io/io.dart';
 
 import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/markdown.dart';
@@ -107,7 +108,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     if (path.endsWith('.txt')) {
       _addTextFilePage(stdout, pages);
-    } else if (path.endsWith('/corpus')) {
+    } else if (Directory(path).existsSync()) {
+      // Process as corpus if the path exists and is a directory.
+      
       _addCorpusPage(stdout, pages);
     } else if (path == weatherDemoFile ||
         // TODO 20250310 gjw Remo the deprecated weatherDemoFile
