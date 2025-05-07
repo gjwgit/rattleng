@@ -113,7 +113,7 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
         TextPage(
           title: '''
 
-          # Word Frequency
+          # Term Frequency
 
           Generated using
           [tm::TermDocumentMatrix()](https://www.rdocumentation.org/packages/tm/topics/TermDocumentMatrix).

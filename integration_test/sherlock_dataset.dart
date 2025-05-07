@@ -62,7 +62,7 @@ void main() {
       await tapButton(tester, 'Display Word Cloud');
       await gotoNextPage(tester);
       await gotoNextPage(tester);
-      await verifyPage('Word Frequency');
+      await verifyPage('Term Frequency');
       await verifySelectableText(tester, [
         ' upon    9',
         'littl    7',
