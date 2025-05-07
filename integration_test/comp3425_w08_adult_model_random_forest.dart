@@ -1,6 +1,6 @@
 /// COMP3425 W08 ADULT -> ADABOOST.
 //
-// Time-stamp: <Friday 2025-05-02 13:41:21 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2025-05-07 16:36:28 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -31,6 +31,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/add_delay.dart';
+import 'utils/enter_text.dart';
 import 'utils/load_dataset_by_path.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
@@ -59,6 +60,7 @@ void main() {
 
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Forest');
+      await enterText(tester, 'forest_variables', '4');
       await tapButton(tester, 'Build Random Forest');
       await addDelay(tester, 55);
 

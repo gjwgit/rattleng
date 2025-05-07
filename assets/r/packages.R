@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-04-03 17:23:14 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2025-05-07 15:09:18 +1000 Graham Williams>
 #
 # Rattle version <VERSION>.
 #
@@ -141,3 +141,7 @@ for (p in pkgs) {
   eval(parse(text=sprintf('library(%s)', p)))
   # require(p, character.only=TRUE)
 }
+
+# For word2vec we could:
+#
+# devtools::install_github("bmschmidt/wordVectors")

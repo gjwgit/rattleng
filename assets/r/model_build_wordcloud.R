@@ -1,6 +1,6 @@
 # Rattle Scripts: Generate a Word Cloud image.
 #
-# Time-stamp: <Wednesday 2025-05-07 10:32:06 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2025-05-07 15:32:01 +1000 Graham Williams>
 #
 # Copyright (C) 2024-2025, Togaware Pty Ltd
 #
@@ -64,15 +64,6 @@ if (clean_punctuation) {
                        preserve_intra_word_dashes=TRUE)
 }
 
-if (clean_stopwords) {
-  docs %<>% tm::tm_map(tm::removeWords,
-                       tm::stopwords("<LANGUAGE>"))
-}
-
-if (clean_stem) {
-  docs %<>% tm::tm_map(tm::stemDocument)
-}
-
 if (clean_lower_case) {
   docs %<>% tm::tm_map(tm::content_transformer(tolower))
 }
@@ -83,6 +74,15 @@ if (clean_remove_numbers) {
 
 if (clean_strip_whitespace) {
   docs %<>% tm::tm_map(tm::stripWhitespace)
+}
+
+if (clean_stopwords) {
+  docs %<>% tm::tm_map(tm::removeWords,
+                       tm::stopwords("<LANGUAGE>"))
+}
+
+if (clean_stem) {
+  docs %<>% tm::tm_map(tm::stemDocument)
 }
 
 # Update the term document matrix.
