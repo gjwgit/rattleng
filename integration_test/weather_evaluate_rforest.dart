@@ -1,6 +1,6 @@
 /// WEATHER dataset MODEL FOREST EVALUATE feature.
 //
-// Time-stamp: <Thursday 2025-02-13 09:30:01 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-05-07 16:50:16 +1000 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -31,6 +31,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
+import 'utils/enter_text.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
@@ -49,6 +50,7 @@ void main() {
       await loadDemoDataset(tester, 'Weather');
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Forest');
+      await enterText(tester, 'forest_variables', '4');
       await tapButton(tester, 'Build Random Forest');
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
