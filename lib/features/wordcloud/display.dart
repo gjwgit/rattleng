@@ -124,6 +124,26 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       );
     }
 
+    String textCorContent = rExtract(stdout, '> tm::findAssocs(dtm,');
+    if (textCorContent.isNotEmpty) {
+      // Skip the first two lines which contain the R command and extract only the results.
+
+      textCorContent = textCorContent.split('\n').skip(1).join('\n');
+      pages.add(
+        TextPage(
+          title: '''
+
+          # Text Correlation
+
+          Generated using
+          [tm::findAssocs()](https://www.rdocumentation.org/packages/tm/topics/findAssocs).
+
+          ''',
+          content: textCorContent,
+        ),
+      );
+    }
+    
     ////////////////////////////////////////////////////////////////////////
 
     return PageViewer(
