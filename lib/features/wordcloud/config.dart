@@ -124,7 +124,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
                 ref.read(wordCloudBuildProvider.notifier).state = timestamp();
               },
-              child: const Text('Build Word Cloud'),
+              child: const Text('Text Mine'),
             ),
           ],
         ),
