@@ -14,6 +14,8 @@ Binaries to download latest version:
 
 ## 6.4 Complete Models and Evaluations
 
++ TEXT: All cleaning options off by default [6.4.82 20250507 gjw]
++ TEXT: Additional cleaning options [6.4.82 20250507 zy]
 + TEXT: Load a folder as a corpus [6.4.81 20250506 zy]
 + Misc refinements [6.4.80 20250506 gjw]
 + EVALUATE: Improved plot titles. [6.4.79 20250505 gjw]
