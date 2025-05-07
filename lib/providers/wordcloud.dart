@@ -34,11 +34,13 @@ final languageProvider =
     StateProvider<String>((ref) => stopwordLanguages.first);
 final maxWordProvider = StateProvider<String>((ref) => '100');
 final minFreqProvider = StateProvider<int>((ref) => 10);
+final punctuationProvider = StateProvider<bool>((ref) => true);
 final removeSparseProvider = StateProvider<bool>((ref) => false);
 final sparseMaxProvider = StateProvider<double>((ref) => 0.9);
-final punctuationProvider = StateProvider<bool>((ref) => true);
 final stopwordProvider = StateProvider<bool>((ref) => true);
 final stemProvider = StateProvider<bool>((ref) => true);
 final lowerCaseProvider = StateProvider<bool>((ref) => false);
 final removeNumbersProvider = StateProvider<bool>((ref) => false);
 final stripWhitespaceProvider = StateProvider<bool>((ref) => false);
+final textCorWordProvider = StateProvider<String>((ref) => '');
+final textCorLimitProvider = StateProvider<double>((ref) => 0.8);

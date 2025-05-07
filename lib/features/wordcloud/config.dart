@@ -34,11 +34,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/constants/style.dart';
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/wordcloud.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/build_text_field.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
@@ -55,7 +57,8 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
   final maxWordTextController = TextEditingController();
   final minFreqTextController = TextEditingController();
   final sparseTextController = TextEditingController();
-
+  final textCorWordController = TextEditingController();
+  final textCorLimitController = TextEditingController();
   String dropdownValue = stopwordLanguages.first;
 
   @override
@@ -64,6 +67,8 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
     maxWordTextController.addListener(_updateMaxWordProvider);
     minFreqTextController.addListener(_updateMinFreqProvider);
     sparseTextController.addListener(_updateSparseProvider);
+    textCorWordController.addListener(_updateTextCorWordProvider);
+    textCorLimitController.addListener(_updateTextCorLimitProvider);
   }
 
   @override
@@ -71,6 +76,8 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
     maxWordTextController.dispose();
     minFreqTextController.dispose();
     sparseTextController.dispose();
+    textCorWordController.dispose();
+    textCorLimitController.dispose();
     super.dispose();
   }
 
@@ -81,7 +88,8 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
     maxWordTextController.text = ref.read(maxWordProvider);
     minFreqTextController.text = ref.read(minFreqProvider).toString();
     sparseTextController.text = ref.read(sparseMaxProvider).toString();
-
+    textCorWordController.text = ref.read(textCorWordProvider).toString();
+    textCorLimitController.text = ref.read(textCorLimitProvider).toString();
     // Layout the config bar.
 
     return Column(
@@ -332,6 +340,48 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 ),
               ),
 
+              buildTextField(
+                label: 'Correlation Word:',
+                controller: textCorWordController,
+                key: const Key('textCorWordField'),
+                textStyle: normalTextStyle,
+                tooltip: '''
+
+                The textcorword parameter is used to specify the textcorword
+                parameter for the wordcloud function.
+
+                ''',
+                enabled: true,
+                validator: (value) => null,
+                inputFormatter: FilteringTextInputFormatter.allow(
+                  RegExp(
+                    r'^[a-zA-Z0-9,.\s]*$',
+                  ), // Allow letters, digits, commas, dots, whitespace.
+                ),
+                maxWidth: 15,
+              ),
+
+              NumberField(
+                label: 'Correlation Limit:',
+                key: const Key('textCorLimit'),
+                tooltip: '''
+
+                **Correlation Limit:** Minimum correlation threshold (0.0-1.0) for word 
+                associations with the term in Correlation Word.
+
+                ''',
+                controller: textCorLimitController,
+                inputFormatter: FilteringTextInputFormatter.allow(
+                  RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
+                ),
+                interval: 0.01,
+                decimalPlaces: 2,
+                validator: (value) => validateDecimal(value),
+                stateProvider: textCorLimitProvider,
+                min: 0.0,
+                max: 1.0,
+              ),
+
               // Checkbox for random order of words in the cloud.
 
               LabelledCheckbox(
@@ -370,5 +420,14 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
   void _updateSparseProvider() {
     ref.read(sparseMaxProvider.notifier).state =
         double.tryParse(sparseTextController.text) ?? 0.99;
+  }
+
+  void _updateTextCorWordProvider() {
+    ref.read(textCorWordProvider.notifier).state = textCorWordController.text;
+  }
+
+  void _updateTextCorLimitProvider() {
+    ref.read(textCorLimitProvider.notifier).state =
+        double.tryParse(textCorLimitController.text) ?? 0.8;
   }
 }

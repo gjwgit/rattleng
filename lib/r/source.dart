@@ -182,6 +182,8 @@ Future<void> rSource(
   bool stripWhitespace = ref.read(stripWhitespaceProvider);
   bool removeSparse = ref.read(removeSparseProvider);
   double textSparseMax = ref.read(sparseMaxProvider);
+  String textCorWord = ref.read(textCorWordProvider);
+  double textCorLimit = ref.read(textCorLimitProvider);
 
   String groupBy = ref.read(groupByProvider);
   String imputed = ref.read(imputedProvider);
@@ -701,6 +703,8 @@ Future<void> rSource(
     stripWhitespace ? 'TRUE' : 'FALSE',
   );
   code = code.replaceAll('<TEXT_SPARSE_MAX>', textSparseMax.toString());
+  code = code.replaceAll('<TEXT_COR_WORD>', textCorWord);
+  code = code.replaceAll('<TEXT_COR_LIMIT>', textCorLimit.toString());
 
   ////////////////////////////////////////////////////////////////////////
 
