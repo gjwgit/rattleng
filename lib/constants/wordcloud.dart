@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2024-07-14 19:25:09 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2025-05-07 15:29:39 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -36,10 +36,10 @@ String wordCloudImagePath = '$tempDir/wordcloud.svg';
 String tmpImagePath = '$tempDir/tmp.png';
 
 const List<String> stopwordLanguages = <String>[
+  'SMART',
   'english',
   'catalan',
   'romanian',
-  'SMART',
   'danish',
   'dutch',
   'finnish',
