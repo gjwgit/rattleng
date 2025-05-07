@@ -31,11 +31,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/page_viewer.dart';
@@ -140,6 +142,24 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
 
           ''',
           content: textCorContent,
+        ),
+      );
+    }
+
+    String correlationImg = '$tempDir/model_wordcloud_cor.svg';
+
+    if (imageExists(correlationImg)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+          # Term Correlation Plot
+
+          Generated using
+          [tm::findFreqTerms()](https://www.rdocumentation.org/packages/tm/topics/findFreqTerms).
+
+          ''',
+          path: correlationImg,
         ),
       );
     }
