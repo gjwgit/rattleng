@@ -62,13 +62,7 @@ import 'package:rattle/providers/svm.dart';
 import 'package:rattle/providers/tree.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/visualise.dart';
-import 'package:rattle/providers/wordcloud/checkbox.dart';
-import 'package:rattle/providers/wordcloud/language.dart';
-import 'package:rattle/providers/wordcloud/maxword.dart';
-import 'package:rattle/providers/wordcloud/minfreq.dart';
-import 'package:rattle/providers/wordcloud/punctuation.dart';
-import 'package:rattle/providers/wordcloud/stem.dart';
-import 'package:rattle/providers/wordcloud/stopword.dart';
+import 'package:rattle/providers/wordcloud.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
 import 'package:rattle/r/strip_todo.dart';
@@ -183,6 +177,11 @@ Future<void> rSource(
   bool punctuation = ref.read(punctuationProvider);
   bool stem = ref.read(stemProvider);
   bool stopword = ref.read(stopwordProvider);
+  bool lowerCase = ref.read(lowerCaseProvider);
+  bool removeNumbers = ref.read(removeNumbersProvider);
+  bool stripWhitespace = ref.read(stripWhitespaceProvider);
+  bool removeSparse = ref.read(removeSparseProvider);
+  double textSparseMax = ref.read(sparseMaxProvider);
 
   String groupBy = ref.read(groupByProvider);
   String imputed = ref.read(imputedProvider);
@@ -684,12 +683,24 @@ Future<void> rSource(
   // WORD CLOUD
 
   code = code.replaceAll('<RANDOMORDER>', checkbox.toString().toUpperCase());
-  code = code.replaceAll('<STEM>', stem ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('<PUNCTUATION>', punctuation ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('<STOPWORD>', stopword ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('<TEXT_STEM>', stem ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('<TEXT_PUNCTUATION>', punctuation ? 'TRUE' : 'FALSE');
+  code = code.replaceAll('<TEXT_STOPWORD>', stopword ? 'TRUE' : 'FALSE');
   code = code.replaceAll('<LANGUAGE>', language);
   code = code.replaceAll('<MINFREQ>', minFreq);
   code = code.replaceAll('<MAXWORD>', maxWord);
+  code = code.replaceAll('<TEXT_LOWER_CASE>', lowerCase ? 'TRUE' : 'FALSE');
+  code =
+      code.replaceAll('<TEXT_REMOVE_SPARSE>', removeSparse ? 'TRUE' : 'FALSE');
+  code = code.replaceAll(
+    '<TEXT_REMOVE_NUMBERS>',
+    removeNumbers ? 'TRUE' : 'FALSE',
+  );
+  code = code.replaceAll(
+    '<TEXT_STRIP_WHITESPACE>',
+    stripWhitespace ? 'TRUE' : 'FALSE',
+  );
+  code = code.replaceAll('<TEXT_SPARSE_MAX>', textSparseMax.toString());
 
   ////////////////////////////////////////////////////////////////////////
 

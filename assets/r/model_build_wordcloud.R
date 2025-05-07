@@ -1,6 +1,6 @@
 # Rattle Scripts: Generate a Word Cloud image.
 #
-# Time-stamp: <Wednesday 2025-05-07 09:28:40 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2025-05-07 10:32:06 +1000 Graham Williams>
 #
 # Copyright (C) 2024-2025, Togaware Pty Ltd
 #
@@ -38,15 +38,24 @@ if (! exists('txt') && ! exists('docs')) {
 ##
 ## txt <- paste(txt, collapse = " ")
 
+if (exists('docs')) {
+  docs <- odocs
+}
+
 if (exists('txt') && ! exists('docs')) {
   docs <- tm::Corpus(tm::VectorSource(txt))
 }
 
 # Preprocessing.  Note that the order matters!
 
-clean_punctuation <- <PUNCTUATION>
-clean_stopwords   <- <STOPWORD>
-clean_stem        <- <STEM>
+clean_punctuation <- <TEXT_PUNCTUATION>
+clean_stopwords   <- <TEXT_STOPWORD>
+clean_stem        <- <TEXT_STEM>
+clean_lower_case  <- <TEXT_LOWER_CASE>
+clean_remove_numbers <- <TEXT_REMOVE_NUMBERS>
+clean_strip_whitespace <- <TEXT_STRIP_WHITESPACE>
+clean_remove_sparse <- <TEXT_REMOVE_SPARSE>
+text_sparse_max <- <TEXT_SPARSE_MAX>
 
 if (clean_punctuation) {
   docs %<>% tm::tm_map(tm::removePunctuation,
@@ -64,9 +73,28 @@ if (clean_stem) {
   docs %<>% tm::tm_map(tm::stemDocument)
 }
 
-tdm <- tm::TermDocumentMatrix(docs)
-m <- as.matrix(tdm)
-v <- sort(rowSums(m), decreasing=TRUE)
+if (clean_lower_case) {
+  docs %<>% tm::tm_map(tm::content_transformer(tolower))
+}
+
+if (clean_remove_numbers) {
+  docs %<>% tm::tm_map(tm::removeNumbers)
+}
+
+if (clean_strip_whitespace) {
+  docs %<>% tm::tm_map(tm::stripWhitespace)
+}
+
+# Update the term document matrix.
+
+dtm <- tm::DocumentTermMatrix(docs)
+
+if (clean_remove_sparse) {
+  dtm %>% tm::removeSparseTerms(text_sparse_max)
+}
+
+m <- as.matrix(dtm)
+v <- sort(colSums(m), decreasing=TRUE)
 d <- data.frame(word=names(v), freq=v)
 
 # Set seed for reproducibility.  Do we want to have the different
@@ -109,3 +137,5 @@ dev.off()
 d %>% dplyr::filter(freq >= <MINFREQ>) %>%
   dplyr::slice_head(n = <MAXWORD>) %>%
   print(row.names = FALSE)
+
+# Plot the frequency of the top words.
