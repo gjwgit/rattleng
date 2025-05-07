@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Thursday 2025-03-27 13:55:02 +1100 Graham Williams>
+/// Time-stamp: <Wednesday 2025-05-07 08:55:30 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -165,11 +165,15 @@ class DatasetPopup extends ConsumerWidget {
                     ref.read(pathProvider.notifier).state = folderPath;
 
                     // Call the corpus loading code.
+                    //
+                    // Add the session_library as session_startup is not called
+                    // for loading a corpus and in saving the SCRIPT package
+                    // magrittr has not been loaded from the library. (gjw
+                    // 20250507)
 
+                    String sl = 'session_library';
                     String lc = 'dataset_load_corpus';
-                    await rSource(context, ref, [
-                      lc,
-                    ]);
+                    await rSource(context, ref, [sl, lc]);
 
                     if (!context.mounted) return;
                     Navigator.pop(context, 'Local Corpus');
@@ -192,7 +196,7 @@ class DatasetPopup extends ConsumerWidget {
                   message: '''
 
                   **Local Corpus:** Tap here to popup a window so that you can
-                  browse to a local folder containing text documents (**txt**, **pdf**, 
+                  browse to a local folder containing text documents (**txt**, **pdf**,
                   or **odt** files) that you would like to **Text Mine**.
 
                   ''',

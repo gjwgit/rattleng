@@ -1,6 +1,6 @@
 # Rattle Scripts: Generate a Word Cloud image.
 #
-# Time-stamp: <Tuesday 2025-05-06 14:19:44 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2025-05-07 10:32:06 +1000 Graham Williams>
 #
 # Copyright (C) 2024-2025, Togaware Pty Ltd
 #
@@ -37,6 +37,10 @@ if (! exists('txt') && ! exists('docs')) {
 ## strings, if required.
 ##
 ## txt <- paste(txt, collapse = " ")
+
+if (exists('docs')) {
+  docs <- odocs
+}
 
 if (exists('txt') && ! exists('docs')) {
   docs <- tm::Corpus(tm::VectorSource(txt))
@@ -81,14 +85,16 @@ if (clean_strip_whitespace) {
   docs %<>% tm::tm_map(tm::stripWhitespace)
 }
 
-dtm <- tm::TermDocumentMatrix(docs)
+# Update the term document matrix.
+
+dtm <- tm::DocumentTermMatrix(docs)
 
 if (clean_remove_sparse) {
-  tm::removeSparseTerms(dtm, text_sparse_max)
+  dtm %>% tm::removeSparseTerms(text_sparse_max)
 }
 
 m <- as.matrix(dtm)
-v <- sort(rowSums(m), decreasing=TRUE)
+v <- sort(colSums(m), decreasing=TRUE)
 d <- data.frame(word=names(v), freq=v)
 
 # Set seed for reproducibility.  Do we want to have the different
@@ -131,3 +137,5 @@ dev.off()
 d %>% dplyr::filter(freq >= <MINFREQ>) %>%
   dplyr::slice_head(n = <MAXWORD>) %>%
   print(row.names = FALSE)
+
+# Plot the frequency of the top words.

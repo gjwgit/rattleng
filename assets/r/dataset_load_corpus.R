@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2025-05-06 09:43:08 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2025-05-07 10:30:55 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -35,6 +35,10 @@ corpus_source <- tm::DirSource(corpus_path)
 # Create the corpus from the source.
 
 docs <- tm::Corpus(corpus_source)
+
+# Keep a copy of the original docs so we can selectively cleanse.
+
+odocs <- docs
 
 # Create document-term matrix.
 
