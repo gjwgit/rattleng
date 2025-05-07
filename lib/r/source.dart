@@ -184,6 +184,7 @@ Future<void> rSource(
   double textSparseMax = ref.read(sparseMaxProvider);
   String textCorWord = ref.read(textCorWordProvider);
   double textCorLimit = ref.read(textCorLimitProvider);
+  int textCorFreq = ref.read(textCorFreqProvider);
 
   String groupBy = ref.read(groupByProvider);
   String imputed = ref.read(imputedProvider);
@@ -705,6 +706,7 @@ Future<void> rSource(
   code = code.replaceAll('<TEXT_SPARSE_MAX>', textSparseMax.toString());
   code = code.replaceAll('<TEXT_COR_WORD>', textCorWord);
   code = code.replaceAll('<TEXT_COR_LIMIT>', textCorLimit.toString());
+  code = code.replaceAll('<TEXT_COR_FREQ>', textCorFreq.toString());
 
   ////////////////////////////////////////////////////////////////////////
 

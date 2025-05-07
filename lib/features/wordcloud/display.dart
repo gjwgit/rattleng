@@ -143,7 +143,7 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
         ),
       );
     }
-    
+
     ////////////////////////////////////////////////////////////////////////
 
     return PageViewer(

@@ -141,3 +141,7 @@ d %>% dplyr::filter(freq >= <MINFREQ>) %>%
 # Find associations for the specified word in the document-term matrix.
 
 tm::findAssocs(dtm, '<TEXT_COR_WORD>', corlimit=<TEXT_COR_LIMIT>)
+
+# Find word associations and prepare to plot term correlations.
+
+plot(dtm, terms=tm::findFreqTerms(dtm, lowfreq=<TEXT_COR_FREQ>), corThreshold=<TEXT_COR_LIMIT>)

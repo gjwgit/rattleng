@@ -59,6 +59,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
   final sparseTextController = TextEditingController();
   final textCorWordController = TextEditingController();
   final textCorLimitController = TextEditingController();
+  final textCorFreqController = TextEditingController();
   String dropdownValue = stopwordLanguages.first;
 
   @override
@@ -69,6 +70,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
     sparseTextController.addListener(_updateSparseProvider);
     textCorWordController.addListener(_updateTextCorWordProvider);
     textCorLimitController.addListener(_updateTextCorLimitProvider);
+    textCorFreqController.addListener(_updateTextCorFreqProvider);
   }
 
   @override
@@ -78,6 +80,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
     sparseTextController.dispose();
     textCorWordController.dispose();
     textCorLimitController.dispose();
+    textCorFreqController.dispose();
     super.dispose();
   }
 
@@ -90,6 +93,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
     sparseTextController.text = ref.read(sparseMaxProvider).toString();
     textCorWordController.text = ref.read(textCorWordProvider).toString();
     textCorLimitController.text = ref.read(textCorLimitProvider).toString();
+    textCorFreqController.text = ref.read(textCorFreqProvider).toString();
     // Layout the config bar.
 
     return Column(
@@ -301,7 +305,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               const Text('Tuning Parameters:  '),
               // max word text field
               SizedBox(
-                width: 150.0,
+                width: 100.0,
                 child: MarkdownTooltip(
                   message: '''
 
@@ -320,7 +324,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 ),
               ),
               SizedBox(
-                width: 150.0,
+                width: 100.0,
                 child: MarkdownTooltip(
                   message: '''
 
@@ -341,7 +345,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               ),
 
               buildTextField(
-                label: 'Correlation Word:',
+                label: 'Cor Word:',
                 controller: textCorWordController,
                 key: const Key('textCorWordField'),
                 textStyle: normalTextStyle,
@@ -358,11 +362,11 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                     r'^[a-zA-Z0-9,.\s]*$',
                   ), // Allow letters, digits, commas, dots, whitespace.
                 ),
-                maxWidth: 15,
+                maxWidth: 8,
               ),
 
               NumberField(
-                label: 'Correlation Limit:',
+                label: 'Cor Limit:',
                 key: const Key('textCorLimit'),
                 tooltip: '''
 
@@ -380,6 +384,27 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 stateProvider: textCorLimitProvider,
                 min: 0.0,
                 max: 1.0,
+              ),
+
+              SizedBox(
+                width: 100.0,
+                child: MarkdownTooltip(
+                  message: '''
+
+                  Filter out less frequent words.  If this results in all words
+                  being filtered out the threshold will not be used.
+
+                  ''',
+                  child: TextField(
+                    controller: textCorFreqController,
+                    style: const TextStyle(fontSize: 16),
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Cor Freq',
+                      labelStyle: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ),
               ),
 
               // Checkbox for random order of words in the cloud.
@@ -429,5 +454,10 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
   void _updateTextCorLimitProvider() {
     ref.read(textCorLimitProvider.notifier).state =
         double.tryParse(textCorLimitController.text) ?? 0.8;
+  }
+
+  void _updateTextCorFreqProvider() {
+    ref.read(textCorFreqProvider.notifier).state =
+        int.tryParse(textCorFreqController.text) ?? 100;
   }
 }
