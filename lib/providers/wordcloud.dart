@@ -1,8 +1,8 @@
-/// A provider manages the state of stopword checkbox
+/// Providers for wordcloud.
 //
-// Time-stamp: <Thursday 2024-09-26 17:04:03 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2025-05-07 10:09:44 +1000 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,10 +21,24 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Yixiang Yin
+/// Authors: Zheyuan Xu
 
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/wordcloud.dart';
+
+final checkboxProvider = StateProvider<bool>((ref) => false);
+final languageProvider =
+    StateProvider<String>((ref) => stopwordLanguages.first);
+final maxWordProvider = StateProvider<String>((ref) => '100');
+final minFreqProvider = StateProvider<int>((ref) => 10);
+final removeSparseProvider = StateProvider<bool>((ref) => false);
+final sparseMaxProvider = StateProvider<double>((ref) => 0.9);
+final punctuationProvider = StateProvider<bool>((ref) => true);
 final stopwordProvider = StateProvider<bool>((ref) => true);
+final stemProvider = StateProvider<bool>((ref) => true);
+final lowerCaseProvider = StateProvider<bool>((ref) => false);
+final removeNumbersProvider = StateProvider<bool>((ref) => false);
+final stripWhitespaceProvider = StateProvider<bool>((ref) => false);

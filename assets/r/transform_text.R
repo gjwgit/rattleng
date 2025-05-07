@@ -1,11 +1,11 @@
-# Load the corpus from the integration_test/corpus directory.
+# Rattle Scripts: Transform Text for text mining.
 #
 # Copyright (C) 2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-05-07 10:30:55 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2025-03-26 05:32:58 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -22,28 +22,13 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Author: Zheyuan Xu, Graham Williams
+# Author: Zheyuan Xu
 
-# Get the path from FILENAME placeholder and extract the basename.
+# Remap variables.
 
-corpus_path <- "<FILENAME>"
+# Transform into a numeric.
 
-# Create a proper source for the Corpus from the directory.
+ds[["TNM_<SELECTED_VAR>"]] <- as.numeric(ds[["<SELECTED_VAR>"]])
 
-corpus_source <- tm::DirSource(corpus_path)
-
-# Create the corpus from the source.
-
-docs <- tm::Corpus(corpus_source)
-
-# Keep a copy of the original docs so we can selectively cleanse.
-
-odocs <- docs
-
-# Create document-term matrix.
-
-dtm <- tm::DocumentTermMatrix(docs)
-
-# Show a summary of the document-term matrix.
-
-tm::inspect(dtm)
+glimpse(ds)
+summary(ds)
