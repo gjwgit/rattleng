@@ -138,4 +138,6 @@ d %>% dplyr::filter(freq >= <MINFREQ>) %>%
   dplyr::slice_head(n = <MAXWORD>) %>%
   print(row.names = FALSE)
 
-# Plot the frequency of the top words.
+# Find associations for the specified word in the document-term matrix.
+
+tm::findAssocs(dtm, '<TEXT_COR_WORD>', corlimit=<TEXT_COR_LIMIT>)
