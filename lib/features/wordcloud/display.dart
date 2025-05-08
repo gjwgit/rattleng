@@ -31,11 +31,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
 import 'package:rattle/r/extract.dart';
+import 'package:rattle/utils/image_exists.dart';
 import 'package:rattle/utils/show_markdown_file_image.dart';
 import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/page_viewer.dart';
@@ -113,13 +115,69 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
         TextPage(
           title: '''
 
-          # Word Frequency
+          # Term Frequency
 
           Generated using
           [tm::TermDocumentMatrix()](https://www.rdocumentation.org/packages/tm/topics/TermDocumentMatrix).
 
           ''',
           content: content,
+        ),
+      );
+    }
+
+    String textCorContent = rExtract(stdout, '> tm::findAssocs(dtm,');
+    if (textCorContent.isNotEmpty) {
+      // Skip the first two lines which contain the R command and extract only the results.
+
+      textCorContent = textCorContent.split('\n').skip(1).join('\n');
+      pages.add(
+        TextPage(
+          title: '''
+
+          # Text Correlation
+
+          Generated using
+          [tm::findAssocs()](https://www.rdocumentation.org/packages/tm/topics/findAssocs).
+
+          ''',
+          content: textCorContent,
+        ),
+      );
+    }
+
+    String correlationImg = '$tempDir/model_wordcloud_cor.svg';
+
+    if (imageExists(correlationImg)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+          # Term Correlation Plot
+
+          Generated using
+          [tm::findFreqTerms()](https://www.rdocumentation.org/packages/tm/topics/findFreqTerms).
+
+          ''',
+          path: correlationImg,
+        ),
+      );
+    }
+
+    String barChartImg = '$tempDir/word_frequency_barplot.svg';
+
+    if (imageExists(barChartImg)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+          # Word Frequency Bar Chart
+
+          Generated using
+          [ggplot2::ggplot()](https://www.rdocumentation.org/packages/ggplot2/topics/ggplot).
+
+          ''',
+          path: barChartImg,
         ),
       );
     }

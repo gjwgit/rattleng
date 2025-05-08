@@ -112,6 +112,8 @@ Future<void> reset(BuildContext context, WidgetRef ref) async {
   ref.invalidate(scriptProvider);
   ref.invalidate(typesProvider);
   ref.invalidate(metaDataProvider);
+  ref.invalidate(textCorWordProvider);
+  ref.invalidate(textCorLimitProvider);
 
   // MODEL TAB
 

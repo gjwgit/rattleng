@@ -182,11 +182,14 @@ Future<void> rSource(
   bool stripWhitespace = ref.read(stripWhitespaceProvider);
   bool removeSparse = ref.read(removeSparseProvider);
   double textSparseMax = ref.read(sparseMaxProvider);
+  String textCorWord = ref.read(textCorWordProvider);
+  double textCorLimit = ref.read(textCorLimitProvider);
+  int textCorFreq = ref.read(textCorFreqProvider);
+  int maxWord = ref.read(maxWordProvider);
 
   String groupBy = ref.read(groupByProvider);
   String imputed = ref.read(imputedProvider);
   String language = ref.read(languageProvider);
-  String maxWord = ref.read(maxWordProvider);
   String minFreq = ref.read(minFreqProvider).toString();
   String path = ref.read(pathProvider);
   String selected = ref.read(selectedProvider);
@@ -688,7 +691,7 @@ Future<void> rSource(
   code = code.replaceAll('<TEXT_STOPWORD>', stopword ? 'TRUE' : 'FALSE');
   code = code.replaceAll('<LANGUAGE>', language);
   code = code.replaceAll('<MINFREQ>', minFreq);
-  code = code.replaceAll('<MAXWORD>', maxWord);
+  code = code.replaceAll('<MAXWORD>', maxWord.toString());
   code = code.replaceAll('<TEXT_LOWER_CASE>', lowerCase ? 'TRUE' : 'FALSE');
   code =
       code.replaceAll('<TEXT_REMOVE_SPARSE>', removeSparse ? 'TRUE' : 'FALSE');
@@ -701,6 +704,10 @@ Future<void> rSource(
     stripWhitespace ? 'TRUE' : 'FALSE',
   );
   code = code.replaceAll('<TEXT_SPARSE_MAX>', textSparseMax.toString());
+  code = code.replaceAll('<TEXT_COR_WORD>', textCorWord);
+  code = code.replaceAll('<TEXT_COR_LIMIT>', textCorLimit.toString());
+  code = code.replaceAll('<TEXT_COR_FREQ>', textCorFreq.toString());
+  code = code.replaceAll('<MINFREQ>', minFreq);
 
   ////////////////////////////////////////////////////////////////////////
 
