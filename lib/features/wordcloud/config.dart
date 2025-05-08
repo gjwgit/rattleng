@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Thursday 2025-05-08 11:56:36 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-05-08 16:29:38 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -139,6 +139,12 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
                 ref.read(wordCloudBuildProvider.notifier).state = timestamp();
               },
+              tooltip: '''
+
+              **Text Mine:** Tap here to build the analysis of the text
+                document(s).
+
+              ''',
               child: const Text('Text Mine'),
             ),
 
@@ -148,7 +154,11 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               key: const Key('random_order'),
               tooltip: '''
 
-               Plot words in random order, otherwise in decreasing frequency.
+               **Random Order:** Tick the checkbox to have the word cloud
+               generated with a random ordering of the words.  Otherwise (the
+               default) the most frequent words are centered and then other
+               words are drawn in decreasing frequency as we progress to the edg
+               of the picture.
 
               ''',
               label: 'Random Order',
@@ -181,9 +191,10 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                         key: const Key('text_stem'),
                         tooltip: '''
 
-                        Stemming reduces words to their base or root form.  Two
-                        different words, when stemmed, can become the same and so can
-                        reduce unnecessary clutter in the wordcloud.
+                        **Stem:**. Enable this to reduces words to their base or
+                        root form.  Two different words, when stemmed, can
+                        become the same and so can reduce unnecessary clutter in
+                        the wordcloud.
 
                         ''',
                         label: 'Stem',
@@ -193,28 +204,31 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                         key: const Key('text_remove_punctuation'),
                         tooltip: '''
 
-                        Remove punctuation marks such as periods.
+                        **Punctuation:** Extraneous data can be removed
+                          including various punctuation.
 
                         ''',
-                        label: 'Remove Punctuation',
+                        label: 'Punctuation',
                         provider: punctuationProvider,
                       ),
                       LabelledCheckbox(
                         key: const Key('text_remove_stopwords'),
                         tooltip: '''
 
-                        Remove common language words for the wordcloud.
+                        **Stopwords:** Remove common language words. The words
+                        removed depend on the chosen language.
 
                         ''',
-                        label: 'Remove Stopwords',
+                        label: 'Stopwords',
                         provider: stopwordProvider,
                       ),
                       Expanded(
                         child: MarkdownTooltip(
                           message: '''
 
-                          Select the language to filter out common stopwords
-                          from the word cloud.
+                          **Language:** The stopwords removed will depend on the
+                          language. Select the language of choice here to filter
+                          out common stopwords.
 
                           The stopwords come from
                           [tm::stopwords()](https://rdrr.io/rforge/tm/man/stopwords.html).
@@ -251,7 +265,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                         key: const Key('lower_case'),
                         tooltip: '''
 
-                        Convert all words to lower case.
+                        **Lower Case:** Convert all words to lower case.
 
                         ''',
                         label: 'Lower Case',
@@ -261,30 +275,31 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                         key: const Key('remove_numbers'),
                         tooltip: '''
 
-                        Remove numbers from the text.
+                        **Numbers:** Remove numbers from the text.
 
                         ''',
-                        label: 'Remove Numbers',
+                        label: 'Numbers',
                         provider: removeNumbersProvider,
                       ),
                       LabelledCheckbox(
                         key: const Key('strip_whitespace'),
                         tooltip: '''
 
-                        Remove whitespace from the text.
+                        **Whitespace:** Remove whitespace from the text.
 
                         ''',
-                        label: 'Strip Whitespace',
+                        label: 'Whitespace',
                         provider: stripWhitespaceProvider,
                       ),
                       LabelledCheckbox(
                         key: const Key('remove_sparse'),
                         tooltip: '''
 
-                        Remove sparse terms from the text.
+                        **Sparse:** Remove sparse terms from the text. The maximum level
+                          of sparseness can be set.
 
                         ''',
-                        label: 'Remove Sparse',
+                        label: 'Sparse',
                         provider: removeSparseProvider,
                       ),
                       NumberField(
@@ -292,7 +307,10 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                         key: const Key('sparse'),
                         tooltip: '''
 
-                        The maximum number of words plotted.  Drop least frequent words.
+                        **Sparse:** The maximum allowed sparsity. Terms are
+                        removed if they have a sparsity factor greater than
+                        specified here. 0 suggests no sparsity and 1 is complete
+                        sparsity.
 
                         ''',
                         controller: sparseTextController,
@@ -330,7 +348,9 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 key: const Key('maxWords'),
                 tooltip: '''
 
-                Maximum number of words plotted. Drop least frequent words.
+                **Max Words:** Specify here the maximum number of words to
+                  consider for various analyses. For example, this will be the
+                  maximum number of words in the word cloud.
 
                 ''',
                 controller: maxWordTextController,
@@ -346,8 +366,8 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
                 tooltip: '''
 
-                Filter out less frequent words.  If this results in all words
-                being filtered out the threshold will not be used.
+                **Min Freq:** Specify here the mininum frequency of words that
+                should be considered for analysis.
 
                 ''',
                 inputFormatter:
@@ -356,25 +376,21 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 stateProvider: minFreqProvider,
               ),
 
-              buildTextField(
-                label: 'Cor Word',
-                controller: textCorWordController,
-                key: const Key('textCorWordField'),
-                textStyle: normalTextStyle,
+              NumberField(
+                label: 'Cor Freq',
+                key: const Key('textCorFreq'),
                 tooltip: '''
 
-                The textcorword parameter is used to specify the textcorword
-                parameter for the wordcloud function.
+                **Cor Freq:** This is the lower bound on the term frequency for
+                the term to be included in the **Term Correlation Plot**.
 
                 ''',
-                enabled: true,
-                validator: (value) => null,
-                inputFormatter: FilteringTextInputFormatter.allow(
-                  RegExp(
-                    r'^[a-zA-Z0-9,.\s]*$',
-                  ), // Allow letters, digits, commas, dots, whitespace.
-                ),
-                maxWidth: 8,
+                controller: textCorFreqController,
+                inputFormatter: FilteringTextInputFormatter.digitsOnly,
+                interval: 1,
+                validator: (value) => validateInteger(value, min: 1),
+                stateProvider: textCorFreqProvider,
+                min: 1,
               ),
 
               NumberField(
@@ -382,8 +398,13 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 key: const Key('textCorLimit'),
                 tooltip: '''
 
-                **Correlation Limit:** Minimum correlation threshold (0.0-1.0) for word 
-                associations with the term in Correlation Word.
+                **Correlation Limit:** This is used for the **Term Association**
+                and **Term Correlation Plot** as the minimum correlation
+                threshold (0-1) for associations between the **Cor Term**
+                specified and other terms in the document term matrix.
+
+                See
+                [tm::findAssocs()](https://www.rdocumentation.org/packages/tm/topics/findAssocs).
 
                 ''',
                 controller: textCorLimitController,
@@ -398,21 +419,30 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 max: 1.0,
               ),
 
-              NumberField(
-                label: 'Cor Freq',
-                key: const Key('textCorFreq'),
+              buildTextField(
+                label: 'Cor Term',
+                controller: textCorWordController,
+                key: const Key('textCorWordField'),
+                textStyle: normalTextStyle,
                 tooltip: '''
 
-                Filter out less frequent words. If this results in all words
-                being filtered out the threshold will not be used.
+                **Cor Term:** The term here will be used to perform an
+                association analysis to find other terms that are highly
+                correlated with this term (at least with a correlation as
+                specified as the **Cor Limit**) .
+
+                See
+                [tm::findAssocs()](https://www.rdocumentation.org/packages/tm/topics/findAssocs).
 
                 ''',
-                controller: textCorFreqController,
-                inputFormatter: FilteringTextInputFormatter.digitsOnly,
-                interval: 1,
-                validator: (value) => validateInteger(value, min: 1),
-                stateProvider: textCorFreqProvider,
-                min: 1,
+                enabled: true,
+                validator: (value) => null,
+                inputFormatter: FilteringTextInputFormatter.allow(
+                  RegExp(
+                    r'^[a-zA-Z0-9,.\s]*$',
+                  ), // Allow letters, digits, commas, dots, whitespace.
+                ),
+                maxWidth: 8,
               ),
             ],
           ),

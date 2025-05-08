@@ -1,6 +1,6 @@
 # Undertake a text analysis of the corpus provided through `docs`.
 #
-# Time-stamp: <Thursday 2025-05-08 09:57:42 +1000 Graham Williams>
+# Time-stamp: <Thursday 2025-05-08 16:39:57 +1000 Graham Williams>
 #
 # Copyright (C) 2024-2025, Togaware Pty Ltd
 #
@@ -153,30 +153,23 @@ svg("<TEMPDIR>/model_wordcloud_cor.svg")
 plot(dtm, terms=tm::findFreqTerms(dtm, lowfreq=<TEXT_COR_FREQ>), corThreshold=<TEXT_COR_LIMIT>)
 dev.off()
 
-# Create a bar chart visualization showing word frequencies
-
-# Open SVG device for the bar chart.
-
-svg("<TEMPDIR>/word_frequency_barplot.svg")
-
 # Create a bar chart of the top <MINFREQ> most frequent words.
 
-d %>% 
+svg("<TEMPDIR>/word_frequency_barplot.svg", width=10)
+d %>%
   dplyr::arrange(desc(freq)) %>%
   dplyr::filter(freq >= <MINFREQ>) %>%
-  ggplot2::ggplot(ggplot2::aes(x = reorder(word, freq), y = freq)) +
-  ggplot2::geom_bar(stat = "identity", fill = "steelblue") +
-  ggplot2::coord_flip() +  # Flip coordinates for horizontal bars
+  ggplot2::ggplot(ggplot2::aes(x=reorder(word, freq), y=freq)) +
+  ggplot2::geom_bar(stat="identity", width=0.5) +
+  ggplot2::coord_flip() +
   ggplot2::labs(
-    title = "Most Frequent Words",
-    x = "Word",
+    title = "Most Frequent Terms",
+    x = "Term",
     y = "Frequency"
   ) +
-  ggplot2::theme_minimal() +
+  <SETTINGS_GRAPHIC_THEME>() +
   ggplot2::theme(
     axis.text.x = ggplot2::element_text(angle = 0, hjust = 0.5),
     plot.title = ggplot2::element_text(hjust = 0.5, face = "bold")
   )
-
 dev.off()
-

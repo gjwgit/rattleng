@@ -1,6 +1,6 @@
 /// Display for word cloud.
 //
-// Time-stamp: <Tuesday 2025-05-06 12:53:21 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-05-08 16:35:18 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -117,7 +117,7 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
 
           # Term Frequency
 
-          Generated using
+          Generated from a
           [tm::TermDocumentMatrix()](https://www.rdocumentation.org/packages/tm/topics/TermDocumentMatrix).
 
           ''',
@@ -126,22 +126,17 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       );
     }
 
-    String textCorContent = rExtract(stdout, '> tm::findAssocs(dtm,');
-    if (textCorContent.isNotEmpty) {
-      // Skip the first two lines which contain the R command and extract only the results.
+    String barChartImg = '$tempDir/word_frequency_barplot.svg';
 
-      textCorContent = textCorContent.split('\n').skip(1).join('\n');
+    if (imageExists(barChartImg)) {
       pages.add(
-        TextPage(
+        ImagePage(
           title: '''
 
-          # Text Correlation
-
-          Generated using
-          [tm::findAssocs()](https://www.rdocumentation.org/packages/tm/topics/findAssocs).
+          # Term Frequency Bar Chart
 
           ''',
-          content: textCorContent,
+          path: barChartImg,
         ),
       );
     }
@@ -164,20 +159,25 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       );
     }
 
-    String barChartImg = '$tempDir/word_frequency_barplot.svg';
+    String textCorContent = rExtract(stdout, '> tm::findAssocs(dtm,');
+    if (textCorContent.isNotEmpty) {
+      // Skip the first two lines which contain the R command and extract only the results.
 
-    if (imageExists(barChartImg)) {
+      textCorContent = textCorContent.split('\n').skip(1).join('\n');
       pages.add(
-        ImagePage(
+        TextPage(
           title: '''
 
-          # Word Frequency Bar Chart
+          # Term Association
 
           Generated using
-          [ggplot2::ggplot()](https://www.rdocumentation.org/packages/ggplot2/topics/ggplot).
+          [tm::findAssocs()](https://www.rdocumentation.org/packages/tm/topics/findAssocs).
+
+          The list shows terms associated with the chosen **Cor Term** and their
+          level of correlation.
 
           ''',
-          path: barChartImg,
+          content: textCorContent,
         ),
       );
     }
