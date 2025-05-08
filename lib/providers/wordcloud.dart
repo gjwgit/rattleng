@@ -1,6 +1,6 @@
 /// Providers for wordcloud.
 //
-// Time-stamp: <Thursday 2025-05-08 15:15:20 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-05-08 16:45:22 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -33,7 +33,7 @@ final checkboxProvider = StateProvider<bool>((ref) => false);
 final languageProvider =
     StateProvider<String>((ref) => stopwordLanguages.first);
 final maxWordProvider = StateProvider<int>((ref) => 100);
-final minFreqProvider = StateProvider<int>((ref) => 5);
+final minFreqProvider = StateProvider<int>((ref) => 50);
 final punctuationProvider = StateProvider<bool>((ref) => false);
 final removeSparseProvider = StateProvider<bool>((ref) => false);
 final sparseMaxProvider = StateProvider<double>((ref) => 0.9);
@@ -43,5 +43,5 @@ final lowerCaseProvider = StateProvider<bool>((ref) => false);
 final removeNumbersProvider = StateProvider<bool>((ref) => false);
 final stripWhitespaceProvider = StateProvider<bool>((ref) => false);
 final textCorWordProvider = StateProvider<String>((ref) => 'the');
-final textCorLimitProvider = StateProvider<double>((ref) => 0.8);
+final textCorLimitProvider = StateProvider<double>((ref) => 0.7);
 final textCorFreqProvider = StateProvider<int>((ref) => 20);
