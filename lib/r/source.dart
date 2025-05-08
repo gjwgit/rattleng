@@ -185,6 +185,7 @@ Future<void> rSource(
   String textCorWord = ref.read(textCorWordProvider);
   double textCorLimit = ref.read(textCorLimitProvider);
   int textCorFreq = ref.read(textCorFreqProvider);
+  int textMinCounts = ref.read(textMinCountsProvider);
 
   String groupBy = ref.read(groupByProvider);
   String imputed = ref.read(imputedProvider);
@@ -707,6 +708,7 @@ Future<void> rSource(
   code = code.replaceAll('<TEXT_COR_WORD>', textCorWord);
   code = code.replaceAll('<TEXT_COR_LIMIT>', textCorLimit.toString());
   code = code.replaceAll('<TEXT_COR_FREQ>', textCorFreq.toString());
+  code = code.replaceAll('<TEXT_MIN_COUNTS>', textMinCounts.toString());
 
   ////////////////////////////////////////////////////////////////////////
 

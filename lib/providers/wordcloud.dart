@@ -44,4 +44,5 @@ final removeNumbersProvider = StateProvider<bool>((ref) => false);
 final stripWhitespaceProvider = StateProvider<bool>((ref) => false);
 final textCorWordProvider = StateProvider<String>((ref) => 'the');
 final textCorLimitProvider = StateProvider<double>((ref) => 0.8);
-final textCorFreqProvider = StateProvider<int>((ref) => 100);
+final textCorFreqProvider = StateProvider<int>((ref) => 20);
+final textMinCountsProvider = StateProvider<int>((ref) => 20);
