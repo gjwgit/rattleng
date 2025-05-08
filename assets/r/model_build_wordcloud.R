@@ -1,6 +1,6 @@
-# Rattle Scripts: Generate a Word Cloud image.
+# Undertake a text analysis of the corpus provided through `docs`.
 #
-# Time-stamp: <Wednesday 2025-05-07 15:32:01 +1000 Graham Williams>
+# Time-stamp: <Thursday 2025-05-08 09:57:42 +1000 Graham Williams>
 #
 # Copyright (C) 2024-2025, Togaware Pty Ltd
 #
@@ -25,28 +25,31 @@
 
 # <TIMESTAMP>
 
-# The text data will have been loaded into the `txt` variable. If that
-# does not exist, because we have a tabular dataset probably loaded
-# for predictive modelling or clusters, then convert `ds` into `txt`.
-
-if (! exists('txt') && ! exists('docs')) {
-  txt <- readr::format_delim(ds, delim=' ')
-}
-##
-## Convert the data to a single character string rather than a list of
-## strings, if required.
-##
-## txt <- paste(txt, collapse = " ")
+# The text data will have been loaded into the `docs` variable, either
+# from a single txt file or from a corpus.
+#
+# If `docs` exists then we will also have had a backup copy in
+# `odocs`. This is restored to `docs` so that we can re-run possibly
+# changed CLEANSE operations.
+#
+# If `docs` does not exist then we will have loaded a tabular dataset
+# into `ds` so we convert `ds` into `docs`.
 
 if (exists('docs')) {
   docs <- odocs
-}
-
-if (exists('txt') && ! exists('docs')) {
+} else {
+  ##
+  ## Convert the data to a single character string rather than a list of
+  ## strings, if required.
+  ##
+  ## txt <- paste(txt, collapse = " ")
+  txt <- readr::format_delim(ds, delim=' ')
   docs <- tm::Corpus(tm::VectorSource(txt))
+  odocs <- docs
 }
 
-# Preprocessing.  Note that the order matters!
+# Preprocessing.  Note that the order matters to a small
+# extent. Probably good to remove stopwords before we do stemming.
 
 clean_punctuation <- <TEXT_PUNCTUATION>
 clean_stopwords   <- <TEXT_STOPWORD>
@@ -85,7 +88,7 @@ if (clean_stem) {
   docs %<>% tm::tm_map(tm::stemDocument)
 }
 
-# Update the term document matrix.
+# Create the term document matrix from the docs.
 
 dtm <- tm::DocumentTermMatrix(docs)
 
