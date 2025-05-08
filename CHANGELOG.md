@@ -14,6 +14,7 @@ Binaries to download latest version:
 
 ## 6.4 Complete Models and Evaluations
 
++ TEXT: Additional text analyses [6.4.84 20250508 zy]
 + TEXT: Update wordcloud options and test [6.4.83 20250508 gjw]
 + TEXT: All cleaning options off by default [6.4.82 20250507 gjw]
 + TEXT: Additional cleaning options [6.4.82 20250507 zy]
