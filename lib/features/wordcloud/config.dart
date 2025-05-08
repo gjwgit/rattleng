@@ -72,7 +72,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
     textCorWordController.addListener(_updateTextCorWordProvider);
     textCorLimitController.addListener(_updateTextCorLimitProvider);
     textCorFreqController.addListener(_updateTextCorFreqProvider);
-    textMinCountsController.addListener(_updateTextMinWordsProvider);
   }
 
   @override
@@ -97,7 +96,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
     textCorWordController.text = ref.read(textCorWordProvider).toString();
     textCorLimitController.text = ref.read(textCorLimitProvider).toString();
     textCorFreqController.text = ref.read(textCorFreqProvider).toString();
-    textMinCountsController.text = ref.read(textMinCountsProvider).toString();
 
     // Layout the config bar.
 
@@ -362,6 +360,23 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 ),
               ),
 
+              NumberField(
+                label: 'Min Freq',
+                key: const Key('textMinFreq'),
+                controller: minFreqTextController,
+
+                tooltip: '''
+
+                Filter out less frequent words.  If this results in all words
+                being filtered out the threshold will not be used.
+
+                ''',
+                inputFormatter:
+                    FilteringTextInputFormatter.digitsOnly, // Integers only
+                validator: (value) => validateInteger(value, min: 1),
+                stateProvider: minFreqProvider,
+              ),
+
               buildTextField(
                 label: 'Cor Word:',
                 controller: textCorWordController,
@@ -424,22 +439,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                   ),
                 ),
               ),
-
-              NumberField(
-                label: 'Min Count:',
-                key: const Key('textMinCounts'),
-                controller: textMinCountsController,
-
-                tooltip: '''
-
-                    **Minimum Word Count:** Minimum frequency threshold for words to be included in the bar chart visualization.
-
-                    ''',
-                inputFormatter:
-                    FilteringTextInputFormatter.digitsOnly, // Integers only
-                validator: (value) => validateInteger(value, min: 1),
-                stateProvider: textMinCountsProvider,
-              ),
             ],
           ),
         ),
@@ -480,10 +479,5 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
   void _updateTextCorFreqProvider() {
     ref.read(textCorFreqProvider.notifier).state =
         int.tryParse(textCorFreqController.text) ?? 20;
-  }
-
-  void _updateTextMinWordsProvider() {
-    ref.read(textMinCountsProvider.notifier).state =
-        int.tryParse(textMinCountsController.text) ?? 20;
   }
 }
