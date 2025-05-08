@@ -160,7 +160,6 @@ svg("<TEMPDIR>/word_frequency_barplot.svg")
 
 d %>% 
   dplyr::arrange(desc(freq)) %>%
-  dplyr::slice_head(n = 20) %>%
   dplyr::filter(freq >= <MINFREQ>) %>%
   ggplot2::ggplot(ggplot2::aes(x = reorder(word, freq), y = freq)) +
   ggplot2::geom_bar(stat = "identity", fill = "steelblue") +
