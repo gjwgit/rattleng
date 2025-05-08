@@ -185,11 +185,11 @@ Future<void> rSource(
   String textCorWord = ref.read(textCorWordProvider);
   double textCorLimit = ref.read(textCorLimitProvider);
   int textCorFreq = ref.read(textCorFreqProvider);
+  int maxWord = ref.read(maxWordProvider);
 
   String groupBy = ref.read(groupByProvider);
   String imputed = ref.read(imputedProvider);
   String language = ref.read(languageProvider);
-  String maxWord = ref.read(maxWordProvider);
   String minFreq = ref.read(minFreqProvider).toString();
   String path = ref.read(pathProvider);
   String selected = ref.read(selectedProvider);
@@ -691,7 +691,7 @@ Future<void> rSource(
   code = code.replaceAll('<TEXT_STOPWORD>', stopword ? 'TRUE' : 'FALSE');
   code = code.replaceAll('<LANGUAGE>', language);
   code = code.replaceAll('<MINFREQ>', minFreq);
-  code = code.replaceAll('<MAXWORD>', maxWord);
+  code = code.replaceAll('<MAXWORD>', maxWord.toString());
   code = code.replaceAll('<TEXT_LOWER_CASE>', lowerCase ? 'TRUE' : 'FALSE');
   code =
       code.replaceAll('<TEXT_REMOVE_SPARSE>', removeSparse ? 'TRUE' : 'FALSE');

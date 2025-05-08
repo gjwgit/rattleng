@@ -90,7 +90,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
   Widget build(BuildContext context) {
     // Keep the value of text field.
 
-    maxWordTextController.text = ref.read(maxWordProvider);
+    maxWordTextController.text = ref.read(maxWordProvider).toString();
     minFreqTextController.text = ref.read(minFreqProvider).toString();
     sparseTextController.text = ref.read(sparseMaxProvider).toString();
     textCorWordController.text = ref.read(textCorWordProvider).toString();
@@ -320,24 +320,18 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               configBotGap,
               const Text('Tuning Parameters:  '),
               // max word text field
-              SizedBox(
-                width: 100.0,
-                child: MarkdownTooltip(
-                  message: '''
+              NumberField(
+                label: 'Max Words',
+                key: const Key('maxWords'),
+                tooltip: '''
 
-                  Maximum number of words plotted.  Drop least frequent words.
+                Maximum number of words plotted. Drop least frequent words.
 
-                  ''',
-                  child: TextField(
-                    controller: maxWordTextController,
-                    style: const TextStyle(fontSize: 16),
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Max Words',
-                      labelStyle: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                ),
+                ''',
+                controller: maxWordTextController,
+                inputFormatter: FilteringTextInputFormatter.digitsOnly,
+                validator: (value) => validateInteger(value, min: 1),
+                stateProvider: maxWordProvider,
               ),
 
               NumberField(
@@ -434,7 +428,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
   void _updateMaxWordProvider() {
     ref.read(maxWordProvider.notifier).state =
-        sanitiseMaxWord(maxWordTextController.text);
+        int.tryParse(maxWordTextController.text) ?? 100;
   }
 
   void _updateMinFreqProvider() {

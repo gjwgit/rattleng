@@ -32,7 +32,7 @@ import 'package:rattle/constants/wordcloud.dart';
 final checkboxProvider = StateProvider<bool>((ref) => false);
 final languageProvider =
     StateProvider<String>((ref) => stopwordLanguages.first);
-final maxWordProvider = StateProvider<String>((ref) => '100');
+final maxWordProvider = StateProvider<int>((ref) => 100);
 final minFreqProvider = StateProvider<int>((ref) => 10);
 final punctuationProvider = StateProvider<bool>((ref) => true);
 final removeSparseProvider = StateProvider<bool>((ref) => false);
