@@ -384,7 +384,6 @@ class NumberFieldState extends ConsumerState<NumberField> {
                   focusNode: _focusNode,
                   decoration: InputDecoration(
                     labelText: widget.label,
-                    labelStyle: const TextStyle(fontWeight: FontWeight.bold),
                     border: const UnderlineInputBorder(),
                     contentPadding: const EdgeInsets.only(
                       right: 40,

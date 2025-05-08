@@ -34,11 +34,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/constants/style.dart';
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/wordcloud.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/build_text_field.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/widgets/activity_button.dart';
 import 'package:rattle/widgets/labelled_checkbox.dart';
@@ -55,7 +57,10 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
   final maxWordTextController = TextEditingController();
   final minFreqTextController = TextEditingController();
   final sparseTextController = TextEditingController();
-
+  final textCorWordController = TextEditingController();
+  final textCorLimitController = TextEditingController();
+  final textCorFreqController = TextEditingController();
+  final textMinCountsController = TextEditingController();
   String dropdownValue = stopwordLanguages.first;
 
   @override
@@ -64,6 +69,9 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
     maxWordTextController.addListener(_updateMaxWordProvider);
     minFreqTextController.addListener(_updateMinFreqProvider);
     sparseTextController.addListener(_updateSparseProvider);
+    textCorWordController.addListener(_updateTextCorWordProvider);
+    textCorLimitController.addListener(_updateTextCorLimitProvider);
+    textCorFreqController.addListener(_updateTextCorFreqProvider);
   }
 
   @override
@@ -71,6 +79,10 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
     maxWordTextController.dispose();
     minFreqTextController.dispose();
     sparseTextController.dispose();
+    textCorWordController.dispose();
+    textCorLimitController.dispose();
+    textCorFreqController.dispose();
+    textMinCountsController.dispose();
     super.dispose();
   }
 
@@ -78,9 +90,12 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
   Widget build(BuildContext context) {
     // Keep the value of text field.
 
-    maxWordTextController.text = ref.read(maxWordProvider);
+    maxWordTextController.text = ref.read(maxWordProvider).toString();
     minFreqTextController.text = ref.read(minFreqProvider).toString();
     sparseTextController.text = ref.read(sparseMaxProvider).toString();
+    textCorWordController.text = ref.read(textCorWordProvider).toString();
+    textCorLimitController.text = ref.read(textCorLimitProvider).toString();
+    textCorFreqController.text = ref.read(textCorFreqProvider).toString();
 
     // Layout the config bar.
 
@@ -124,7 +139,20 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
                 ref.read(wordCloudBuildProvider.notifier).state = timestamp();
               },
-              child: const Text('Build Word Cloud'),
+              child: const Text('Text Mine'),
+            ),
+
+            // Checkbox for random order of words in the cloud.
+
+            LabelledCheckbox(
+              key: const Key('random_order'),
+              tooltip: '''
+
+               Plot words in random order, otherwise in decreasing frequency.
+
+              ''',
+              label: 'Random Order',
+              provider: checkboxProvider,
             ),
           ],
         ),
@@ -297,57 +325,94 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               configBotGap,
               const Text('Tuning Parameters:  '),
               // max word text field
-              SizedBox(
-                width: 150.0,
-                child: MarkdownTooltip(
-                  message: '''
-
-                  Maximum number of words plotted.  Drop least frequent words.
-
-                  ''',
-                  child: TextField(
-                    controller: maxWordTextController,
-                    style: const TextStyle(fontSize: 16),
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Max Words',
-                      labelStyle: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 150.0,
-                child: MarkdownTooltip(
-                  message: '''
-
-                  Filter out less frequent words.  If this results in all words
-                  being filtered out the threshold will not be used.
-
-                      ''',
-                  child: TextField(
-                    controller: minFreqTextController,
-                    style: const TextStyle(fontSize: 16),
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Min Freq',
-                      labelStyle: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                ),
-              ),
-
-              // Checkbox for random order of words in the cloud.
-
-              LabelledCheckbox(
-                key: const Key('random_order'),
+              NumberField(
+                label: 'Max Words',
+                key: const Key('maxWords'),
                 tooltip: '''
 
-               Plot words in random order, otherwise in decreasing frequency.
+                Maximum number of words plotted. Drop least frequent words.
 
-              ''',
-                label: 'Random Order',
-                provider: checkboxProvider,
+                ''',
+                controller: maxWordTextController,
+                inputFormatter: FilteringTextInputFormatter.digitsOnly,
+                validator: (value) => validateInteger(value, min: 1),
+                stateProvider: maxWordProvider,
+              ),
+
+              NumberField(
+                label: 'Min Freq',
+                key: const Key('textMinFreq'),
+                controller: minFreqTextController,
+
+                tooltip: '''
+
+                Filter out less frequent words.  If this results in all words
+                being filtered out the threshold will not be used.
+
+                ''',
+                inputFormatter:
+                    FilteringTextInputFormatter.digitsOnly, // Integers only
+                validator: (value) => validateInteger(value, min: 1),
+                stateProvider: minFreqProvider,
+              ),
+
+              buildTextField(
+                label: 'Cor Word',
+                controller: textCorWordController,
+                key: const Key('textCorWordField'),
+                textStyle: normalTextStyle,
+                tooltip: '''
+
+                The textcorword parameter is used to specify the textcorword
+                parameter for the wordcloud function.
+
+                ''',
+                enabled: true,
+                validator: (value) => null,
+                inputFormatter: FilteringTextInputFormatter.allow(
+                  RegExp(
+                    r'^[a-zA-Z0-9,.\s]*$',
+                  ), // Allow letters, digits, commas, dots, whitespace.
+                ),
+                maxWidth: 8,
+              ),
+
+              NumberField(
+                label: 'Cor Limit',
+                key: const Key('textCorLimit'),
+                tooltip: '''
+
+                **Correlation Limit:** Minimum correlation threshold (0.0-1.0) for word 
+                associations with the term in Correlation Word.
+
+                ''',
+                controller: textCorLimitController,
+                inputFormatter: FilteringTextInputFormatter.allow(
+                  RegExp(r'^[0-9]*\.?[0-9]{0,4}$'),
+                ),
+                interval: 0.01,
+                decimalPlaces: 2,
+                validator: (value) => validateDecimal(value),
+                stateProvider: textCorLimitProvider,
+                min: 0.0,
+                max: 1.0,
+              ),
+
+              NumberField(
+                label: 'Cor Freq',
+                key: const Key('textCorFreq'),
+                tooltip: '''
+
+                Filter out less frequent words. If this results in all words
+                being filtered out the threshold will not be used.
+
+                ''',
+                controller: textCorFreqController,
+                inputFormatter: FilteringTextInputFormatter.digitsOnly,
+                interval: 1,
+                validator: (value) => validateInteger(value, min: 1),
+                stateProvider: textCorFreqProvider,
+                min: 1,
               ),
             ],
           ),
@@ -364,7 +429,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
   void _updateMaxWordProvider() {
     ref.read(maxWordProvider.notifier).state =
-        sanitiseMaxWord(maxWordTextController.text);
+        int.tryParse(maxWordTextController.text) ?? 100;
   }
 
   void _updateMinFreqProvider() {
@@ -375,5 +440,19 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
   void _updateSparseProvider() {
     ref.read(sparseMaxProvider.notifier).state =
         double.tryParse(sparseTextController.text) ?? 0.99;
+  }
+
+  void _updateTextCorWordProvider() {
+    ref.read(textCorWordProvider.notifier).state = textCorWordController.text;
+  }
+
+  void _updateTextCorLimitProvider() {
+    ref.read(textCorLimitProvider.notifier).state =
+        double.tryParse(textCorLimitController.text) ?? 0.8;
+  }
+
+  void _updateTextCorFreqProvider() {
+    ref.read(textCorFreqProvider.notifier).state =
+        int.tryParse(textCorFreqController.text) ?? 20;
   }
 }

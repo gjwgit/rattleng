@@ -57,7 +57,7 @@ void main() {
       await tester.pump(interact);
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Text');
-      await tapButton(tester, 'Build Word Cloud');
+      await tapButton(tester, 'Text Mine');
       await navigateToPage(tester, 2, back: 2, title: 'Word Frequency');
       await verifySelectableText(tester, [
         'word freq',
