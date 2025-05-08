@@ -339,26 +339,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                   ),
                 ),
               ),
-              SizedBox(
-                width: 100.0,
-                child: MarkdownTooltip(
-                  message: '''
-
-                  Filter out less frequent words.  If this results in all words
-                  being filtered out the threshold will not be used.
-
-                      ''',
-                  child: TextField(
-                    controller: minFreqTextController,
-                    style: const TextStyle(fontSize: 16),
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Min Freq',
-                      labelStyle: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                ),
-              ),
 
               NumberField(
                 label: 'Min Freq',
