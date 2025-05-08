@@ -164,6 +164,24 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       );
     }
 
+    String barChartImg = '$tempDir/word_frequency_barplot.svg';
+
+    if (imageExists(barChartImg)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+          # Word Frequency Bar Chart
+
+          Generated using
+          [ggplot2::ggplot()](https://www.rdocumentation.org/packages/ggplot2/topics/ggplot).
+
+          ''',
+          path: barChartImg,
+        ),
+      );
+    }
+
     ////////////////////////////////////////////////////////////////////////
 
     return PageViewer(
