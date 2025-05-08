@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2025-04-30 15:19:20 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-05-08 14:33:22 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -107,7 +107,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
       const String scd = 'Summary of the Traditional Forest model.';
 
       final String fm = rExtractFormula(stdout);
-      displayContent = '$scd \n\nFormula: $fm\n$content';
+      content = '$scd \n\nFormula: $fm\n$content';
 
       // Extract the list of tree sizes for the trees of the forest. From the
       // print command output we remove the first n space characters from each
@@ -126,7 +126,21 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
           )
           .join('\n');
 
-      displayContent = '$content\n\nTree Sizes:\n\n$sizes';
+      // Keep just the first and last 20 lines if there are more the 40 lines.
+
+      final maxLines = 10;
+      List<String> lines = sizes.split('\n');
+      int nlines = lines.length;
+      List<String> keep = lines;
+      if (nlines > maxLines * 3) {
+        keep = ['See the CONSOLE for the full list.\n'] +
+            lines.sublist(0, maxLines) +
+            ['        ...        ...'] +
+            lines.sublist(nlines - maxLines, nlines);
+      }
+      sizes = keep.join('\n');
+
+      content = '$content\n\nTree Sizes:\n\n$sizes';
     }
 
     if (content.isNotEmpty) {
@@ -140,7 +154,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
           [randomForest::randomForest()](https://www.rdocumentation.org/packages/randomForest/topics/randomForest).
 
           ''',
-          content: '$displayContent',
+          content: content,
         ),
       );
     }
@@ -163,6 +177,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
       // }
 
       ////////////////////////////////////////////////////////////////////////
+      // SAMPLE RULES
 
       content = rExtract(
         stdout,
@@ -294,7 +309,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
             # Random Forest Model
 
-            Built using `cforest()`.
+            Built using `cforest()`. [party::cforest()](https://www.rdocumentation.org/packages/party/topics/cforest)
 
             ''',
             content: content,
@@ -304,22 +319,28 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
       ////////////////////////////////////////////////////////////////////////
 
-      String rulesContent = rExtract(
+      content = rExtract(
         stdout,
-        'prettytree(model_conditionalForest@ensemble[[${forestNo}]], names(model_conditionalForest@data@get("input")))',
+        'prettytree(model_conditionalForest@ensemble[[${forestNo}]]',
       );
 
-      if (rulesContent.isNotEmpty) {
+      // Remove a continuation line.
+
+      List<String> lines = content.split('\n');
+      content = lines.where((line) => !line.startsWith('+')).join('\n');
+
+      if (content.isNotEmpty) {
         pages.add(
           TextPage(
             title: '''
 
             # Sample Rules
 
-            Built using `party::prettytree()`.
+            Built using
+            [party::prettytree()](https://www.rdocumentation.org/packages/party/topics/prettytree).
 
             ''',
-            content: rulesContent,
+            content: content,
           ),
         );
       }
