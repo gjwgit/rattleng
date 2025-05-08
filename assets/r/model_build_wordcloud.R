@@ -149,3 +149,32 @@ tm::findAssocs(dtm, '<TEXT_COR_WORD>', corlimit=<TEXT_COR_LIMIT>)
 svg("<TEMPDIR>/model_wordcloud_cor.svg")
 plot(dtm, terms=tm::findFreqTerms(dtm, lowfreq=<TEXT_COR_FREQ>), corThreshold=<TEXT_COR_LIMIT>)
 dev.off()
+
+# Create a bar chart visualization showing word frequencies
+
+# Open SVG device for the bar chart.
+
+svg("<TEMPDIR>/word_frequency_barplot.svg")
+
+# Create a bar chart of the top <TEXT_MIN_COUNTS> most frequent words.
+
+d %>% 
+  dplyr::arrange(desc(freq)) %>%
+  dplyr::slice_head(n = 20) %>%
+  dplyr::filter(freq >= <TEXT_MIN_COUNTS>) %>%
+  ggplot2::ggplot(ggplot2::aes(x = reorder(word, freq), y = freq)) +
+  ggplot2::geom_bar(stat = "identity", fill = "steelblue") +
+  ggplot2::coord_flip() +  # Flip coordinates for horizontal bars
+  ggplot2::labs(
+    title = "Most Frequent Words",
+    x = "Word",
+    y = "Frequency"
+  ) +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(
+    axis.text.x = ggplot2::element_text(angle = 0, hjust = 0.5),
+    plot.title = ggplot2::element_text(hjust = 0.5, face = "bold")
+  )
+
+dev.off()
+

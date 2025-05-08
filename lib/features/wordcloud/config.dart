@@ -60,6 +60,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
   final textCorWordController = TextEditingController();
   final textCorLimitController = TextEditingController();
   final textCorFreqController = TextEditingController();
+  final textMinCountsController = TextEditingController();
   String dropdownValue = stopwordLanguages.first;
 
   @override
@@ -71,6 +72,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
     textCorWordController.addListener(_updateTextCorWordProvider);
     textCorLimitController.addListener(_updateTextCorLimitProvider);
     textCorFreqController.addListener(_updateTextCorFreqProvider);
+    textMinCountsController.addListener(_updateTextMinWordsProvider);
   }
 
   @override
@@ -81,6 +83,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
     textCorWordController.dispose();
     textCorLimitController.dispose();
     textCorFreqController.dispose();
+    textMinCountsController.dispose();
     super.dispose();
   }
 
@@ -94,6 +97,8 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
     textCorWordController.text = ref.read(textCorWordProvider).toString();
     textCorLimitController.text = ref.read(textCorLimitProvider).toString();
     textCorFreqController.text = ref.read(textCorFreqProvider).toString();
+    textMinCountsController.text = ref.read(textMinCountsProvider).toString();
+
     // Layout the config bar.
 
     return Column(
@@ -137,6 +142,19 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 ref.read(wordCloudBuildProvider.notifier).state = timestamp();
               },
               child: const Text('Text Mine'),
+            ),
+
+            // Checkbox for random order of words in the cloud.
+
+            LabelledCheckbox(
+              key: const Key('random_order'),
+              tooltip: '''
+
+               Plot words in random order, otherwise in decreasing frequency.
+
+              ''',
+              label: 'Random Order',
+              provider: checkboxProvider,
             ),
           ],
         ),
@@ -407,17 +425,20 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 ),
               ),
 
-              // Checkbox for random order of words in the cloud.
+              NumberField(
+                label: 'Min Count:',
+                key: const Key('textMinCounts'),
+                controller: textMinCountsController,
 
-              LabelledCheckbox(
-                key: const Key('random_order'),
                 tooltip: '''
 
-               Plot words in random order, otherwise in decreasing frequency.
+                    **Minimum Word Count:** Minimum frequency threshold for words to be included in the bar chart visualization.
 
-              ''',
-                label: 'Random Order',
-                provider: checkboxProvider,
+                    ''',
+                inputFormatter:
+                    FilteringTextInputFormatter.digitsOnly, // Integers only
+                validator: (value) => validateInteger(value, min: 1),
+                stateProvider: textMinCountsProvider,
               ),
             ],
           ),
@@ -458,6 +479,11 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
   void _updateTextCorFreqProvider() {
     ref.read(textCorFreqProvider.notifier).state =
-        int.tryParse(textCorFreqController.text) ?? 100;
+        int.tryParse(textCorFreqController.text) ?? 20;
+  }
+
+  void _updateTextMinWordsProvider() {
+    ref.read(textMinCountsProvider.notifier).state =
+        int.tryParse(textMinCountsController.text) ?? 20;
   }
 }
