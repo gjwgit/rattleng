@@ -1,11 +1,11 @@
-# Load the corpus from the integration_test/corpus directory.
+# Load a corpus into the session for text mining.
 #
 # Copyright (C) 2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-05-07 10:30:55 +1000 Graham Williams>
+# Time-stamp: <Thursday 2025-05-08 09:56:30 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -28,7 +28,7 @@
 
 corpus_path <- "<FILENAME>"
 
-# Create a proper source for the Corpus from the directory.
+# Create a source for the Corpus from the directory.
 
 corpus_source <- tm::DirSource(corpus_path)
 
@@ -41,9 +41,12 @@ docs <- tm::Corpus(corpus_source)
 odocs <- docs
 
 # Create document-term matrix.
+## We do this here for the dataset display page. Eventually we might
+## want to generate a nicer summary and then leave the dtm to
+## model_build_text_mine.R
 
 dtm <- tm::DocumentTermMatrix(docs)
 
-# Show a summary of the document-term matrix.
+# DATASET DISPLAY: Show a summary of the document-term matrix.
 
 tm::inspect(dtm)

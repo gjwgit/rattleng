@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Friday 2025-05-02 13:49:55 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-05-08 11:56:36 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -178,7 +178,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                     children: [
                       configBotGap,
                       LabelledCheckbox(
-                        key: const Key('stem'),
+                        key: const Key('text_stem'),
                         tooltip: '''
 
                         Stemming reduces words to their base or root form.  Two
@@ -190,7 +190,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                         provider: stemProvider,
                       ),
                       LabelledCheckbox(
-                        key: const Key('remove_punctuation'),
+                        key: const Key('text_remove_punctuation'),
                         tooltip: '''
 
                         Remove punctuation marks such as periods.
@@ -200,7 +200,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                         provider: punctuationProvider,
                       ),
                       LabelledCheckbox(
-                        key: const Key('remove_stopwords'),
+                        key: const Key('text_remove_stopwords'),
                         tooltip: '''
 
                         Remove common language words for the wordcloud.
@@ -213,10 +213,15 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                         child: MarkdownTooltip(
                           message: '''
 
-                          Select the language to filter out common stopwords from the word
-                          cloud.  'SMART' covers English stopwords from the SMART
-                          information retrieval system (as documented in Appendix 11 of
-                          https://jmlr.csail.mit.edu/papers/volume5/lewis04a/)
+                          Select the language to filter out common stopwords
+                          from the word cloud.
+
+                          The stopwords come from
+                          [tm::stopwords()](https://rdrr.io/rforge/tm/man/stopwords.html).
+
+                          For English, 'SMART' will remove some 570 stopwords,
+                          more than the `english` option which removes only 170
+                          stopwords.
 
                           ''',
                           child: DropdownMenu<String>(

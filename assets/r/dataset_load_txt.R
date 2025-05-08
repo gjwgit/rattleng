@@ -1,11 +1,11 @@
-# Rattle Scripts: Load a text file into the session as `txt`.
+# Load a text file into the session as `txt` for text mining.
 #
 # Copyright (C) 2023, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-02-02 14:04:10 +1100 Graham Williams>
+# Time-stamp: <Thursday 2025-05-08 09:59:00 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -39,5 +39,20 @@
 dsname <- "<FILENAME>" %>% basename() %>% sub(".txt$", "", .)
 
 txt <- readLines("<FILENAME>")
+
+# Create a source for the Corpus from the text file.
+
+corpus_source <- tm::VectorSource(txt)
+
+# Create the corpus from the source.
+
+docs <- tm::Corpus(corpus_source)
+
+# Keep a copy of the original docs so we can selectively cleanse
+# interactively.
+
+odocs <- docs
+
+# A simple display of the text file contents.
 
 cat(txt, sep = "\n")
