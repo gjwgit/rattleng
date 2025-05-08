@@ -352,7 +352,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               ),
 
               buildTextField(
-                label: 'Cor Word:',
+                label: 'Cor Word',
                 controller: textCorWordController,
                 key: const Key('textCorWordField'),
                 textStyle: normalTextStyle,
@@ -373,7 +373,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               ),
 
               NumberField(
-                label: 'Cor Limit:',
+                label: 'Cor Limit',
                 key: const Key('textCorLimit'),
                 tooltip: '''
 
@@ -393,25 +393,21 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 max: 1.0,
               ),
 
-              SizedBox(
-                width: 100.0,
-                child: MarkdownTooltip(
-                  message: '''
+              NumberField(
+                label: 'Cor Freq',
+                key: const Key('textCorFreq'),
+                tooltip: '''
 
-                  Filter out less frequent words.  If this results in all words
-                  being filtered out the threshold will not be used.
+                Filter out less frequent words. If this results in all words
+                being filtered out the threshold will not be used.
 
-                  ''',
-                  child: TextField(
-                    controller: textCorFreqController,
-                    style: const TextStyle(fontSize: 16),
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Cor Freq',
-                      labelStyle: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                ),
+                ''',
+                controller: textCorFreqController,
+                inputFormatter: FilteringTextInputFormatter.digitsOnly,
+                interval: 1,
+                validator: (value) => validateInteger(value, min: 1),
+                stateProvider: textCorFreqProvider,
+                min: 1,
               ),
             ],
           ),
