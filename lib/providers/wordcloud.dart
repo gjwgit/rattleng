@@ -1,6 +1,6 @@
 /// Providers for text mining.
 //
-// Time-stamp: <Friday 2025-05-09 08:15:45 +1000 Graham Williams>
+// Time-stamp: <Friday 2025-05-09 12:05:57 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -32,7 +32,7 @@ import 'package:rattle/constants/wordcloud.dart';
 final checkboxProvider = StateProvider<bool>((ref) => false);
 final languageProvider =
     StateProvider<String>((ref) => stopwordLanguages.first);
-final maxWordProvider = StateProvider<int>((ref) => 100);
+final maxWordProvider = StateProvider<int>((ref) => 500);
 final minFreqProvider = StateProvider<int>((ref) => 5);
 final punctuationProvider = StateProvider<bool>((ref) => false);
 final removeSparseProvider = StateProvider<bool>((ref) => false);

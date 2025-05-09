@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-05-09 09:48:28 +1000 Graham Williams>
+# Time-stamp: <Friday 2025-05-09 11:48:26 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -51,4 +51,4 @@ dtm <- tm::DocumentTermMatrix(docs)
 
 docs
 tm::inspect(dtm)
-for (i in 1:length(docs)) { cat(rownames(dtm)[i]); print(docs[[i]]); cat("\n") }
+for (i in 1:length(docs)) { cat(rownames(dtm)[i], " "); print(docs[[i]]); cat("\n") }
