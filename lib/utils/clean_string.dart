@@ -1,6 +1,6 @@
 /// General cleanup of strings from the R console.
 //
-// Time-stamp: <Sunday 2024-08-25 20:50:54 +0800 Graham Williams>
+// Time-stamp: <Friday 2025-05-09 10:59:40 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -53,6 +53,9 @@ String cleanString(String txt) {
   txt = txt.replaceAll('[24m', '');
   txt = txt.replaceAll('[110C', '');
 
+  // 20250509 Others being reported.
+
+  txt = txt.replaceAll('[42;144H', '');
   txt = txt.replaceAll('[3m[38;5;246m', '');
   txt = txt.replaceAll('[?2004l', '');
   txt = txt.replaceAll('[39m[23m', '');
