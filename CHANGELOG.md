@@ -14,7 +14,7 @@ Binaries to download latest version:
 
 ## 6.4 Complete Models and Evaluations
 
-+ Temporary test [6.4.86 20250509 gjw]
++ TEXT: Update corpus summary and min freq default [6.4.86 20250509 gjw]
 + TEST: Tune parameters and tooltips [6.4.85 20250508 gjw]
 + TEXT: Additional text analyses [6.4.84 20250508 zy]
 + TEXT: Update wordcloud options and test [6.4.83 20250508 gjw]
