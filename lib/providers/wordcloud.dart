@@ -1,6 +1,6 @@
-/// Providers for wordcloud.
+/// Providers for text mining.
 //
-// Time-stamp: <Thursday 2025-05-08 16:45:22 +1000 Graham Williams>
+// Time-stamp: <Friday 2025-05-09 08:15:45 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Zheyuan Xu, Graham Williams
 
 library;
 
@@ -33,7 +33,7 @@ final checkboxProvider = StateProvider<bool>((ref) => false);
 final languageProvider =
     StateProvider<String>((ref) => stopwordLanguages.first);
 final maxWordProvider = StateProvider<int>((ref) => 100);
-final minFreqProvider = StateProvider<int>((ref) => 50);
+final minFreqProvider = StateProvider<int>((ref) => 5);
 final punctuationProvider = StateProvider<bool>((ref) => false);
 final removeSparseProvider = StateProvider<bool>((ref) => false);
 final sparseMaxProvider = StateProvider<double>((ref) => 0.9);
