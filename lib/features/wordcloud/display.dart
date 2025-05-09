@@ -1,6 +1,6 @@
 /// Display for word cloud.
 //
-// Time-stamp: <Thursday 2025-05-08 16:35:18 +1000 Graham Williams>
+// Time-stamp: <Friday 2025-05-09 12:11:46 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -151,7 +151,8 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
           # Term Correlation Plot
 
           Generated using
-          [tm::findFreqTerms()](https://www.rdocumentation.org/packages/tm/topics/findFreqTerms).
+          [tm::findFreqTerms()](https://www.rdocumentation.org/packages/tm/topics/findFreqTerms) and
+          [tm::plot()](https://www.rdocumentation.org/packages/tm/topics/plot).
 
           ''',
           path: correlationImg,

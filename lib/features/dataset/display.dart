@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Tuesday 2025-05-06 12:25:43 +1000 Graham Williams>
+// Time-stamp: <Friday 2025-05-09 09:52:18 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -173,7 +173,12 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
   // Add a page for corpus content.
 
   void _addCorpusPage(String stdout, List<Widget> pages) {
-    String content = rExtract(stdout, '> tm::inspect(dtm)');
+    String docs = rExtract(stdout, '> docs');
+    String inspect = rExtract(stdout, '> tm::inspect(dtm)');
+    String docinfo = rExtract(stdout, '> for (i in 1:length(docs)) {');
+    String content = '## Summary of the Docs\n\n$docs\n\n'
+        '## Summary of the Document Term Matrix\n\n$inspect\n\n'
+        '## Individual Documents\n\n$docinfo\n\n';
 
     if (content.isNotEmpty) {
       pages.add(
