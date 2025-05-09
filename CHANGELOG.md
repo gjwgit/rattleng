@@ -14,6 +14,7 @@ Binaries to download latest version:
 
 ## 6.4 Complete Models and Evaluations
 
++ TEXT: Improve information in titles/display [6.4.87 20250509 gjw]
 + TEXT: Update corpus summary and min freq default [6.4.86 20250509 gjw]
 + TEST: Tune parameters and tooltips [6.4.85 20250508 gjw]
 + TEXT: Additional text analyses [6.4.84 20250508 zy]
