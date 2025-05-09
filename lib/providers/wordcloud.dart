@@ -30,6 +30,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/wordcloud.dart';
 
 final checkboxProvider = StateProvider<bool>((ref) => false);
+final saveDtmCsvProvider = StateProvider<String>((ref) => '');
 final languageProvider =
     StateProvider<String>((ref) => stopwordLanguages.first);
 final maxWordProvider = StateProvider<int>((ref) => 100);
