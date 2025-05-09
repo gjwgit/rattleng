@@ -1,6 +1,6 @@
 # Undertake a text analysis of the corpus provided through `docs`.
 #
-# Time-stamp: <Thursday 2025-05-08 16:39:57 +1000 Graham Williams>
+# Time-stamp: <Friday 2025-05-09 12:23:06 +1000 Graham Williams>
 #
 # Copyright (C) 2024-2025, Togaware Pty Ltd
 #
@@ -150,7 +150,9 @@ tm::findAssocs(dtm, '<TEXT_COR_WORD>', corlimit=<TEXT_COR_LIMIT>)
 # Display the model visually for review.
 
 svg("<TEMPDIR>/model_wordcloud_cor.svg")
+par(mar = c(15, 14, 10, 12))
 plot(dtm, terms=tm::findFreqTerms(dtm, lowfreq=<TEXT_COR_FREQ>), corThreshold=<TEXT_COR_LIMIT>)
+title("Correlations >= <TEXT_COR_LIMIT> of Frequent >= <TEXT_COR_FREQ> Terms in Document-Term Matrix", line=-1)
 dev.off()
 
 # Create a bar chart of the top <MINFREQ> most frequent words.
@@ -163,7 +165,7 @@ d %>%
   ggplot2::geom_bar(stat="identity", width=0.5) +
   ggplot2::coord_flip() +
   ggplot2::labs(
-    title = "Most Frequent Terms",
+    title = "Terms with Frequency at least <MINFREQ>",
     x = "Term",
     y = "Frequency"
   ) +
