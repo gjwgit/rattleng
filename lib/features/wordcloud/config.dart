@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Thursday 2025-05-08 16:29:38 +1000 Graham Williams>
+// Time-stamp: <Saturday 2025-05-10 15:15:46 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -37,6 +37,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/constants/wordcloud.dart';
+import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/wordcloud.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
@@ -98,7 +99,9 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
     textCorLimitController.text = ref.read(textCorLimitProvider).toString();
     textCorFreqController.text = ref.read(textCorFreqProvider).toString();
 
-    String defaultSuggestedName = '<DSNAME>.csv';
+    final String dsname = ref.read(dsnameProvider);
+
+    String defaultSuggestedName = '$dsname.csv';
 
     // Layout the config bar.
 
