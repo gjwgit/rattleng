@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Saturday 2025-05-10 15:15:46 +1000 Graham Williams>
+// Time-stamp: <Saturday 2025-05-10 16:05:30 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -172,54 +172,57 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
             ),
             Spacer(),
 
-            ActivityButton(
-              pageControllerProvider:
-                  wordcloudPageControllerProvider, // Optional navigation.
+            MarkdownTooltip(
+              message: '''
 
-              onPressed: () async {
-                // Define allowed file type (optional: restrict to .csv files).
+              **Save to CSV:** Tap here to save the generated document term matrix to a CSV
+              file, one row for each document and a column for each term.
 
-                final fs.XTypeGroup csvType = const fs.XTypeGroup(
-                  label: 'CSV files',
-                  extensions: ['csv'],
-                );
-
-                // Open the Save dialog with a suggested file name.
-
-                fs.FileSaveLocation? result = await fs.getSaveLocation(
-                  acceptedTypeGroups: [csvType],
-                  suggestedName: defaultSuggestedName,
-                );
-
-                if (result == null) {
-                  return;
-                }
-
-                // Get the selected file path.
-
-                String selectedPath = result.path;
-
-                // Escape backslashes for Windows paths so R can handle the string.
-
-                String dtmSafePath = selectedPath.replaceAll('\\', '\\\\');
-
-                ref.read(saveDtmCsvProvider.notifier).state = dtmSafePath;
-
-                // Build the R command to save the dataset to the selected path.
-
-                await rSource(context, ref, ['dataset_convert_dtm_csv']);
-
-                // Toggle the state to trigger rebuild.
-
-                ref.read(wordCloudBuildProvider.notifier).state = timestamp();
-              },
-              tooltip: '''
-
-              **Save to CSV:** Tap here to save the current dtm to a CSV
-              file.
 
               ''',
-              child: const Text('Save'),
+              child: IconButton(
+                onPressed: () async {
+                  // Define allowed file type (optional: restrict to .csv files).
+
+                  final fs.XTypeGroup csvType = const fs.XTypeGroup(
+                    label: 'CSV files',
+                    extensions: ['csv'],
+                  );
+
+                  // Open the Save dialog with a suggested file name.
+
+                  fs.FileSaveLocation? result = await fs.getSaveLocation(
+                    acceptedTypeGroups: [csvType],
+                    suggestedName: defaultSuggestedName,
+                  );
+
+                  if (result == null) {
+                    return;
+                  }
+
+                  // Get the selected file path.
+
+                  String selectedPath = result.path;
+
+                  // Escape backslashes for Windows paths so R can handle the string.
+
+                  String dtmSafePath = selectedPath.replaceAll('\\', '\\\\');
+
+                  ref.read(saveDtmCsvProvider.notifier).state = dtmSafePath;
+
+                  // Build the R command to save the dataset to the selected path.
+
+                  await rSource(context, ref, ['dataset_convert_dtm_csv']);
+
+                  // Toggle the state to trigger rebuild.
+
+                  ref.read(wordCloudBuildProvider.notifier).state = timestamp();
+                },
+                icon: Icon(
+                  Icons.save,
+                  color: Colors.blue,
+                ),
+              ),
             ),
           ],
         ),
