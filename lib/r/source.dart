@@ -183,6 +183,7 @@ Future<void> rSource(
   bool removeSparse = ref.read(removeSparseProvider);
   double textSparseMax = ref.read(sparseMaxProvider);
   String textCorWord = ref.read(textCorWordProvider);
+  String saveDtmCsvPath = ref.read(saveDtmCsvProvider);
   double textCorLimit = ref.read(textCorLimitProvider);
   int textCorFreq = ref.read(textCorFreqProvider);
   int maxWord = ref.read(maxWordProvider);
@@ -708,6 +709,10 @@ Future<void> rSource(
   code = code.replaceAll('<TEXT_COR_LIMIT>', textCorLimit.toString());
   code = code.replaceAll('<TEXT_COR_FREQ>', textCorFreq.toString());
   code = code.replaceAll('<MINFREQ>', minFreq);
+
+  // Handle DTM CSV save path.
+
+  code = code.replaceAll('<DTMCSVNAME>', saveDtmCsvPath);
 
   ////////////////////////////////////////////////////////////////////////
 
