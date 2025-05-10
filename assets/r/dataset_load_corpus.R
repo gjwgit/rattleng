@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-05-09 11:48:26 +1000 Graham Williams>
+# Time-stamp: <Saturday 2025-05-10 15:18:10 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -23,6 +23,8 @@
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # Author: Zheyuan Xu, Graham Williams
+
+dsname <- "<FILENAME>" %>% basename()
 
 # Get the path from FILENAME placeholder and extract the basename.
 
