@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Wednesday 2025-05-07 08:55:30 +1000 Graham Williams>
+/// Time-stamp: <Saturday 2025-05-10 15:23:33 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -174,6 +174,16 @@ class DatasetPopup extends ConsumerWidget {
                     String sl = 'session_library';
                     String lc = 'dataset_load_corpus';
                     await rSource(context, ref, [sl, lc]);
+
+                    // Save the dataset name in lowercase to the dsnameProvider
+                    // from the path.
+
+                    ref.read(dsnameProvider.notifier).state = folderPath
+                        .split(RegExp(r'[/\\]'))
+                        .last
+                        .split('.')
+                        .first
+                        .toLowerCase();
 
                     if (!context.mounted) return;
                     Navigator.pop(context, 'Local Corpus');
