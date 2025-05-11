@@ -392,7 +392,8 @@ class ImagePage extends ConsumerWidget {
 
                       // Determine the side length for a square viewing area.
 
-                      final side = math.min(availableWidth, calculatedMaxHeight);
+                      final side =
+                          math.min(availableWidth, calculatedMaxHeight);
 
                       // Determine which image to display based on file extension.
                       final bool isSvg =
