@@ -5,7 +5,7 @@
 // VALUE. MIGHT BE OKAY FOR A WIDGET WATCHING A VARIABLE TO CHANGE AS IN forest
 // config AND display THROUGH THE PROVIDER forestMaxRules.
 ///
-/// Time-stamp: <Thursday 2025-05-01 09:17:53 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2025-05-11 09:50:24 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -38,11 +38,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/pty.dart';
+import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/utils/update_script.dart';
 
 /// Run the R [code] and append to the [rattle] script.
 
 void rExecute(WidgetRef ref, String code) {
+  String stdout = ref.watch(stdoutProvider);
+
   debugPrint('R EXECUTE\t$code');
 
   // Add the code to the script provider so it will be displayed in the script

@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: <Friday 2025-03-28 08:20:41 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-05-11 10:42:45 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -57,6 +57,7 @@ import 'package:rattle/providers/pty.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/settings.dart';
+import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/summary_crosstab.dart';
 import 'package:rattle/providers/svm.dart';
 import 'package:rattle/providers/tree.dart';
@@ -136,6 +137,28 @@ Future<void> rSource(
 //   WidgetRef ref,
 //   List<String> scripts,
 ) async {
+  // We first check that the R CONSOLE is ready to accept commands. This is done
+  // by checking for the `> ` prompt as the final two characters in stdout. If
+  // we don't find it then we loop here for 5 seconds waiting for the '> '
+  // string in stdout. If not there after 5s then add a popup here to note that
+  // the R CONSOLE is not yet ready to accept this action and so it will not be
+  // run at this time. The message should instruct the user to view the CONSOLE
+  // to understand why R is not ready. There is then an OKAY button in the popup
+  // and we immediately return from this function without submitting the
+  // script. Add an optional parameter to this function to do this test. If
+  // true, the default, then we do the test. If false then skip this test. Thus
+  // all current calls to rScript() will work but have this added test
+  // automatically while we can override it if it is problematic in specific
+  // cases. (gjw 20250511)
+
+  String stdout = ref.read(stdoutProvider);
+  if (stdout.substring(stdout.length - 2) != '> ') {
+    debugText('TRACE', 'CONSOLE **IS NOT** READY ***************');
+    // LOOP HERE FOR 5 SECONDS  WAITING FOR THE '> ' THEN FAIL WITH POPUP
+  } else {
+    debugText('TRACE', 'CONSOLE is ready');
+  }
+
   // 20250213 gjw Be sure to load the partition information from shared
   // preferences and so update the provider appropraitely so that the user's
   // selected preferred partitioning is immediately available on startup.
