@@ -117,7 +117,14 @@ if (! randomly) {
 ## TODO 20240618 gjw <REPALCE> `<WORDCLOUDPATH>` WITH `<TEMPDIR>` FOR ALL
 ## <TEMPARARY> <FILES>.
 
-svg("<TEMPDIR>/wordcloud.svg")
+# Open an SVG device with specific dimensions to help control whitespace.
+
+svg("<TEMPDIR>/wordcloud.svg", width = 4, height = 4) # You can adjust width/height
+
+# Set plot margins to zero (bottom, left, top, right).
+
+par(mar = c(0, 0, 0, 0))
+
 wordcloud::wordcloud(
   words        = d$word,
   freq         = d$freq,
