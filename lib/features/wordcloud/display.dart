@@ -35,6 +35,7 @@ import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/wordcloud.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/image_exists.dart';
@@ -174,8 +175,9 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
           Generated using
           [tm::findAssocs()](https://www.rdocumentation.org/packages/tm/topics/findAssocs).
 
-          The list shows terms associated with the chosen **Cor Term** and their
-          level of correlation.
+          The list below shows terms associated with the chosen Cor Term
+          '${ref.watch(textCorWordProvider.notifier).state}' with a correlation of
+          at least ${ref.watch(textCorLimitProvider.notifier).state}.
 
           ''',
           content: textCorContent,
