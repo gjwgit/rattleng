@@ -309,6 +309,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                               ref.read(languageProvider.notifier).state =
                                   value!;
                             },
+                            enabled: ref.watch(stopwordProvider),
                           ),
                         ),
                       ),
