@@ -121,6 +121,8 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
           Generated from a
           [tm::TermDocumentMatrix()](https://www.rdocumentation.org/packages/tm/topics/TermDocumentMatrix).
 
+          The word frequency list below shows a maximum of ${ref.watch(maxWordProvider.notifier).state} words and with frequency at least ${ref.watch(minFreqProvider.notifier).state}.
+
           ''',
           content: content,
         ),
