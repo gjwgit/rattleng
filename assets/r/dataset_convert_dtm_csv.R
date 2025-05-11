@@ -1,11 +1,11 @@
-# Load a text file into the session as `txt` for text mining.
+# Write a document term matrix as CSV.
 #
 # Copyright (C) 2023, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-05-08 09:59:00 +1000 Graham Williams>
+# Time-stamp: <Sunday 2025-05-11 09:49:46 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -52,7 +52,7 @@ m <- as.matrix(dtm)
 # Write the matrix to CSV at the location specified by <DTMCSVNAME>
 # which is provided by the Flutter app through saveDtmCsvProvider.
 
-write.csv(m, file = "<DTMCSVNAME>", row.names = TRUE)
+write.csv(m, file="<DTMCSVNAME>", row.names=TRUE)
 
 # Inform the user.
 
