@@ -12,6 +12,8 @@ Binaries to download latest version:
 [**MacOS**](https://access.togaware.com/rattle-dev-macos.zip) -
 [**Windows**](https://access.togaware.com/rattle-dev-windows-inno.exe).
 
+Visit [togaware](https://rattle.togaware.com) for details.
+
 ## 6.4 Complete Models and Evaluations
 
 + TEXT: Review and bug fix [6.4.89 20250512 gjw]
