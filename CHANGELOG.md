@@ -16,6 +16,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.4 Complete Models and Evaluations
 
++ TEXT: Use template filename for saving corpus [6.4.91 20250513 gjw]
 + TEXT: Ensure only txt files loaded and R setup [6.4.90 20250513 gjw]
 + TEXT: Review and bug fix [6.4.89 20250512 gjw]
 + TEXT: Add a SAVE button to TEXT for dtm [6.4.88 20250510 zy]
