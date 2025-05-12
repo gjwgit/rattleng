@@ -14,7 +14,8 @@ Binaries to download latest version:
 
 ## 6.4 Complete Models and Evaluations
 
-+ TEXT: Add a SAVE button to TEXT for dtm [6.4.88 20250510 gjw]
++ TEXT: Review and bug fix [6.4.89 20250512 gjw]
++ TEXT: Add a SAVE button to TEXT for dtm [6.4.88 20250510 zy]
 + TEXT: Improve information in titles/display [6.4.87 20250509 gjw]
 + TEXT: Update corpus summary and min freq default [6.4.86 20250509 gjw]
 + TEST: Tune parameters and tooltips [6.4.85 20250508 gjw]
