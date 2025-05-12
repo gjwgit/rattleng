@@ -1,6 +1,6 @@
 /// CSV Save button.
 //
-// Time-stamp: <Monday 2025-05-12 07:32:12 +1000 Graham Williams>
+// Time-stamp: <Monday 2025-05-12 11:14:01 +1000 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///
@@ -63,7 +63,7 @@ class SaveDatasetButton extends ConsumerWidget {
       ''',
       child: IconButton(
         icon: const Icon(
-          Icons.save,
+          Icons.save_alt,
           color: Colors.blue,
         ),
         onPressed: () async {

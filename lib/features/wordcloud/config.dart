@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Saturday 2025-05-10 16:05:30 +1000 Graham Williams>
+// Time-stamp: <Monday 2025-05-12 11:18:30 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -219,7 +219,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                   ref.read(wordCloudBuildProvider.notifier).state = timestamp();
                 },
                 icon: Icon(
-                  Icons.save,
+                  Icons.save_alt,
                   color: Colors.blue,
                 ),
               ),

@@ -1,6 +1,6 @@
 /// A button to save the script to file.
 ///
-/// Time-stamp: <Sunday 2025-03-30 11:46:20 +1100 Graham Williams>
+/// Time-stamp: <Monday 2025-05-12 11:13:46 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -62,7 +62,7 @@ class ScriptSaveButton extends ConsumerWidget {
           _showFileNameDialog(context, ref);
         },
         icon: Icon(
-          Icons.save,
+          Icons.save_alt,
           color: Colors.blue,
         ),
       ),
