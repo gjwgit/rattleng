@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: <Monday 2025-05-12 11:37:57 +1000 Graham Williams>
+// Time-stamp: <Monday 2025-05-12 11:46:03 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -152,9 +152,7 @@ Future<void> rSource(
   // cases. (gjw 20250511)
 
   String stdout = ref.read(stdoutProvider);
-  if (stdout != null &&
-      stdout.isNotEmpty &&
-      stdout.substring(stdout.length - 2) != '> ') {
+  if (stdout.isNotEmpty && stdout.substring(stdout.length - 2) != '> ') {
     debugText('  TRACE **', 'CONSOLE **IS NOT** READY ***************');
     // LOOP HERE FOR 5 SECONDS  WAITING FOR THE '> ' THEN FAIL WITH POPUP
   } else {
