@@ -1,11 +1,11 @@
-# Write a document term matrix as CSV.
+# Save a term document matrix as CSV.
 #
 # Copyright (C) 2023, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-05-11 09:49:46 +1000 Graham Williams>
+# Time-stamp: <Monday 2025-05-12 11:31:08 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,36 +24,25 @@
 #
 # Author: Zheyuan Xu
 
-# The file `<DTMCSVNAME>` is loaded as a CSV file into the template
-# variable `ds` (dataset), intialising the `dsname` (a printable name
-# for the dataset) and `vnames` (the variable names).
-#
-# Rattle timestamp: <TIMESTAMP>
+# Timestamp: <TIMESTAMP>
 #
 # References:
 #
-# @williams:2017:essentials Chapter 3
-#
-# https://survivor.togaware.com/datascience/csv-data-reading.html
+# @williams:2017:essentials
 
-# Convert the Document-Term Matrix (dtm) to a matrix and save as CSV.
+# Convert the Term-Document Matrix (tdm) to a matrix and save as CSV.
 # This allows for easier sharing and importing into other tools.
 
-# Check if dtm exists in the environment.
+tdm <- tm::TermDocumentMatrix(docs)
 
-if (!exists("dtm")) {
-  stop("No document-term matrix (dtm) found in the environment.")
-}
+# Convert to a matrix.
 
-# Convert dtm to a matrix.
+m <- as.matrix(tdm)
 
-m <- as.matrix(dtm)
+# Write the matrix to a CSV file.
 
-# Write the matrix to CSV at the location specified by <DTMCSVNAME>
-# which is provided by the Flutter app through saveDtmCsvProvider.
-
-write.csv(m, file="<DTMCSVNAME>", row.names=TRUE)
+write.csv(m, file="<CORPUS_SAVE_NAME>", row.names=TRUE)
 
 # Inform the user.
 
-cat("Document-term matrix saved to", "<DTMCSVNAME>", "\n")
+cat("Term-document matrix saved to", "<CORPUS_SAVE_NAME>", "\n")
