@@ -1,6 +1,6 @@
 # Undertake a text analysis of the corpus provided through `docs`.
 #
-# Time-stamp: <Friday 2025-05-09 12:23:06 +1000 Graham Williams>
+# Time-stamp: <Monday 2025-05-12 10:28:38 +1000 Graham Williams>
 #
 # Copyright (C) 2024-2025, Togaware Pty Ltd
 #
@@ -117,11 +117,12 @@ if (! randomly) {
 ## TODO 20240618 gjw <REPALCE> `<WORDCLOUDPATH>` WITH `<TEMPDIR>` FOR ALL
 ## <TEMPARARY> <FILES>.
 
-# Open an SVG device with specific dimensions to help control whitespace.
+# Open an SVG device with specific dimensions to help control
+# whitespace.  You can adjust width/height. (zy 20250512)
 
-svg("<TEMPDIR>/wordcloud.svg", width = 4, height = 4) # You can adjust width/height
+svg("<TEMPDIR>/wordcloud.svg", width = 4, height = 4)
 
-# Set plot margins to zero (bottom, left, top, right).
+# Set plot margins to zero (bottom, left, top, right). (zy 20250512)
 
 par(mar = c(0, 0, 0, 0))
 
