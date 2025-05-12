@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-05-07 15:09:18 +1000 Graham Williams>
+# Time-stamp: <Monday 2025-05-12 14:52:55 +1000 Graham Williams>
 #
 # Rattle version <VERSION>.
 #
@@ -84,6 +84,7 @@ install_if_missing <- function(pkg) {
 # packages themselves. The latter for now.
 
 pkgs <- c(
+  'BiocManager',
   'Ckmeans.1d.dp',
   'Hmisc',
   'NeuralNetTools',
@@ -97,6 +98,7 @@ pkgs <- c(
   'biclust',
   'corrplot',
   'descr',
+  'devtools',
   'fBasics',
   'ggcorrplot',
   'ggtext',
@@ -142,6 +144,14 @@ for (p in pkgs) {
   # require(p, character.only=TRUE)
 }
 
-# For word2vec we could:
-#
-# devtools::install_github("bmschmidt/wordVectors")
+# Special case for Text Mining
+
+if (!requireNamespace('Rgraphviz')) {
+  BiocManager::install("Rgraphviz")
+}
+
+# Sepcial case for Text Mining using word2vec
+
+if (!requireNamespace('Rgraphviz')) {
+  devtools::install_github("bmschmidt/wordVectors")
+}
