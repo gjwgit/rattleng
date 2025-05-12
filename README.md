@@ -8,6 +8,14 @@
 [![GitHub License](https://img.shields.io/github/license/gjwgit/rattleng)](https://raw.githubusercontent.com/gjwgit/rattleng/main/LICENSE)
 [![GitHub commit activity (dev)](https://img.shields.io/github/commit-activity/w/gjwgit/rattleng/dev)](https://github.com/gjwgit/rattle/commits/dev/)
 
+Binaries to download latest version:
+[**GNU/Linux**](https://access.togaware.com/rattle-dev-linux.zip) -
+[**Debian/Ubuntu**](https://access.togaware.com/rattle_amd64.deb) -
+[**MacOS**](https://access.togaware.com/rattle-dev-macos.zip) -
+[**Windows**](https://access.togaware.com/rattle-dev-windows-inno.exe).
+
+Visit [togaware](https://rattle.togaware.com) for details.
+
 # Rattle the Next Generation Data Scientist
 
 [Rattle](https://rattle.togaware.com) has been in development and use
