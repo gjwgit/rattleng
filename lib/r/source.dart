@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: <Sunday 2025-05-11 10:42:45 +1000 Graham Williams>
+// Time-stamp: <Monday 2025-05-12 11:37:57 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -152,11 +152,13 @@ Future<void> rSource(
   // cases. (gjw 20250511)
 
   String stdout = ref.read(stdoutProvider);
-  if (stdout.substring(stdout.length - 2) != '> ') {
-    debugText('TRACE', 'CONSOLE **IS NOT** READY ***************');
+  if (stdout != null &&
+      stdout.isNotEmpty &&
+      stdout.substring(stdout.length - 2) != '> ') {
+    debugText('  TRACE **', 'CONSOLE **IS NOT** READY ***************');
     // LOOP HERE FOR 5 SECONDS  WAITING FOR THE '> ' THEN FAIL WITH POPUP
   } else {
-    debugText('TRACE', 'CONSOLE is ready');
+    debugText('  TRACE **', 'CONSOLE is ready');
   }
 
   // 20250213 gjw Be sure to load the partition information from shared
@@ -206,7 +208,7 @@ Future<void> rSource(
   bool removeSparse = ref.read(removeSparseProvider);
   double textSparseMax = ref.read(sparseMaxProvider);
   String textCorWord = ref.read(textCorWordProvider);
-  String saveDtmCsvPath = ref.read(saveDtmCsvProvider);
+  String corpusSaveName = ref.read(corpusSaveNameProvider);
   double textCorLimit = ref.read(textCorLimitProvider);
   int textCorFreq = ref.read(textCorFreqProvider);
   int maxWord = ref.read(maxWordProvider);
@@ -735,7 +737,7 @@ Future<void> rSource(
 
   // Handle DTM CSV save path.
 
-  code = code.replaceAll('<DTMCSVNAME>', saveDtmCsvPath);
+  code = code.replaceAll('<CORPUS_SAVE_NAME>', corpusSaveName);
 
   ////////////////////////////////////////////////////////////////////////
 

@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Monday 2025-05-12 11:18:30 +1000 Graham Williams>
+// Time-stamp: <Monday 2025-05-12 11:27:02 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -206,13 +206,14 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
                   // Escape backslashes for Windows paths so R can handle the string.
 
-                  String dtmSafePath = selectedPath.replaceAll('\\', '\\\\');
+                  String corpusSafePath = selectedPath.replaceAll('\\', '\\\\');
 
-                  ref.read(saveDtmCsvProvider.notifier).state = dtmSafePath;
+                  ref.read(corpusSaveNameProvider.notifier).state =
+                      corpusSafePath;
 
                   // Build the R command to save the dataset to the selected path.
 
-                  await rSource(context, ref, ['dataset_convert_dtm_csv']);
+                  await rSource(context, ref, ['dataset_save_corpus']);
 
                   // Toggle the state to trigger rebuild.
 

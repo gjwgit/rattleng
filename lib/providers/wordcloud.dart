@@ -1,6 +1,6 @@
 /// Providers for text mining.
 //
-// Time-stamp: <Friday 2025-05-09 12:05:57 +1000 Graham Williams>
+// Time-stamp: <Monday 2025-05-12 11:25:41 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -30,7 +30,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/constants/wordcloud.dart';
 
 final checkboxProvider = StateProvider<bool>((ref) => false);
-final saveDtmCsvProvider = StateProvider<String>((ref) => '');
+final corpusSaveNameProvider = StateProvider<String>((ref) => '');
 final languageProvider =
     StateProvider<String>((ref) => stopwordLanguages.first);
 final maxWordProvider = StateProvider<int>((ref) => 500);
