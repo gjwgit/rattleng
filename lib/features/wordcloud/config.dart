@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Monday 2025-05-12 11:27:02 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2025-05-13 07:38:53 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -100,8 +100,12 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
     textCorFreqController.text = ref.read(textCorFreqProvider).toString();
 
     final String dsname = ref.read(dsnameProvider);
-
-    String defaultSuggestedName = '$dsname.csv';
+    final now = DateTime.now();
+    String yyyymmdd = "${now.year.toString().padLeft(4, '0')}"
+        "${(now.month).toString().padLeft(2, '0')}"
+        "${(now.day).toString().padLeft(2, '0')}";
+    String defaultSuggestedName =
+        'corpus_$yyyymmdd${dsname.isNotEmpty ? "_" : ""}$dsname.csv';
 
     // Layout the config bar.
 
