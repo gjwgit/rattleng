@@ -1,6 +1,6 @@
 /// Display for word cloud.
 //
-// Time-stamp: <Friday 2025-05-09 12:11:46 +1000 Graham Williams>
+// Time-stamp: <Monday 2025-05-12 09:59:26 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -35,6 +35,7 @@ import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/constants/wordcloud.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/stdout.dart';
+import 'package:rattle/providers/wordcloud.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/image_exists.dart';
@@ -120,11 +121,17 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
           Generated from a
           [tm::TermDocumentMatrix()](https://www.rdocumentation.org/packages/tm/topics/TermDocumentMatrix).
 
+          The word frequency list below shows a maximum of
+          ${ref.watch(maxWordProvider.notifier).state} words having a frequency
+          of at least ${ref.watch(minFreqProvider.notifier).state}.
+
           ''',
           content: content,
         ),
       );
     }
+
+    ////////////////////////////////////////////////////////////////////////
 
     String barChartImg = '$tempDir/word_frequency_barplot.svg';
 
@@ -140,6 +147,8 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
         ),
       );
     }
+
+    ////////////////////////////////////////////////////////////////////////
 
     String correlationImg = '$tempDir/model_wordcloud_cor.svg';
 
@@ -160,11 +169,14 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       );
     }
 
-    String textCorContent = rExtract(stdout, '> tm::findAssocs(dtm,');
-    if (textCorContent.isNotEmpty) {
-      // Skip the first two lines which contain the R command and extract only the results.
+    ////////////////////////////////////////////////////////////////////////
 
-      textCorContent = textCorContent.split('\n').skip(1).join('\n');
+    content = rExtract(stdout, '> tm::findAssocs(dtm,');
+    if (content.isNotEmpty) {
+      // Skip the first two lines which contain the R command and extract only
+      // the results.
+
+      content = content.split('\n').skip(1).join('\n');
       pages.add(
         TextPage(
           title: '''
@@ -174,11 +186,12 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
           Generated using
           [tm::findAssocs()](https://www.rdocumentation.org/packages/tm/topics/findAssocs).
 
-          The list shows terms associated with the chosen **Cor Term** and their
-          level of correlation.
+          The list below shows terms associated with the chosen Cor Term
+          '${ref.watch(textCorWordProvider.notifier).state}' with a correlation of
+          at least ${ref.watch(textCorLimitProvider.notifier).state}.
 
           ''',
-          content: textCorContent,
+          content: content,
         ),
       );
     }

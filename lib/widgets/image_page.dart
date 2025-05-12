@@ -31,7 +31,7 @@ library;
 
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
+import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
@@ -285,7 +285,7 @@ class ImagePage extends ConsumerWidget {
 
                             String extension = isSvg ? 'svg' : 'png';
                             String fileName =
-                                'plot_${Random().nextInt(10000)}.$extension';
+                                'plot_${math.Random().nextInt(10000)}.$extension';
                             File tempFile = File('$tempDir/$fileName');
 
                             // Copy the original file to the temporary file.
@@ -384,31 +384,35 @@ class ImagePage extends ConsumerWidget {
                   LayoutBuilder(
                     builder: (context, constraints) {
                       // The max available width from LayoutBuilder.
-
-                      final maxWidth = constraints.maxWidth;
+                      final availableWidth = constraints.maxWidth;
 
                       // Apply a bounded height to avoid infinite height error.
-
-                      final double maxHeight =
+                      final calculatedMaxHeight =
                           MediaQuery.of(context).size.height * 0.6;
 
-                      // Determine which image to display based on file extension.
+                      // Determine the side length for a square viewing area.
 
+                      final side =
+                          math.min(availableWidth, calculatedMaxHeight);
+
+                      // Determine which image to display based on file extension.
                       final bool isSvg =
                           (display ?? path).toLowerCase().endsWith('.svg');
 
-                      return SizedBox(
-                        height: maxHeight,
-                        width: maxWidth,
-                        child: InteractiveViewer(
-                          maxScale: 5,
-                          alignment: Alignment.topCenter,
-                          child: isSvg
-                              ? SvgPicture.memory(
-                                  bytes,
-                                  fit: BoxFit.scaleDown,
-                                )
-                              : Image.memory(bytes),
+                      return Center(
+                        child: SizedBox(
+                          width: side,
+                          height: side,
+                          child: InteractiveViewer(
+                            maxScale: 5,
+                            alignment: Alignment.center,
+                            child: isSvg
+                                ? SvgPicture.memory(
+                                    bytes,
+                                    fit: BoxFit.contain,
+                                  )
+                                : Image.memory(bytes),
+                          ),
                         ),
                       );
                     },
