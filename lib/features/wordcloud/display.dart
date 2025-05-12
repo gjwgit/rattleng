@@ -1,6 +1,6 @@
 /// Display for word cloud.
 //
-// Time-stamp: <Friday 2025-05-09 12:11:46 +1000 Graham Williams>
+// Time-stamp: <Monday 2025-05-12 09:59:26 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -121,13 +121,17 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
           Generated from a
           [tm::TermDocumentMatrix()](https://www.rdocumentation.org/packages/tm/topics/TermDocumentMatrix).
 
-          The word frequency list below shows a maximum of ${ref.watch(maxWordProvider.notifier).state} words and with frequency at least ${ref.watch(minFreqProvider.notifier).state}.
+          The word frequency list below shows a maximum of
+          ${ref.watch(maxWordProvider.notifier).state} words having a frequency
+          of at least ${ref.watch(minFreqProvider.notifier).state}.
 
           ''',
           content: content,
         ),
       );
     }
+
+    ////////////////////////////////////////////////////////////////////////
 
     String barChartImg = '$tempDir/word_frequency_barplot.svg';
 
@@ -143,6 +147,8 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
         ),
       );
     }
+
+    ////////////////////////////////////////////////////////////////////////
 
     String correlationImg = '$tempDir/model_wordcloud_cor.svg';
 
@@ -163,11 +169,14 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       );
     }
 
-    String textCorContent = rExtract(stdout, '> tm::findAssocs(dtm,');
-    if (textCorContent.isNotEmpty) {
-      // Skip the first two lines which contain the R command and extract only the results.
+    ////////////////////////////////////////////////////////////////////////
 
-      textCorContent = textCorContent.split('\n').skip(1).join('\n');
+    content = rExtract(stdout, '> tm::findAssocs(dtm,');
+    if (content.isNotEmpty) {
+      // Skip the first two lines which contain the R command and extract only
+      // the results.
+
+      content = content.split('\n').skip(1).join('\n');
       pages.add(
         TextPage(
           title: '''
@@ -182,7 +191,7 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
           at least ${ref.watch(textCorLimitProvider.notifier).state}.
 
           ''',
-          content: textCorContent,
+          content: content,
         ),
       );
     }
