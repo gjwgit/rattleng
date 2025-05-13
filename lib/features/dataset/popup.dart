@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Monday 2025-05-12 14:43:02 +1000 Graham Williams>
+/// Time-stamp: <Tuesday 2025-05-13 08:33:23 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -207,8 +207,9 @@ class DatasetPopup extends ConsumerWidget {
                   message: '''
 
                   **Local Corpus:** Tap here to popup a window so that you can
-                  browse to a local folder containing text documents (**txt**, **pdf**,
-                  or **odt** files) that you would like to **Text Mine**.
+                  browse to a local folder containing text documents (**txt**)
+                  that you would like to **Text Mine**. At present only text
+                  files ending in **.txt** are supported by Rattle.
 
                   ''',
                   child: Text('Local Corpus'),
