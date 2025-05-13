@@ -5,8 +5,8 @@
 [![GitHub License](https://img.shields.io/github/license/gjwgit/rattleng)](https://raw.githubusercontent.com/gjwgit/rattleng/main/LICENSE)
 [![GitHub Version](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/gjwgit/rattleng/master/pubspec.yaml&query=$.version&label=version&logo=github)](https://github.com/gjwgit/rattleng/blob/dev/CHANGELOG.md)
 [![GitHub Last Updated](https://img.shields.io/github/last-commit/gjwgit/rattleng?label=last%20updated)](https://github.com/gjwgit/rattleng/commits/dev/)
-[![GitHub Issues](https://img.shields.io/github/issues/gjwgit/rattleng)](https://github.com/gjwgit/rattleng/issues)
 [![GitHub Commit Activity (dev)](https://img.shields.io/github/commit-activity/w/gjwgit/rattleng/dev)](https://github.com/gjwgit/rattle/commits/dev/)
+[![GitHub Issues](https://img.shields.io/github/issues/gjwgit/rattleng)](https://github.com/gjwgit/rattleng/issues)
 
 Binaries to download latest version:
 [**GNU/Linux**](https://access.togaware.com/rattle-dev-linux.zip) -
