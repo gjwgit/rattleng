@@ -2,11 +2,11 @@
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 [![R](https://img.shields.io/badge/r-%23276DC3.svg?style=for-the-badge&logo=r&logoColor=white)](https://www.r-project.org/)
 
-[![Last Updated](https://img.shields.io/github/last-commit/gjwgit/rattleng?label=last%20updated)](https://github.com/gjwgit/rattleng/commits/dev/)
-[![Flutter Version](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/gjwgit/rattleng/master/pubspec.yaml&query=$.version&label=version)](https://github.com/gjwgit/rattleng/blob/dev/CHANGELOG.md)
+[![GitHub Version](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/gjwgit/rattleng/master/pubspec.yaml&query=$.version&label=version)](https://github.com/gjwgit/rattleng/blob/dev/CHANGELOG.md)
+[![GitHub Last Updated](https://img.shields.io/github/last-commit/gjwgit/rattleng?label=last%20updated&logo=github)](https://github.com/gjwgit/rattleng/commits/dev/)
 [![GitHub Issues](https://img.shields.io/github/issues/gjwgit/rattleng)](https://github.com/gjwgit/rattleng/issues)
+[![GitHub Commit Activity (dev)](https://img.shields.io/github/commit-activity/w/gjwgit/rattleng/dev)](https://github.com/gjwgit/rattle/commits/dev/)
 [![GitHub License](https://img.shields.io/github/license/gjwgit/rattleng)](https://raw.githubusercontent.com/gjwgit/rattleng/main/LICENSE)
-[![GitHub commit activity (dev)](https://img.shields.io/github/commit-activity/w/gjwgit/rattleng/dev)](https://github.com/gjwgit/rattle/commits/dev/)
 
 Binaries to download latest version:
 [**GNU/Linux**](https://access.togaware.com/rattle-dev-linux.zip) -
