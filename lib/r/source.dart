@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: <Monday 2025-05-12 11:46:03 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2025-05-13 17:16:05 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -770,8 +770,27 @@ Future<void> rSource(
 
   // code = '$code\nprint("Processing $script Completed")\n';
 
-  ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
+  List<String> lines = code.split('\n');
+  debugText('R CODE LENGTH', '${lines.length} lines');
 
+  // EXPERIMENTAL Set to 2000 to skip this splitting.
+  //
+  // Had a problem with model_build_rforest.R and it seemed that the code was
+  // getting truncated going to the R console. Trying sending it in two
+  // segments. The segmenting seemed to work but need to keep an eye on it! The
+  // 200 lines was chonsen because the model_template then model_build_rforest
+  // was 286 lines of code. It may be char length rather than line count that is
+  // important though. (gjw 20250513)
+
+  if (lines.length > 200) {
+    String code1 = lines.take(200).join('\n') + '\n';
+    String code2 = lines.skip(200).join('\n');
+
+    ref.read(ptyProvider).write(const Utf8Encoder().convert(code1));
+    ref.read(ptyProvider).write(const Utf8Encoder().convert(code2));
+  } else {
+    ref.read(ptyProvider).write(const Utf8Encoder().convert(code));
+  }
   // Optionally, show a SnackBar when the script finishes executing.
 
 //  if (code.contains('Processing $script Completed')) {
