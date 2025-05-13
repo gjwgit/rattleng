@@ -16,6 +16,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.4 Complete Models and Evaluations
 
++ R SOURCE: Send R code in segments to console. [6.4.92 20250513 gjw]
 + TEXT: Use template filename for saving corpus [6.4.91 20250513 gjw]
 + TEXT: Ensure only txt files loaded and R setup [6.4.90 20250513 gjw]
 + TEXT: Review and bug fix [6.4.89 20250512 gjw]
