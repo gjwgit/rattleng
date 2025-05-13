@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-04-30 15:21:33 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2025-05-13 16:43:32 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -99,7 +99,7 @@ importance_long <- melt(importance_df,
                         variable.name = "Class",
                         value.name    = "Importance")
 
-svg("<TEMPDIR>/model_random_forest_varimp.svg", height=4.5, width=10)
+svg("<TEMPDIR>/model_random_forest_varimp.svg", height=6, width=10)
 ggplot(importance_long, aes(x    = reorder(Variable, Importance),
                             y    = Importance,
                             fill = Class)) +
@@ -114,24 +114,35 @@ ggplot(importance_long, aes(x    = reorder(Variable, Importance),
   <SETTINGS_GRAPHIC_THEME>()
 dev.off()
 
+########################################################################
 
 # Plot the error rate against the number of trees.
 
+# WITH THIS CODE WE SEEM TO RUN OUT OF BUFFER TO SEND TO R
+
+errors <- model_randomForest$err.rate
+
 svg("<TEMPDIR>/model_random_forest_error_rate.svg", height=5, width=9)
-
-plot(model_randomForest, main="")
-legend("topright", c("OOB", "No", "Yes"),
-       text.col = 1:6,
-       lty      = 1:3,
-       col      = 1:3)
-title(main="Error Rates Random",
-    sub=paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
-
+errors %>%
+  as.data.frame() %>%
+  dplyr::mutate(Index=1:nrow(.)) %>%
+  tidyr::pivot_longer(cols = colnames(errors),
+                      names_to = "Category",
+                      values_to = "Value") %>%
+  dplyr::mutate(Category = factor(Category,
+                                  levels = colnames(errors))) %>%
+  ggplot(aes(x = Index, y = Value, color = Category)) +
+  geom_line() +
+  labs(title = "Error Rates as Trees Added to Random Forest",
+       x = "Trees",
+       y = "Error",
+       color = "Category") +
+  <SETTINGS_GRAPHIC_THEME>()
 dev.off()
 
 # Plot the OOB ROC curve.
 
-svg("<TEMPDIR>/model_random_forest_oob_roc_curve.svg", height=5, width=5)
+svg("<TEMPDIR>/model_random_forest_oob_roc_curve.svg", height=7, width=10)
 
 # Extract observed class labels from the Random Forest model.
 
@@ -176,35 +187,33 @@ if (min_class_size >= 3 && length(unique(predicted_probs)) > 1) {
                        ci        = TRUE,
                        ci.method = "delong")
 
-  # Plot ROC curve.
+  roc_obj <- pROC::roc(observed_binary, predicted_probs)
 
-  plot(roc_obj,
-       main        = "OOB ROC Curve Random Forest",
-       col         = "blue",
-       lwd         = 2,
-       legacy.axes = TRUE)
+  roc_df <- data.frame(
+    TPR = roc_obj$sensitivities,
+    FPR = 1 - roc_obj$specificities
+  )
 
-  # Add diagonal reference line.
-
-  abline(0, 1, lty = 2, col = "gray")
-
-  # Add AUC to the plot.
+  # Calculate AUC and 95% CI
 
   auc_value <- pROC::auc(roc_obj)
-  legend("bottomright",
-         legend = sprintf("AUC = %.3f\n95%% CI: %.3f-%.3f",
-                         auc_value,
-                         roc_obj$ci[1],
-                         roc_obj$ci[3]),
-         bty = "n")
+  ci <- pROC::ci.auc(roc_obj)
 
-  # Add subtitle.
-
-  mtext(paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"),
-              Sys.info()["user"]),
-        side = 3,
-        line = 0.5,
-        cex  = 0.8)
+  roc_df %>%
+    ggplot(aes(x=FPR, y=TPR)) +
+    geom_line(color="blue") +
+    geom_abline(slope     = 1,
+                intercept = 0,
+                linetype  = "dashed",
+                color     = "red") +
+    labs(title = "OOB ROC Curve Random Forest",
+         x     = "False Positive Rate (1 - Specificity)",
+         y     = "True Positive Rate (Sensitivity)") +
+    annotate("text", x=0.8, y=0.1,
+             label=sprintf("AUC: %.3f\n95%% CI: %.3f-%.3f",
+                             auc_value, ci[1], ci[3]),
+             size=5, hjust=0) +
+  <SETTINGS_GRAPHIC_THEME>()
 
 } else {
   # Create an empty plot with an error message.
@@ -224,8 +233,9 @@ if (min_class_size >= 3 && length(unique(predicted_probs)) > 1) {
 }
 dev.off()
 
-# Now we generate details about the different tree sizes in the
-# forest.
+########################################################################
+
+# Generate details about the different tree sizes in the forest.
 
 # A support function to count leaf nodes in a tree.
 
@@ -269,7 +279,7 @@ rf_tree_info %>%
   ggplot2::labs(
     title    = "Distribution of Tree Sizes in the Random Forest",
     subtitle = paste("Based on", num_trees, "trees"),
-    x        = "Number of Leaf Nodes/Rules",
+    x        = "Number of Leaf Nodes (Rules)",
     y        = "Count"
   ) +
   <SETTINGS_GRAPHIC_THEME>() +
