@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2024-09-27 05:39:57 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2025-05-14 10:26:46 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -66,13 +66,14 @@ String _basicTemplate(
 
   // Now extract the output from particular commands.
 
-  String sz = '', cm = '', cn = '', ss = '';
+  String sz = '', cm = '', cn = '', ss = '', id = '';
 
   if (type == 'kmeans') {
     sz = rExtract(log, '> print(paste(model_kmeans');
     cm = rExtract(log, '> print(colMeans');
     cn = rExtract(log, '> print(model_kmeans\$centers');
     ss = rExtract(log, '> print(model_kmeans\$withinss)');
+    id = rExtract(log, '> if (! is.null(ids)) print(ids)');
   } else if (type == 'ewkm') {
     sz = rExtract(log, "> print(paste(model_ewkm\$size, collapse = ' '))");
     cm = rExtract(log, '> print(colMeans(data_for_clustering))');
@@ -103,6 +104,7 @@ String _basicTemplate(
         'Cluster Means:\n$cm\n\n'
         'Cluster Centers:\n$cn\n\n'
         'Cluster Within Sum of Squares\n$ss\n\n'
+        '$id\n\n'
         'Rattle timestamp: $ts';
   }
 
@@ -123,11 +125,14 @@ String rExtractCluster(
   // line after each group of centers, for the case where the variables are more
   // than fit on one line.
 
-  final pattern = RegExp(r'\n10.*?(?=\n)');
+  // THIS IS WRONG - 10 is a parameter so it only works if the default is not
+  // changed. It also interferes elsewhere? (gjw 20250514)
 
-  extract = extract.replaceAllMapped(pattern, (match) {
-    return '${match.group(0)}\n';
-  });
+  // final pattern = RegExp(r'\n10.*?(?=\n)');
+
+  // extract = extract.replaceAllMapped(pattern, (match) {
+  //   return '${match.group(0)}\n';
+  // });
 
   return extract;
 }
