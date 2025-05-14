@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-05-14 10:27:43 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2025-05-14 17:05:39 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -111,7 +111,6 @@ cat("\n")
 # coordinates. We convert tds to a matrix if it's not already.
 
 svg("<TEMPDIR>/model_cluster_discriminant.svg")
-
 tds_matrix <- as.matrix(tds)
 cluster::clusplot(tds_matrix,
                   model_kmeans$cluster,
