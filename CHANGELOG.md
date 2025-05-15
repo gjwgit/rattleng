@@ -14,6 +14,10 @@ Binaries to download latest version:
 
 Visit [togaware](https://rattle.togaware.com) for details.
 
+## 6.5 Consolidate
+
++ Initial release of the 6.5 series [6.5.0 20250515 gjw]
+
 ## 6.4 Complete Models and Evaluations
 
 + DENDROGRAM: Updated to use ggplot2. [6.4.93 20250514 gjw]
