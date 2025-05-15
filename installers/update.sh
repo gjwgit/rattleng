@@ -59,7 +59,7 @@ if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
 
     gh run download ${bumpId} --name ${APP}-windows-inno
     rsync -avzh ${APP}-dev-windows-inno.exe ${DEST}
-    mv ${APP}-dev-windows-inno.exe ARCHIVE/${APP}-${version}-windows-inno.exe
+    mv ${APP}-dev-windows-inno.exe ARCHIVE/${APP}_${version}_windows-inno.exe
 
     echo ""
 
@@ -68,7 +68,7 @@ if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
     gh run download ${bumpId} --name ${APP}-linux-zip
     rsync -avzh ${APP}-dev-linux.zip ${DEST}
     # unzip -oq ${APP}-dev-linux.zip -d ${HOME}/.local/share/${APP}/
-    mv -f ${APP}-dev-linux.zip ARCHIVE/${APP}-${version}-linux.zip
+    mv -f ${APP}-dev-linux.zip ARCHIVE/${APP}_${version}_linux.zip
 
     echo ""
 
@@ -76,7 +76,7 @@ if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
 
     gh run download ${bumpId} --name ${APP}-windows-zip
     rsync -avzh ${APP}-dev-windows.zip ${DEST}
-    mv -f ${APP}-dev-windows.zip ARCHIVE/${APP}-${version}-windows.zip
+    mv -f ${APP}-dev-windows.zip ARCHIVE/${APP}_${version}_windows.zip
     ssh ${HOST} "cd ${FLDR}; chmod a+r ${APP}-dev-*.zip ${APP}-dev-*.exe"
 
 
@@ -86,7 +86,7 @@ if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
 
     gh run download ${bumpId} --name ${APP}-macos-zip
     rsync -avzh ${APP}-dev-macos.zip ${DEST}
-    mv ${APP}-dev-macos.zip ARCHIVE/${APP}-${version}-macos.zip
+    mv ${APP}-dev-macos.zip ARCHIVE/${APP}_${version}_macos.zip
     ssh ${HOST} "cd ${FLDR}; chmod a+r ${APP}-dev-*.zip ${APP}-dev-*.exe"
 
 else
