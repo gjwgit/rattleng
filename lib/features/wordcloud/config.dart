@@ -489,17 +489,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                     ref,
                     'tm::findAssocs(dtm, "${textCorWordController.text}", corlimit=${textCorLimitController.text})',
                   );
-
-                  await ref.read(wordcloudPageControllerProvider).animateToPage(
-                        4,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
-                  await ref.read(wordcloudPageControllerProvider).animateToPage(
-                        5,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
                 },
                 tapDelay: 1000,
               ),
@@ -534,17 +523,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                     ref,
                     'tm::findAssocs(dtm, "${textCorWordController.text}", corlimit=${textCorLimitController.text})',
                   );
-
-                  await ref.read(wordcloudPageControllerProvider).animateToPage(
-                        4,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
-                  await ref.read(wordcloudPageControllerProvider).animateToPage(
-                        5,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
                 },
                 tapDelay: 1000,
               ),
