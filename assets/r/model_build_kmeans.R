@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-04-17 14:30:52 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2025-05-14 17:05:39 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -111,7 +111,6 @@ cat("\n")
 # coordinates. We convert tds to a matrix if it's not already.
 
 svg("<TEMPDIR>/model_cluster_discriminant.svg")
-
 tds_matrix <- as.matrix(tds)
 cluster::clusplot(tds_matrix,
                   model_kmeans$cluster,
@@ -127,3 +126,19 @@ dev.off()
 
 cluster_assignments <- model_kmeans$cluster
 pair_file  <- "model_cluster_pairs_kmeans.svg"
+
+## This is not yet robust to missing values. Probably better to get
+## the identifiers as ids in the above tds code.
+##
+## Needs work
+##
+o <- order(model_kmeans$cluster)
+##
+if (! is.null(identifier) && ds[tr,identifier] %>% nrow() < 300) {
+  ids <- data.frame(ds[tr,][o,identifier],model_kmeans$cluster[o])
+  names(ids) <- c(identifier, "cluster")
+} else {
+  ids = NULL
+}
+
+if (! is.null(ids)) print(ids)

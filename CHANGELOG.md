@@ -12,8 +12,18 @@ Binaries to download latest version:
 [**MacOS**](https://access.togaware.com/rattle-dev-macos.zip) -
 [**Windows**](https://access.togaware.com/rattle-dev-windows-inno.exe).
 
+Visit [togaware](https://rattle.togaware.com) for details.
+
+## 6.5 Consolidate
+
++ Initial release of the 6.5 series [6.5.0 20250515 gjw]
+
 ## 6.4 Complete Models and Evaluations
 
++ DENDROGRAM: Updated to use ggplot2. [6.4.93 20250514 gjw]
++ R SOURCE: Send R code in segments to console. [6.4.92 20250513 gjw]
++ TEXT: Use template filename for saving corpus [6.4.91 20250513 gjw]
++ TEXT: Ensure only txt files loaded and R setup [6.4.90 20250513 gjw]
 + TEXT: Review and bug fix [6.4.89 20250512 gjw]
 + TEXT: Add a SAVE button to TEXT for dtm [6.4.88 20250510 zy]
 + TEXT: Improve information in titles/display [6.4.87 20250509 gjw]

@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Friday 2025-05-09 09:52:18 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2025-05-13 07:19:02 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -180,7 +180,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         '## Summary of the Document Term Matrix\n\n$inspect\n\n'
         '## Individual Documents\n\n$docinfo\n\n';
 
-    if (content.isNotEmpty) {
+    if (docs.isNotEmpty || inspect.isNotEmpty || docinfo.isNotEmpty) {
       pages.add(
         TextPage(
           title: '''

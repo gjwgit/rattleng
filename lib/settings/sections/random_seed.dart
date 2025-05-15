@@ -1,6 +1,6 @@
 /// Random seed section.
 //
-// Time-stamp: <Wednesday 2025-04-09 09:08:55 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2025-05-14 08:18:22 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -73,7 +73,7 @@ class RandomSeed extends ConsumerWidget {
               **Random Seed:** The random seed is used to control the randomness
               of partitioning the dataset and building models.  Setting a
               specific seed ensures that results are reproducible. The random
-              seed will be reset to this value each tome the dataset is
+              seed will be reset to this value each time the dataset is
               partitioned or the model is built.
 
               ''',
@@ -92,10 +92,12 @@ class RandomSeed extends ConsumerWidget {
             MarkdownTooltip(
               message: '''
 
-              **Reset Random Seed each Model Build:** When enabled, the dataset
-              partition (if any) will be resetrandomised each time a model is built.
-              This is useful if you want to ensure that the model is not biased
-              towards a specific partition.
+              **Random Partition each Model Build:** When enabled, the dataset
+              partition (if any) will be reset and randomised each time a model
+              is built.  This is useful if you want to ensure that the model is
+              not biased towards a specific partition. If this is disabled then
+              the same partition is used for each model build and so the dame
+              model is built each time.
 
               ''',
               child: Switch(
@@ -114,9 +116,9 @@ class RandomSeed extends ConsumerWidget {
             MarkdownTooltip(
               message: '''
 
-              **Reset Random Seed:**
-              Clicking this button resets the random seed to the default value of 42.
-              This is useful if you want to restore the initial random state.
+              **Reset Random Seed:** Tap here to factory reset the random seed
+              settings to their default values, being 42 for the seed itself and
+              to retain the same partitioning for building a model.
 
               ''',
               child: ElevatedButton(
