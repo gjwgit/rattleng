@@ -59,7 +59,7 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
   Widget build(BuildContext context) {
     final pageController = ref.watch(
       wordcloudPageControllerProvider,
-    ); // Get the PageController from Riverpod
+    ); // Get the PageController from Riverpod.
     final stdout = ref.watch(stdoutProvider);
     final lastBuildTime = ref.watch(wordCloudBuildProvider);
 
@@ -86,7 +86,7 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
     // build button pressed but png not exists (never reached)
     if (buildButtonPressed(lastBuildTime)) {
       // The check to see if file exists is not necessary.
-      // build button pressed and png file exists
+      // build button pressed and png file exists.
 
       pages.add(
         ImagePage(
@@ -102,7 +102,7 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
         ),
       );
 
-    // Term Frequency Page.
+      // Term Frequency Page.
 
       final String tfContentRaw =
           rExtract(stdout, 'd %>% dplyr::filter(freq >=');
@@ -172,7 +172,8 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-      // Term Association Page
+      // Term Association Page.
+      
       final String taContentRaw = rExtract(stdout, '> tm::findAssocs(dtm,');
       String taContentDisplay;
       if (taContentRaw.isNotEmpty) {
