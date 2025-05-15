@@ -41,6 +41,7 @@ import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/wordcloud.dart';
 import 'package:rattle/providers/wordcloud/build.dart';
+import 'package:rattle/r/execute.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/build_text_field.dart';
 import 'package:rattle/utils/timestamp.dart';
@@ -505,6 +506,14 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                   ), // Allow letters, digits, commas, dots, whitespace.
                 ),
                 maxWidth: 8,
+                ref: ref,
+                onUpDownPressed: () {
+                  rExecute(
+                    ref,
+                    'tm::findAssocs(dtm, "${textCorWordController.text}", corlimit=${textCorLimitController.text})',
+                  );
+                },
+                tapDelay: 1000,
               ),
             ],
           ),
