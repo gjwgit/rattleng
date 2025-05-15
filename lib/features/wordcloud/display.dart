@@ -171,12 +171,13 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, '> tm::findAssocs(dtm,');
-    if (content.isNotEmpty) {
+    String termAssociationContent = rExtract(stdout, '> tm::findAssocs(dtm,');
+    if (termAssociationContent.isNotEmpty) {
       // Skip the first two lines which contain the R command and extract only
       // the results.
 
-      content = content.split('\n').skip(1).join('\n');
+      termAssociationContent =
+          termAssociationContent.split('\n').skip(1).join('\n');
       pages.add(
         TextPage(
           title: '''
@@ -191,7 +192,7 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
           at least ${ref.watch(textCorLimitProvider.notifier).state}.
 
           ''',
-          content: content,
+          content: termAssociationContent,
         ),
       );
     }
