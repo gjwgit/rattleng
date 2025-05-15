@@ -484,6 +484,24 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 stateProvider: textCorLimitProvider,
                 min: 0.0,
                 max: 1.0,
+                onUpDownPressed: () async {
+                  rExecute(
+                    ref,
+                    'tm::findAssocs(dtm, "${textCorWordController.text}", corlimit=${textCorLimitController.text})',
+                  );
+
+                  await ref.read(wordcloudPageControllerProvider).animateToPage(
+                        4,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                  await ref.read(wordcloudPageControllerProvider).animateToPage(
+                        5,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                },
+                tapDelay: 1000,
               ),
 
               buildTextField(
@@ -511,11 +529,22 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 ),
                 maxWidth: 8,
                 ref: ref,
-                onUpDownPressed: () {
+                onUpDownPressed: () async {
                   rExecute(
                     ref,
                     'tm::findAssocs(dtm, "${textCorWordController.text}", corlimit=${textCorLimitController.text})',
                   );
+
+                  await ref.read(wordcloudPageControllerProvider).animateToPage(
+                        4,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                  await ref.read(wordcloudPageControllerProvider).animateToPage(
+                        5,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
                 },
                 tapDelay: 1000,
               ),
