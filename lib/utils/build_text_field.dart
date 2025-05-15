@@ -23,6 +23,8 @@
 ///
 /// Authors: Zheyuan Xu
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -38,81 +40,110 @@ import 'package:rattle/providers/forest.dart';
 ///
 /// Returns a widget containing the styled and configured text field.
 
-Widget buildTextField({
-  required String label,
-  required TextEditingController controller,
-  required TextStyle textStyle,
-  required String tooltip,
-  required bool enabled,
-  required String? Function(String?) validator,
-  required TextInputFormatter inputFormatter,
-  required int maxWidth,
-  required Key key,
-  WidgetRef? ref,
-}) {
-  return Flexible(
-    child: MarkdownTooltip(
-      message: tooltip,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            // Set maximum width for the input field.
+class buildTextField extends ConsumerStatefulWidget {
+  final String label;
+  final TextEditingController controller;
+  final TextStyle textStyle;
+  final String tooltip;
+  final bool enabled;
+  final String? Function(String?) validator;
+  final TextInputFormatter inputFormatter;
+  final int maxWidth;
+  final WidgetRef? ref;
+  final VoidCallback? onUpDownPressed;
+  final int? tapDelay;
 
-            width: maxWidth * 15.0,
-            child: TextFormField(
-              key: key,
-              controller: controller,
-              decoration: InputDecoration(
-                labelText: label,
-                border: const UnderlineInputBorder(),
-                errorText: validator(controller.text),
-                errorStyle: const TextStyle(fontSize: 10),
+  const buildTextField({
+    super.key,
+    required this.label,
+    required this.controller,
+    required this.textStyle,
+    required this.tooltip,
+    required this.enabled,
+    required this.validator,
+    required this.inputFormatter,
+    required this.maxWidth,
+    required this.ref,
+    this.onUpDownPressed,
+    this.tapDelay,
+  });
+
+  @override
+  ConsumerState<buildTextField> createState() => _buildTextFieldState();
+}
+
+class _buildTextFieldState extends ConsumerState<buildTextField> {
+  Timer? _debounceTimer;
+
+  @override
+  void dispose() {
+    _debounceTimer?.cancel();
+    super.dispose();
+  }
+
+  void _onTextFieldChanged(String value) {
+    _debounceTimer?.cancel();
+    if (widget.onUpDownPressed != null) {
+      _debounceTimer = Timer(
+        Duration(milliseconds: widget.tapDelay ?? 500),
+        () {
+          if (mounted) {
+            widget.onUpDownPressed!();
+          }
+        },
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      child: MarkdownTooltip(
+        message: widget.tooltip,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: widget.maxWidth * 15.0,
+              child: TextFormField(
+                key: widget.key,
+                controller: widget.controller,
+                decoration: InputDecoration(
+                  labelText: widget.label,
+                  border: const UnderlineInputBorder(),
+                  errorText: widget.validator(widget.controller.text),
+                  errorStyle: const TextStyle(fontSize: 10),
+                ),
+                style: widget.textStyle,
+                enabled: widget.enabled,
+                inputFormatters: [
+                  widget.inputFormatter,
+                  FilteringTextInputFormatter.singleLineFormatter,
+                ],
+                onChanged: _onTextFieldChanged,
+                onEditingComplete: () {
+                  if (widget.label == 'Sample Size:' && widget.ref != null) {
+                    ref.read(forestSampleSizeProvider.notifier).state =
+                        widget.controller.text;
+                  }
+                },
+                onSaved: (value) {
+                  if (widget.label == 'Sample Size:' && widget.ref != null) {
+                    ref.read(forestSampleSizeProvider.notifier).state =
+                        widget.controller.text;
+                  }
+                },
+                onTapOutside: (event) {
+                  if (widget.label == 'Sample Size:' && widget.ref != null) {
+                    ref.read(forestSampleSizeProvider.notifier).state =
+                        widget.controller.text;
+                  }
+                },
               ),
-              style: textStyle,
-              // Control enable state.
-
-              enabled: enabled,
-              inputFormatters: [
-                inputFormatter,
-                FilteringTextInputFormatter.singleLineFormatter,
-              ],
-              onEditingComplete: () {
-                // Called when the user finishes editing the text field (e.g., pressing
-                // the "Done" key on the keyboard). If this is the "Sample Size:" text field
-                // and we have a valid Riverpod reference, update the forestSampleSizeProvider
-                // with the current text from the controller.
-
-                if (label == 'Sample Size:' && ref != null) {
-                  ref.read(forestSampleSizeProvider.notifier).state =
-                      controller.text;
-                }
-              },
-              onSaved: (value) {
-                // Called when the form containing this text field is saved (for example,
-                // by calling Form.of(context).save()). If this is the "Sample Size:" text field
-                // and we have a valid Riverpod reference, update the forestSampleSizeProvider
-                // with the current text from the controller.
-
-                if (label == 'Sample Size:' && ref != null) {
-                  ref.read(forestSampleSizeProvider.notifier).state =
-                      controller.text;
-                }
-              },
-              onTapOutside: (event) {
-                // Called when the user taps outside of the text field, causing it to lose focus.
-                // If this is the "Sample Size:" text field and we have a valid Riverpod reference,
-                // update the forestSampleSizeProvider with the current text from the controller.
-
-                if (label == 'Sample Size:' && ref != null) {
-                  ref.read(forestSampleSizeProvider.notifier).state =
-                      controller.text;
-                }
-              },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
