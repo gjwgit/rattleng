@@ -1,6 +1,6 @@
 /// Test Wordcloud on the sherlock dataset.
 //
-// Time-stamp: <Thursday 2025-05-08 12:02:20 +1000 Graham Williams>
+// Time-stamp: <Monday 2025-05-12 15:56:30 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -58,7 +58,7 @@ void main() {
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Text');
       await tapButton(tester, 'Text Mine');
-      await navigateToPage(tester, 2, back: 2, title: 'Word Frequency');
+      await navigateToPage(tester, 2, back: 2, title: 'Term Frequency');
       await verifySelectableText(tester, [
         'word freq',
         'the   64',
@@ -68,21 +68,21 @@ void main() {
         'her   14',
       ]);
       await tapCheckbox(tester, 'text_remove_stopwords');
-      await tapButton(tester, 'Build Word Cloud');
+      await tapButton(tester, 'Text Mine');
       await verifySelectableText(tester, [
         'word freq',
         'upon    9',
         'little    7',
       ]);
       await tapCheckbox(tester, 'text_stem');
-      await tapButton(tester, 'Build Word Cloud');
+      await tapButton(tester, 'Text Mine');
       await verifySelectableText(tester, [
         'word freq',
         'upon    9',
         'littl    7',
       ]);
       await tapCheckbox(tester, 'text_remove_punctuation');
-      await tapButton(tester, 'Build Word Cloud');
+      await tapButton(tester, 'Text Mine');
       await verifySelectableText(tester, [
         'word freq',
         'upon    9',

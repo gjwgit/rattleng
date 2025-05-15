@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2025-05-10 15:18:10 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2025-05-13 07:28:54 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -30,9 +30,12 @@ dsname <- "<FILENAME>" %>% basename()
 
 corpus_path <- "<FILENAME>"
 
-# Create a source for the Corpus from the directory.
+# Create a source for the Corpus from the directory, loading only text
+# files.
 
-corpus_source <- tm::DirSource(corpus_path)
+corpus_source <- tm::DirSource(directory = corpus_path,
+                               encoding  = "UTF-8",
+                               pattern   = ".*\\.txt$")
 
 # Create the corpus from the source.
 

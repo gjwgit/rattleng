@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-04-17 08:57:24 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2025-05-14 17:06:07 +1000 Graham Williams>
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -115,29 +115,34 @@ print("Within-Cluster Sum of Squares:")
 print(withinss)
 
 cat("\n")
-##
-## Convert the hcluster object to an hclust object if necessary.
-## This ensures compatibility with the plot function.
-##
-## WHEN IS THIS NEEDED? (gjw 20250411)
-## model_hclust_hclust <- as.hclust(model_hclust)
 
-# Plot the dendrogram.
+# Plot the dendrogram using ggplot2. (gjw 20250514)
 
-svg("<TEMPDIR>/model_cluster_hierarchical.svg", width=20, height=9)
-plot(model_hclust,
-     main = "Hierarchical Clustering Dendrogram",
-     sub = paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]),
-     # labels = ds[tr, identifier],
-     xlab = "",
-     ylab = "Height")
-rect.hclust(model_hclust, k=<CLUSTER_NUM>, border="red")
+svg("<TEMPDIR>/model_cluster_hierarchical.svg", width=12, height=10)
+dd <- ggdendro::dendro_data(model_hclust)
+id <- ds[tr,identifier] %>% data.frame() %>% '[['(1)
+labels <- dd$labels
+labels$identifier <- id[match(labels$label, rownames(ds[tr,]))]
+ggplot() +
+  geom_segment(data = dd$segments,
+               aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_text(data = labels,
+            aes(x = x, y = y, label = identifier),
+            vjust   = -0.2,  # Adjust vertical position
+            nudge_y = 0.1, # Nudge labels slightly away from lines
+            size    = 4) +    # Adjust text size
+  coord_flip() +
+  labs(title = "Hierarchical Clustering Dendrogram", y="", x="") +
+  <SETTINGS_GRAPHIC_THEME>() +
+  theme(plot.margin = margin(10, 50, 10, 10),
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank() )
 dev.off()
 
-# Extract the corresponding cluster assignments.
-# Hierarchical clustering creates a tree-like structure (dendrogram) 
-# rather than directly assigning observations to clusters.
-# The cutree function is used to cut the dendrogram at a specified number of clusters.
+# Extract the corresponding cluster assignments.  Hierarchical
+# clustering creates a tree-like structure (dendrogram) rather than
+# directly assigning observations to clusters.  The cutree function is
+# used to cut the dendrogram at a specified number of clusters.
 
 cluster_assignments <- cutree(model_hclust, k=<CLUSTER_NUM>)
 
