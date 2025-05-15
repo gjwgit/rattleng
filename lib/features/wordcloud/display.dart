@@ -75,9 +75,6 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       ),
     ];
 
-
-
-
     // file exists | build not empty
     // 1 | 1 -> show the png
     // 1 | 0 -> show not built
@@ -132,7 +129,7 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
         ),
       );
 
-    ////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////
 
       String barChartImg = '$tempDir/word_frequency_barplot.svg';
 
@@ -149,7 +146,7 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
         );
       }
 
-    ////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////
 
       String correlationImg = '$tempDir/model_wordcloud_cor.svg';
 
@@ -170,10 +167,10 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
         );
       }
 
-    ////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////
 
       // Term Association Page.
-      
+
       final String taContentRaw = rExtract(stdout, '> tm::findAssocs(dtm,');
       String taContentDisplay;
       if (taContentRaw.isNotEmpty) {
@@ -201,7 +198,7 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
         ),
       );
 
-    ////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////
     } // This closes the if (buildButtonPressed(lastBuildTime)) block
 
     return PageViewer(
