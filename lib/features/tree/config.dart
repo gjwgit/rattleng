@@ -387,6 +387,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                   ), // Allow digits, commas, dots, whitespace.
                 ),
                 maxWidth: 10,
+                ref: ref,
               ),
               buildTextField(
                 label: 'Loss Matrix:',
@@ -409,6 +410,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 ),
                 validator: (value) => _validateLossMatrix(value),
                 maxWidth: 10,
+                ref: ref,
               ),
             ],
           ),
