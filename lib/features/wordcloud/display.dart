@@ -59,8 +59,9 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
   Widget build(BuildContext context) {
     final pageController = ref.watch(
       wordcloudPageControllerProvider,
-    ); // Get the PageController from Riverpod
-    String stdout = ref.watch(stdoutProvider);
+    ); // Get the PageController from Riverpod.
+    final stdout = ref.watch(stdoutProvider);
+    final lastBuildTime = ref.watch(wordCloudBuildProvider);
 
     // Build the word cloud widget to be displayed in the tab, consisting of the
     // top configuration and the main panel showing the generated image. Before
@@ -74,10 +75,6 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       ),
     ];
 
-    String content = '';
-
-    String lastBuildTime = ref.watch(wordCloudBuildProvider);
-
     // file exists | build not empty
     // 1 | 1 -> show the png
     // 1 | 0 -> show not built
@@ -86,7 +83,7 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
     // build button pressed but png not exists (never reached)
     if (buildButtonPressed(lastBuildTime)) {
       // The check to see if file exists is not necessary.
-      // build button pressed and png file exists
+      // build button pressed and png file exists.
 
       pages.add(
         ImagePage(
@@ -101,17 +98,17 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
           path: wordCloudImagePath,
         ),
       );
-    }
 
-    ////////////////////////////////////////////////////////////////////////
+      // Term Frequency Page.
 
-    content = rExtract(stdout, 'd %>% dplyr::filter(freq >=');
-
-    if (content.isNotEmpty) {
-      // Drop the first two lines which are still the R command.
-
-      content = content.split('\n').skip(2).join('\n');
-
+      final String tfContentRaw =
+          rExtract(stdout, 'd %>% dplyr::filter(freq >=');
+      String tfContentDisplay;
+      if (tfContentRaw.isNotEmpty) {
+        tfContentDisplay = tfContentRaw.split('\n').skip(2).join('\n');
+      } else {
+        tfContentDisplay = '';
+      }
       pages.add(
         TextPage(
           title: '''
@@ -126,36 +123,37 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
           of at least ${ref.watch(minFreqProvider.notifier).state}.
 
           ''',
-          content: content,
+          content: tfContentDisplay.isNotEmpty
+              ? tfContentDisplay
+              : 'Term frequencies are being processed or are not available.',
         ),
       );
-    }
 
-    ////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////
 
-    String barChartImg = '$tempDir/word_frequency_barplot.svg';
+      String barChartImg = '$tempDir/word_frequency_barplot.svg';
 
-    if (imageExists(barChartImg)) {
-      pages.add(
-        ImagePage(
-          title: '''
+      if (imageExists(barChartImg)) {
+        pages.add(
+          ImagePage(
+            title: '''
 
           # Term Frequency Bar Chart
 
           ''',
-          path: barChartImg,
-        ),
-      );
-    }
+            path: barChartImg,
+          ),
+        );
+      }
 
-    ////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////
 
-    String correlationImg = '$tempDir/model_wordcloud_cor.svg';
+      String correlationImg = '$tempDir/model_wordcloud_cor.svg';
 
-    if (imageExists(correlationImg)) {
-      pages.add(
-        ImagePage(
-          title: '''
+      if (imageExists(correlationImg)) {
+        pages.add(
+          ImagePage(
+            title: '''
 
           # Term Correlation Plot
 
@@ -164,19 +162,22 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
           [tm::plot()](https://www.rdocumentation.org/packages/tm/topics/plot).
 
           ''',
-          path: correlationImg,
-        ),
-      );
-    }
+            path: correlationImg,
+          ),
+        );
+      }
 
-    ////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, '> tm::findAssocs(dtm,');
-    if (content.isNotEmpty) {
-      // Skip the first two lines which contain the R command and extract only
-      // the results.
+      // Term Association Page.
 
-      content = content.split('\n').skip(1).join('\n');
+      final String taContentRaw = rExtract(stdout, '> tm::findAssocs(dtm,');
+      String taContentDisplay;
+      if (taContentRaw.isNotEmpty) {
+        taContentDisplay = taContentRaw.split('\n').skip(1).join('\n');
+      } else {
+        taContentDisplay = '';
+      }
       pages.add(
         TextPage(
           title: '''
@@ -191,12 +192,14 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
           at least ${ref.watch(textCorLimitProvider.notifier).state}.
 
           ''',
-          content: content,
+          content: taContentDisplay.isNotEmpty
+              ? taContentDisplay
+              : 'Term associations are being processed or are not available.',
         ),
       );
-    }
 
-    ////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////
+    } // This closes the if (buildButtonPressed(lastBuildTime)) block
 
     return PageViewer(
       pageController: pageController,
