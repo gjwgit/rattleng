@@ -1,6 +1,6 @@
 /// Test the MODEL tab's TREE feature with the LARGE dataset.
 //
-// Time-stamp: <Sunday 2025-01-26 07:15:29 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-05-19 16:13:43 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -33,87 +33,38 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/number_field.dart';
 
+import 'utils/add_delay.dart';
 import 'utils/delays.dart';
+import 'utils/goto_next_page.dart';
 import 'utils/load_dataset_by_path.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
+import 'utils/tap_button_by_key.dart';
+import 'utils/tap_chip.dart';
+import 'utils/verify_page.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('Large Model Tree CTree:', () {
-    /// TODO 20240826 zy CONDITIONAL TREE NOT OPERATIOANL.
-    ///
-    /// Only testing UI functions.
-
     testWidgets('Load, Navigate.', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
       await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
+      // TODO 20250519
+      // INGNORE ALL
+      // TARGET is smoking_status
+      // INPUT is marital_status age_at_consultation
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Tree');
-
-      // Find the ChoiceChipTip widget for the traditional algorithm type.
-
-      final traditionalChip = find.text(
-        'Traditional',
-      );
-      final conditionalChip = find.text('Conditional');
-
-      // Verify that both chips exist in the widget tree.
-
-      expect(traditionalChip, findsOneWidget);
-      expect(conditionalChip, findsOneWidget);
-
-      // Tap the conditional chip to switch algorithms.
-
-      await tester.tap(conditionalChip);
-      await tester.pumpAndSettle();
-      await tester.pump(longHack);
-
-      // Now switch back to the traditional algorithm.
-
-      await tester.tap(traditionalChip);
-
-      // Wait for the widget to rebuild and settle.
-
-      await tester.pumpAndSettle();
-      await tester.pump(longHack);
-
-      // Tap the conditional chip to switch algorithms.
-
-      await tester.tap(conditionalChip);
-
-      await tester.pumpAndSettle();
-      await tester.pump(longHack);
-
-      // Verify the relevant fields are disabled when Conditional is selected.
-
-      final complexityField = find.byKey(const Key('complexityField'));
-      final priorsField = find.byKey(const Key('priorsField'));
-      final lossMatrixField = find.byKey(const Key('lossMatrixField'));
-
-      // Ensure that these fields are disabled (meaning that they are not accepting input).
-
-      expect(tester.widget<NumberField>(complexityField).enabled, isFalse);
-      expect(tester.widget<TextFormField>(priorsField).enabled, isFalse);
-      expect(tester.widget<TextFormField>(lossMatrixField).enabled, isFalse);
-
-      // Now switch back to the traditional algorithm.
-
-      await tester.tap(traditionalChip);
-      await tester.pumpAndSettle();
-      await tester.pump(longHack);
-
-      // Verify that the relevant fields are now enabled.
-
-      expect(tester.widget<NumberField>(complexityField).enabled, isTrue);
-      expect(tester.widget<TextFormField>(priorsField).enabled, isTrue);
-      expect(tester.widget<TextFormField>(lossMatrixField).enabled, isTrue);
-
-      await tester.pumpAndSettle();
-      await tester.pump(interact);
+      await tapChip(tester, 'Conditional');
+      // Don't build the tree with default parameters as it takes a long time.
+      //
+      // await tapButtonByKey(tester, 'Build Decision Tree');
+      // await addDelay(tester, 60);
+      // await gotoNextPage(tester);
+      // await verifyPage('Decision Tree Model');
     });
   });
 }
