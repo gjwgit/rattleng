@@ -1,6 +1,6 @@
 /// Test the MODEL tab's TREE feature with the LARGE dataset.
 //
-// Time-stamp: <Monday 2025-05-19 16:13:43 +1000 Graham Williams>
+// Time-stamp: <Monday 2025-05-19 16:16:52 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,23 +25,16 @@
 
 library;
 
-import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
-import 'package:rattle/widgets/number_field.dart';
 
-import 'utils/add_delay.dart';
 import 'utils/delays.dart';
-import 'utils/goto_next_page.dart';
 import 'utils/load_dataset_by_path.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/tap_button_by_key.dart';
 import 'utils/tap_chip.dart';
-import 'utils/verify_page.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
