@@ -1,6 +1,6 @@
 /// Model tree test with demo dataset.
 //
-// Time-stamp: <Friday 2025-01-31 12:51:58 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-05-19 06:45:59 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -24,8 +24,6 @@
 /// Authors: Zheyuan Xu, Graham Williams
 
 library;
-
-// Group imports by dart, flutter, packages, local. Then alphabetically.
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
