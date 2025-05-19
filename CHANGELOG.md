@@ -16,6 +16,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.5 Consolidate
 
++ INSTALLERS: Testing installers [6.5.2 20250520 gjw]
 + TEXT: Interactive update of corr term display [6.5.1 20250518 zy]
 + Initial release of the 6.5 series [6.5.0 20250515 gjw]
 
