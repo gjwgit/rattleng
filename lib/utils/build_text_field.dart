@@ -1,6 +1,6 @@
 /// Build a text field widget for the input of numeric values.
 //
-// Time-stamp: <Monday 2025-06-23 07:58:55 +1000 Graham Williams>
+// Time-stamp: <Monday 2025-06-23 08:03:17 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -119,6 +119,13 @@ class _buildTextFieldState extends ConsumerState<buildTextField> {
                   FilteringTextInputFormatter.singleLineFormatter,
                 ],
                 onChanged: _onTextFieldChanged,
+                // TODO 20250623 gjw Why do we need a special case for Sample Size?
+                //
+                // This is particularly bad practice, having a special case for
+                // a single text field for just one part of the user
+                // interface. @zheyuan, we need to have a really good
+                // explanation here for this please. Or else implement the
+                // special case through extra parameters.
                 onEditingComplete: () {
                   if (widget.label == 'Sample Size:' && widget.ref != null) {
                     ref.read(forestSampleSizeProvider.notifier).state =
