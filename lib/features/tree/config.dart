@@ -1,8 +1,8 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Monday 2025-03-24 05:51:47 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-06-23 08:16:41 +1000 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd.
+/// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 ///
@@ -128,7 +128,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
             spacing: configWidgetSpace,
             children: [
               ActivityButton(
-                key: const Key('Build Decision Tree'),
+                key: const Key('build_decision_tree_button'),
                 pageControllerProvider:
                     treePageControllerProvider, // Optional navigation
 
