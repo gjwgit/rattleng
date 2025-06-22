@@ -1,6 +1,6 @@
 /// Build text field to input numeric input.
 //
-// Time-stamp: <Sunday 2025-03-30 09:39:17 +1100 Graham Williams>
+// Time-stamp: <Monday 2025-06-23 07:38:05 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -106,7 +106,6 @@ class _buildTextFieldState extends ConsumerState<buildTextField> {
             SizedBox(
               width: widget.maxWidth * 15.0,
               child: TextFormField(
-                key: widget.key,
                 controller: widget.controller,
                 decoration: InputDecoration(
                   labelText: widget.label,
