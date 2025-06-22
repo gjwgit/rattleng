@@ -3,8 +3,9 @@
 Recorded here are the high level changes for the RattleNG app.
 
 Guide: Each version update is recorded here with a short user-oriented
-description of the update. Updates in the 6.4.n series are heading
-toward a 6.5 release and listed under the 6.4 series.
+description of the update. Updates in the 6.5.n series are heading
+toward a 6.6 release.  The `[version timestamp user]` string is
+utilised by the flutter version_widget package.
 
 Binaries to download latest version:
 [**GNU/Linux**](https://access.togaware.com/rattle-dev-linux.zip) -
@@ -14,7 +15,7 @@ Binaries to download latest version:
 
 Visit [togaware](https://rattle.togaware.com) for details.
 
-## 6.5 Consolidate
+## 6.6 Review and Consolidate
 
 + INSTALLERS: Testing installers [6.5.2 20250520 gjw]
 + TEXT: Interactive update of corr term display [6.5.1 20250518 zy]
