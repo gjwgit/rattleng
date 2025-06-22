@@ -1,6 +1,6 @@
-/// Build text field to input numeric input.
+/// Build a text field widget for the input of numeric values.
 //
-// Time-stamp: <Monday 2025-06-23 07:38:05 +1000 Graham Williams>
+// Time-stamp: <Monday 2025-06-23 07:58:55 +1000 Graham Williams>
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: Zheyuan Xu
+/// Authors: Zheyuan Xu, Graham Williams
 
 import 'dart:async';
 
@@ -33,12 +33,11 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/providers/forest.dart';
 
-/// Creates a custom text input field with tooltip.
+/// Create a custom filed for entering numeric values.
 ///
-/// Builds a TextFormField wrapped in a MarkdownTooltip with specified styling and validation.
-/// The field has configurable width, input formatting, and validation rules.
-///
-/// Returns a widget containing the styled and configured text field.
+/// A [TextFormField] with a [label] is wrapped within a MarkdownTooltip to
+/// support our standard [tooltip] widget. The field has a specified [textStyle]
+/// with configurable [maxWidth], an [inputFormatter], and [validator] rules.
 
 class buildTextField extends ConsumerStatefulWidget {
   final String label;
