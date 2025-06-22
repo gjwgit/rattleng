@@ -1,6 +1,6 @@
 /// Model tree test with demo dataset.
 //
-// Time-stamp: <Monday 2025-05-19 06:45:59 +1000 Graham Williams>
+// Time-stamp: <Monday 2025-06-23 08:19:48 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -35,7 +35,7 @@ import 'utils/goto_next_page.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
-import 'utils/tap_button_by_key.dart';
+import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
 import 'utils/verify_page.dart';
 
@@ -51,7 +51,7 @@ void main() {
     await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Tree');
     await tapChip(tester, 'Conditional');
-    await tapButtonByKey(tester, 'Build Decision Tree');
+    await tapButton(tester, 'Build Decision Tree');
     await tester.pump(hack);
     await gotoNextPage(tester);
     await verifyPage('Decision Tree Model');
