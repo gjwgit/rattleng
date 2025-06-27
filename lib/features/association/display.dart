@@ -55,9 +55,7 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
   Widget build(BuildContext context) {
     // Get the PageController from Riverpod.
 
-    final pageController = ref.watch(
-      associationControllerProvider,
-    );
+    final pageController = ref.watch(associationControllerProvider);
 
     String stdout = ref.watch(stdoutProvider);
 
@@ -251,9 +249,6 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    return PageViewer(
-      pageController: pageController,
-      pages: pages,
-    );
+    return PageViewer(pageController: pageController, pages: pages);
   }
 }

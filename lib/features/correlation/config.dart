@@ -57,7 +57,6 @@ class CorrelationConfigState extends ConsumerState<CorrelationConfig> {
             configLeftGap,
 
             // The BUILD button.
-
             ActivityButton(
               pageControllerProvider:
                   correlationPageControllerProvider, // Optional navigation

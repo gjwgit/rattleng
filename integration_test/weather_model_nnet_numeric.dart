@@ -69,13 +69,10 @@ void main() {
       await tapButton(tester, 'Build Neural Network');
       await tester.pump(hack);
       await navigateToPage(tester, 1);
-      await verifySelectableText(
-        tester,
-        [
-          'A 14-10-1 network with',
-          'Options were - skip-layer connections  entropy fitting',
-        ],
-      );
+      await verifySelectableText(tester, [
+        'A 14-10-1 network with',
+        'Options were - skip-layer connections  entropy fitting',
+      ]);
     });
   });
 }

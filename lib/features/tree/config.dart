@@ -137,17 +137,25 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
 
                   // Perform manual validation.
 
-                  String? minSplitError =
-                      validateInteger(_minSplitController.text, min: 0);
-                  String? maxDepthError =
-                      validateInteger(_maxDepthController.text, min: 1);
-                  String? minBucketError =
-                      validateInteger(_minBucketController.text, min: 1);
-                  String? complexityError =
-                      validateDecimal(_complexityController.text);
+                  String? minSplitError = validateInteger(
+                    _minSplitController.text,
+                    min: 0,
+                  );
+                  String? maxDepthError = validateInteger(
+                    _maxDepthController.text,
+                    min: 1,
+                  );
+                  String? minBucketError = validateInteger(
+                    _minBucketController.text,
+                    min: 1,
+                  );
+                  String? complexityError = validateDecimal(
+                    _complexityController.text,
+                  );
                   String? priorsError = _validatePriors(_priorsController.text);
-                  String? lossMatrixError =
-                      _validateLossMatrix(_lossMatrixController.text);
+                  String? lossMatrixError = _validateLossMatrix(
+                    _lossMatrixController.text,
+                  );
 
                   // Collect all errors.
 
@@ -209,12 +217,15 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                   } else {
                     // Update provider value.
 
-                    ref.read(treeMinSplitProvider.notifier).state =
-                        int.parse(_minSplitController.text);
-                    ref.read(treeMaxDepthProvider.notifier).state =
-                        int.parse(_maxDepthController.text);
-                    ref.read(treeMinBucketProvider.notifier).state =
-                        int.parse(_minBucketController.text);
+                    ref.read(treeMinSplitProvider.notifier).state = int.parse(
+                      _minSplitController.text,
+                    );
+                    ref.read(treeMaxDepthProvider.notifier).state = int.parse(
+                      _maxDepthController.text,
+                    );
+                    ref.read(treeMinBucketProvider.notifier).state = int.parse(
+                      _minBucketController.text,
+                    );
 
                     ref.read(treeComplexityProvider.notifier).state =
                         double.parse(_complexityController.text);

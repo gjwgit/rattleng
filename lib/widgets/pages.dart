@@ -31,10 +31,7 @@ import 'package:flutter/material.dart';
 class Pages extends StatefulWidget {
   final List<Widget> children;
 
-  const Pages({
-    super.key,
-    required this.children,
-  });
+  const Pages({super.key, required this.children});
 
   @override
   PagesState createState() => PagesState();
@@ -204,10 +201,7 @@ class CustomPageIndicator extends StatelessWidget {
                 onUpdateCurrentPageIndex(currentPageIndex - 1);
               }
             },
-            icon: const Icon(
-              Icons.arrow_left_rounded,
-              size: 32.0,
-            ),
+            icon: const Icon(Icons.arrow_left_rounded, size: 32.0),
           ),
           Row(
             children: List<Widget>.generate(numOfPages, (index) {
@@ -224,13 +218,11 @@ class CustomPageIndicator extends StatelessWidget {
                     color: currentPageIndex == index
                         ? colorScheme.primary
                         // Inside color for unselected dots.
-
                         : Colors.white,
                     border: Border.all(
                       color: currentPageIndex == index
                           ? Colors.transparent
                           // Black border for unselected dots.
-
                           : Colors.black,
                       width: 1.5,
                     ),
@@ -247,10 +239,7 @@ class CustomPageIndicator extends StatelessWidget {
                 onUpdateCurrentPageIndex(currentPageIndex + 1);
               }
             },
-            icon: const Icon(
-              Icons.arrow_right_rounded,
-              size: 32.0,
-            ),
+            icon: const Icon(Icons.arrow_right_rounded, size: 32.0),
           ),
         ],
       ),

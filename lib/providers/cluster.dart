@@ -43,13 +43,17 @@ const defaultClusterType = 'KMeans';
 
 final linkClusterProvider = StateProvider<String>((ref) => defaultClusterLink);
 final numberClusterProvider = StateProvider<int>((ref) => defaultClusterNumber);
-final pairSizeClusterProvider =
-    StateProvider<int>((ref) => defaultClusterPairSize);
-final processorClusterProvider =
-    StateProvider<int>((ref) => defaultClusterProcessor);
-final reScaleClusterProvider =
-    StateProvider<bool>((ref) => defaultClusterReScale);
+final pairSizeClusterProvider = StateProvider<int>(
+  (ref) => defaultClusterPairSize,
+);
+final processorClusterProvider = StateProvider<int>(
+  (ref) => defaultClusterProcessor,
+);
+final reScaleClusterProvider = StateProvider<bool>(
+  (ref) => defaultClusterReScale,
+);
 final runClusterProvider = StateProvider<int>((ref) => defaultClusterRun);
 final typeClusterProvider = StateProvider<String>((ref) => defaultClusterType);
-final distanceClusterProvider =
-    StateProvider<String>((ref) => defaultClusterDistance);
+final distanceClusterProvider = StateProvider<String>(
+  (ref) => defaultClusterDistance,
+);

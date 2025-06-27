@@ -55,8 +55,10 @@ class _DebugTogglesState extends State<DebugToggles> {
           Container(
             padding: const EdgeInsets.all(16.0),
             child: ToggleButtons(
-              isSelected:
-                  List.generate(3, (index) => index == _selectedToggleIndex),
+              isSelected: List.generate(
+                3,
+                (index) => index == _selectedToggleIndex,
+              ),
               onPressed: (int newIndex) {
                 setState(() {
                   _selectedToggleIndex = newIndex;
@@ -80,7 +82,6 @@ class _DebugTogglesState extends State<DebugToggles> {
               child: Row(
                 children: [
                   // Display selected widget
-
                   Visibility(
                     visible: _selectedToggleIndex == 0,
                     child: _toggleWidgets.first,

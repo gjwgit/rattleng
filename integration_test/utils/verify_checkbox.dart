@@ -44,8 +44,9 @@ Future<void> verifyCheckbox(
 
   // Retrieve the CheckboxListTile widget.
 
-  final LabelledCheckbox checkbox =
-      tester.widget<LabelledCheckbox>(checkboxFinder);
+  final LabelledCheckbox checkbox = tester.widget<LabelledCheckbox>(
+    checkboxFinder,
+  );
 
   // Verify the active state of the checkbox.
 

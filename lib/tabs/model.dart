@@ -48,46 +48,16 @@ import 'package:rattle/providers/reset.dart';
 import 'package:rattle/utils/debug_text.dart';
 
 final List<Map<String, dynamic>> modelPanels = [
-  {
-    'title': 'Overview',
-    'widget': const ModelPanel(),
-  },
-  {
-    'title': 'Cluster',
-    'widget': const ClusterPanel(),
-  },
-  {
-    'title': 'Associations',
-    'widget': const AssociationPanel(),
-  },
-  {
-    'title': 'Tree',
-    'widget': const TreePanel(),
-  },
-  {
-    'title': 'Forest',
-    'widget': const ForestPanel(),
-  },
-  {
-    'title': 'Boost',
-    'widget': const BoostPanel(),
-  },
-  {
-    'title': 'SVM',
-    'widget': const SvmPanel(),
-  },
-  {
-    'title': 'Linear',
-    'widget': const LinearPanel(),
-  },
-  {
-    'title': 'Neural',
-    'widget': const NeuralPanel(),
-  },
-  {
-    'title': 'Text',
-    'widget': const WordCloudPanel(),
-  },
+  {'title': 'Overview', 'widget': const ModelPanel()},
+  {'title': 'Cluster', 'widget': const ClusterPanel()},
+  {'title': 'Associations', 'widget': const AssociationPanel()},
+  {'title': 'Tree', 'widget': const TreePanel()},
+  {'title': 'Forest', 'widget': const ForestPanel()},
+  {'title': 'Boost', 'widget': const BoostPanel()},
+  {'title': 'SVM', 'widget': const SvmPanel()},
+  {'title': 'Linear', 'widget': const LinearPanel()},
+  {'title': 'Neural', 'widget': const NeuralPanel()},
+  {'title': 'Text', 'widget': const WordCloudPanel()},
 ];
 
 // TODO 20230916 gjw DOES THIS NEED TO BE STATEFUL?
@@ -129,8 +99,10 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
     }
 
     // Initialize the TabController with the filtered panels
-    _tabController =
-        TabController(length: filteredModelPanels.length, vsync: this);
+    _tabController = TabController(
+      length: filteredModelPanels.length,
+      vsync: this,
+    );
 
     _tabController.addListener(() {
       ref.read(modelProvider.notifier).state =
@@ -177,17 +149,16 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
             // with an IgnorePointer but the ignore would not take. In fact I
             // want to ignore Word Cloud if the data type is table.
 
-            final wcIndex =
-                modelPanels.indexWhere((item) => item['title'] == 'Text');
+            final wcIndex = modelPanels.indexWhere(
+              (item) => item['title'] == 'Text',
+            );
             if (!['', 'table'].contains(ref.watch(datatypeProvider)) &&
                 index != wcIndex) {
               _tabController.index = 0;
             }
           },
           tabs: filteredModelPanels.map((tab) {
-            return Tab(
-              text: tab['title'],
-            );
+            return Tab(text: tab['title']);
           }).toList(),
         ),
         Expanded(

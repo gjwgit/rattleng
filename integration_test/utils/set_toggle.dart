@@ -35,11 +35,7 @@ import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/partition.dart';
 
-Future<void> setToggle(
-  WidgetTester tester,
-  String toggle,
-  bool on,
-) async {
+Future<void> setToggle(WidgetTester tester, String toggle, bool on) async {
   // Identify the toggle button
 
   var ic = switch (toggle) {
@@ -62,12 +58,8 @@ Future<void> setToggle(
 
   // Get initial partition state.
 
-  final toggleState = tester
-      .state<ConsumerState>(
-        find.byType(DatasetToggles),
-      )
-      .ref
-      .read(prov);
+  final toggleState =
+      tester.state<ConsumerState>(find.byType(DatasetToggles)).ref.read(prov);
 
   // 20250206 gjw If partition is enabled and we want to turn it off, or the
   // partition is disabled and we want to turn it on, then tap the parition icon
@@ -80,12 +72,8 @@ Future<void> setToggle(
 
   // Verify partition is now enabled.
 
-  final updatedPartitionState = tester
-      .state<ConsumerState>(
-        find.byType(DatasetToggles),
-      )
-      .ref
-      .read(prov);
+  final updatedPartitionState =
+      tester.state<ConsumerState>(find.byType(DatasetToggles)).ref.read(prov);
   expect(updatedPartitionState, on);
 
   await tester.pumpAndSettle();

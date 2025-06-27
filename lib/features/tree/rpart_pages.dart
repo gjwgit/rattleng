@@ -38,9 +38,7 @@ import 'package:rattle/widgets/text_page.dart';
 
 /// Display the results of building an rpart tree.
 
-List<Widget> rpartPages(
-  WidgetRef ref,
-) {
+List<Widget> rpartPages(WidgetRef ref) {
   String stdout = ref.watch(stdoutProvider);
 
   // Begin the list of pages to display with model content.

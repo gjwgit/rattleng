@@ -57,19 +57,11 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
 
   // List of transformations enabled only for numeric variables.
 
-  List<String> numericMethods = [
-    'Mean',
-    'Median',
-  ];
+  List<String> numericMethods = ['Mean', 'Median'];
 
   // List of all transformations available.
 
-  List<String> methods = [
-    'Mean',
-    'Median',
-    'Mode',
-    'Constant',
-  ];
+  List<String> methods = ['Mean', 'Median', 'Mode', 'Constant'];
 
   // 20250206 gjw Default transformation is the Mean imputation but we will
   // override this below to be the Mode if a categoric variable is selected.
@@ -112,7 +104,6 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
           // field for improved UX.
 
           // Mean and Median Chips are only available for numeric variables.
-
           ChoiceChipTip<String>(
             options: methods.sublist(0, 2),
             selectedOption: selectedTransform,
@@ -147,7 +138,6 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
           ),
 
           // Place Mode Chip separately so we can enable it conditionally.
-
           ChoiceChipTip<String>(
             options: methods.sublist(2, 3),
             selectedOption: selectedTransform,
@@ -174,11 +164,9 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
           ),
 
           // Add extra space between MODE and CONSTANT.
-
           configChooserGap,
 
           // Second group of chips (only CONSTANT for now).
-
           ChoiceChipTip<String>(
             options: methods.sublist(3),
             selectedOption: selectedTransform,
@@ -336,7 +324,6 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
             configLeftGap,
             ActivityButton(
               // Optional navigation.
-
               pageControllerProvider: imputePageControllerProvider,
 
               onPressed: () {
@@ -360,7 +347,6 @@ class ImputeConfigState extends ConsumerState<ImputeConfig> {
 
               // On selection as well as recording what was selected rebuild the
               // visualisations.
-
               onChanged: (String? value) {
                 ref.read(selectedProvider.notifier).state =
                     value ?? 'IMPOSSIBLE';

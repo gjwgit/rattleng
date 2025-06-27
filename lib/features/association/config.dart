@@ -43,11 +43,7 @@ import 'package:rattle/widgets/vector_number_field.dart';
 
 /// Sort by methods of ASSOCIATION rules.
 
-List<String> associationRulesSortBy = [
-  'Support',
-  'Confidence',
-  'Lift',
-];
+List<String> associationRulesSortBy = ['Support', 'Confidence', 'Lift'];
 
 /// The ASSOCIATION tab config currently consists of just an ACTIVITY button.
 ///
@@ -93,19 +89,16 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
           spacing: configWidgetSpace,
           children: [
             // Space to the left of the configs.
-
             const SizedBox(width: 5),
 
             // The BUILD button.
-
             ActivityButton(
               onPressed: () async {
                 if (context.mounted)
-                  await rSource(
-                    context,
-                    ref,
-                    ['model_template', 'model_build_association'],
-                  );
+                  await rSource(context, ref, [
+                    'model_template',
+                    'model_build_association',
+                  ]);
                 await ref.read(associationControllerProvider).animateToPage(
                       // Index of the second page.
                       1,
@@ -119,7 +112,6 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
             Text('Target: ${getTarget(ref)}'),
 
             // Add Ident advisory text after Target
-
             Text('Ident: ${getIdent(ref)}'),
 
             LabelledCheckbox(
@@ -212,15 +204,11 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
                 ''',
               inputFormatter:
                   FilteringTextInputFormatter.digitsOnly, // Integers only
-              validator: (value) => validateInteger(
-                value,
-                min: 2,
-              ),
+              validator: (value) => validateInteger(value, min: 2),
               stateProvider: interestMeasuresAssociationProvider,
 
               // 20250307 gjw Why was this only available when BASKETS was not
               // ticked?
-
               enabled: true, // !basketsTicked,
             ),
             variableChooser(
@@ -243,7 +231,6 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
 
               // 20250307 gjw Why was this only available when BASKETS was not
               // ticked?
-
               enabled: true, //!basketsTicked,
             ),
           ],

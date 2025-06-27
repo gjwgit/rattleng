@@ -67,16 +67,11 @@ void main() {
 
       // Ensure the "Yes" button exists.
 
-      expect(
-        yesButtonFinder,
-        findsOneWidget,
-      );
+      expect(yesButtonFinder, findsOneWidget);
 
       // Tap on the "Yes" button to confirm the deletion.
 
-      await tester.tap(
-        yesButtonFinder,
-      );
+      await tester.tap(yesButtonFinder);
       await tester.pumpAndSettle();
 
       // Pause after screen change.
@@ -95,10 +90,7 @@ void main() {
 
         // Ensure the deleted variable is not listed.
 
-        expect(
-          deletedVariableFinder,
-          findsNothing,
-        );
+        expect(deletedVariableFinder, findsNothing);
       }
 
       await navigateToTab(tester, 'Explore');
@@ -111,10 +103,7 @@ void main() {
 
       // Ensure 'wind_gust_dir' is selected.
 
-      expect(
-        evaporationSelectedFinder,
-        findsOneWidget,
-      );
+      expect(evaporationSelectedFinder, findsOneWidget);
 
       // Tap on the dropdown menu.
 
@@ -141,9 +130,7 @@ void main() {
 
       // Confirm the deletion by tapping the "Yes" button.
 
-      await tester.tap(
-        yesButtonFinder,
-      );
+      await tester.tap(yesButtonFinder);
       await tester.pumpAndSettle();
 
       // Pause after screen change.
@@ -162,10 +149,7 @@ void main() {
       // Check that 'wind_speed_9am' is the selected variable.
 
       final windGustSpeedFinder = find.text('wind_speed_9am').hitTestable();
-      expect(
-        windGustSpeedFinder,
-        findsOneWidget,
-      );
+      expect(windGustSpeedFinder, findsOneWidget);
     });
   });
 }

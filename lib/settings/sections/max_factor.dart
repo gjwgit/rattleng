@@ -35,10 +35,7 @@ import 'package:rattle/widgets/number_field.dart';
 
 class MaxFactor extends ConsumerWidget {
   final TextEditingController controller;
-  const MaxFactor({
-    super.key,
-    required this.controller,
-  });
+  const MaxFactor({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

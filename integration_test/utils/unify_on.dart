@@ -13,9 +13,7 @@ Future<void> unifyOn(WidgetTester tester) async {
   // Get initial normalise state.
 
   final unifyState = tester
-      .state<ConsumerState>(
-        find.byType(DatasetToggles),
-      )
+      .state<ConsumerState>(find.byType(DatasetToggles))
       .ref
       .read(normaliseProvider);
 
@@ -29,9 +27,7 @@ Future<void> unifyOn(WidgetTester tester) async {
   // Verify normalise is now enabled.
 
   final updatedUnifyState = tester
-      .state<ConsumerState>(
-        find.byType(DatasetToggles),
-      )
+      .state<ConsumerState>(find.byType(DatasetToggles))
       .ref
       .read(normaliseProvider);
   expect(updatedUnifyState, true);

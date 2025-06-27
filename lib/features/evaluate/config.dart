@@ -283,14 +283,12 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       children: [
         // 20241215 gjw Add comment into this file here to force the automatic
         // code formatter to allow empty lines between widgets.
-
         configTopGap,
 
         Row(
           spacing: configWidgetSpace,
           children: [
             // 20241215 gjw Add comment to allow empty lines between widgets.
-
             configLeftGap,
 
             ActivityButton(
@@ -317,16 +315,18 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
                   bool adaBoostExecuted = ref.watch(adaBoostEvaluateProvider);
                   bool boostTicked = ref.watch(boostEvaluateProvider);
-                  bool conditionalForestExecuted =
-                      ref.watch(conditionalForestEvaluateProvider);
+                  bool conditionalForestExecuted = ref.watch(
+                    conditionalForestEvaluateProvider,
+                  );
                   bool ctreeExecuted = ref.watch(cTreeEvaluateProvider);
                   bool forestTicked = ref.watch(forestEvaluateProvider);
                   bool linearExecuted = ref.watch(linearEvaluateProvider);
                   bool nnetExecuted = ref.watch(nnetEvaluateProvider);
                   bool neuralNetExecuted = ref.watch(neuralNetEvaluateProvider);
                   bool neuralTicked = ref.watch(neuralEvaluateProvider);
-                  bool randomForestExecuted =
-                      ref.watch(randomForestEvaluateProvider);
+                  bool randomForestExecuted = ref.watch(
+                    randomForestEvaluateProvider,
+                  );
                   bool rpartExecuted = ref.watch(rpartTreeEvaluateProvider);
                   bool svmExecuted = ref.watch(svmEvaluateProvider);
                   bool treeExecuted = ref.watch(treeEvaluateProvider);
@@ -574,11 +574,10 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
           children: [
             configLeftGap,
             Text('Evaluation Dataset: '),
-            // Widget to display dataset type selection as choice chips with tooltips.
 
+            // Widget to display dataset type selection as choice chips with tooltips.
             ChoiceChipTip<String>(
               // Generate list of dataset type options, filtering based on partition toggles.
-
               options: datasetTypes.keys
                   .where(
                     (key) => ref.read(partitionProvider) || key == 'Complete',
@@ -590,17 +589,17 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                         : key,
                   )
                   .toList(),
-              // Set selected option, handling Tuning/Validation text swap and defaulting to Complete when partitions disabled.
 
+              // Set selected option, handling Tuning/Validation text swap and defaulting to Complete when partitions disabled.
               selectedOption: !ref.read(partitionProvider)
                   ? 'Complete'
                   : (datasetType == 'Tuning' &&
                           ref.watch(useValidationSettingProvider)
                       ? 'Validation'
                       : datasetType),
+
               // Create tooltips map, replacing 'Tuning' key with 'Validation'
               // when validation is enabled and filtering based on partition setting.
-
               tooltips: Map.fromEntries(
                 datasetTypes.entries
                     .where(
@@ -618,8 +617,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                       ),
                     ),
               ),
-              // Handle selection changes by updating state and provider.
 
+              // Handle selection changes by updating state and provider.
               onSelected: (chosen) {
                 setState(() {
                   if (chosen != null) {

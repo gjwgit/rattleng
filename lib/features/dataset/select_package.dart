@@ -55,9 +55,7 @@ Future<String> datasetSelectPackage(
                 // Expand each package into a list of ListTile widgets
                 return entry.value.map((dataset) {
                   return ListTile(
-                    title: Text(
-                      '${entry.key} - $dataset',
-                    ),
+                    title: Text('${entry.key} - $dataset'),
                     onTap: () {
                       ref.read(pathProvider.notifier).state =
                           '${entry.key}::$dataset';

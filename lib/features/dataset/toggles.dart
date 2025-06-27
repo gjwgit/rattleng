@@ -199,11 +199,9 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
     return ToggleButtons(
       // Set the selection states for the toggles based on the provider values.
-
       isSelected: [cleanse, normalise, partition],
 
       // Define the behavior when a toggle is pressed.
-
       onPressed: (int index) {
         // Check if "Keep in Sync" is enabled to determine how to handle state changes.
 
@@ -274,7 +272,6 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
       children: <Widget>[
         // CLEANSE
-
         MarkdownTooltip(
           message: '''
 
@@ -291,7 +288,6 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         ),
 
         // UNIFY
-
         MarkdownTooltip(
           message: '''
 
@@ -307,7 +303,6 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         ),
 
         // PARTITION
-
         MarkdownTooltip(
           message: '''
 

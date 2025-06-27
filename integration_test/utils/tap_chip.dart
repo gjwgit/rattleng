@@ -39,10 +39,7 @@ class NoChipFoundException implements Exception {
 
 /// Find a [Chip] widget with label [text] and tap it.
 
-Future<void> tapChip(
-  WidgetTester tester,
-  String text,
-) async {
+Future<void> tapChip(WidgetTester tester, String text) async {
   final chip = find.byWidgetPredicate(
     (Widget widget) =>
         widget is ChoiceChip && (widget.label as Text).data == text,

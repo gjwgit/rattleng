@@ -70,29 +70,23 @@ void main() {
       await navigateToFeature(tester, 'Summary');
       await tapButton(tester, 'Generate Dataset Summary');
       await navigateToPage(tester, 3, title: 'Skim the Dataset');
-      verifySelectableText(
-        tester,
-        [
-          // 20250208 gjw How many unique values does the target variable have
-          // and what are they?
-          '6 adjusted              0         1     FALSE',
-          '2 No: 1537, Yes: 463',
-        ],
-      );
+      verifySelectableText(tester, [
+        // 20250208 gjw How many unique values does the target variable have
+        // and what are they?
+        '6 adjusted              0         1     FALSE',
+        '2 No: 1537, Yes: 463',
+      ]);
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Tree');
       await tapButton(tester, 'Build Decision Tree');
       await tester.pump(delay);
       await navigateToPage(tester, 1, title: 'Decision Tree Model');
       await verifyPage('Decision Tree Model', 'Observations = 1400');
-      await verifySelectableText(
-        tester,
-        [
-          '1) root 1400 319 No (0.77214286 0.22785714)',
-          '2) age< 30.5 475  31 No (0.93473684 0.06526316) *',
-          '14) gender=Female 118  28 No (0.76271186 0.23728814) *',
-        ],
-      );
+      await verifySelectableText(tester, [
+        '1) root 1400 319 No (0.77214286 0.22785714)',
+        '2) age< 30.5 475  31 No (0.93473684 0.06526316) *',
+        '14) gender=Female 118  28 No (0.76271186 0.23728814) *',
+      ]);
     });
   });
 }

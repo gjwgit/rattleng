@@ -40,9 +40,7 @@ Future<void> setPartition(WidgetTester tester, bool on) async {
   // Get initial partition state.
 
   final partitionState = tester
-      .state<ConsumerState>(
-        find.byType(DatasetToggles),
-      )
+      .state<ConsumerState>(find.byType(DatasetToggles))
       .ref
       .read(partitionProvider);
 
@@ -58,9 +56,7 @@ Future<void> setPartition(WidgetTester tester, bool on) async {
   // Verify partition is now enabled.
 
   final updatedPartitionState = tester
-      .state<ConsumerState>(
-        find.byType(DatasetToggles),
-      )
+      .state<ConsumerState>(find.byType(DatasetToggles))
       .ref
       .read(partitionProvider);
   expect(updatedPartitionState, on);

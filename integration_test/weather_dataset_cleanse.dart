@@ -1,6 +1,6 @@
 /// Test WEATHER dataset loads properly when cleanse is on/off.
 //
-// Time-stamp: <Sunday 2025-01-26 07:32:57 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-06-27 14:27:54 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -39,8 +39,9 @@ import 'utils/verify_text.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Load Weather Dataset and test when cleanse is on.',
-      (WidgetTester tester) async {
+  testWidgets('Load Weather Dataset and test when cleanse is on.', (
+    WidgetTester tester,
+  ) async {
     app.main();
     await tester.pumpAndSettle();
     await cleanseOn(tester);
@@ -48,23 +49,17 @@ void main() {
 
     // Verify dataset content.
 
-    await verifySelectableText(
-      tester,
-      [
-        // Verify dates in the Sample Column for date Variable.
+    await verifySelectableText(tester, [
+      // Verify dates in the Sample Column for date Variable.
+      '2023-07-01',
+      '2023-07-02',
 
-        '2023-07-01',
-        '2023-07-02',
+      // Verify min_temp in the Sample Column.
+      '4.6',
 
-        // Verify min_temp in the Sample Column.
-
-        '4.6',
-
-        // Verify max_temp in the Content Column.
-
-        '13.9',
-      ],
-    );
+      // Verify max_temp in the Content Column.
+      '13.9',
+    ]);
 
     // // These following are unique when cleanse is on.
 
@@ -72,23 +67,21 @@ void main() {
       tester,
       [
         // Verify Unique Values for date Variable.
-
         '365',
 
         // Verify Unique Values for min_temp Variable.
-
         '192',
 
         // Verify Type Values for date Variable.
-
         'date',
       ],
       multi: true,
     );
   });
 
-  testWidgets('Load Weather Dataset and test when cleanse is off.',
-      (WidgetTester tester) async {
+  testWidgets('Load Weather Dataset and test when cleanse is off.', (
+    WidgetTester tester,
+  ) async {
     app.main();
     await tester.pumpAndSettle();
 
@@ -98,11 +91,10 @@ void main() {
 
     await verifySelectableText(
       tester,
-      // These are unique when cleanse is off.
 
+      // These are unique when cleanse is off.
       [
         // Verify Sample Values for location Variable.
-
         'Canberra',
       ],
     );
@@ -111,7 +103,6 @@ void main() {
       tester,
       [
         // Verify Type Values for wind_dir_9am Variable.
-
         'chr',
       ],
       multi: true,

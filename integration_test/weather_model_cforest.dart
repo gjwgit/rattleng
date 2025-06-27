@@ -54,22 +54,12 @@ void main() {
       await tapChip(tester, 'Conditional');
       await tapButton(tester, 'Build Random Forest');
       await addDelay(tester, 2);
-      await navigateToPage(
-        tester,
-        1,
-        back: 1,
-        title: 'Random Forest Model',
-      );
+      await navigateToPage(tester, 1, back: 1, title: 'Random Forest Model');
       await verifySelectableText(tester, [
         'Number of trees:  500',
         'Number of observations:  254',
       ]);
-      await navigateToPage(
-        tester,
-        2,
-        back: 1,
-        title: 'Sample Rules',
-      );
+      await navigateToPage(tester, 2, back: 1, title: 'Sample Rules');
       await verifySelectableText(tester, [
         '1) pressure_9am <= 1018.3; criterion = 0.993, statistic = 24.293',
         '2) wind_speed_3pm <= 22; criterion = 0.99, statistic = 17.177',

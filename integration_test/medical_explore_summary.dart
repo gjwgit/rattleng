@@ -51,27 +51,12 @@ void main() {
     await tapButton(tester, 'Generate Dataset Summary');
     await tester.pump(hack);
     await navigateToPage(tester, 1, title: 'Summary of the Dataset');
-    await verifySelectableText(tester, [
-      'Length:20000',
-      'f:12435',
-    ]);
+    await verifySelectableText(tester, ['Length:20000', 'f:12435']);
     await gotoNextPage(tester, title: 'Dataset Glimpse');
-    await verifySelectableText(
-      tester,
-      ['Rows: 20,000'],
-    );
+    await verifySelectableText(tester, ['Rows: 20,000']);
     await gotoNextPage(tester, title: 'Skim the Dataset');
-    await verifySelectableText(
-      tester,
-      ['20000'],
-    );
+    await verifySelectableText(tester, ['20000']);
     await gotoNextPage(tester, title: 'Kurtosis and Skewness');
-    await verifySelectableText(
-      tester,
-      [
-        '2.12090961',
-        '0.099352734',
-      ],
-    );
+    await verifySelectableText(tester, ['2.12090961', '0.099352734']);
   });
 }

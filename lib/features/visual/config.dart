@@ -198,9 +198,9 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
                 dropdownMenuEntries: inputs.map((s) {
                   return DropdownMenuEntry(value: s, label: s);
                 }).toList(),
+
                 // On selection, record the variable that was selected AND rebuild
                 // the visualisations.
-
                 onSelected: (String? value) {
                   ref.read(selectedProvider.notifier).state =
                       value ?? 'IMPOSSIBLE';
@@ -228,7 +228,6 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
 
                 // On selection, record the variable that was selected AND
                 // rebuild the visualisations.
-
                 onSelected: (String? value) {
                   ref.read(groupByProvider.notifier).state =
                       value ?? 'IMPOSSIBLE';

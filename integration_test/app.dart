@@ -73,10 +73,9 @@ void main() {
       final welcomeWidget =
           welcomeMarkdownFinder.evaluate().first.widget as Markdown;
 
-      String expectedwelcome1Content = File('assets/markdown/welcome1.md')
-          .readAsStringSync()
-          .replaceAll(RegExp(r'\s+'), ' ')
-          .trim();
+      String expectedwelcome1Content = File(
+        'assets/markdown/welcome1.md',
+      ).readAsStringSync().replaceAll(RegExp(r'\s+'), ' ').trim();
       String actualwelcome1Content =
           welcomeWidget.data.replaceAll(RegExp(r'\s+'), ' ').trim();
 
@@ -89,10 +88,9 @@ void main() {
       final welcome2Widget =
           welcomeMarkdownFinder.evaluate().elementAt(1).widget as Markdown;
 
-      String expectedwelcome2Content = File('assets/markdown/welcome2.md')
-          .readAsStringSync()
-          .replaceAll(RegExp(r'\s+'), ' ')
-          .trim();
+      String expectedwelcome2Content = File(
+        'assets/markdown/welcome2.md',
+      ).readAsStringSync().replaceAll(RegExp(r'\s+'), ' ').trim();
       String actualwelcome2Content =
           welcome2Widget.data.replaceAll(RegExp(r'\s+'), ' ').trim();
 

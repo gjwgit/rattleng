@@ -56,7 +56,6 @@ class InteractiveConfigState extends ConsumerState<InteractiveConfig> {
             configLeftGap,
 
             // The BUILD button.
-
             ActivityButton(
               onPressed: () {
                 showUnderConstruction(context);

@@ -76,19 +76,12 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
   /// Function that is used for the calculation of the error.
 
-  List<String> errorFunction = [
-    'sse',
-    'ce',
-  ];
+  List<String> errorFunction = ['sse', 'ce'];
 
   /// Function that is used for smoothing the result of the cross product
   /// of the covariate or neurons and the weights.
 
-  List<String> activationFunction = [
-    'logistic',
-    'tanh',
-    'relu',
-  ];
+  List<String> activationFunction = ['logistic', 'tanh', 'relu'];
 
   // Controllers for the input fields.
 
@@ -145,12 +138,18 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
               onPressed: () async {
                 // Perform manual validation.
-                String? sizeHiddenLayerError =
-                    validateInteger(_nnetSizeLayerController.text, min: 1);
-                String? maxNWtsError =
-                    validateInteger(_maxNWtsController.text, min: 1);
-                String? maxitError =
-                    validateInteger(_maxitController.text, min: 1);
+                String? sizeHiddenLayerError = validateInteger(
+                  _nnetSizeLayerController.text,
+                  min: 1,
+                );
+                String? maxNWtsError = validateInteger(
+                  _maxNWtsController.text,
+                  min: 1,
+                );
+                String? maxitError = validateInteger(
+                  _maxitController.text,
+                  min: 1,
+                );
 
                 // Collect all errors.
                 List<String> errors = [
@@ -185,10 +184,12 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
                 } else {
                   ref.read(hiddenLayerNeuralProvider.notifier).state =
                       int.parse(_nnetSizeLayerController.text);
-                  ref.read(neuralMaxWeightsProvider.notifier).state =
-                      int.parse(_maxNWtsController.text);
-                  ref.read(maxitNeuralProvider.notifier).state =
-                      int.parse(_maxitController.text);
+                  ref.read(neuralMaxWeightsProvider.notifier).state = int.parse(
+                    _maxNWtsController.text,
+                  );
+                  ref.read(maxitNeuralProvider.notifier).state = int.parse(
+                    _maxitController.text,
+                  );
 
                   // Run the R scripts.
 
@@ -198,18 +199,10 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
                   if (context.mounted) {
                     if (algorithm == 'nnet') {
-                      await rSource(
-                        context,
-                        ref,
-                        [mt, mbnn],
-                      );
+                      await rSource(context, ref, [mt, mbnn]);
                       ref.read(nnetEvaluateProvider.notifier).state = true;
                     } else if (algorithm == 'neuralnet') {
-                      await rSource(
-                        context,
-                        ref,
-                        [mt, mbn],
-                      );
+                      await rSource(context, ref, [mt, mbn]);
                       ref.read(neuralNetEvaluateProvider.notifier).state = true;
                     }
                   }
@@ -322,8 +315,9 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
 
                     ''',
                     validator: validateVector,
-                    inputFormatter:
-                        FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
+                    inputFormatter: FilteringTextInputFormatter.allow(
+                      RegExp(r'[0-9,\s]'),
+                    ),
                   ),
             NumberField(
               label: 'Max Iterations:',

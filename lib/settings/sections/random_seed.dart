@@ -36,10 +36,7 @@ import 'package:rattle/widgets/number_field.dart';
 
 class RandomSeed extends ConsumerWidget {
   final TextEditingController controller;
-  const RandomSeed({
-    super.key,
-    required this.controller,
-  });
+  const RandomSeed({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -103,11 +100,8 @@ class RandomSeed extends ConsumerWidget {
               child: Switch(
                 value: randomPartition,
                 onChanged: (value) {
-                  ref
-                      .read(
-                        randomPartitionSettingProvider.notifier,
-                      )
-                      .state = value;
+                  ref.read(randomPartitionSettingProvider.notifier).state =
+                      value;
                   _saveRandomPartition(value);
                 },
               ),
@@ -127,11 +121,8 @@ class RandomSeed extends ConsumerWidget {
                       defaultRandomSeed;
                   _saveRandomSeed(defaultRandomSeed);
 
-                  ref
-                      .read(
-                        randomPartitionSettingProvider.notifier,
-                      )
-                      .state = false;
+                  ref.read(randomPartitionSettingProvider.notifier).state =
+                      false;
                   _saveRandomPartition(false);
                 },
                 child: const Text('Reset'),

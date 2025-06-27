@@ -53,14 +53,11 @@ void main() {
       await tester.pump(hack);
       await gotoNextPage(tester);
       await verifyPage('Correlation - Numeric Data', '1.00');
-      await verifySelectableText(
-        tester,
-        [
-          'pressure_9am      1.00         0.97         0.25',
-          'humidity_9am      0.25         0.23         1.00',
-          'risk_mm          -0.20        -0.22         0.06',
-        ],
-      );
+      await verifySelectableText(tester, [
+        'pressure_9am      1.00         0.97         0.25',
+        'humidity_9am      0.25         0.23         1.00',
+        'risk_mm          -0.20        -0.22         0.06',
+      ]);
       await gotoNextPage(tester);
       await verifyPage('Variable Correlation Plot');
       await tester.pump(interact);

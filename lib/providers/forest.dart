@@ -30,8 +30,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rattle/providers/tree.dart';
 
-final algorithmForestProvider =
-    StateProvider<AlgorithmType>((ref) => AlgorithmType.traditional);
+final algorithmForestProvider = StateProvider<AlgorithmType>(
+  (ref) => AlgorithmType.traditional,
+);
 final forestSampleSizeProvider = StateProvider<String?>((ref) => null);
 final imputeForestProvider = StateProvider<bool>((ref) => true);
 final maxRulesForestProvider = StateProvider<int>((ref) => 10);

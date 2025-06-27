@@ -58,27 +58,22 @@ class _DatasetConfigState extends State<DatasetConfig> {
     return Row(
       children: [
         // Some fixed space so the widgets aren't crowded.
-
         configWidgetGap,
 
         // Widget to select the dataset filename.
-
         DatasetButton(),
 
         configWidgetGap,
 
         // A text field to display the selected dataset name.
-
         DatasetTextField(),
 
         // Clear the textfield entry.
-
         DatasetClearTextField(),
 
         configWidgetGap,
 
         // Toggles to choose what to do on loading the dataset.
-
         DatasetToggles(),
       ],
     );

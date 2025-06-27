@@ -56,12 +56,7 @@ final List<String> varsToIgnore = [
   'accounts',
 ];
 
-final List<String> inputVars = [
-  'age',
-  'income',
-  'deductions',
-  'hours',
-];
+final List<String> inputVars = ['age', 'income', 'deductions', 'hours'];
 
 final String riskVar = 'adjustment';
 final String targetVar = 'adjusted';
@@ -71,8 +66,9 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('AUDIT -> TRANSFORM -> MODEL -> NEURAL -> EVALUATE:', () {
-    testWidgets('ignore, rescale, configure, evaluate, error matrix.',
-        (WidgetTester tester) async {
+    testWidgets('ignore, rescale, configure, evaluate, error matrix.', (
+      WidgetTester tester,
+    ) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
@@ -119,31 +115,25 @@ void main() {
         back: 1,
         title: 'Neural Net Model - Summary and Weights',
       );
-      await verifySelectableText(
-        tester,
-        [
-          'A 4-10-1 network with 65 weights',
-          'Inputs: R01_age, R01_income, R01_deductions, R01_hours,',
-          'b->h1 i1->h1 i2->h1 i3->h1 i4->h1',
-          ' 1.12  11.16  -0.64  15.49   2.91',
-        ],
-      );
+      await verifySelectableText(tester, [
+        'A 4-10-1 network with 65 weights',
+        'Inputs: R01_age, R01_income, R01_deductions, R01_hours,',
+        'b->h1 i1->h1 i2->h1 i3->h1 i4->h1',
+        ' 1.12  11.16  -0.64  15.49   2.91',
+      ]);
 
       // EVALUATE -> ERROR MATRIX
 
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
       await navigateToPage(tester, 1, back: 2, title: 'Error Matrix');
-      await verifySelectableText(
-        tester,
-        [
-          'No  220  14   6.0',
-          'Yes  52  14  78.8',
-          'No  73.3 4.7   6.0',
-          'Yes 17.3 4.7  78.8',
-          'Overall Error = 22.00%; Average Error = 42.39%.',
-        ],
-      );
+      await verifySelectableText(tester, [
+        'No  220  14   6.0',
+        'Yes  52  14  78.8',
+        'No  73.3 4.7   6.0',
+        'Yes 17.3 4.7  78.8',
+        'Overall Error = 22.00%; Average Error = 42.39%.',
+      ]);
     });
   });
 }

@@ -41,22 +41,16 @@ void main() {
     await tester.pumpAndSettle();
     await loadDemoDataset(tester);
 
-    await verifySelectableText(
-      tester,
-      [
-        // Verify dates in the Content Column.
+    await verifySelectableText(tester, [
+      // Verify dates in the Content Column.
+      '2023-07-01',
+      '2023-07-02',
 
-        '2023-07-01',
-        '2023-07-02',
+      // Verify min_temp in the Content Column.
+      '4.6',
 
-        // Verify min_temp in the Content Column.
-
-        '4.6',
-
-        // Verify max_temp in the Content Column.
-
-        '13.9',
-      ],
-    );
+      // Verify max_temp in the Content Column.
+      '13.9',
+    ]);
   });
 }

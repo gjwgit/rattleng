@@ -53,33 +53,23 @@ String _basicTemplate(String log, bool isSummary) {
 String rExtractAssociation(String log, bool isSummary) {
   String extract = _basicTemplate(log, isSummary);
 
-  extract = extract.replaceAllMapped(
-    RegExp(r'\nn= '),
-    (match) {
-      return '\nObservations = ';
-    },
-  );
+  extract = extract.replaceAllMapped(RegExp(r'\nn= '), (match) {
+    return '\nObservations = ';
+  });
 
   // Nicely format the call.
 
   extract = extract.replaceAllMapped(
-    RegExp(
-      r'\n(\(.*\))\)',
-      multiLine: true,
-      dotAll: true,
-    ),
+    RegExp(r'\n(\(.*\))\)', multiLine: true, dotAll: true),
     (match) {
       String txt = match.group(1) ?? '';
 
       txt = txt.replaceAll('\n', '');
       txt = txt.replaceAll(RegExp(r',\s*m'), ', m');
 
-      txt = txt.replaceAllMapped(
-        RegExp(r'(\w+)\s*=\s*([^,]+),'),
-        (match) {
-          return '\n    ${match.group(1)}=${match.group(2)},';
-        },
-      );
+      txt = txt.replaceAllMapped(RegExp(r'(\w+)\s*=\s*([^,]+),'), (match) {
+        return '\n    ${match.group(1)}=${match.group(2)},';
+      });
 
       txt = txt.replaceAll(' = ', '=');
 

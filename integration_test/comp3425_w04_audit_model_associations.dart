@@ -46,8 +46,9 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('COMP3425 W04 LAB AUDIT ASSOCIATION:', () {
-    testWidgets('model, impute occupation, model.',
-        (WidgetTester tester) async {
+    testWidgets('model, impute occupation, model.', (
+      WidgetTester tester,
+    ) async {
       app.main();
       await tester.pumpAndSettle();
       // 20250206 gjw Turn partition on for now though the COMP3425 exercise
@@ -66,16 +67,13 @@ void main() {
         1,
         title: 'Association Rules — Meta Summary',
       );
-      await verifySelectableText(
-        tester,
-        [
-          'set of 19 rules',
-          '   support         confidence        coverage           lift',
-          'Min.   :0.1114   Min.   :0.1747   Min.   :0.1614   Min.   :0.8538',
-          'Median :0.1457   Median :0.4403   Median :0.3436   Median :1.0425',
-          'list(support = 0.1, confidence = 0.1, minlen = 2)',
-        ],
-      );
+      await verifySelectableText(tester, [
+        'set of 19 rules',
+        '   support         confidence        coverage           lift',
+        'Min.   :0.1114   Min.   :0.1747   Min.   :0.1614   Min.   :0.8538',
+        'Median :0.1457   Median :0.4403   Median :0.3436   Median :1.0425',
+        'list(support = 0.1, confidence = 0.1, minlen = 2)',
+      ]);
       // 20250206 gjw If we turn partition off then we get different numbers.
       // await verifySelectableText(
       //   tester,
@@ -92,15 +90,12 @@ void main() {
         2,
         title: 'Association Rules — Discovered Rules',
       );
-      await verifySelectableText(
-        tester,
-        [
-          'marital=Married',
-          '=> {gender=Male}',
-          'support   confidence coverage  lift      count',
-          '0.4014286 0.8906498  0.4507143 1.3279123 562',
-        ],
-      );
+      await verifySelectableText(tester, [
+        'marital=Married',
+        '=> {gender=Male}',
+        'support   confidence coverage  lift      count',
+        '0.4014286 0.8906498  0.4507143 1.3279123 562',
+      ]);
 
       // Now IMPUTE missing for the Occupation and build again.
 
@@ -112,12 +107,7 @@ void main() {
       await tapChip(tester, 'Constant');
       await tapButton(tester, 'Impute Missing Values');
       await navigateToPage(tester, 1, title: 'Dataset Summary');
-      await verifySelectableText(
-        tester,
-        [
-          'IMP_occupation',
-        ],
-      );
+      await verifySelectableText(tester, ['IMP_occupation']);
 
       // 20250205 gjw Rebuild the model and determin the difference?
 
@@ -130,26 +120,18 @@ void main() {
         1,
         title: 'Association Rules — Meta Summary',
       );
-      await verifySelectableText(
-        tester,
-        [
-          'set of 23 rules',
-        ],
-      );
+      await verifySelectableText(tester, ['set of 23 rules']);
       await navigateToPage(
         tester,
         2,
         title: 'Association Rules — Discovered Rules',
       );
-      await verifySelectableText(
-        tester,
-        [
-          'marital=Married',
-          '=> {gender=Male}',
-          'support   confidence coverage  lift      count',
-          '0.4014286 0.8906498  0.4507143 1.3279123 562',
-        ],
-      );
+      await verifySelectableText(tester, [
+        'marital=Married',
+        '=> {gender=Male}',
+        'support   confidence coverage  lift      count',
+        '0.4014286 0.8906498  0.4507143 1.3279123 562',
+      ]);
     });
   });
 }

@@ -27,8 +27,9 @@ import 'package:intl/intl.dart';
 String timestamp() {
   int current = DateTime.now().millisecondsSinceEpoch;
 
-  String result = DateFormat('yyyy-MM-dd HH:mm:ss')
-      .format(DateTime.fromMillisecondsSinceEpoch(current));
+  String result = DateFormat(
+    'yyyy-MM-dd HH:mm:ss',
+  ).format(DateTime.fromMillisecondsSinceEpoch(current));
 
   return result;
 }

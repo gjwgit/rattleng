@@ -30,16 +30,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class NoImagePage extends StatelessWidget {
-  const NoImagePage({
-    super.key,
-  });
+  const NoImagePage({super.key});
 
   /// Load the placeholder image.
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SvgPicture.asset('assets/svg/placeholder.svg'),
-    );
+    return Center(child: SvgPicture.asset('assets/svg/placeholder.svg'));
   }
 }

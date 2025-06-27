@@ -35,9 +35,7 @@ import 'package:rattle/settings/utils/out_of_range_warning.dart';
 import 'package:rattle/settings/widgets/partition_controls.dart';
 
 class Partition extends ConsumerWidget {
-  const Partition({
-    super.key,
-  });
+  const Partition({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -103,9 +101,7 @@ class Partition extends ConsumerWidget {
               ''',
               child: const Text(
                 'Partition',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
             configRowGap,

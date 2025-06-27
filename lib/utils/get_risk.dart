@@ -32,8 +32,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rattle/providers/vars/roles.dart';
 
 String getRisk(WidgetRef ref) {
-// The rolesProvider listes the roles for the different variables which we
-// need to know for parsing the R scripts.
+  // The rolesProvider listes the roles for the different variables which we
+  // need to know for parsing the R scripts.
 
   Map<String, Role> roles = ref.read(rolesProvider);
 

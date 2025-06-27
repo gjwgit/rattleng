@@ -41,20 +41,11 @@ void main() {
     app.main();
     await tester.pumpAndSettle();
     await loadDemoDataset(tester, 'Movies');
-    await verifyText(
-      tester,
-      [
-        'basket',
-        'item',
-      ],
-    );
-    await verifySelectableText(
-      tester,
-      [
-        '1, 1, 1, 1, 1, 2,',
-        'Sixth Sense',
-        'LOTR1',
-      ],
-    );
+    await verifyText(tester, ['basket', 'item']);
+    await verifySelectableText(tester, [
+      '1, 1, 1, 1, 1, 2,',
+      'Sixth Sense',
+      'LOTR1',
+    ]);
   });
 }

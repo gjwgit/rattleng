@@ -57,12 +57,7 @@ final List<String> varsToIgnore = [
   'accounts',
 ];
 
-final List<String> inputVars = [
-  'age',
-  'income',
-  'deductions',
-  'hours',
-];
+final List<String> inputVars = ['age', 'income', 'deductions', 'hours'];
 
 final String riskVar = 'adjustment';
 final String targetVar = 'adjusted';
@@ -71,86 +66,81 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group(
-      'AUDIT -> CLASSIFICATION -> TRANSFORM -> MODEL -> NEURALNET -> EVALUATE:',
-      () {
-    testWidgets('ignore, rescale, evaluate, error matrix.',
-        (WidgetTester tester) async {
-      app.main();
-      await tester.pumpAndSettle();
-      await tester.pump(interact);
+    'AUDIT -> CLASSIFICATION -> TRANSFORM -> MODEL -> NEURALNET -> EVALUATE:',
+    () {
+      testWidgets('ignore, rescale, evaluate, error matrix.', (
+        WidgetTester tester,
+      ) async {
+        app.main();
+        await tester.pumpAndSettle();
+        await tester.pump(interact);
 
-      // DATASET -> AUDIT -> ROLES
+        // DATASET -> AUDIT -> ROLES
 
-      await loadDemoDataset(tester, 'Audit');
-      for (final v in varsToIgnore) {
-        await setDatasetRole(tester, v, 'Ignore');
-      }
-      for (final v in inputVars) {
-        await verifyDatasetRole(v, 'Input');
-      }
-      await setDatasetRole(tester, riskVar, 'Risk');
-      await verifyDatasetRole(targetVar, 'Target');
-      await verifyDatasetRole('id', 'Ident');
+        await loadDemoDataset(tester, 'Audit');
+        for (final v in varsToIgnore) {
+          await setDatasetRole(tester, v, 'Ignore');
+        }
+        for (final v in inputVars) {
+          await verifyDatasetRole(v, 'Input');
+        }
+        await setDatasetRole(tester, riskVar, 'Risk');
+        await verifyDatasetRole(targetVar, 'Target');
+        await verifyDatasetRole('id', 'Ident');
 
-      // TRANSFORM -> RESCALE
+        // TRANSFORM -> RESCALE
 
-      await navigateToTab(tester, 'Transform');
-      await navigateToFeature(tester, 'Rescale');
-      await tapChip(tester, 'Scale [0-1]');
-      for (final v in inputVars) {
-        await setSelectedVariable(tester, v);
-        await tapButton(tester, 'Rescale Variable Values');
-      }
-      await navigateToFeature(tester, 'Cleanup');
-      await tapChip(tester, 'Ignored');
-      await tapButton(tester, 'Delete from Dataset');
-      await tapPopup(tester, 'Yes');
-      await addDelay(tester, 4);
+        await navigateToTab(tester, 'Transform');
+        await navigateToFeature(tester, 'Rescale');
+        await tapChip(tester, 'Scale [0-1]');
+        for (final v in inputVars) {
+          await setSelectedVariable(tester, v);
+          await tapButton(tester, 'Rescale Variable Values');
+        }
+        await navigateToFeature(tester, 'Cleanup');
+        await tapChip(tester, 'Ignored');
+        await tapButton(tester, 'Delete from Dataset');
+        await tapPopup(tester, 'Yes');
+        await addDelay(tester, 4);
 
-      // MODEL -> CONFIGURE -> NNET
+        // MODEL -> CONFIGURE -> NNET
 
-      await navigateToTab(tester, 'Model');
-      await navigateToFeature(tester, 'Neural');
-      await tapChip(tester, 'neuralnet');
-      await setTextField(tester, 'neuralnet_config_hidden_layers', '3,2');
-      await tapButton(tester, 'Build Neural Network');
-      await addDelay(tester, 4);
-      await navigateToPage(
-        tester,
-        1,
-        back: 1,
-        title: 'Neural Net Model - Summary and Weights',
-      );
-      await verifySelectableText(
-        tester,
-        [
+        await navigateToTab(tester, 'Model');
+        await navigateToFeature(tester, 'Neural');
+        await tapChip(tester, 'neuralnet');
+        await setTextField(tester, 'neuralnet_config_hidden_layers', '3,2');
+        await tapButton(tester, 'Build Neural Network');
+        await addDelay(tester, 4);
+        await navigateToPage(
+          tester,
+          1,
+          back: 1,
+          title: 'Neural Net Model - Summary and Weights',
+        );
+        await verifySelectableText(tester, [
           'Error                       9.509195e+01',
           'Reached.threshold           7.498733e-03',
           'Steps                       1.195300e+04',
           'Intercept.to.1layhid1       9.169849e-01',
           'R01_age.to.1layhid1        -2.139192e+00',
-        ],
-      );
+        ]);
 
-      // EVALUATE -> ERROR MATRIX
+        // EVALUATE -> ERROR MATRIX
 
-      await navigateToTab(tester, 'Evaluate');
-      await tapButton(tester, 'Evaluate');
-      await addDelay(tester, 4);
-      await navigateToPage(tester, 1, back: 1, title: 'Error Matrix');
-      await verifySelectableText(
-        tester,
-        [
+        await navigateToTab(tester, 'Evaluate');
+        await tapButton(tester, 'Evaluate');
+        await addDelay(tester, 4);
+        await navigateToPage(tester, 1, back: 1, title: 'Error Matrix');
+        await verifySelectableText(tester, [
           // This seems wrong - need to check the pred function again. (gjw
           // 20250324)
-
           'No  234   0     0',
           'Yes  66   0   100',
           'No  78   0     0',
           'Yes 22   0   100',
           'Overall Error = 22.00%; Average Error = 50.00%.',
-        ],
-      );
-    });
-  });
+        ]);
+      });
+    },
+  );
 }

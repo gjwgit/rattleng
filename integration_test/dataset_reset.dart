@@ -40,8 +40,9 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('DATASET RESET:', () {
-    testWidgets('load weather; reload weather; validate contents.',
-        (WidgetTester tester) async {
+    testWidgets('load weather; reload weather; validate contents.', (
+      WidgetTester tester,
+    ) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
@@ -68,20 +69,17 @@ void main() {
 
       await navigateToPage(tester, 1);
 
-      await verifySelectableText(
-        tester,
-        [
-          // Verify date in the Content Column.
-          '2023-07-01',
-          '2023-07-02',
+      await verifySelectableText(tester, [
+        // Verify date in the Content Column.
+        '2023-07-01',
+        '2023-07-02',
 
-          // Verify min_temp in the Content Column.
-          '4.6',
+        // Verify min_temp in the Content Column.
+        '4.6',
 
-          // Verify max_temp in the Content Column.
-          '13.9',
-        ],
-      );
+        // Verify max_temp in the Content Column.
+        '13.9',
+      ]);
     });
   });
 }

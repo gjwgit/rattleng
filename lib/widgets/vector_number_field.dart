@@ -72,8 +72,9 @@ class VectorNumberFieldState extends ConsumerState<VectorNumberField> {
   void initState() {
     super.initState();
     _focusNode.addListener(_onFocusChange);
-    widget.controller.text =
-        ref.read(widget.stateProvider); // Initialize with state as a string
+    widget.controller.text = ref.read(
+      widget.stateProvider,
+    ); // Initialize with state as a string
   }
 
   void updateField() {

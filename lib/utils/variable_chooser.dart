@@ -52,7 +52,6 @@ Widget variableChooser(
       }).toList(),
 
       // Use the enabled parameter to control the dropdown state.
-
       enabled: enabled,
       onSelected: (String? value) {
         if (enabled) {
@@ -66,10 +65,8 @@ Widget variableChooser(
       },
 
       // Add a custom style for when it's disabled.
-
       textStyle: TextStyle(
         // Set grey when disabled.
-
         color: enabled ? Colors.black : Colors.grey,
       ),
     ),

@@ -29,10 +29,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
-Future<void> tapButtonByKey(
-  WidgetTester tester,
-  String key,
-) async {
+Future<void> tapButtonByKey(WidgetTester tester, String key) async {
   final button = find.byKey(Key(key));
 
   // 20250130 gjw Fail if more than a single widget with the key is found. Is

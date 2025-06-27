@@ -105,37 +105,37 @@ Future<void> rSource(
   // partially works but then fails. For now, revert to the direct call to
   // rSource(). (gjw 20250319)
   //
-// ) async {
-//   // In order to explore different execution options we can call _rSource() as a
-//   // private function. The issue is that on Linux the script that is being sent
-//   // to the Console is being truncated on the Console for EVLUATION. And so with
-//   // the recent addition of the 4 ROCR plots (cost, lift, precision,
-//   // sensitivity) I don't get all the plots for multiple models. They are
-//   // actually not being generated into SVG files, seems like because the code is
-//   // not getting to the CONSOLE. Seems like this is the case on my Linux, but
-//   // others are not yet reporting an issue. However, splitting each script out
-//   // to be executed one at a time does not solve the problem. (gjw 20250316)
-//   //
-//   // A work around is to generate an evaluation for one model at a time, then
-//   // have a break! But did not work.
+  // ) async {
+  //   // In order to explore different execution options we can call _rSource() as a
+  //   // private function. The issue is that on Linux the script that is being sent
+  //   // to the Console is being truncated on the Console for EVLUATION. And so with
+  //   // the recent addition of the 4 ROCR plots (cost, lift, precision,
+  //   // sensitivity) I don't get all the plots for multiple models. They are
+  //   // actually not being generated into SVG files, seems like because the code is
+  //   // not getting to the CONSOLE. Seems like this is the case on my Linux, but
+  //   // others are not yet reporting an issue. However, splitting each script out
+  //   // to be executed one at a time does not solve the problem. (gjw 20250316)
+  //   //
+  //   // A work around is to generate an evaluation for one model at a time, then
+  //   // have a break! But did not work.
 
-//   // for (String script in scripts) {
-//   //   _rSource(context, ref, [script]);
-//   // }
+  //   // for (String script in scripts) {
+  //   //   _rSource(context, ref, [script]);
+  //   // }
 
-//   // In this case simply pass through. This is the original implementation.
+  //   // In this case simply pass through. This is the original implementation.
 
-//   _rSource(context, ref, scripts);
+  //   _rSource(context, ref, scripts);
 
-//   // Could try a delay after ever script.
+  //   // Could try a delay after ever script.
 
-// //      await Future.delayed(Duration(milliseconds: 500));
-// }
+  // //      await Future.delayed(Duration(milliseconds: 500));
+  // }
 
-// Future<void> _rSource(
-//   BuildContext context,
-//   WidgetRef ref,
-//   List<String> scripts,
+  // Future<void> _rSource(
+  //   BuildContext context,
+  //   WidgetRef ref,
+  //   List<String> scripts,
 ) async {
   // We first check that the R CONSOLE is ready to accept commands. This is done
   // by checking for the `> ` prompt as the final two characters in stdout. If
@@ -241,8 +241,9 @@ Future<void> rSource(
   double associationSupport = ref.read(supportAssociationProvider);
   double associationConfidence = ref.read(confidenceAssociationProvider);
   int associationMinLength = ref.read(minLengthAssociationProvider);
-  int associationInterestMeasureLimit =
-      ref.read(interestMeasuresAssociationProvider);
+  int associationInterestMeasureLimit = ref.read(
+    interestMeasuresAssociationProvider,
+  );
   String associationRulesSortBy =
       ref.read(sortByAssociationProvider).toLowerCase();
 
@@ -378,8 +379,10 @@ Future<void> rSource(
 
   code = code.replaceAll('<SETTINGS_GRAPHIC_THEME>', theme);
 
-  code =
-      code.replaceAll('<TUNING_TYPE>', useValidation ? 'validation' : 'tuning');
+  code = code.replaceAll(
+    '<TUNING_TYPE>',
+    useValidation ? 'validation' : 'tuning',
+  );
 
   ////////////////////////////////////////////////////////////////////////
   // DATASET ROLES
@@ -439,10 +442,7 @@ Future<void> rSource(
     }
   });
 
-  code = code.replaceAll(
-    '<RISK_VAR>',
-    risk == 'NULL' ? 'NULL' : '"$risk"',
-  );
+  code = code.replaceAll('<RISK_VAR>', risk == 'NULL' ? 'NULL' : '"$risk"');
 
   // IDENTIFIERS
 
@@ -532,8 +532,10 @@ Future<void> rSource(
 
   code = code.replaceAll('<SELECTED_2_VAR>', selected2);
 
-  code =
-      code.replaceAll('<GROUP_BY_VAR>', groupBy == 'None' ? 'NULL' : groupBy);
+  code = code.replaceAll(
+    '<GROUP_BY_VAR>',
+    groupBy == 'None' ? 'NULL' : groupBy,
+  );
 
   code = code.replaceAll('<IMPUTED_VALUE>', imputed);
 
@@ -552,8 +554,10 @@ Future<void> rSource(
         : 'usesurrogate = 0,\n                          maxsurrogate = 0,\n                          ',
   );
   code = code.replaceAll('<MINSPLIT>', 'minsplit     = ${minSplit.toString()}');
-  code =
-      code.replaceAll('<MINBUCKET>', 'minbucket    = ${minBucket.toString()}');
+  code = code.replaceAll(
+    '<MINBUCKET>',
+    'minbucket    = ${minBucket.toString()}',
+  );
   code = code.replaceAll('<MAXDEPTH>', 'maxdepth     = ${maxDepth.toString()}');
   code = code.replaceAll('<CP>', 'cp           = ${complexity.toString()}');
   code = code.replaceAll(
@@ -613,16 +617,17 @@ Future<void> rSource(
 
   code = code.replaceAll('<CLUSTER_NUM>', clusterNum.toString());
   code = code.replaceAll('<CLUSTER_RUN>', clusterRun.toString());
-  code =
-      code.replaceAll('<CLUSTER_RESCALE>', clusterReScale ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('<CLUSTER_TYPE>', '"${clusterType.toString()}"');
   code = code.replaceAll(
-    '<CLUSTER_TYPE_STR>',
-    clusterType.toString(),
+    '<CLUSTER_RESCALE>',
+    clusterReScale ? 'TRUE' : 'FALSE',
   );
+  code = code.replaceAll('<CLUSTER_TYPE>', '"${clusterType.toString()}"');
+  code = code.replaceAll('<CLUSTER_TYPE_STR>', clusterType.toString());
 
-  code =
-      code.replaceAll('<CLUSTER_DISTANCE>', '"${clusterDistance.toString()}"');
+  code = code.replaceAll(
+    '<CLUSTER_DISTANCE>',
+    '"${clusterDistance.toString()}"',
+  );
   code = code.replaceAll('<CLUSTER_LINK>', '"${clusterLink.toString()}"');
   code = code.replaceAll('<CLUSTER_PROCESSOR>', clusterProcessor.toString());
   code = code.replaceAll('<CLUSTER_PAIR_SIZE>', clusterPairSize.toString());
@@ -675,8 +680,10 @@ Future<void> rSource(
     '<NEURAL_MAX_NWTS>',
     ref.read(neuralMaxWeightsProvider).toString(),
   );
-  code =
-      code.replaceAll('<NEURAL_ERROR_FCT>', '"${neuralErrorFct.toString()}"');
+  code = code.replaceAll(
+    '<NEURAL_ERROR_FCT>',
+    '"${neuralErrorFct.toString()}"',
+  );
   code = code.replaceAll(
     '<NEURAL_ACT_FCT>',
     '"${neuralActivationFct.toString()}"',
@@ -717,8 +724,10 @@ Future<void> rSource(
   code = code.replaceAll('<MINFREQ>', minFreq);
   code = code.replaceAll('<MAXWORD>', maxWord.toString());
   code = code.replaceAll('<TEXT_LOWER_CASE>', lowerCase ? 'TRUE' : 'FALSE');
-  code =
-      code.replaceAll('<TEXT_REMOVE_SPARSE>', removeSparse ? 'TRUE' : 'FALSE');
+  code = code.replaceAll(
+    '<TEXT_REMOVE_SPARSE>',
+    removeSparse ? 'TRUE' : 'FALSE',
+  );
   code = code.replaceAll(
     '<TEXT_REMOVE_NUMBERS>',
     removeNumbers ? 'TRUE' : 'FALSE',
@@ -793,7 +802,7 @@ Future<void> rSource(
   }
   // Optionally, show a SnackBar when the script finishes executing.
 
-//  if (code.contains('Processing $script Completed')) {
+  //  if (code.contains('Processing $script Completed')) {
   setStatus(
     ref,
     'R scripts completed. See **Console** for details, **Script** for R code.\n'
@@ -831,5 +840,5 @@ Future<void> rSource(
   //     ),
   //   );
   // }
-//  }
+  //  }
 }

@@ -98,12 +98,9 @@ void main() {
       // the next page.
       await tester.pump(delay);
       await verifyPage('Decision Tree Model');
-      await verifySelectableText(
-        tester,
-        [
-          '1) root 14000 1860 0 (0.8671429 0.1328571) *',
-        ],
-      );
+      await verifySelectableText(tester, [
+        '1) root 14000 1860 0 (0.8671429 0.1328571) *',
+      ]);
       await tester.pump(interact);
     });
   });

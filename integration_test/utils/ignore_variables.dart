@@ -32,10 +32,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'delays.dart';
 import 'test_print.dart';
 
-Future ignoreVariables(
-  WidgetTester tester,
-  List<String> vars,
-) async {
+Future ignoreVariables(WidgetTester tester, List<String> vars) async {
   // Expect to find the scrollable ListView - ROLES.
 
   final scrollableFinder = find.byKey(const Key('roles_list_view'));
@@ -60,9 +57,7 @@ Future ignoreVariables(
 
         final parentFinder = find.ancestor(
           of: varFinder,
-          matching: find.byType(
-            Row,
-          ),
+          matching: find.byType(Row),
         );
 
         // Select the first Row in the list.
@@ -111,9 +106,7 @@ Future ignoreVariables(
 
             final preParentFinder = find.ancestor(
               of: preVarFinder,
-              matching: find.byType(
-                Row,
-              ),
+              matching: find.byType(Row),
             );
 
             // Select the first Row in the list.

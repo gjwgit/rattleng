@@ -61,9 +61,7 @@ void showError({
       selectable: true,
       softLineBreak: true,
     ),
-    actions: [
-      ExitButton,
-    ],
+    actions: [ExitButton],
   );
 
   // Show the dialog

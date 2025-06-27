@@ -60,12 +60,7 @@ void main() {
       await tester.pump(delay);
       await tester.pump(delay);
       await navigateToPage(tester, 1);
-      await verifySelectableText(
-        tester,
-        [
-          'data = ds_final',
-        ],
-      );
+      await verifySelectableText(tester, ['data = ds_final']);
     });
   });
 }

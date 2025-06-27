@@ -142,20 +142,14 @@ class PartitionControls extends ConsumerWidget {
                 ''',
                 child: Row(
                   children: [
-                    const Text(
-                      'Use Tuning',
-                      style: TextStyle(fontSize: 16),
-                    ),
+                    const Text('Use Tuning', style: TextStyle(fontSize: 16)),
                     Switch(
                       value: useValidation,
                       onChanged: (value) {
                         onValidationChanged(value);
                       },
                     ),
-                    const Text(
-                      'or Validation',
-                      style: TextStyle(fontSize: 16),
-                    ),
+                    const Text('or Validation', style: TextStyle(fontSize: 16)),
                   ],
                 ),
               ),

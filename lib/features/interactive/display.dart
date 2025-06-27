@@ -58,10 +58,7 @@ class _InteractiveDisplayState extends ConsumerState<InteractiveDisplay> {
               width: double.infinity,
               padding: const EdgeInsets.only(left: 10),
               child: SingleChildScrollView(
-                child: SelectableText(
-                  content,
-                  style: monoTextStyle,
-                ),
+                child: SelectableText(content, style: monoTextStyle),
               ),
             ),
           );

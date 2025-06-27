@@ -93,7 +93,6 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
             ),
 
             // Dropdown for first numeric input
-
             DropdownMenu(
               label: const Text('Input (Numeric)'),
               initialSelection: selected,
@@ -107,7 +106,6 @@ class TestsConfigState extends ConsumerState<TestsConfig> {
             ),
 
             // Dropdown for second numeric input
-
             DropdownMenu(
               label: const Text('Second (Numeric)'),
               initialSelection: selected2,

@@ -54,16 +54,13 @@ void main() {
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
       await navigateToPage(tester, 1, title: 'Error Matrix');
-      await verifySelectableText(
-        tester,
-        [
-          'No  15   0     0',
-          'Yes  9   0   100',
-          'No  62.5   0     0',
-          'Yes 37.5   0   100',
-          'Overall Error = 37.50%; Average Error = 50.00%.',
-        ],
-      );
+      await verifySelectableText(tester, [
+        'No  15   0     0',
+        'Yes  9   0   100',
+        'No  62.5   0     0',
+        'Yes 37.5   0   100',
+        'Overall Error = 37.50%; Average Error = 50.00%.',
+      ]);
     });
   });
 }

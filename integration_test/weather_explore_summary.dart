@@ -52,33 +52,24 @@ void main() {
       await tapButton(tester, 'Generate Dataset Summary');
       await tester.pump(hack);
       await navigateToPage(tester, 1, title: 'Summary of the Dataset');
-      await verifySelectableText(
-        tester,
-        [
-          '2023-07-01',
-          '-6.200', // min_temp
-          '8.40', // max_temp.
-        ],
-      );
+      await verifySelectableText(tester, [
+        '2023-07-01',
+        '-6.200', // min_temp
+        '8.40', // max_temp.
+      ]);
       await gotoNextPage(tester); // Datset Glimpse
       await gotoNextPage(tester); // Skim the Dataset
-      await verifySelectableText(
-        tester,
-        [
-          'Number of columns          21',
-          'Number of rows             365',
-          'rainfall                2         0.995    1.82',
-        ],
-      );
+      await verifySelectableText(tester, [
+        'Number of columns          21',
+        'Number of rows             365',
+        'rainfall                2         0.995    1.82',
+      ]);
       await gotoNextPage(tester); // Kurtosis and Skewness
-      await verifySelectableText(
-        tester,
-        [
-          '-1.0832020',
-          '-1.0649102',
-          '4.27691518',
-        ],
-      );
+      await verifySelectableText(tester, [
+        '-1.0832020',
+        '-1.0649102',
+        '4.27691518',
+      ]);
     });
   });
 }

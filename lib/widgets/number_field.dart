@@ -1,6 +1,6 @@
 /// A numerical text input field.
 //
-// Time-stamp: <Friday 2024-12-13 08:49:23 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-06-27 14:29:28 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -213,8 +213,9 @@ class NumberFieldState extends ConsumerState<NumberField> {
     // Round to the specified decimal places if needed.
 
     if (widget.decimalPlaces > 0) {
-      currentValue =
-          double.parse(currentValue.toStringAsFixed(widget.decimalPlaces));
+      currentValue = double.parse(
+        currentValue.toStringAsFixed(widget.decimalPlaces),
+      );
     }
 
     ref.read(widget.stateProvider.notifier).state = currentValue;
@@ -248,8 +249,9 @@ class NumberFieldState extends ConsumerState<NumberField> {
     // Round to the specified decimal places if needed.
 
     if (widget.decimalPlaces > 0) {
-      currentValue =
-          double.parse(currentValue.toStringAsFixed(widget.decimalPlaces));
+      currentValue = double.parse(
+        currentValue.toStringAsFixed(widget.decimalPlaces),
+      );
     }
 
     ref.read(widget.stateProvider.notifier).state = currentValue;
@@ -352,8 +354,10 @@ class NumberFieldState extends ConsumerState<NumberField> {
 
     if (_previousSelection != null && _focusNode.hasFocus) {
       widget.controller.selection = TextSelection.collapsed(
-        offset:
-            min(_previousSelection!.baseOffset, widget.controller.text.length),
+        offset: min(
+          _previousSelection!.baseOffset,
+          widget.controller.text.length,
+        ),
       );
     }
 
@@ -385,17 +389,13 @@ class NumberFieldState extends ConsumerState<NumberField> {
                   decoration: InputDecoration(
                     labelText: widget.label,
                     border: const UnderlineInputBorder(),
-                    contentPadding: const EdgeInsets.only(
-                      right: 40,
-                      left: 0,
-                    ),
+                    contentPadding: const EdgeInsets.only(right: 40, left: 0),
                     errorText: widget.validator(widget.controller.text),
-                    errorStyle: const TextStyle(
-                      fontSize: 10,
-                    ),
+                    errorStyle: const TextStyle(fontSize: 10),
                   ),
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
                   onEditingComplete: () {
                     // Store selection before completing edit.
 
@@ -411,8 +411,10 @@ class NumberFieldState extends ConsumerState<NumberField> {
 
                     if (value.isNotEmpty &&
                         !RegExp(r'^[0-9.]+$').hasMatch(value)) {
-                      String newValue =
-                          value.replaceAll(RegExp(r'[^0-9.]'), '');
+                      String newValue = value.replaceAll(
+                        RegExp(r'[^0-9.]'),
+                        '',
+                      );
                       widget.controller.value = TextEditingValue(
                         text: newValue,
                         selection: TextSelection.collapsed(
@@ -433,8 +435,8 @@ class NumberFieldState extends ConsumerState<NumberField> {
                     widget.inputFormatter,
                   ],
                 ),
-                // Positioned Arrow Buttons.
 
+                // Positioned Arrow Buttons.
                 Positioned(
                   right: 0,
                   top: 0,
@@ -476,11 +478,7 @@ class NumberFieldState extends ConsumerState<NumberField> {
 
 // Validation logic for integer fields.
 
-String? validateInteger(
-  String? value, {
-  required int min,
-  int? max,
-}) {
+String? validateInteger(String? value, {required int min, int? max}) {
   if (value == null || value.isEmpty) return 'Cannot be empty';
 
   int? intValue = int.tryParse(value);

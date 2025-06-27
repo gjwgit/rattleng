@@ -92,11 +92,7 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
             ),
             key: scriptTextKey,
           )
-        : SelectableText(
-            script,
-            key: scriptTextKey,
-            style: monoSmallTextStyle,
-          );
+        : SelectableText(script, key: scriptTextKey, style: monoSmallTextStyle);
 
     return KeyboardListener(
       focusNode: FocusNode(),
@@ -107,16 +103,13 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
         child: Column(
           children: [
             // The search bar at the top (only visible if _showSearchBar is true).
-
             if (_showSearchBar) _buildSearchBar(context, script),
 
             // Expanded area for the scrollable text content.
-
             Expanded(
               child: Stack(
                 children: [
                   // Main scrollable script content.
-
                   Scrollbar(
                     controller: _scrollController,
                     thumbVisibility: true,
@@ -129,8 +122,8 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
                       ),
                     ),
                   ),
-                  // Save and Search buttons positioned at the top-right of the scroll area.
 
+                  // Save and Search buttons positioned at the top-right of the scroll area.
                   Positioned(
                     top: 8.0,
                     right: 8.0,
@@ -210,7 +203,6 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
         child: Row(
           children: [
             // The search input.
-
             Expanded(
               child: TextField(
                 focusNode: _searchFocusNode,
@@ -219,15 +211,15 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
                   hintText: 'Search script...',
                   border: InputBorder.none,
                 ),
-                // Use onChanged so that the search happens immediately as the user types.
 
+                // Use onChanged so that the search happens immediately as the user types.
                 onChanged: (query) {
                   _performSearch(query, script);
                 },
               ),
             ),
-            // Previous match button.
 
+            // Previous match button.
             IconButton(
               icon: const Icon(Icons.arrow_upward),
               tooltip: 'Previous match',
@@ -241,8 +233,8 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
                       });
                     },
             ),
-            // Next match button.
 
+            // Next match button.
             IconButton(
               icon: const Icon(Icons.arrow_downward),
               tooltip: 'Next match',
@@ -256,8 +248,8 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
                       });
                     },
             ),
-            // Close search overlay button.
 
+            // Close search overlay button.
             IconButton(
               icon: const Icon(Icons.close),
               tooltip: 'Close search',
@@ -282,8 +274,10 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
     if (query.isNotEmpty) {
       int startIndex = 0;
       while (true) {
-        final index =
-            script.toLowerCase().indexOf(query.toLowerCase(), startIndex);
+        final index = script.toLowerCase().indexOf(
+              query.toLowerCase(),
+              startIndex,
+            );
         if (index == -1) break;
         indices.add(index);
         startIndex = index + query.length;
@@ -343,10 +337,7 @@ List<TextSpan> buildHighlightSpans(
     final index = matchIndices[i];
     if (index > start) {
       spans.add(
-        TextSpan(
-          text: text.substring(start, index),
-          style: monoSmallTextStyle,
-        ),
+        TextSpan(text: text.substring(start, index), style: monoSmallTextStyle),
       );
     }
     // Use green for the current match, yellow for others.
@@ -364,9 +355,7 @@ List<TextSpan> buildHighlightSpans(
   // Add any remaining text after the last match.
 
   if (start < text.length) {
-    spans.add(
-      TextSpan(text: text.substring(start), style: monoSmallTextStyle),
-    );
+    spans.add(TextSpan(text: text.substring(start), style: monoSmallTextStyle));
   }
 
   return spans;

@@ -41,26 +41,11 @@ import 'package:rattle/providers/transform.dart';
 import 'package:rattle/utils/debug_text.dart';
 
 final List<Map<String, dynamic>> transformPanels = [
-  {
-    'title': 'Overview',
-    'widget': const TransformPanel(),
-  },
-  {
-    'title': 'Impute',
-    'widget': const ImputePanel(),
-  },
-  {
-    'title': 'Rescale',
-    'widget': const RescalePanel(),
-  },
-  {
-    'title': 'Recode',
-    'widget': const RecodePanel(),
-  },
-  {
-    'title': 'Cleanup',
-    'widget': const CleanupPanel(),
-  },
+  {'title': 'Overview', 'widget': const TransformPanel()},
+  {'title': 'Impute', 'widget': const ImputePanel()},
+  {'title': 'Rescale', 'widget': const RescalePanel()},
+  {'title': 'Recode', 'widget': const RecodePanel()},
+  {'title': 'Cleanup', 'widget': const CleanupPanel()},
 ];
 
 class TransformTabs extends ConsumerStatefulWidget {
@@ -114,16 +99,13 @@ class _TransformTabsState extends ConsumerState<TransformTabs>
         // 20241123 gjw Ignore the features if the data type of the loaded
         // dataset is not 'table'. The features are implemented assuming a table
         // as the dataset.
-
         IgnorePointer(
           ignoring: !['', 'table'].contains(ref.watch(datatypeProvider)),
           child: TabBar(
             unselectedLabelColor: Colors.grey,
             controller: _tabController,
             tabs: transformPanels.map((tab) {
-              return Tab(
-                text: tab['title'],
-              );
+              return Tab(text: tab['title']);
             }).toList(),
           ),
         ),

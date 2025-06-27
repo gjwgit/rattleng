@@ -79,10 +79,7 @@ class _GraphicThemeState extends ConsumerState<GraphicTheme> {
               ''',
               child: Text(
                 'Graphic Theme',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
             configRowGap,

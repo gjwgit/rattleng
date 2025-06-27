@@ -47,11 +47,7 @@ class TextPage extends StatelessWidget {
   final String title;
   final String content;
 
-  const TextPage({
-    super.key,
-    required this.title,
-    required this.content,
-  });
+  const TextPage({super.key, required this.title, required this.content});
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +67,6 @@ class TextPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Add the button to view and save as PDF.
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -88,7 +83,6 @@ class TextPage extends StatelessWidget {
               Row(
                 children: [
                   // Button to generate and open PDF.
-
                   MarkdownTooltip(
                     message: '''
 
@@ -100,10 +94,7 @@ class TextPage extends StatelessWidget {
                         ''',
                     child: IconButton(
                       onPressed: () => _generateAndOpenPdf(context),
-                      icon: Icon(
-                        Icons.open_in_new,
-                        color: Colors.blue,
-                      ),
+                      icon: Icon(Icons.open_in_new, color: Colors.blue),
                     ),
                   ),
 
@@ -111,7 +102,6 @@ class TextPage extends StatelessWidget {
                   SizedBox(width: 8),
 
                   // Button to save as PDF.
-
                   MarkdownTooltip(
                     message: '''
 
@@ -121,10 +111,7 @@ class TextPage extends StatelessWidget {
                         ''',
                     child: IconButton(
                       onPressed: () => _saveAsPdf(context),
-                      icon: Icon(
-                        Icons.save,
-                        color: Colors.blue,
-                      ),
+                      icon: Icon(Icons.save, color: Colors.blue),
                     ),
                   ),
                 ],
@@ -140,7 +127,6 @@ class TextPage extends StatelessWidget {
               trackVisibility: true,
 
               // Attach the horizontal controller.
-
               controller: horizontalScrollController,
               child: SingleChildScrollView(
                 // Attach a vertical controller for independent scrolling.
@@ -153,14 +139,13 @@ class TextPage extends StatelessWidget {
                   controller: horizontalScrollController,
                   child: Container(
                     // Ensure width matches the full container.
-
                     width: MediaQuery.of(context).size.width,
                     child: SelectableText(
                       content,
                       style: monoTextStyle,
                       textAlign: TextAlign.left,
-                      // Handle text selection changes in the content.
 
+                      // Handle text selection changes in the content.
                       onSelectionChanged: (selection, cause) {
                         // Only copy text when user long presses or drags to select.
 
@@ -191,11 +176,9 @@ class TextPage extends StatelessWidget {
           // 20240812 gjw Add a bottom spacer to leave a gap for the page
           // navigation when scrolling to the bottom of the page so that it can
           // be visible in at least some part of any very busy pages.
-
           textPageBottomGap,
 
           // 20240812 gjw Add a divider to mark the end of the text page.
-
           const Divider(
             thickness: 15,
             color: Color(0XFFBBDEFB),
@@ -280,7 +263,7 @@ class TextPage extends StatelessWidget {
     return fin;
   }
 
-// Generate the PDF document with given content.
+  // Generate the PDF document with given content.
 
   Future<pw.Document> _createPdf(String content) async {
     String extractedTitle = extractTitle(title);
@@ -316,7 +299,6 @@ class TextPage extends StatelessWidget {
         build: (pw.Context context) {
           return [
             // Add the title at the top of the document.
-
             pw.Text(
               extractedTitle,
               style: pw.TextStyle(
@@ -329,7 +311,6 @@ class TextPage extends StatelessWidget {
             pw.SizedBox(height: 10),
 
             // Add a commentary text.
-
             pw.Text(
               extractCommentary(title),
               style: pw.TextStyle(
@@ -342,7 +323,6 @@ class TextPage extends StatelessWidget {
             pw.SizedBox(height: 10),
 
             // Add the content lines.
-
             pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: lines.map((line) {
@@ -367,7 +347,7 @@ class TextPage extends StatelessWidget {
 
     return pdf;
   }
-// Function to generate and open the PDF in a separate window.
+  // Function to generate and open the PDF in a separate window.
 
   Future<void> _generateAndOpenPdf(BuildContext context) async {
     // Create the PDF document using the helper function.
@@ -393,7 +373,7 @@ class TextPage extends StatelessWidget {
     }
   }
 
-// Function to save the PDF with a user-selected directory and custom file name.
+  // Function to save the PDF with a user-selected directory and custom file name.
 
   Future<void> _saveAsPdf(BuildContext context) async {
     // Create the PDF document using the helper function.
@@ -432,11 +412,9 @@ class TextPage extends StatelessWidget {
     } else {
       // Handle case when no file is selected.
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('No file selected.'),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('No file selected.')));
     }
   }
 }

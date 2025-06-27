@@ -47,22 +47,10 @@ String clusterPrefix = 'https://www.rdocumentation.org/packages/';
 /// Define a mapping from type to function name and URL.
 
 final Map<String, Map<String, String>> clusterMethods = {
-  'KMeans': {
-    'functionName': 'kmeans',
-    'package': 'stats',
-  },
-  'Ewkm': {
-    'functionName': 'ewkm',
-    'package': 'wskm',
-  },
-  'Hierarchical': {
-    'functionName': 'hclust',
-    'package': 'stats',
-  },
-  'BiCluster': {
-    'functionName': 'biclust',
-    'package': 'biclust',
-  },
+  'KMeans': {'functionName': 'kmeans', 'package': 'stats'},
+  'Ewkm': {'functionName': 'ewkm', 'package': 'wskm'},
+  'Hierarchical': {'functionName': 'hclust', 'package': 'stats'},
+  'BiCluster': {'functionName': 'biclust', 'package': 'biclust'},
 };
 
 /// The CLUSTER panel displays the tree instructions or the tree biuld output.
@@ -90,11 +78,7 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
     String image = '';
 
     List<Widget> pages = [
-      showMarkdownFile(
-        context,
-        clusterIntroFile,
-        'assets/svg/cluster.svg',
-      ),
+      showMarkdownFile(context, clusterIntroFile, 'assets/svg/cluster.svg'),
     ];
 
     // Retrieve the function name and URL from the mapping.
@@ -191,9 +175,6 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
       );
     }
 
-    return PageViewer(
-      pageController: pageController,
-      pages: pages,
-    );
+    return PageViewer(pageController: pageController, pages: pages);
   }
 }

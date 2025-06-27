@@ -153,7 +153,6 @@ Future<void> main() async {
       // other apps on the desktop so that it is visible.
       //
       // We later turn it off as we don't want to force it always on top.
-
       alwaysOnTop: true,
 
       // We can override the size in the first instance by, for example in
@@ -168,7 +167,6 @@ Future<void> main() async {
       // size: Size(950, 600),
 
       // The [title] is used for the window manager's window title.
-
       title: 'RattleNG - Data Science with R',
     );
 
@@ -211,7 +209,6 @@ Future<void> main() async {
       // the close dialog, since it needs a MaterialLocalizations to be in the
       // parentage which MaterialApp ensures, and it makes sense for it to be
       // the root.
-
       child: MaterialApp(
         theme: ThemeData(
           // Material 3 is the current (2024) flutter default theme for colours
@@ -221,10 +218,7 @@ Future<void> main() async {
           // We could turn the new material theme off to get the older look.
           //
           // useMaterial3: false,
-
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: flavor.mantle,
-          ),
+          colorScheme: ColorScheme.fromSeed(seedColor: flavor.mantle),
 
           // primarySwatch: createMaterialColor(Colors.black),
 

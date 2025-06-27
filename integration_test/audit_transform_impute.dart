@@ -60,21 +60,15 @@ void main() {
       await tapButton(tester, 'Impute Missing Values');
       await tester.pump(delay);
       await gotoNextPage(tester);
-      await verifyPage(
-        'Dataset Summary',
-        'IMO_occupation',
-      );
-      await verifySelectableText(
-        tester,
-        [
-          'Executive   :390',
-          'Professional:247',
-          'Clerical    :232',
-          'Repair      :225',
-          'Service     :210',
-          'Sales       :206',
-        ],
-      );
+      await verifyPage('Dataset Summary', 'IMO_occupation');
+      await verifySelectableText(tester, [
+        'Executive   :390',
+        'Professional:247',
+        'Clerical    :232',
+        'Repair      :225',
+        'Service     :210',
+        'Sales       :206',
+      ]);
     });
   });
 }

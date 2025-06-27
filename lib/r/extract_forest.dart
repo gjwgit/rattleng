@@ -31,10 +31,7 @@ import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_formula.dart';
 import 'package:rattle/utils/timestamp.dart';
 
-String _basicTemplate(
-  String log,
-  WidgetRef ref,
-) {
+String _basicTemplate(String log, WidgetRef ref) {
   AlgorithmType forestAlgorithm =
       ref.read(algorithmForestProvider.notifier).state;
 
@@ -71,10 +68,7 @@ String _basicTemplate(
 
 /// Extract from the R [log] lines of output from the random forest.
 
-String rExtractForest(
-  String log,
-  WidgetRef ref,
-) {
+String rExtractForest(String log, WidgetRef ref) {
   AlgorithmType forestAlgorithm =
       ref.read(algorithmForestProvider.notifier).state;
 
@@ -86,11 +80,7 @@ String rExtractForest(
     // Nicely format the call to randomForest.
 
     extract = extract.replaceAllMapped(
-      RegExp(
-        r'\n (randomForest\(.*?)\)',
-        multiLine: true,
-        dotAll: false,
-      ),
+      RegExp(r'\n (randomForest\(.*?)\)', multiLine: true, dotAll: false),
       (match) {
         // The first group is then the whole randomForest(...) call.
 
@@ -99,12 +89,9 @@ String rExtractForest(
         txt = txt.replaceAll('\n', '');
         txt = txt.replaceAll(RegExp(r',\s*m'), ', m');
 
-        txt = txt.replaceAllMapped(
-          RegExp(r'(\w+)\s*=\s*([^,]+),'),
-          (match) {
-            return '\n    ${match.group(1)}=${match.group(2)},';
-          },
-        );
+        txt = txt.replaceAllMapped(RegExp(r'(\w+)\s*=\s*([^,]+),'), (match) {
+          return '\n    ${match.group(1)}=${match.group(2)},';
+        });
 
         txt = txt.replaceAll(' = ', '=');
 
@@ -133,12 +120,9 @@ String rExtractForest(
         txt = txt.replaceAll('\n', '');
         txt = txt.replaceAll(RegExp(r',\s*m'), ', m');
 
-        txt = txt.replaceAllMapped(
-          RegExp(r'(\w+)\s*=\s*([^,]+),'),
-          (match) {
-            return '\n    ${match.group(1)}=${match.group(2)},';
-          },
-        );
+        txt = txt.replaceAllMapped(RegExp(r'(\w+)\s*=\s*([^,]+),'), (match) {
+          return '\n    ${match.group(1)}=${match.group(2)},';
+        });
 
         txt = txt.replaceAll(' = ', '=');
 

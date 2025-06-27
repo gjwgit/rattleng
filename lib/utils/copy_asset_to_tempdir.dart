@@ -35,9 +35,7 @@ import 'package:path/path.dart' as p;
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/utils/debug_text.dart';
 
-Future<String> copyAssetToTempDir({
-  required String asset,
-}) async {
+Future<String> copyAssetToTempDir({required String asset}) async {
   // Load the CSV file from assets.
 
   final ByteData data = await rootBundle.load('assets/$asset');

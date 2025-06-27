@@ -63,7 +63,6 @@ FutureBuilder showMarkdownFile2(
                 child: Row(
                   children: [
                     // Left side: Original Markdown content taking 50% of the screen width.
-
                     Expanded(
                       flex: 5,
                       child: Padding(
@@ -85,7 +84,6 @@ FutureBuilder showMarkdownFile2(
                     ),
 
                     // Right side: New Markdown content taking 50% of the screen width.
-
                     Expanded(
                       flex: 5,
                       child: Padding(

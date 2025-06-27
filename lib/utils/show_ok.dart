@@ -62,9 +62,7 @@ showOk({
       selectable: true,
       softLineBreak: true,
     ),
-    actions: [
-      okButton,
-    ],
+    actions: [okButton],
   );
 
   // Show the dialog

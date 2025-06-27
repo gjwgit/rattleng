@@ -68,24 +68,18 @@ void main() {
       // Verify that the page content includes the expected dataset summary with
       // 'IMN_rainfall'.
 
-      await verifyPage(
-        'Dataset Summary',
-        'IMN_rainfall',
-      );
+      await verifyPage('Dataset Summary', 'IMN_rainfall');
 
       // Verify specific statistical values for the imputed 'IMN_rainfall' variable.
 
-      await verifySelectableText(
-        tester,
-        [
-          'Min.   : 0.000', // Minimum value of 'IMN_rainfall'.
-          '1st Qu.: 0.000', // First quartile value of 'IMN_rainfall'.
-          'Median : 0.000', // Median value of 'IMN_rainfall'.
-          'Mean   : 1.825', // Mean value of 'IMN_rainfall'.
-          '3rd Qu.: 0.200', // Third quartile value of 'IMN_rainfall'.
-          'Max.   :44.800', // Maximum value of 'IMN_rainfall'.
-        ],
-      );
+      await verifySelectableText(tester, [
+        'Min.   : 0.000', // Minimum value of 'IMN_rainfall'.
+        '1st Qu.: 0.000', // First quartile value of 'IMN_rainfall'.
+        'Median : 0.000', // Median value of 'IMN_rainfall'.
+        'Mean   : 1.825', // Mean value of 'IMN_rainfall'.
+        '3rd Qu.: 0.200', // Third quartile value of 'IMN_rainfall'.
+        'Max.   :44.800', // Maximum value of 'IMN_rainfall'.
+      ]);
 
       // Step 2: Test imputation with Median.
 
@@ -95,22 +89,16 @@ void main() {
 
       await tester.pump(delay);
 
-      await verifyPage(
-        'Dataset Summary',
-        'IMD_rainfall',
-      );
+      await verifyPage('Dataset Summary', 'IMD_rainfall');
 
-      await verifySelectableText(
-        tester,
-        [
-          'Min.   : 0.000', // Minimum value of 'IMD_rainfall'.
-          '1st Qu.: 0.000', // First quartile value of 'IMD_rainfall'.
-          'Median : 0.000', // Median value of 'IMD_rainfall'.
-          'Mean   : 1.815', // Mean value of 'IMD_rainfall'.
-          '3rd Qu.: 0.200', // Third quartile value of 'IMD_rainfall'.
-          'Max.   :44.800', // Maximum value of 'IMD_rainfall'.
-        ],
-      );
+      await verifySelectableText(tester, [
+        'Min.   : 0.000', // Minimum value of 'IMD_rainfall'.
+        '1st Qu.: 0.000', // First quartile value of 'IMD_rainfall'.
+        'Median : 0.000', // Median value of 'IMD_rainfall'.
+        'Mean   : 1.815', // Mean value of 'IMD_rainfall'.
+        '3rd Qu.: 0.200', // Third quartile value of 'IMD_rainfall'.
+        'Max.   :44.800', // Maximum value of 'IMD_rainfall'.
+      ]);
 
       // Step 3: Test imputation with Mode.
 
@@ -120,22 +108,16 @@ void main() {
 
       await tester.pump(delay);
 
-      await verifyPage(
-        'Dataset Summary',
-        'IMO_rainfall',
-      );
+      await verifyPage('Dataset Summary', 'IMO_rainfall');
 
-      await verifySelectableText(
-        tester,
-        [
-          'Min.   : 0.000', // Minimum value of 'IMO_rainfall'.
-          '1st Qu.: 0.000', // First quartile value of 'IMO_rainfall'.
-          'Median : 0.000', // Median value of 'IMO_rainfall'.
-          'Mean   : 1.815', // Mean value of 'IMO_rainfall'.
-          '3rd Qu.: 0.200', // Third quartile value of 'IMO_rainfall'.
-          'Max.   :44.800', // Maximum value of 'IMO_rainfall'.
-        ],
-      );
+      await verifySelectableText(tester, [
+        'Min.   : 0.000', // Minimum value of 'IMO_rainfall'.
+        '1st Qu.: 0.000', // First quartile value of 'IMO_rainfall'.
+        'Median : 0.000', // Median value of 'IMO_rainfall'.
+        'Mean   : 1.815', // Mean value of 'IMO_rainfall'.
+        '3rd Qu.: 0.200', // Third quartile value of 'IMO_rainfall'.
+        'Max.   :44.800', // Maximum value of 'IMO_rainfall'.
+      ]);
 
       // To ensure the UI updates correctly.
 

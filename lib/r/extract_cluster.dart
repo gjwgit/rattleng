@@ -30,10 +30,7 @@ import 'package:rattle/providers/cluster.dart';
 import 'package:rattle/r/extract.dart';
 import 'package:rattle/utils/timestamp.dart';
 
-String _basicTemplate(
-  String log,
-  WidgetRef ref,
-) {
+String _basicTemplate(String log, WidgetRef ref) {
   // Here we build up the basic information from the output of the cluster.
 
   // First some strings to put into the output.
@@ -111,10 +108,7 @@ String _basicTemplate(
   return result;
 }
 
-String rExtractCluster(
-  String log,
-  WidgetRef ref,
-) {
+String rExtractCluster(String log, WidgetRef ref) {
   // Extract from the R log those lines of output from the cluster.
 
   String extract = _basicTemplate(log, ref);

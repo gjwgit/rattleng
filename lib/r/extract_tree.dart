@@ -48,28 +48,20 @@ String _basicTemplate(String log) {
 String rExtractTree(String log) {
   String extract = _basicTemplate(log);
 
-  extract = extract.replaceAllMapped(
-    RegExp(r'\nn= '),
-    (match) {
-      return '\nObservations = ';
-    },
-  );
+  extract = extract.replaceAllMapped(RegExp(r'\nn= '), (match) {
+    return '\nObservations = ';
+  });
 
-  extract = extract.replaceAllMapped(
-    RegExp(r'\n(Classification tree:)\n'),
-    (match) {
-      return '\n${match.group(1)}\n\n';
-    },
-  );
+  extract = extract.replaceAllMapped(RegExp(r'\n(Classification tree:)\n'), (
+    match,
+  ) {
+    return '\n${match.group(1)}\n\n';
+  });
 
   // Nicely format the call to rpart.
 
   extract = extract.replaceAllMapped(
-    RegExp(
-      r'\n(rpart\(.*\))\)',
-      multiLine: true,
-      dotAll: true,
-    ),
+    RegExp(r'\n(rpart\(.*\))\)', multiLine: true, dotAll: true),
     (match) {
       // The first group is then the whole rpart(...) call.
 
@@ -78,12 +70,9 @@ String rExtractTree(String log) {
       txt = txt.replaceAll('\n', '');
       txt = txt.replaceAll(RegExp(r',\s*m'), ', m');
 
-      txt = txt.replaceAllMapped(
-        RegExp(r'(\w+)\s*=\s*([^,]+),'),
-        (match) {
-          return '\n    ${match.group(1)}=${match.group(2)},';
-        },
-      );
+      txt = txt.replaceAllMapped(RegExp(r'(\w+)\s*=\s*([^,]+),'), (match) {
+        return '\n    ${match.group(1)}=${match.group(2)},';
+      });
 
       txt = txt.replaceAll(' = ', '=');
 

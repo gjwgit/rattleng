@@ -71,22 +71,11 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
   String selected = 'NULL';
   String selectedTransform = 'Quantiles';
 
-  List<String> numericMethods = [
-    'Quantiles',
-    'KMeans',
-    'Equal Width',
-  ];
+  List<String> numericMethods = ['Quantiles', 'KMeans', 'Equal Width'];
 
-  List<String> asMethods = [
-    'As Categoric',
-    'As Numeric',
-  ];
-  List<String> asCategoricMethods = [
-    'As Categoric',
-  ];
-  List<String> asNumericMethods = [
-    'As Numeric',
-  ];
+  List<String> asMethods = ['As Categoric', 'As Numeric'];
+  List<String> asCategoricMethods = ['As Categoric'];
+  List<String> asNumericMethods = ['As Numeric'];
 
   Map<String, String> asCategoricMethodsTooltips = {
     'As Categoric': '''
@@ -124,10 +113,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
       ''',
   };
 
-  List<String> categoricMethods = [
-    'Indicator Variable',
-    'Join Categorics',
-  ];
+  List<String> categoricMethods = ['Indicator Variable', 'Join Categorics'];
 
   Map<String, String> categoricMethodsTooltips = {
     'Indicator Variable': '''
@@ -166,15 +152,11 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
         rSource(context, ref, ['transform_recode_join_categoric']);
         break;
       case 'As Categoric':
-        rSource(
-          context,
-          ref,
-          [
-            isNumeric
-                ? 'transform_recode_as_categoric_numeric'
-                : 'transform_recode_as_categoric_character',
-          ],
-        );
+        rSource(context, ref, [
+          isNumeric
+              ? 'transform_recode_as_categoric_numeric'
+              : 'transform_recode_as_categoric_character',
+        ]);
         break;
       case 'As Numeric':
         rSource(context, ref, ['transform_recode_as_numeric']);
@@ -234,7 +216,6 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
         ),
 
         // As Categoric chip.
-
         ChoiceChipTip(
           options: asCategoricMethods,
           selectedOption: selectedTransform,
@@ -248,7 +229,6 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
         ),
 
         // As Numeric chip.
-
         ChoiceChipTip(
           options: asNumericMethods,
           selectedOption: selectedTransform,
@@ -447,10 +427,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
             recodeChooser(inputs, selected2),
           ],
         ),
-        if (_isLoading)
-          const Center(
-            child: CircularProgressIndicator(),
-          ),
+        if (_isLoading) const Center(child: CircularProgressIndicator()),
       ],
     );
   }

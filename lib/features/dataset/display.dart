@@ -114,7 +114,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       _addCorpusPage(stdout, pages);
     } else if (path == weatherDemoFile ||
         // TODO 20250310 gjw Remo the deprecated weatherDemoFile
-
         path.endsWith('.csv') ||
         path.endsWith('.xlsx')) {
       // 20240815 gjw Update the metaData provider here if needed.
@@ -128,24 +127,25 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     HardwareKeyboard.instance.addHandler((event) {
       setState(() {
-        _isShiftPressed = HardwareKeyboard.instance.logicalKeysPressed
-                .contains(LogicalKeyboardKey.shiftLeft) ||
-            HardwareKeyboard.instance.logicalKeysPressed
-                .contains(LogicalKeyboardKey.shiftRight);
+        _isShiftPressed = HardwareKeyboard.instance.logicalKeysPressed.contains(
+              LogicalKeyboardKey.shiftLeft,
+            ) ||
+            HardwareKeyboard.instance.logicalKeysPressed.contains(
+              LogicalKeyboardKey.shiftRight,
+            );
 
-        _isCtrlPressed = HardwareKeyboard.instance.logicalKeysPressed
-                .contains(LogicalKeyboardKey.controlLeft) ||
-            HardwareKeyboard.instance.logicalKeysPressed
-                .contains(LogicalKeyboardKey.controlRight);
+        _isCtrlPressed = HardwareKeyboard.instance.logicalKeysPressed.contains(
+              LogicalKeyboardKey.controlLeft,
+            ) ||
+            HardwareKeyboard.instance.logicalKeysPressed.contains(
+              LogicalKeyboardKey.controlRight,
+            );
       });
 
       return false;
     });
 
-    return PageViewer(
-      pageController: pageController,
-      pages: pages,
-    );
+    return PageViewer(pageController: pageController, pages: pages);
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -283,8 +283,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                           padding: const EdgeInsets.symmetric(horizontal: 4.0),
                           child: ElevatedButton(
                             onPressed: () {
-                              final selectedRows =
-                                  ref.read(selectedRowIndicesProvider);
+                              final selectedRows = ref.read(
+                                selectedRowIndicesProvider,
+                              );
 
                               if (selectedRows.isEmpty) {
                                 // Show a warning dialog if no rows are selected.
@@ -333,10 +334,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
                 ''',
                 child: IconButton(
-                  icon: const Icon(
-                    Icons.table_view,
-                    color: Colors.blue,
-                  ),
+                  icon: const Icon(Icons.table_view, color: Colors.blue),
                   onPressed: () {
                     String path = ref.read(pathProvider);
                     if (path.isEmpty) {
@@ -360,7 +358,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           ),
 
           // Main ListView for displaying data table.
-
           Padding(
             padding: const EdgeInsets.only(top: 56.0),
             child: _buildDataTable(vars),
@@ -581,15 +578,14 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                   },
                   cells: [
                     DataCell(Text(variable.name)),
-                    DataCell(
-                      _buildRoleChips(variable.name, currentRoles),
-                    ),
+                    DataCell(_buildRoleChips(variable.name, currentRoles)),
                     DataCell(Text(variable.type)),
                     DataCell(
                       Text(
                         formatter.format(
-                          ref.watch(metaDataProvider)[variable.name]?['unique']
-                                  ?[0] ??
+                          ref.watch(
+                                metaDataProvider,
+                              )[variable.name]?['unique']?[0] ??
                               0,
                         ),
                       ),
@@ -597,8 +593,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                     DataCell(
                       Text(
                         formatter.format(
-                          ref.watch(metaDataProvider)[variable.name]?['missing']
-                                  ?[0] ??
+                          ref.watch(
+                                metaDataProvider,
+                              )[variable.name]?['missing']?[0] ??
                               0,
                         ),
                       ),
@@ -637,12 +634,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
           // current role.  Defaults to `Role.ignore` if the variable
           // (`columnName`) has no assigned role. (zy 20250429)
           selected: remap(currentRoles[columnName] ?? Role.ignore, choice),
-          onSelected: (bool selected) => _handleRoleSelection(
-            selected,
-            choice,
-            columnName,
-            currentRoles,
-          ),
+          onSelected: (bool selected) =>
+              _handleRoleSelection(selected, choice, columnName, currentRoles),
         );
       }).toList(),
     );

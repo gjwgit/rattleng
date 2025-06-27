@@ -41,9 +41,7 @@ import 'utils/verify_page.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Large Dataset, Explore, Missing.', (
-    WidgetTester tester,
-  ) async {
+  testWidgets('Large Dataset, Explore, Missing.', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
     await tester.pump(interact);
@@ -59,13 +57,9 @@ void main() {
     await gotoNextPage(tester);
     await verifyPage('Patterns of Missing Values - Visual');
     await gotoNextPage(tester);
-    await verifyPage(
-      'Aggregation of Missing Values - Textual',
-    );
+    await verifyPage('Aggregation of Missing Values - Textual');
     await gotoNextPage(tester);
-    await verifyPage(
-      'Aggregation of Missing Values - Visual',
-    );
+    await verifyPage('Aggregation of Missing Values - Visual');
     // 20250211 gjw I added this delay before the move to the next page since
     // the delay after the goto did not always work. It could be that we just
     // need this delay and not the one afterwards. For checking.
@@ -74,13 +68,9 @@ void main() {
     // 20250211 gjw I added this delay in order to ensure the visualisation is
     // rendered on the page as I was occasionally getting an exception.
     await tester.pump(delay);
-    await verifyPage(
-      'Visualisation of Observations with Missing Values',
-    );
+    await verifyPage('Visualisation of Observations with Missing Values');
     await gotoNextPage(tester);
-    await verifyPage(
-      'Comparison of Counts of Missing Values',
-    );
+    await verifyPage('Comparison of Counts of Missing Values');
     await gotoNextPage(tester);
     await verifyPage('Patterns of Missingness');
   });

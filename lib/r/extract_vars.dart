@@ -150,9 +150,5 @@ class VariableInfo {
   final String type;
   final String details;
 
-  VariableInfo({
-    required this.name,
-    required this.type,
-    required this.details,
-  });
+  VariableInfo({required this.name, required this.type, required this.details});
 }

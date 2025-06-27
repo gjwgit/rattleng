@@ -198,7 +198,6 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
             ),
 
             // Close button for the dialog.
-
             Positioned(
               top: 16,
               right: 16,
