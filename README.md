@@ -8,11 +8,14 @@
 [![GitHub Commit Activity (dev)](https://img.shields.io/github/commit-activity/w/gjwgit/rattleng/dev)](https://github.com/gjwgit/rattle/commits/dev/)
 [![GitHub Issues](https://img.shields.io/github/issues/gjwgit/rattleng)](https://github.com/gjwgit/rattleng/issues)
 
-Binaries to download latest version:
-[**GNU/Linux**](https://access.togaware.com/rattle-dev-linux.zip) -
-[**Debian/Ubuntu**](https://access.togaware.com/rattle_amd64.deb) -
-[**MacOS**](https://access.togaware.com/rattle-dev-macos.zip) -
-[**Windows**](https://access.togaware.com/rattle-dev-windows-inno.exe).
+Download the latest version:
+**GNU/Linux**
+[zip](https://access.togaware.com/rattle-dev-linux.zip) or
+[deb](https://access.togaware.com/rattle_amd64.deb) -
+**macOS**
+[zip](https://access.togaware.com/rattle-dev-macos.zip) -
+**Windows**
+[inno](https://access.togaware.com/rattle-dev-windows-inno.exe).
 
 Visit [togaware](https://rattle.togaware.com) for details.
 
