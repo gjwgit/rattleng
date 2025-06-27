@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Rattle
+Version=1.0
+Terminal=false
+Type=Application
+Exec=.local/bin/rattle
+Icon=/home/USER/.local/share/icons/hicolor/256x256/apps/rattle.png
+GenericName=Data Miner
+Comment=Established data science tool
+Categories=DataScience;AI;MachineLearning;
