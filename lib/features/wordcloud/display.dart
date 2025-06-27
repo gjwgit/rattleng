@@ -68,11 +68,7 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
     // the build we display a introdcurory text to the functionality.
 
     List<Widget> pages = [
-      showMarkdownFile(
-        context,
-        wordCloudMsgFile,
-        'assets/svg/wordcloud.svg',
-      ),
+      showMarkdownFile(context, wordCloudMsgFile, 'assets/svg/wordcloud.svg'),
     ];
 
     // file exists | build not empty
@@ -101,8 +97,10 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
 
       // Term Frequency Page.
 
-      final String tfContentRaw =
-          rExtract(stdout, 'd %>% dplyr::filter(freq >=');
+      final String tfContentRaw = rExtract(
+        stdout,
+        'd %>% dplyr::filter(freq >=',
+      );
       String tfContentDisplay;
       if (tfContentRaw.isNotEmpty) {
         tfContentDisplay = tfContentRaw.split('\n').skip(2).join('\n');
@@ -201,9 +199,6 @@ class WordCloudDisplayState extends ConsumerState<WordCloudDisplay> {
       ////////////////////////////////////////////////////////////////////////
     } // This closes the if (buildButtonPressed(lastBuildTime)) block
 
-    return PageViewer(
-      pageController: pageController,
-      pages: pages,
-    );
+    return PageViewer(pageController: pageController, pages: pages);
   }
 }

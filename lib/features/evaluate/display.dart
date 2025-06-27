@@ -106,12 +106,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     // distinct naming scheme and we need to coordinate the names we use here
     // with those in `assets/r/evaluate_model_*.R` (20250312 gjw).
 
-    final evaluationTypes = [
-      'roc',
-      'riskchart',
-      'hand',
-      'rocr',
-    ];
+    final evaluationTypes = ['roc', 'riskchart', 'hand', 'rocr'];
 
     final modelDisplayNames = {
       'rpart': 'RPART',
@@ -146,10 +141,7 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         'documentation': 'Reference [ROC](https://developers.google.com/'
             'machine-learning/crash-course/classification/roc-and-auc).',
       },
-      'riskchart': {
-        'title': 'Risk Chart',
-        'documentation': null,
-      },
+      'riskchart': {'title': 'Risk Chart', 'documentation': null},
       'hand': {
         'title': 'H-Measure &#8212; Coherent Alternative to AUC',
         'documentation': 'Built using [hmeasure::HMeasure](https://'
@@ -202,9 +194,6 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
       }
     }
 
-    return PageViewer(
-      pageController: pageController,
-      pages: pages,
-    );
+    return PageViewer(pageController: pageController, pages: pages);
   }
 }

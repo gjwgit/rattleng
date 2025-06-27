@@ -66,30 +66,24 @@ void main() {
       await tapButton(tester, 'Evaluate');
       await tester.pump(delay);
       await navigateToPage(tester, 1, back: 1, title: 'Error Matrix');
-      await verifySelectableText(
-        tester,
-        [
-          'No  41   2   4.7',
-          'Yes  8   3  72.7',
-          'No  75.9 3.7   4.7',
-          'Yes 14.8 5.6  72.7',
-          'Overall Error = 18.52%; Average Error = 38.69%.',
-        ],
-      );
+      await verifySelectableText(tester, [
+        'No  41   2   4.7',
+        'Yes  8   3  72.7',
+        'No  75.9 3.7   4.7',
+        'Yes 14.8 5.6  72.7',
+        'Overall Error = 18.52%; Average Error = 38.69%.',
+      ]);
       await tapChip(tester, 'Training');
       await tapButton(tester, 'Evaluate');
       await tester.pump(delay);
       await navigateToPage(tester, 1, back: 1, title: 'Error Matrix');
-      await verifySelectableText(
-        tester,
-        [
-          'No  214   1   0.5',
-          'Yes   1  38   2.6',
-          'No  84.3  0.4   0.5',
-          'Yes  0.4 15.0   2.6',
-          'Overall Error = 0.79%; Average Error = 1.51%.',
-        ],
-      );
+      await verifySelectableText(tester, [
+        'No  214   1   0.5',
+        'Yes   1  38   2.6',
+        'No  84.3  0.4   0.5',
+        'Yes  0.4 15.0   2.6',
+        'Overall Error = 0.79%; Average Error = 1.51%.',
+      ]);
     });
   });
 }

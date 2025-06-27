@@ -56,11 +56,7 @@ class _ImputeDisplayState extends ConsumerState<ImputeDisplay> {
     String stdout = ref.watch(stdoutProvider);
 
     List<Widget> pages = [
-      showMarkdownFile(
-        context,
-        imputeIntroFile,
-        'assets/svg/impute.svg',
-      ),
+      showMarkdownFile(context, imputeIntroFile, 'assets/svg/impute.svg'),
     ];
 
     // Second page is the data summary. Be sure to include the IGNOREd variables
@@ -90,9 +86,6 @@ class _ImputeDisplayState extends ConsumerState<ImputeDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    return PageViewer(
-      pageController: pageController,
-      pages: pages,
-    );
+    return PageViewer(pageController: pageController, pages: pages);
   }
 }

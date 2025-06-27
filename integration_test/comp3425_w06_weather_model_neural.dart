@@ -76,8 +76,9 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('COMP3425 W06 LAB WEATHER NNET:', () {
-    testWidgets('roles, ignore, cleanup, impute, rescale, nnet.',
-        (WidgetTester tester) async {
+    testWidgets('roles, ignore, cleanup, impute, rescale, nnet.', (
+      WidgetTester tester,
+    ) async {
       app.main();
 
       // Load the dataset and set variable roles.
@@ -143,7 +144,7 @@ void main() {
 
       // build nnet and neuralnet??
 
-// evaluate either!!!
+      // evaluate either!!!
     });
   });
 }

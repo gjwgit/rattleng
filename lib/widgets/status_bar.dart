@@ -74,10 +74,7 @@ class StatusBar extends ConsumerWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
-            'assets/images/favicon_small.png',
-            height: 44,
-          ),
+          Image.asset('assets/images/favicon_small.png', height: 44),
           const SizedBox(width: 8),
           Expanded(
             child: MarkdownBody(
@@ -95,10 +92,9 @@ class StatusBar extends ConsumerWidget {
                   '${_buildTargetDisplay(getTarget(ref))}   '
                   '${ref.watch(statusProvider)}',
               styleSheet: MarkdownStyleSheet(
-                p: Theme.of(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(height: 1.5),
+                p: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(height: 1.5),
                 a: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Colors.blue,
                       height: 1.5,

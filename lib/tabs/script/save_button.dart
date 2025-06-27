@@ -61,10 +61,7 @@ class ScriptSaveButton extends ConsumerWidget {
         onPressed: () {
           _showFileNameDialog(context, ref);
         },
-        icon: Icon(
-          Icons.save_alt,
-          color: Colors.blue,
-        ),
+        icon: Icon(Icons.save_alt, color: Colors.blue),
       ),
     );
   }
@@ -83,10 +80,10 @@ class ScriptSaveButton extends ConsumerWidget {
 
     String? outputPath = await FilePicker.platform.saveFile(
       dialogTitle: 'Provide a .R filename to save the R script to.',
+
       // If there is not yet a dataset laoded then we need to make sure the
       // resulting saved filename is `script_yyyymmdd.R` and not
       // `script_yyyymmdd_.R` with the trailing underscore. (gjw 20250113)
-
       fileName: 'script_$yyyymmdd${dsname.isNotEmpty ? "_" : ""}${dsname}.R',
       type: FileType.custom,
       allowedExtensions: ['R'],
@@ -183,12 +180,7 @@ class ScriptSaveButton extends ConsumerWidget {
       'co-est2016-alldata.csv',
     ]) {
       lines = lines
-          .map(
-            (line) => line.replaceAll(
-              '"$assets"',
-              '"assets/data/$assets"',
-            ),
-          )
+          .map((line) => line.replaceAll('"$assets"', '"assets/data/$assets"'))
           .toList();
     }
 
@@ -211,8 +203,8 @@ class ScriptSaveButton extends ConsumerWidget {
     file.writeAsString(script);
 
     final filePath = file.absolute.path;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('R script file saved as $filePath')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('R script file saved as $filePath')));
   }
 }

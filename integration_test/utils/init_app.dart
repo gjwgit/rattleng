@@ -33,10 +33,7 @@ import 'package:rattle/app.dart';
 Future<ProviderContainer> initApp(WidgetTester tester) async {
   final container = ProviderContainer();
   await tester.pumpWidget(
-    UncontrolledProviderScope(
-      container: container,
-      child: const RattleApp(),
-    ),
+    UncontrolledProviderScope(container: container, child: const RattleApp()),
   );
   await tester.pumpAndSettle();
 

@@ -66,11 +66,7 @@ class _NeuralDisplayState extends ConsumerState<NeuralDisplay> {
     String content = '';
 
     List<Widget> pages = [
-      showMarkdownFile(
-        context,
-        neuralIntroFile,
-        'assets/svg/neural.svg',
-      ),
+      showMarkdownFile(context, neuralIntroFile, 'assets/svg/neural.svg'),
     ];
 
     ////////////////////////////////////////////////////////////////////////
@@ -272,12 +268,7 @@ $weights
     String riskImage = '$tempDir/model_neural_neuralnet_risk.svg';
 
     if (imageExists(riskImage)) {
-      pages.add(
-        ImagePage(
-          title: 'RISK CHART',
-          path: riskImage,
-        ),
-      );
+      pages.add(ImagePage(title: 'RISK CHART', path: riskImage));
     }
 
     if (algorithm == 'neuralnet') {
@@ -323,9 +314,6 @@ $weights
 
     ////////////////////////////////////////////////////////////////////////
 
-    return PageViewer(
-      pageController: pageController,
-      pages: pages,
-    );
+    return PageViewer(pageController: pageController, pages: pages);
   }
 }

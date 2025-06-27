@@ -43,34 +43,13 @@ import 'package:rattle/providers/reset.dart';
 import 'package:rattle/utils/debug_text.dart';
 
 final List<Map<String, dynamic>> explorePanels = [
-  {
-    'title': 'Overview',
-    'widget': const ExplorePanel(),
-  },
-  {
-    'title': 'Summary',
-    'widget': const SummaryPanel(),
-  },
-  {
-    'title': 'Visual',
-    'widget': const VisualPanel(),
-  },
-  {
-    'title': 'Missing',
-    'widget': const MissingPanel(),
-  },
-  {
-    'title': 'Correlation',
-    'widget': const CorrelationPanel(),
-  },
-  {
-    'title': 'Tests',
-    'widget': const TestsPanel(),
-  },
-  {
-    'title': 'Interactive',
-    'widget': const InteractivePanel(),
-  },
+  {'title': 'Overview', 'widget': const ExplorePanel()},
+  {'title': 'Summary', 'widget': const SummaryPanel()},
+  {'title': 'Visual', 'widget': const VisualPanel()},
+  {'title': 'Missing', 'widget': const MissingPanel()},
+  {'title': 'Correlation', 'widget': const CorrelationPanel()},
+  {'title': 'Tests', 'widget': const TestsPanel()},
+  {'title': 'Interactive', 'widget': const InteractivePanel()},
   // TODO ADD WORDCLOUD HERE
   // {
   //   'title': 'Word Cloud',
@@ -129,16 +108,13 @@ class _ExploreTabsState extends ConsumerState<ExploreTabs>
         // 20241123 gjw Ignore the features if the data type of the loaded
         // dataset is not 'table'. The features are implemented assuming a table
         // as the dataset.
-
         IgnorePointer(
           ignoring: !['', 'table'].contains(ref.watch(datatypeProvider)),
           child: TabBar(
             unselectedLabelColor: Colors.grey,
             controller: _tabController,
             tabs: explorePanels.map((tab) {
-              return Tab(
-                text: tab['title'],
-              );
+              return Tab(text: tab['title']);
             }).toList(),
           ),
         ),

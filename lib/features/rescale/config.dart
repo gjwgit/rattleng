@@ -65,10 +65,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     'Log 10',
   ];
 
-  List<String> orderMethods = [
-    'Rank',
-    'Interval',
-  ];
+  List<String> orderMethods = ['Rank', 'Interval'];
 
   // Define tooltips for normaliseMethods.
 
@@ -132,7 +129,6 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
         configLeftGap,
 
         // Add tooltips to normaliseMethods ChoiceChipTip.
-
         ChoiceChipTip<String>(
           options: normaliseMethods,
           selectedOption: selectedTransform,
@@ -141,15 +137,14 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
               selectedTransform = selected ?? '';
             });
           },
-          // Adding tooltips here.
 
+          // Adding tooltips here.
           tooltips: normaliseMethodTooltips,
         ),
 
         // Add a ChoiceChip with Tooltip for RANK. This is separated out now so
         // that we can have a larger gap between this and INTERVAL. The INTERVAL
         // button needs to be closer to the INTERVAL number widget.
-
         ChoiceChipTip<String>(
           options: orderMethods.sublist(0, 1),
           selectedOption: selectedTransform,
@@ -160,12 +155,10 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
           },
 
           // Adding tooltips here.
-
           tooltips: orderMethodTooltips,
         ),
 
         // Add tooltips to orderMethods ChoiceChipTip. INTERVAL
-
         ChoiceChipTip<String>(
           options: orderMethods.sublist(1),
           selectedOption: selectedTransform,
@@ -176,7 +169,6 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
           },
 
           // Adding tooltips here.
-
           tooltips: orderMethodTooltips,
         ),
 
@@ -192,13 +184,11 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
           controller: valCtrl,
 
           // Allow integers only.
-
           inputFormatter: FilteringTextInputFormatter.digitsOnly,
           validator: (value) => validateInteger(value, min: 1),
           stateProvider: intervalProvider,
 
           // Enable only when "Interval" is selected.
-
           enabled: selectedTransform == 'Interval',
         ),
       ],

@@ -32,9 +32,7 @@ import 'package:flutter_test/flutter_test.dart';
 Future<void> verifyPopup(List<String> vars) async {
   // Locate the popup.
 
-  final popupFinder = find.byType(
-    AlertDialog,
-  );
+  final popupFinder = find.byType(AlertDialog);
 
   // Ensure the popup is present.
 
@@ -45,9 +43,7 @@ Future<void> verifyPopup(List<String> vars) async {
   for (String variable in vars) {
     final variableTextFinder = find.descendant(
       of: popupFinder,
-      matching: find.textContaining(
-        variable,
-      ),
+      matching: find.textContaining(variable),
     );
 
     expect(

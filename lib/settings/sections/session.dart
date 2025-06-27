@@ -72,10 +72,7 @@ class Session extends ConsumerWidget {
           children: [
             const Text(
               'Session',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             configRowGap,
             MarkdownTooltip(
@@ -115,12 +112,7 @@ class Session extends ConsumerWidget {
               ''',
               child: Row(
                 children: [
-                  const Text(
-                    'Ask before exit',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
+                  const Text('Ask before exit', style: TextStyle(fontSize: 16)),
                   configRowGap,
                   Switch(
                     value: askOnExit,

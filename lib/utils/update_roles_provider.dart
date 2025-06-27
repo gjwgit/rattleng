@@ -49,7 +49,6 @@ final List<String> specialPrefixes = ['RIN', 'BKM', 'BQT', 'BEQ'];
 
 Set<String> transformPrefix = {
   // Rescale
-
   'RRC',
   'R01',
   'RMD',
@@ -57,9 +56,7 @@ Set<String> transformPrefix = {
   'R10',
   'RRK',
   'RIN', // numeric suffix
-
   // Impute
-
   'IZR',
   'IMN',
   'IMD',
@@ -67,7 +64,6 @@ Set<String> transformPrefix = {
   'IMP',
 
   // Recode
-
   'BKM', // KMeans
   'BQT', // Quantiles
   'BEQ', // Equal Width

@@ -58,11 +58,7 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     String stdout = ref.watch(stdoutProvider);
 
     List<Widget> pages = [
-      showMarkdownFile(
-        context,
-        missingIntroFile,
-        'assets/svg/missing.svg',
-      ),
+      showMarkdownFile(context, missingIntroFile, 'assets/svg/missing.svg'),
     ];
 
     String content = '';
@@ -259,9 +255,6 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
       );
     }
 
-    return PageViewer(
-      pageController: pageController,
-      pages: pages,
-    );
+    return PageViewer(pageController: pageController, pages: pages);
   }
 }

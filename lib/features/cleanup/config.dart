@@ -240,9 +240,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
             ''',
       );
     } else
-
     // All good.
-
     {
       showDialog(
         context: context,
@@ -347,9 +345,9 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
                     }
                   });
                 },
+
                 // Check if the target variable has missing values.
                 // The check only applies to the "Obs with Missing Target" option.
-
                 isOptionDisabled: (option) =>
                     option == multiMethods.keys.toList()[2] &&
                     !hasTargetMissingValues(ref),
@@ -370,7 +368,6 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
               ),
 
               // Use the variableChooser with enabled parameter.
-
               variableChooser(
                 'Variable',
                 inputs,

@@ -61,11 +61,7 @@ void showImageDialog(
                   onTap: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Icon(
-                    Icons.close,
-                    color: Colors.grey,
-                    size: 30,
-                  ),
+                  child: const Icon(Icons.close, color: Colors.grey, size: 30),
                 ),
               ),
             ],

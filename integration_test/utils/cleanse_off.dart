@@ -13,9 +13,7 @@ Future<void> cleanseOff(WidgetTester tester) async {
   // Get initial cleanse state.
 
   final cleanseState = tester
-      .state<ConsumerState>(
-        find.byType(DatasetToggles),
-      )
+      .state<ConsumerState>(find.byType(DatasetToggles))
       .ref
       .read(cleanseProvider);
 
@@ -29,9 +27,7 @@ Future<void> cleanseOff(WidgetTester tester) async {
   // Verify cleanse is now disabled.
 
   final updatedCleanseState = tester
-      .state<ConsumerState>(
-        find.byType(DatasetToggles),
-      )
+      .state<ConsumerState>(find.byType(DatasetToggles))
       .ref
       .read(cleanseProvider);
   expect(updatedCleanseState, false);

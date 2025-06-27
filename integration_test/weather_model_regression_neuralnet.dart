@@ -109,12 +109,7 @@ void main() {
         back: 1,
         title: 'Neural Net Model - Summary and Weights',
       );
-      await verifySelectableText(
-        tester,
-        [
-          'data = ds_final',
-        ],
-      );
+      await verifySelectableText(tester, ['data = ds_final']);
     });
   });
 }

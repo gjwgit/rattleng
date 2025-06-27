@@ -59,9 +59,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
   Widget build(BuildContext context) {
     // Get the PageController from Riverpod.
 
-    final pageController = ref.watch(
-      forestPageControllerProvider,
-    );
+    final pageController = ref.watch(forestPageControllerProvider);
 
     String stdout = ref.watch(stdoutProvider);
     bool useValidation = ref.watch(useValidationSettingProvider);
@@ -71,11 +69,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
         ref.watch(algorithmForestProvider.notifier).state;
 
     List<Widget> pages = [
-      showMarkdownFile(
-        context,
-        forestIntroFile,
-        'assets/svg/forest.svg',
-      ),
+      showMarkdownFile(context, forestIntroFile, 'assets/svg/forest.svg'),
     ];
 
     String content = '';
@@ -346,10 +340,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
       ////////////////////////////////////////////////////////////////////////
 
-      content = rExtract(
-        stdout,
-        'print(importance_df)',
-      );
+      content = rExtract(stdout, 'print(importance_df)');
 
       if (content.isNotEmpty) {
         pages.add(
@@ -435,9 +426,6 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    return PageViewer(
-      pageController: pageController,
-      pages: pages,
-    );
+    return PageViewer(pageController: pageController, pages: pages);
   }
 }

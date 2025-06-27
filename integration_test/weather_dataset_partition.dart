@@ -44,35 +44,37 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets(
-      'Load Weather Dataset and test when unify is on and partition is on.',
-      (WidgetTester tester) async {
-    app.main();
-    await tester.pumpAndSettle();
-    await unifyOn(tester);
-    await setPartition(tester, true);
-    await loadDemoDataset(tester);
-    await navigateToTab(tester, 'Model');
-    await navigateToFeature(tester, 'Tree');
-    await tapButton(tester, 'Build Decision Tree');
-    await tester.pump(delay); // 20250131 gjw Could not find '254'
-    await gotoNextPage(tester);
-    await tester.pump(delay); // 20250212 gjw Could not find '254'
-    await verifySelectableText(tester, ['254']);
-  });
+    'Load Weather Dataset and test when unify is on and partition is on.',
+    (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+      await unifyOn(tester);
+      await setPartition(tester, true);
+      await loadDemoDataset(tester);
+      await navigateToTab(tester, 'Model');
+      await navigateToFeature(tester, 'Tree');
+      await tapButton(tester, 'Build Decision Tree');
+      await tester.pump(delay); // 20250131 gjw Could not find '254'
+      await gotoNextPage(tester);
+      await tester.pump(delay); // 20250212 gjw Could not find '254'
+      await verifySelectableText(tester, ['254']);
+    },
+  );
 
   testWidgets(
-      'Load Weather Dataset and test when unify is on and partition is off.',
-      (WidgetTester tester) async {
-    app.main();
-    await tester.pumpAndSettle();
-    await unifyOn(tester);
-    await setPartition(tester, false);
-    await loadDemoDataset(tester, 'Weather', false);
-    await navigateToTab(tester, 'Model');
-    await navigateToFeature(tester, 'Tree');
-    await tapButton(tester, 'Build Decision Tree');
-    await tester.pump(delay); // 20250212 gjw Could not find '363'
-    await gotoNextPage(tester);
-    await verifySelectableText(tester, ['363']);
-  });
+    'Load Weather Dataset and test when unify is on and partition is off.',
+    (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+      await unifyOn(tester);
+      await setPartition(tester, false);
+      await loadDemoDataset(tester, 'Weather', false);
+      await navigateToTab(tester, 'Model');
+      await navigateToFeature(tester, 'Tree');
+      await tapButton(tester, 'Build Decision Tree');
+      await tester.pump(delay); // 20250212 gjw Could not find '363'
+      await gotoNextPage(tester);
+      await verifySelectableText(tester, ['363']);
+    },
+  );
 }

@@ -29,10 +29,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'delays.dart';
 
-Future<void> navigateToFeature(
-  WidgetTester tester,
-  String feature,
-) async {
+Future<void> navigateToFeature(WidgetTester tester, String feature) async {
   final tabFinder = find.text(feature);
   expect(tabFinder, findsOneWidget);
 

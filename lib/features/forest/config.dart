@@ -195,25 +195,23 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
       spacing: configRowSpace,
       children: [
         // Space above the beginning of the configs.
-
         configBotGap,
 
         Row(
           spacing: configWidgetSpace,
           children: [
             // Space to the left of the configs.
-
             configLeftGap,
 
             // The BUILD button.
-
             ActivityButton(
               pageControllerProvider:
                   forestPageControllerProvider, // Optional navigation
 
               onPressed: () async {
-                String? sampleSizeError =
-                    _validateSampleSize(_rfSampleSizeController.text);
+                String? sampleSizeError = _validateSampleSize(
+                  _rfSampleSizeController.text,
+                );
 
                 // Collect all errors and the list may be added in future use.
 
@@ -256,16 +254,8 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
                 String mbcf = 'model_build_cforest';
 
                 selectedAlgorithm == AlgorithmType.traditional
-                    ? await rSource(
-                        context,
-                        ref,
-                        [mt, mbrf],
-                      )
-                    : await rSource(
-                        context,
-                        ref,
-                        [mt, mbcf],
-                      );
+                    ? await rSource(context, ref, [mt, mbrf])
+                    : await rSource(context, ref, [mt, mbcf]);
 
                 if (selectedAlgorithm == AlgorithmType.traditional) {
                   ref.read(randomForestEvaluateProvider.notifier).state = true;
@@ -314,7 +304,6 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
           spacing: configWidgetSpace,
           children: [
             // Space to the left of the configs.
-
             configLeftGap,
 
             NumberField(
@@ -350,8 +339,9 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
 
                 ''',
               validator: validateVector,
-              inputFormatter:
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
+              inputFormatter: FilteringTextInputFormatter.allow(
+                RegExp(r'[0-9,\s]'),
+              ),
               stateProvider: predictorNumForestProvider,
             ),
 
@@ -371,8 +361,9 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
                 ''',
               max: treeNum,
               validator: validateVector,
-              inputFormatter:
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
+              inputFormatter: FilteringTextInputFormatter.allow(
+                RegExp(r'[0-9,\s]'),
+              ),
               stateProvider: treeNoForestProvider,
               onUpDownPressed: () {
                 rExecute(
@@ -398,8 +389,9 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
 
                 ''',
               validator: validateVector,
-              inputFormatter:
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9,\s]')),
+              inputFormatter: FilteringTextInputFormatter.allow(
+                RegExp(r'[0-9,\s]'),
+              ),
               stateProvider: maxRulesForestProvider,
               onUpDownPressed: () {
                 rExecute(

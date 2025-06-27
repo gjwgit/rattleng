@@ -154,9 +154,6 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    return PageViewer(
-      pageController: pageController,
-      pages: pages,
-    );
+    return PageViewer(pageController: pageController, pages: pages);
   }
 }

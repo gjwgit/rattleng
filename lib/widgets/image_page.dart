@@ -1,6 +1,6 @@
 /// A widget to build the a common single image based pages.
 //
-// Time-stamp: <Tuesday 2025-05-06 07:37:03 +1000 Graham Williams>
+// Time-stamp: <Friday 2025-06-27 14:28:44 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -117,10 +117,7 @@ class ImagePage extends ConsumerWidget {
   Future<ByteData> _svgToImageBytes(String svgPath) async {
     final svgString = await File(svgPath).readAsString();
 
-    final pictureInfo = await vg.loadPicture(
-      SvgStringLoader(svgString),
-      null,
-    );
+    final pictureInfo = await vg.loadPicture(SvgStringLoader(svgString), null);
 
     final recorder = ui.PictureRecorder();
     final canvas = ui.Canvas(recorder);
@@ -130,8 +127,10 @@ class ImagePage extends ConsumerWidget {
 
     pictureInfo.picture.toImage(size.width.toInt(), size.height.toInt());
 
-    final image = await pictureInfo.picture
-        .toImage(size.width.toInt(), size.height.toInt());
+    final image = await pictureInfo.picture.toImage(
+      size.width.toInt(),
+      size.height.toInt(),
+    );
     final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
 
     if (byteData == null) {
@@ -151,9 +150,7 @@ class ImagePage extends ConsumerWidget {
       pw.Page(
         build: (pw.Context context) {
           return pw.Center(
-            child: pw.Image(
-              pw.MemoryImage(pngBytes.buffer.asUint8List()),
-            ),
+            child: pw.Image(pw.MemoryImage(pngBytes.buffer.asUint8List())),
           );
         },
       ),
@@ -208,7 +205,6 @@ class ImagePage extends ConsumerWidget {
                 children: [
                   Row(
                     // 20240726 gjw Ensure the Save button is aligned at the top.
-
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // 20240726 gjw Remove the Flexible for now. Perhaps avoid
@@ -219,7 +215,6 @@ class ImagePage extends ConsumerWidget {
                       // 20240725 gjw Introduce the Flexible wrapper to avoid the markdown
                       // text overflowing to the elevarted Export
                       // button.
-
                       MarkdownBody(
                         data: wordWrap(title),
                         selectable: true,
@@ -277,8 +272,9 @@ class ImagePage extends ConsumerWidget {
                             // irrespective of whether we have a [display],
                             // which is intended for in-app use only.
 
-                            final bool isSvg =
-                                path.toLowerCase().endsWith('.svg');
+                            final bool isSvg = path.toLowerCase().endsWith(
+                                  '.svg',
+                                );
 
                             // Generate a unique file name for the new file in the
                             // temporary directory with the correct extension.
@@ -296,8 +292,9 @@ class ImagePage extends ConsumerWidget {
                             // if not set.
 
                             final prefs = await SharedPreferences.getInstance();
-                            final savedImageViewer =
-                                prefs.getString('imageViewerApp');
+                            final savedImageViewer = prefs.getString(
+                              'imageViewerApp',
+                            );
 
                             // If the shared preferences image viewer app is null(not set),
                             // use the provider default.
@@ -308,7 +305,9 @@ class ImagePage extends ConsumerWidget {
                             Platform.isWindows
                                 ? Process.run(
                                     imageViewerApp!,
-                                    [path],
+                                    [
+                                      path,
+                                    ],
                                     runInShell: true,
                                   )
                                 : Process.run(imageViewerApp!, [path]);
@@ -330,10 +329,7 @@ class ImagePage extends ConsumerWidget {
 
                         ''',
                         child: IconButton(
-                          icon: const Icon(
-                            Icons.save,
-                            color: Colors.blue,
-                          ),
+                          icon: const Icon(Icons.save, color: Colors.blue),
                           onPressed: () async {
                             String fileName = path.split('/').last;
                             String? pathToSave = await selectFile(
@@ -392,8 +388,10 @@ class ImagePage extends ConsumerWidget {
 
                       // Determine the side length for a square viewing area.
 
-                      final side =
-                          math.min(availableWidth, calculatedMaxHeight);
+                      final side = math.min(
+                        availableWidth,
+                        calculatedMaxHeight,
+                      );
 
                       // Determine which image to display based on file extension.
                       final bool isSvg =
@@ -407,10 +405,7 @@ class ImagePage extends ConsumerWidget {
                             maxScale: 5,
                             alignment: Alignment.center,
                             child: isSvg
-                                ? SvgPicture.memory(
-                                    bytes,
-                                    fit: BoxFit.contain,
-                                  )
+                                ? SvgPicture.memory(bytes, fit: BoxFit.contain)
                                 : Image.memory(bytes),
                           ),
                         ),

@@ -55,10 +55,9 @@ void main() {
     // Find the text containing the number of default clusters.
 
     await navigateToPage(tester, 1, title: 'Cluster Analysis');
-    await verifySelectableText(
-      tester,
-      ["built using 'kmeans' with 10 clusters"],
-    );
+    await verifySelectableText(tester, [
+      "built using 'kmeans' with 10 clusters",
+    ]);
 
     await tester.pump(interact);
     await navigateToPage(tester, 2, title: 'Cluster Analysis - Visual');

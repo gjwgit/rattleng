@@ -47,9 +47,7 @@ void main() {
     await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Cluster');
     await tester.pump(interact);
-    final biclusterChip = find.text(
-      'BiCluster',
-    );
+    final biclusterChip = find.text('BiCluster');
     await tester.tap(biclusterChip);
     await tester.pumpAndSettle();
     await tapButton(tester, 'Build Clustering');

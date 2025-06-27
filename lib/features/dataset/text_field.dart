@@ -88,7 +88,6 @@ class _DatasetTextFieldState extends ConsumerState<DatasetTextField> {
 
     return Expanded(
       // Use [Expanded] to fill the remainder of the row.
-
       child: MarkdownTooltip(
         message: '''
 
@@ -99,7 +98,6 @@ class _DatasetTextFieldState extends ConsumerState<DatasetTextField> {
         ''',
         child: TextField(
           // A [TextField] to contain the name of the selected dataset.
-
           key: datasetPathKey,
 
           // If the user updates the text then we need to send the new value
@@ -110,7 +108,6 @@ class _DatasetTextFieldState extends ConsumerState<DatasetTextField> {
           //          },
 
           // Waht to do when the user presses ENTER.
-
           onSubmitted: (newPath) async {
             // Simply ignore if the path is empty.
 
@@ -132,7 +129,6 @@ class _DatasetTextFieldState extends ConsumerState<DatasetTextField> {
 
             ref.read(pageControllerProvider).animateToPage(
                   // Index of the second page.
-
                   1,
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
@@ -140,14 +136,12 @@ class _DatasetTextFieldState extends ConsumerState<DatasetTextField> {
           },
 
           // For an empty value we show a helpful message.
-
           decoration: const InputDecoration(
             hintText: 'Path to dataset file or named dataset from a package.',
           ),
 
           // The controller displays the current path and accessing it from the
           // path provider ensures it is always the latest value displayed.
-
           controller: _textController,
         ),
       ),

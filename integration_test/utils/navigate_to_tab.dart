@@ -31,10 +31,7 @@ import 'package:rattle/home.dart';
 
 import 'delays.dart';
 
-Future<void> navigateToTab(
-  WidgetTester tester,
-  String tabTitle,
-) async {
+Future<void> navigateToTab(WidgetTester tester, String tabTitle) async {
   // Find the tab details from homeTabs list using the tabTitle.
 
   final tab = homeTabs.firstWhere(

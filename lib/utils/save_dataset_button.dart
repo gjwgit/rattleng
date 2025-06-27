@@ -62,10 +62,7 @@ class SaveDatasetButton extends ConsumerWidget {
 
       ''',
       child: IconButton(
-        icon: const Icon(
-          Icons.save_alt,
-          color: Colors.blue,
-        ),
+        icon: const Icon(Icons.save_alt, color: Colors.blue),
         onPressed: () async {
           // Define allowed file type (optional: restrict to .csv files).
 

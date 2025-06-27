@@ -53,21 +53,13 @@ void main() {
     await tester.pump(delay);
     await gotoNextPage(tester);
     await verifyPage('Association Rules — Meta Summary');
-    await verifySelectableText(
-      tester,
-      [
-        '44 rules',
-      ],
-    );
+    await verifySelectableText(tester, ['44 rules']);
     await gotoNextPage(tester);
     await verifyPage('Association Rules — Discovered Rules');
-    await verifySelectableText(
-      tester,
-      [
-        'Patriot',
-        '0.7500000  0.4      1.5000000 3',
-      ],
-    );
+    await verifySelectableText(tester, [
+      'Patriot',
+      '0.7500000  0.4      1.5000000 3',
+    ]);
 
     await gotoNextPage(tester);
     await verifyPage('Item Frequency');

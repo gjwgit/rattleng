@@ -59,10 +59,7 @@ class NewPageIndicator extends StatelessWidget {
                 onUpdateCurrentPageIndex(currentPageIndex - 1);
               }
             },
-            icon: const Icon(
-              Icons.arrow_left_rounded,
-              size: 32.0,
-            ),
+            icon: const Icon(Icons.arrow_left_rounded, size: 32.0),
           ),
           // Page indicators (dots)
           Row(
@@ -102,10 +99,7 @@ class NewPageIndicator extends StatelessWidget {
                 onUpdateCurrentPageIndex(currentPageIndex + 1);
               }
             },
-            icon: const Icon(
-              Icons.arrow_right_rounded,
-              size: 32.0,
-            ),
+            icon: const Icon(Icons.arrow_right_rounded, size: 32.0),
           ),
         ],
       ),

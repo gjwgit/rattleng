@@ -38,9 +38,11 @@ bool checkFileExists(BuildContext context, String path) {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('File Not Found'),
-          content: Text('The file you specified does not exist\n\n'
-              '        $path\n\n'
-              'Please correct the filename path and try again.'),
+          content: Text(
+            'The file you specified does not exist\n\n'
+            '        $path\n\n'
+            'Please correct the filename path and try again.',
+          ),
           actions: [
             TextButton(
               onPressed: () {

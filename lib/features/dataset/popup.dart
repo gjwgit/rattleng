@@ -75,18 +75,11 @@ class DatasetPopup extends ConsumerWidget {
         children: [
           const Row(
             children: [
-              Icon(
-                Icons.data_usage,
-                size: 24,
-                color: Colors.blue,
-              ),
+              Icon(Icons.data_usage, size: 24, color: Colors.blue),
               popupIconGap,
               Text(
                 'Choose the Dataset Source:',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -97,7 +90,6 @@ class DatasetPopup extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               // FILENAME
-
               ElevatedButton(
                 onPressed: () async {
                   String path = await datasetSelectFile();
@@ -135,7 +127,6 @@ class DatasetPopup extends ConsumerWidget {
 
                   await ref.read(pageControllerProvider).animateToPage(
                         // Index of the second page.
-
                         1,
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeInOut,
@@ -290,7 +281,6 @@ class DatasetPopup extends ConsumerWidget {
           configRowGap,
 
           //  Buttons for selecting the demo dataset.
-
           Consumer(
             builder: (context, ref, child) {
               return Row(
@@ -334,7 +324,6 @@ class DatasetPopup extends ConsumerWidget {
 
                         await ref.read(pageControllerProvider).animateToPage(
                               // Index of the second page.
-
                               1,
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.easeInOut,
@@ -370,7 +359,6 @@ class DatasetPopup extends ConsumerWidget {
 
                         await ref.read(pageControllerProvider).animateToPage(
                               // Index of the second page.
-
                               1,
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.easeInOut,
@@ -416,7 +404,6 @@ class DatasetPopup extends ConsumerWidget {
 
                         await ref.read(pageControllerProvider).animateToPage(
                               // Index of the second page.
-
                               1,
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.easeInOut,
@@ -451,7 +438,6 @@ class DatasetPopup extends ConsumerWidget {
 
                         await ref.read(pageControllerProvider).animateToPage(
                               // Index of the second page.
-
                               1,
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.easeInOut,
@@ -490,7 +476,6 @@ class DatasetPopup extends ConsumerWidget {
 
                         await ref.read(pageControllerProvider).animateToPage(
                               // Index of the second page.
-
                               1,
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.easeInOut,
@@ -524,7 +509,6 @@ class DatasetPopup extends ConsumerWidget {
 
                         await ref.read(pageControllerProvider).animateToPage(
                               // Index of the second page.
-
                               1,
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.easeInOut,
@@ -559,7 +543,6 @@ class DatasetPopup extends ConsumerWidget {
 
                         await ref.read(pageControllerProvider).animateToPage(
                               // Index of the second page.
-
                               1,
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.easeInOut,
@@ -574,11 +557,9 @@ class DatasetPopup extends ConsumerWidget {
           ),
 
           // SPACE between row of options and the cancel button.
-
           configRowGap,
 
           // Add a CANCEL button to do nothing but return.
-
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [

@@ -75,9 +75,9 @@ Future<void> reset(BuildContext context, WidgetRef ref) async {
   // Clear all .svg files in the tempDir.
   final tempDirectory = Directory(tempDir);
   if (await tempDirectory.exists()) {
-    final svgFiles = tempDirectory
-        .listSync()
-        .where((file) => file is File && file.path.endsWith('.svg'));
+    final svgFiles = tempDirectory.listSync().where(
+          (file) => file is File && file.path.endsWith('.svg'),
+        );
 
     for (var file in svgFiles) {
       try {

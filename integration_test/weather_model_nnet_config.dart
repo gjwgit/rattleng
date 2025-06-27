@@ -52,9 +52,7 @@ final List<String> varsToIgnore = [
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Demo Model Neural NNet Config:', (
-    WidgetTester tester,
-  ) async {
+  testWidgets('Demo Model Neural NNet Config:', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
     await loadDemoDataset(tester, 'Weather');

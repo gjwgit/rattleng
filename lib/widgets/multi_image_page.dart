@@ -1,6 +1,6 @@
 /// Widget for multiple images across the page.
 //
-// Time-stamp: <Tuesday 2025-05-06 07:36:53 +1000 Graham Williams>
+// Time-stamp: <Friday 2025-06-27 14:29:09 +1000 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -89,18 +89,17 @@ class MultiImagePage extends ConsumerWidget {
 
   Future<ByteData> _svgToImageBytes(String svgPath) async {
     final svgString = await File(svgPath).readAsString();
-    final pictureInfo = await vg.loadPicture(
-      SvgStringLoader(svgString),
-      null,
-    );
+    final pictureInfo = await vg.loadPicture(SvgStringLoader(svgString), null);
 
     final recorder = ui.PictureRecorder();
     final canvas = ui.Canvas(recorder);
     final size = pictureInfo.size;
 
     canvas.scale(1.0, 1.0);
-    final image = await pictureInfo.picture
-        .toImage(size.width.toInt(), size.height.toInt());
+    final image = await pictureInfo.picture.toImage(
+      size.width.toInt(),
+      size.height.toInt(),
+    );
     final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
 
     if (byteData == null) {
@@ -118,9 +117,7 @@ class MultiImagePage extends ConsumerWidget {
       pw.Page(
         build: (pw.Context context) {
           return pw.Center(
-            child: pw.Image(
-              pw.MemoryImage(pngBytes.buffer.asUint8List()),
-            ),
+            child: pw.Image(pw.MemoryImage(pngBytes.buffer.asUint8List())),
           );
         },
       ),
@@ -156,7 +153,6 @@ class MultiImagePage extends ConsumerWidget {
                       '''),
                 styleSheet: MarkdownStyleSheet(
                   // Force left alignment for paragraph text.
-
                   p: Theme.of(context).textTheme.bodyMedium ??
                       const TextStyle(),
                   textAlign: WrapAlignment.start,
@@ -191,9 +187,7 @@ class MultiImagePage extends ConsumerWidget {
                     future: _loadImageBytes(paths[index]),
                     builder: (context, snapshot) {
                       if (snapshot.hasError) {
-                        return Center(
-                          child: Text('Error: ${snapshot.error}'),
-                        );
+                        return Center(child: Text('Error: ${snapshot.error}'));
                       } else if (snapshot.connectionState ==
                           ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator());
@@ -233,9 +227,7 @@ class MultiImagePage extends ConsumerWidget {
                                         },
                                       ),
                                     ),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
+                                    const SizedBox(width: 8),
                                     MarkdownTooltip(
                                       message: '''
                                                 **Enlarge.** Tap here to view the plot enlarged to the
@@ -251,9 +243,7 @@ class MultiImagePage extends ConsumerWidget {
                                         },
                                       ),
                                     ),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
+                                    const SizedBox(width: 8),
                                     MarkdownTooltip(
                                       message: '''
                                                 **Open.** Tap here to open the plot in a separate window
@@ -274,11 +264,13 @@ class MultiImagePage extends ConsumerWidget {
                                         onPressed: () async {
                                           String fileName =
                                               'plot_${Random().nextInt(10000)}.svg';
-                                          File tempFile =
-                                              File('$tempDir/$fileName');
+                                          File tempFile = File(
+                                            '$tempDir/$fileName',
+                                          );
 
-                                          await File(paths[index])
-                                              .copy(tempFile.path);
+                                          await File(
+                                            paths[index],
+                                          ).copy(tempFile.path);
 
                                           final prefs = await SharedPreferences
                                               .getInstance();
@@ -297,19 +289,18 @@ class MultiImagePage extends ConsumerWidget {
                                           Platform.isWindows
                                               ? Process.run(
                                                   imageViewerApp!,
-                                                  [tempFile.path],
+                                                  [
+                                                    tempFile.path,
+                                                  ],
                                                   runInShell: true,
                                                 )
-                                              : Process.run(
-                                                  imageViewerApp!,
-                                                  [tempFile.path],
-                                                );
+                                              : Process.run(imageViewerApp!, [
+                                                  tempFile.path,
+                                                ]);
                                         },
                                       ),
                                     ),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
+                                    const SizedBox(width: 8),
                                     MarkdownTooltip(
                                       message: '''
                                                 **Save.** Tap here to save the plot in your preferred
@@ -344,8 +335,9 @@ class MultiImagePage extends ConsumerWidget {
                                                 .last
                                                 .toLowerCase();
                                             if (extension == 'svg') {
-                                              await File(paths[index])
-                                                  .copy(pathToSave);
+                                              await File(
+                                                paths[index],
+                                              ).copy(pathToSave);
                                             } else if (extension == 'pdf') {
                                               await _exportToPdf(
                                                 paths[index],
@@ -375,12 +367,11 @@ class MultiImagePage extends ConsumerWidget {
                                     const SizedBox(width: 5),
                                   ],
                                 ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
+                                const SizedBox(height: 8),
                                 Container(
-                                  constraints:
-                                      const BoxConstraints(maxHeight: 450),
+                                  constraints: const BoxConstraints(
+                                    maxHeight: 450,
+                                  ),
                                   child: InteractiveViewer(
                                     maxScale: 5,
                                     alignment: Alignment.topCenter,

@@ -54,10 +54,7 @@ void main() {
     await tapButton(tester, 'Build Clustering');
     await addDelay(tester, 10);
     await navigateToPage(tester, 1, title: 'Cluster Analysis');
-    await verifySelectableText(
-      tester,
-      ['cluster_assignments'],
-    );
+    await verifySelectableText(tester, ['cluster_assignments']);
     await navigateToPage(tester, 2, title: 'Cluster Analysis - Visual');
   });
 }

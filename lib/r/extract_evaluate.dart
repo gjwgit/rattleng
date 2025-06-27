@@ -37,11 +37,7 @@ import 'package:rattle/utils/timestamp.dart';
 /// model evaluation states. It returns a formatted string that contains relevant
 /// evaluation results.
 
-String _basicTemplate(
-  String log,
-  String evaluateDataset,
-  WidgetRef ref,
-) {
+String _basicTemplate(String log, String evaluateDataset, WidgetRef ref) {
   // Check which models and evaluation options have been selected or executed.
 
   bool rpartTreeExecuted = ref.watch(rpartTreeEvaluateProvider);
@@ -105,24 +101,12 @@ String _basicTemplate(
   // Extract results from the log for each model's error matrices.
   // Extract the count data from the log and remove the first line.
 
-  String crc = rExtract(
-    log,
-    '> rpart_${evaluateDataset}_COUNT',
-  );
+  String crc = rExtract(log, '> rpart_${evaluateDataset}_COUNT');
 
-  String crp = rExtract(
-    log,
-    '> rpart_${evaluateDataset}_PROP',
-  );
+  String crp = rExtract(log, '> rpart_${evaluateDataset}_PROP');
 
-  String cc = rExtract(
-    log,
-    '> ctree_${evaluateDataset}_COUNT',
-  );
-  String cp = rExtract(
-    log,
-    '> ctree_${evaluateDataset}_PROP',
-  );
+  String cc = rExtract(log, '> ctree_${evaluateDataset}_COUNT');
+  String cp = rExtract(log, '> ctree_${evaluateDataset}_PROP');
   String ca = rExtract(log, '> adaboost_${evaluateDataset}_COUNT');
   String pa = rExtract(log, '> adaboost_${evaluateDataset}_PROP');
   String cx = rExtract(log, '> xgboost_${evaluateDataset}_COUNT');
@@ -139,26 +123,46 @@ String _basicTemplate(
   String cntp = rExtract(log, '> neuralnet_${evaluateDataset}_PROP');
   String clic = rExtract(log, '> linear_${evaluateDataset}_COUNT');
   String clip = rExtract(log, '> linear_${evaluateDataset}_PROP');
-  String rems =
-      rExtract(log, '> rpart_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
-  String cems =
-      rExtract(log, '> ctree_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
-  String aems =
-      rExtract(log, '> adaboost_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
-  String xems =
-      rExtract(log, '> xgboost_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
-  String rfems =
-      rExtract(log, '> randomForest_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
-  String cfems =
-      rExtract(log, '> cforest_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
-  String svmems =
-      rExtract(log, '> svm_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
-  String nnems =
-      rExtract(log, '> nnet_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
-  String ntems =
-      rExtract(log, '> neuralnet_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
-  String liems =
-      rExtract(log, '> linear_${evaluateDataset}_ERROR_MATRIX_SUMMARY:');
+  String rems = rExtract(
+    log,
+    '> rpart_${evaluateDataset}_ERROR_MATRIX_SUMMARY:',
+  );
+  String cems = rExtract(
+    log,
+    '> ctree_${evaluateDataset}_ERROR_MATRIX_SUMMARY:',
+  );
+  String aems = rExtract(
+    log,
+    '> adaboost_${evaluateDataset}_ERROR_MATRIX_SUMMARY:',
+  );
+  String xems = rExtract(
+    log,
+    '> xgboost_${evaluateDataset}_ERROR_MATRIX_SUMMARY:',
+  );
+  String rfems = rExtract(
+    log,
+    '> randomForest_${evaluateDataset}_ERROR_MATRIX_SUMMARY:',
+  );
+  String cfems = rExtract(
+    log,
+    '> cforest_${evaluateDataset}_ERROR_MATRIX_SUMMARY:',
+  );
+  String svmems = rExtract(
+    log,
+    '> svm_${evaluateDataset}_ERROR_MATRIX_SUMMARY:',
+  );
+  String nnems = rExtract(
+    log,
+    '> nnet_${evaluateDataset}_ERROR_MATRIX_SUMMARY:',
+  );
+  String ntems = rExtract(
+    log,
+    '> neuralnet_${evaluateDataset}_ERROR_MATRIX_SUMMARY:',
+  );
+  String liems = rExtract(
+    log,
+    '> linear_${evaluateDataset}_ERROR_MATRIX_SUMMARY:',
+  );
 
   // Obtain the current timestamp for logging purposes.
 
@@ -281,18 +285,10 @@ String _basicTemplate(
   return result;
 }
 
-String rExtractEvaluate(
-  String log,
-  String evaluateDataset,
-  WidgetRef ref,
-) {
+String rExtractEvaluate(String log, String evaluateDataset, WidgetRef ref) {
   // Extract from the R log those lines of output from the evaluate.
 
-  String extract = _basicTemplate(
-    log,
-    evaluateDataset,
-    ref,
-  );
+  String extract = _basicTemplate(log, evaluateDataset, ref);
 
   return extract;
 }

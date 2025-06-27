@@ -76,9 +76,7 @@ void main() {
 
           final parentFinder = find.ancestor(
             of: variableFinder,
-            matching: find.byType(
-              Row,
-            ),
+            matching: find.byType(Row),
           );
 
           // Select the first Row in the list.
@@ -103,8 +101,9 @@ void main() {
 
           // Get the ChoiceChip widget.
 
-          final ChoiceChip ignoreChipWidget =
-              tester.widget<ChoiceChip>(ignoreChipFinder);
+          final ChoiceChip ignoreChipWidget = tester.widget<ChoiceChip>(
+            ignoreChipFinder,
+          );
 
           // Check if the 'Ignore' ChoiceChip is selected.
 

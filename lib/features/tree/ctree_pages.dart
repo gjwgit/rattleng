@@ -38,9 +38,7 @@ import 'package:rattle/widgets/text_page.dart';
 
 /// Ctree tree displays.
 
-List<Widget> ctreePages(
-  WidgetRef ref,
-) {
+List<Widget> ctreePages(WidgetRef ref) {
   String stdout = ref.watch(stdoutProvider);
 
   // Begin the list of pages to display with the introduction markdown text.

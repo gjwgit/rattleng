@@ -56,11 +56,7 @@ class _RecodeDisplayState extends ConsumerState<RecodeDisplay> {
     String stdout = ref.watch(stdoutProvider);
 
     List<Widget> pages = [
-      showMarkdownFile(
-        context,
-        recodeIntroFile,
-        'assets/svg/recode.svg',
-      ),
+      showMarkdownFile(context, recodeIntroFile, 'assets/svg/recode.svg'),
     ];
 
     // Second page is the data summary.
@@ -89,9 +85,6 @@ class _RecodeDisplayState extends ConsumerState<RecodeDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    return PageViewer(
-      pageController: pageController,
-      pages: pages,
-    );
+    return PageViewer(pageController: pageController, pages: pages);
   }
 }

@@ -27,15 +27,7 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum Role {
-  input,
-  target,
-  risk,
-  ident,
-  ignore,
-  ignoreAfterTransformed,
-  weight,
-}
+enum Role { input, target, risk, ident, ignore, ignoreAfterTransformed, weight }
 
 // Define an extension on TemperatureType to override the toString method
 extension RoleExtension on Role {

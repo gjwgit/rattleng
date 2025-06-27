@@ -60,21 +60,15 @@ class ImageViewerTextField extends ConsumerWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Text(
-            'Image Viewer',
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
+          const Text('Image Viewer', style: TextStyle(fontSize: 16)),
           const SizedBox(width: 16),
           ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: 150,
-            ),
+            constraints: const BoxConstraints(maxWidth: 150),
             child: TextField(
               controller: TextEditingController(text: imageViewerApp)
-                ..selection =
-                    TextSelection.collapsed(offset: imageViewerApp.length),
+                ..selection = TextSelection.collapsed(
+                  offset: imageViewerApp.length,
+                ),
               onChanged: (value) {
                 ref.read(imageViewerSettingProvider.notifier).state = value;
                 saveImageViewerApp(value);

@@ -49,19 +49,13 @@ class SvmDisplay extends ConsumerStatefulWidget {
 class _SvmDisplayState extends ConsumerState<SvmDisplay> {
   @override
   Widget build(BuildContext context) {
-    final pageController = ref.watch(
-      svmPageControllerProvider,
-    );
+    final pageController = ref.watch(svmPageControllerProvider);
     String stdout = ref.watch(stdoutProvider);
     String content = '';
     String displayContent = '';
 
     List<Widget> pages = [
-      showMarkdownFile(
-        context,
-        svmIntroFile,
-        'assets/svg/svm.svg',
-      ),
+      showMarkdownFile(context, svmIntroFile, 'assets/svg/svm.svg'),
     ];
 
     ////////////////////////////////////////////////////////////////////////
@@ -92,9 +86,6 @@ class _SvmDisplayState extends ConsumerState<SvmDisplay> {
       );
     }
 
-    return PageViewer(
-      pageController: pageController,
-      pages: pages,
-    );
+    return PageViewer(pageController: pageController, pages: pages);
   }
 }

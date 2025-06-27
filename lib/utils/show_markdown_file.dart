@@ -37,10 +37,7 @@ import 'package:rattle/utils/load_asset.dart';
 /// which is located under the path [markdownFilePath].
 /// It allows handling asynchronous loading of markdown file.
 
-FutureBuilder showMarkdownFile(
-  String markdownFilePath,
-  BuildContext context,
-) {
+FutureBuilder showMarkdownFile(String markdownFilePath, BuildContext context) {
   return FutureBuilder(
     key: const Key('markdown_file'),
     future: loadAsset(markdownFilePath),
@@ -55,11 +52,9 @@ FutureBuilder showMarkdownFile(
           // too wide. For now, and assuming the default window width, place the
           // Markdown text into a row and half fill the row. Eventually probably
           // want a fixed width?
-
           child: Row(
             children: [
               // The text goes into the left pane.
-
               Expanded(
                 child: Markdown(
                   data: snapshot.data!,
@@ -70,7 +65,6 @@ FutureBuilder showMarkdownFile(
                   },
 
                   // Custom image builder to load assets.
-
                   sizedImageBuilder: (config) {
                     return Image.asset('$assetsPath/${config.uri.toString()}');
                   },
@@ -78,7 +72,6 @@ FutureBuilder showMarkdownFile(
               ),
 
               // The right pain is empty.
-
               Expanded(
                 child: SvgPicture.asset(
                   svgAsset,

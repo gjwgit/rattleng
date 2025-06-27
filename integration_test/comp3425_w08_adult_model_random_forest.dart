@@ -65,32 +65,26 @@ void main() {
       await addDelay(tester, 55);
 
       await navigateToPage(tester, 1, back: 1, title: 'Random Forest Model');
-      await verifySelectableText(
-        tester,
-        [
-          'randomForest(formula=form, data=trds',
-          'OOB estimate of error rate: 13.76%',
-          'Confusion Matrix:',
-          '<=50K >50K class.error',
-          '<=50K 16111 1157  0.06700255',
-        ],
-      );
+      await verifySelectableText(tester, [
+        'randomForest(formula=form, data=trds',
+        'OOB estimate of error rate: 13.76%',
+        'Confusion Matrix:',
+        '<=50K >50K class.error',
+        '<=50K 16111 1157  0.06700255',
+      ]);
 
       await navigateToPage(tester, 2, back: 1, title: 'Sample Rules');
-      await verifySelectableText(
-        tester,
-        [
-          'Random Forest Model 1 ',
-          'Tree 1 Rule 1 Node 60 Decision <=50K',
-          '1: occupation IN ("Armed-Forces", "Exec-managerial", "Prof-specialty")',
-          '2: relationship IN ("Not-in-family", "Other-relative", "Own-child", "Unmarried")',
-          '3: eductation IN ("5th-6th", "Doctorate", "Preschool", "Prof-school")',
-          '4: capital_gain <= 4030',
-          '5: workclass IN ("Federal-gov", "Self-emp-not-inc")',
-          '6: age <= 31.5',
-          'Number of rules in Tree 1: 2186. Only 10 rules shown.',
-        ],
-      );
+      await verifySelectableText(tester, [
+        'Random Forest Model 1 ',
+        'Tree 1 Rule 1 Node 60 Decision <=50K',
+        '1: occupation IN ("Armed-Forces", "Exec-managerial", "Prof-specialty")',
+        '2: relationship IN ("Not-in-family", "Other-relative", "Own-child", "Unmarried")',
+        '3: eductation IN ("5th-6th", "Doctorate", "Preschool", "Prof-school")',
+        '4: capital_gain <= 4030',
+        '5: workclass IN ("Federal-gov", "Self-emp-not-inc")',
+        '6: age <= 31.5',
+        'Number of rules in Tree 1: 2186. Only 10 rules shown.',
+      ]);
 
       await navigateToPage(
         tester,
@@ -98,25 +92,22 @@ void main() {
         back: 2,
         title: 'Variable Importance — Numeric',
       );
-      await verifySelectableText(
-        tester,
-        [
-          '<=50K   >50K MeanDecreaseAccuracy MeanDecreaseGini',
-          'capital_gain   166.60 228.53               228.02           569.26',
-          'capital_loss    61.35 113.51               112.10           173.98',
-          'occupation      38.98  68.12                87.95           429.46',
-          'age            -10.39  94.68                68.23           593.91',
-          'eductation      61.02   7.29                54.82           324.59',
-          'hours_per_week  13.88  60.70                53.06           347.09',
-          'martial         49.19  19.99                44.82           424.95',
-          'education_num   38.93  18.92                41.04           341.65',
-          'workclass       34.89  13.41                40.37           190.38',
-          'relationship    27.36  39.81                36.87           623.95',
-          'sex             34.00   2.45                33.66            52.19',
-          'race            -0.46  16.69                10.52            73.22',
-          'fnlwgt           2.11   1.97                 2.89           653.56',
-        ],
-      );
+      await verifySelectableText(tester, [
+        '<=50K   >50K MeanDecreaseAccuracy MeanDecreaseGini',
+        'capital_gain   166.60 228.53               228.02           569.26',
+        'capital_loss    61.35 113.51               112.10           173.98',
+        'occupation      38.98  68.12                87.95           429.46',
+        'age            -10.39  94.68                68.23           593.91',
+        'eductation      61.02   7.29                54.82           324.59',
+        'hours_per_week  13.88  60.70                53.06           347.09',
+        'martial         49.19  19.99                44.82           424.95',
+        'education_num   38.93  18.92                41.04           341.65',
+        'workclass       34.89  13.41                40.37           190.38',
+        'relationship    27.36  39.81                36.87           623.95',
+        'sex             34.00   2.45                33.66            52.19',
+        'race            -0.46  16.69                10.52            73.22',
+        'fnlwgt           2.11   1.97                 2.89           653.56',
+      ]);
 
       // Build decision tree for comparison.
 
@@ -128,33 +119,30 @@ void main() {
       await tapButton(tester, 'Evaluate');
 
       await navigateToPage(tester, 1, back: 2, title: 'Error Matrix');
-      await verifySelectableText(
-        tester,
-        [
-          'Error matrix for the RPART Decision Tree model [TUNING] (counts)',
-          'Predicted',
-          'Actual  <=50K >50K Error',
-          '<=50K  3537  191   5.1',
-          '>50K    564  592  48.8',
-          'Error matrix for the RPART Decision Tree model [TUNING] (proportions)',
-          'Predicted',
-          'Actual  <=50K >50K Error',
-          '<=50K  72.4  3.9   5.1',
-          '>50K   11.5 12.1  48.8',
-          'Overall Error = 15.46%; Average Error = 26.96%.',
-          'Error matrix for the RANDOM FOREST model [TUNING] (proportions)',
-          'Predicted',
-          'Actual  <=50K >50K Error',
-          '<=50K  3474  254   6.8',
-          '>50K    403  753  34.9',
-          'Error matrix for the RANDOM FOREST model [TUNING] (counts)',
-          'Predicted',
-          'Actual  <=50K >50K Error',
-          '<=50K  71.1  5.2   6.8',
-          '>50K    8.3 15.4  34.9',
-          'Overall Error = 13.45%; Average Error = 20.84%.',
-        ],
-      );
+      await verifySelectableText(tester, [
+        'Error matrix for the RPART Decision Tree model [TUNING] (counts)',
+        'Predicted',
+        'Actual  <=50K >50K Error',
+        '<=50K  3537  191   5.1',
+        '>50K    564  592  48.8',
+        'Error matrix for the RPART Decision Tree model [TUNING] (proportions)',
+        'Predicted',
+        'Actual  <=50K >50K Error',
+        '<=50K  72.4  3.9   5.1',
+        '>50K   11.5 12.1  48.8',
+        'Overall Error = 15.46%; Average Error = 26.96%.',
+        'Error matrix for the RANDOM FOREST model [TUNING] (proportions)',
+        'Predicted',
+        'Actual  <=50K >50K Error',
+        '<=50K  3474  254   6.8',
+        '>50K    403  753  34.9',
+        'Error matrix for the RANDOM FOREST model [TUNING] (counts)',
+        'Predicted',
+        'Actual  <=50K >50K Error',
+        '<=50K  71.1  5.2   6.8',
+        '>50K    8.3 15.4  34.9',
+        'Overall Error = 13.45%; Average Error = 20.84%.',
+      ]);
 
       // Build decision tree for comparison.
 
@@ -165,63 +153,57 @@ void main() {
       await addDelay(tester, 70);
 
       await navigateToPage(tester, 1, back: 2, title: 'AdaBoost - Summary');
-      await verifySelectableText(
-        tester,
-        [
-          'True value <=50K  >50K',
-          '<=50K 16351   917',
-          '>50K   2310  3214',
-          'Train Error: 0.142',
-          'Out-Of-Bag Error:  0.141  iteration= 50',
-          'Additional Estimates of number of iterations:',
-          'train.err1 train.kap1',
-          '26         12',
-        ],
-      );
+      await verifySelectableText(tester, [
+        'True value <=50K  >50K',
+        '<=50K 16351   917',
+        '>50K   2310  3214',
+        'Train Error: 0.142',
+        'Out-Of-Bag Error:  0.141  iteration= 50',
+        'Additional Estimates of number of iterations:',
+        'train.err1 train.kap1',
+        '26         12',
+      ]);
 
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
       await addDelay(tester, 70);
 
       await navigateToPage(tester, 1, back: 1, title: 'Error Matrix');
-      await verifySelectableText(
-        tester,
-        [
-          'Error matrix for the RPART Decision Tree model [TUNING] (counts)',
-          'Predicted',
-          'Actual  <=50K >50K Error',
-          '<=50K  3537  191   5.1',
-          '>50K    564  592  48.8',
-          'Error matrix for the RPART Decision Tree model [TUNING] (proportions)',
-          'Predicted',
-          'Actual  <=50K >50K Error',
-          '<=50K  72.4  3.9   5.1',
-          '>50K   11.5 12.1  48.8',
-          'Overall Error = 15.46%; Average Error = 26.96%.',
-          'Error matrix for the RANDOM FOREST model [TUNING] (proportions)',
-          'Predicted',
-          'Actual  <=50K >50K Error',
-          '<=50K  3474  254   6.8',
-          '>50K    403  753  34.9',
-          'Error matrix for the RANDOM FOREST model [TUNING] (counts)',
-          'Predicted',
-          'Actual  <=50K >50K Error',
-          '<=50K  71.1  5.2   6.8',
-          '>50K    8.3 15.4  34.9',
-          'Overall Error = 13.45%; Average Error = 20.84%.',
-          'Error matrix for the ADABOOST model [TUNING] (counts)',
-          'Predicted',
-          'Actual  <=50K >50K Error',
-          '<=50K  3537  191   5.1',
-          '>50K    485  671  42.0',
-          'Error matrix for the ADABOOST model [TUNING] (proportions)',
-          'Predicted',
-          'Actual  <=50K >50K Error',
-          '<=50K  72.4  3.9   5.1',
-          '>50K    9.9 13.7  42.0',
-          'Overall Error = 13.84%; Average Error = 23.54%.',
-        ],
-      );
+      await verifySelectableText(tester, [
+        'Error matrix for the RPART Decision Tree model [TUNING] (counts)',
+        'Predicted',
+        'Actual  <=50K >50K Error',
+        '<=50K  3537  191   5.1',
+        '>50K    564  592  48.8',
+        'Error matrix for the RPART Decision Tree model [TUNING] (proportions)',
+        'Predicted',
+        'Actual  <=50K >50K Error',
+        '<=50K  72.4  3.9   5.1',
+        '>50K   11.5 12.1  48.8',
+        'Overall Error = 15.46%; Average Error = 26.96%.',
+        'Error matrix for the RANDOM FOREST model [TUNING] (proportions)',
+        'Predicted',
+        'Actual  <=50K >50K Error',
+        '<=50K  3474  254   6.8',
+        '>50K    403  753  34.9',
+        'Error matrix for the RANDOM FOREST model [TUNING] (counts)',
+        'Predicted',
+        'Actual  <=50K >50K Error',
+        '<=50K  71.1  5.2   6.8',
+        '>50K    8.3 15.4  34.9',
+        'Overall Error = 13.45%; Average Error = 20.84%.',
+        'Error matrix for the ADABOOST model [TUNING] (counts)',
+        'Predicted',
+        'Actual  <=50K >50K Error',
+        '<=50K  3537  191   5.1',
+        '>50K    485  671  42.0',
+        'Error matrix for the ADABOOST model [TUNING] (proportions)',
+        'Predicted',
+        'Actual  <=50K >50K Error',
+        '<=50K  72.4  3.9   5.1',
+        '>50K    9.9 13.7  42.0',
+        'Overall Error = 13.84%; Average Error = 23.54%.',
+      ]);
     });
   });
 }

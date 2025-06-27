@@ -1,6 +1,6 @@
 /// Test WEATHER dataset loads properly when unify is on/off.
 //
-// Time-stamp: <Sunday 2025-01-26 07:31:43 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-06-27 14:28:28 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -40,40 +40,40 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets(
-      'Load Weather Dataset and test when cleanse is on and unify is on.',
-      (WidgetTester tester) async {
-    app.main();
-    await tester.pumpAndSettle();
-    await cleanseOn(tester);
-    await unifyOn(tester);
-    await loadDemoDataset(tester);
-    await verifyText(
-      tester,
-      [
-        // Verify the variables are in lowercase and separated by underscores.
-
-        'min_temp',
-      ],
-      multi: true,
-    );
-  });
+    'Load Weather Dataset and test when cleanse is on and unify is on.',
+    (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+      await cleanseOn(tester);
+      await unifyOn(tester);
+      await loadDemoDataset(tester);
+      await verifyText(
+        tester,
+        [
+          // Verify the variables are in lowercase and separated by underscores.
+          'min_temp',
+        ],
+        multi: true,
+      );
+    },
+  );
 
   testWidgets(
-      'Load Weather Dataset and test when cleanse is on and unify is off.',
-      (WidgetTester tester) async {
-    app.main();
-    await tester.pumpAndSettle();
-    await cleanseOn(tester);
-    await unifyOff(tester);
-    await loadDemoDataset(tester, 'Weather', false);
-    await verifyText(
-      tester,
-      [
-        // Verify the variables are in uppercase and underscores are removed.
-
-        'MinTemp',
-      ],
-      multi: true,
-    );
-  });
+    'Load Weather Dataset and test when cleanse is on and unify is off.',
+    (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+      await cleanseOn(tester);
+      await unifyOff(tester);
+      await loadDemoDataset(tester, 'Weather', false);
+      await verifyText(
+        tester,
+        [
+          // Verify the variables are in uppercase and underscores are removed.
+          'MinTemp',
+        ],
+        multi: true,
+      );
+    },
+  );
 }

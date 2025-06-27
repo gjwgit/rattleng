@@ -72,25 +72,21 @@ class LinearConfigState extends ConsumerState<LinearConfig> {
       spacing: configRowSpace,
       children: [
         // Space above the beginning of the configs.
-
         configBotGap,
 
         Row(
           spacing: configWidgetSpace,
           children: [
             // Space to the left of the configs.
-
             configLeftGap,
 
             // The BUILD button.
-
             ActivityButton(
               onPressed: () async {
-                await rSource(
-                  context,
-                  ref,
-                  ['model_template', 'model_build_linear'],
-                );
+                await rSource(context, ref, [
+                  'model_template',
+                  'model_build_linear',
+                ]);
 
                 // Update the state to make the linear evaluate tick box
                 // automatically selected after the model build.

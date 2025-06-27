@@ -60,11 +60,7 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
     String stdout = ref.watch(stdoutProvider);
 
     List<Widget> pages = [
-      showMarkdownFile(
-        context,
-        summaryIntroFile,
-        'assets/svg/summary.svg',
-      ),
+      showMarkdownFile(context, summaryIntroFile, 'assets/svg/summary.svg'),
     ];
 
     String content = '';
@@ -163,12 +159,7 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
       ''';
 
     if (content.isNotEmpty) {
-      pages.add(
-        TextPage(
-          title: title,
-          content: '\n$content',
-        ),
-      );
+      pages.add(TextPage(title: title, content: '\n$content'));
     }
 
     ////////////////////////////////////////////////////////////////////////
@@ -398,10 +389,7 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    return PageViewer(
-      pageController: pageController,
-      pages: pages,
-    );
+    return PageViewer(pageController: pageController, pages: pages);
 
     // Pages(children: pages);
   }

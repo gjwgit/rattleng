@@ -51,9 +51,7 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
   Widget build(BuildContext context) {
     // Get the PageController from Riverpod.
 
-    final pageController = ref.watch(
-      treePageControllerProvider,
-    );
+    final pageController = ref.watch(treePageControllerProvider);
 
     AlgorithmType treeAlgorithm = ref.watch(treeAlgorithmProvider);
 
@@ -73,9 +71,6 @@ class _TreeDisplayState extends ConsumerState<TreeDisplay> {
     // 20250105 gjw Return the PageViewer widget for navigating through the
     // model pages.
 
-    return PageViewer(
-      pageController: pageController,
-      pages: pages,
-    );
+    return PageViewer(pageController: pageController, pages: pages);
   }
 }

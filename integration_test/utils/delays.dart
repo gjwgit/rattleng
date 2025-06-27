@@ -38,8 +38,10 @@ library;
 /// If a test works when [interact] is non-zero but fails when it is zero then you
 /// probably need to use a <delay> or a <hack> rather than a [interact].
 
-const String envINTERACT =
-    String.fromEnvironment('INTERACT', defaultValue: '0');
+const String envINTERACT = String.fromEnvironment(
+  'INTERACT',
+  defaultValue: '0',
+);
 final Duration interact = Duration(seconds: int.parse(envINTERACT));
 
 /// The default <delay> can be used where a delay is always useful. We use a

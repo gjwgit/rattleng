@@ -48,10 +48,7 @@ List<String> modelObjective = [
 class BoostSettings extends ConsumerStatefulWidget {
   final String algorithm;
 
-  const BoostSettings({
-    super.key,
-    required this.algorithm,
-  });
+  const BoostSettings({super.key, required this.algorithm});
 
   @override
   ConsumerState<BoostSettings> createState() => _BoostSettingsState();

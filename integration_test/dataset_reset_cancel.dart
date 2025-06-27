@@ -41,29 +41,24 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('DATASET RESET:', () {
-    testWidgets('load weather; cancel load; load medical file.',
-        (WidgetTester tester) async {
+    testWidgets('load weather; cancel load; load medical file.', (
+      WidgetTester tester,
+    ) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);
       await loadDemoDataset(tester, 'Weather');
-      await verifySelectableText(
-        tester,
-        [
-          // Verify date in the Content Column.
+      await verifySelectableText(tester, [
+        // Verify date in the Content Column.
+        '2023-07-01',
+        '2023-07-02',
 
-          '2023-07-01',
-          '2023-07-02',
+        // Verify min_temp in the Content Column.
+        '4.6',
 
-          // Verify min_temp in the Content Column.
-
-          '4.6',
-
-          // Verify max_temp in the Content Column.
-
-          '13.9',
-        ],
-      );
+        // Verify max_temp in the Content Column.
+        '13.9',
+      ]);
       final datasetButton = find.byType(DatasetButton);
       await tester.tap(datasetButton);
       await tester.pumpAndSettle();
@@ -99,23 +94,17 @@ void main() {
 
       await tester.pump(hack);
 
-      await verifySelectableText(
-        tester,
-        [
-          // Verify the first couple of rec_id values.
+      await verifySelectableText(tester, [
+        // Verify the first couple of rec_id values.
+        'rec-57600',
+        'rec-73378',
 
-          'rec-57600',
-          'rec-73378',
+        // Verify the first ssn.
+        'i145245676',
 
-          // Verify the first ssn.
-
-          'i145245676',
-
-          // Verify first middle name.
-
-          'joseirizarry',
-        ],
-      );
+        // Verify first middle name.
+        'joseirizarry',
+      ]);
 
       await tester.pump(interact);
     });

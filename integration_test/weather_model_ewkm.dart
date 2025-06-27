@@ -49,9 +49,7 @@ void main() {
     await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Cluster');
     await tester.pump(interact);
-    final ewkmaChip = find.text(
-      'Ewkm',
-    );
+    final ewkmaChip = find.text('Ewkm');
     await tester.tap(ewkmaChip);
     await tester.pumpAndSettle();
     await tapButton(tester, 'Build Clustering');
@@ -61,8 +59,9 @@ void main() {
 
     // Find the text containing the number of default clusters.
 
-    final dataFinder =
-        find.textContaining("built using 'ewkm' with 10 clusters");
+    final dataFinder = find.textContaining(
+      "built using 'ewkm' with 10 clusters",
+    );
     expect(dataFinder, findsOneWidget);
 
     await tester.pump(interact);

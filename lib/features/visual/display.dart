@@ -56,11 +56,7 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
     ); // Get the PageController from Riverpod
 
     List<Widget> pages = [
-      showMarkdownFile(
-        context,
-        visualIntroFile,
-        'assets/svg/visual.svg',
-      ),
+      showMarkdownFile(context, visualIntroFile, 'assets/svg/visual.svg'),
     ];
 
     // 20240817 gjw We watch changes to stdout as a clue that we need to rebuild
@@ -238,9 +234,6 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
       }
     }
 
-    return PageViewer(
-      pageController: pageController,
-      pages: pages,
-    );
+    return PageViewer(pageController: pageController, pages: pages);
   }
 }

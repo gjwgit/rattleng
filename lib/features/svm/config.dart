@@ -83,18 +83,15 @@ class SvmConfigState extends ConsumerState<SvmConfig> {
       spacing: configRowSpace,
       children: [
         // Space above the beginning of the configs.
-
         configTopGap,
 
         Row(
           spacing: configWidgetSpace,
           children: [
             // Space to the left of the configs.
-
             configLeftGap,
 
             // The BUILD button.
-
             ActivityButton(
               onPressed: () async {
                 // Run the R scripts.

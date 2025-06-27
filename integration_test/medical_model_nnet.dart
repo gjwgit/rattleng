@@ -100,12 +100,9 @@ void main() {
       await gotoNextPage(tester);
       await verifyPage('Neural Net Model - Summary and Weights');
     }
-    await verifySelectableText(
-      tester,
-      [
-        'A 7-10-1 network with 98 weights',
-        'Options were - skip-layer connections  entropy fitting',
-      ],
-    );
+    await verifySelectableText(tester, [
+      'A 7-10-1 network with 98 weights',
+      'Options were - skip-layer connections  entropy fitting',
+    ]);
   });
 }

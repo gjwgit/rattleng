@@ -47,10 +47,7 @@ Future<void> verifyDatasetRole(String variable, String role) async {
   // Verify that the role chip exists and is selected.
 
   final choiceChip = find
-      .descendant(
-        of: parentFinder.first,
-        matching: find.byType(ChoiceChip),
-      )
+      .descendant(of: parentFinder.first, matching: find.byType(ChoiceChip))
       .evaluate()
       .firstWhere(
         (element) =>

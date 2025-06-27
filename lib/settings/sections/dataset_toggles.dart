@@ -146,10 +146,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
               ''',
               child: const Text(
                 'Dataset',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
             configRowGap,
@@ -159,17 +156,13 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         configRowGap,
 
         // Build toggle rows synced with providers.
-
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             //  Toggles section.
-
             const Text(
               'Toggles',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
 
             configRowGap,
@@ -255,10 +248,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
               - **Off:** Changes are only recovered on restart.
 
               ''',
-              child: const Text(
-                'Keep in Sync',
-                style: TextStyle(fontSize: 16),
-              ),
+              child: const Text('Keep in Sync', style: TextStyle(fontSize: 16)),
             ),
             MarkdownTooltip(
               message: '''
@@ -282,7 +272,6 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
             configRowGap,
 
             // Reset Dataset Toggles to default button.
-
             MarkdownTooltip(
               message: '''
 
@@ -307,7 +296,6 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         settingsGroupGap,
 
         // Ignore Missing Target row.
-
         Row(
           spacing: configRowSpace,
           children: [

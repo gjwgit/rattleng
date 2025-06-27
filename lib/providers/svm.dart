@@ -28,9 +28,7 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final degreeSVMProvider = StateProvider<int>(
-  (ref) => 1,
-);
+final degreeSVMProvider = StateProvider<int>((ref) => 1);
 final kernelSVMProvider = StateProvider<String>(
   (ref) => 'Radial Basis (rbfdot)',
 );

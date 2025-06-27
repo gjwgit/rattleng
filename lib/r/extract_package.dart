@@ -35,8 +35,9 @@ Map<String, List<String>> parsePackage(String text) {
     line = line.trim(); // Remove leading and trailing spaces
     if (line.startsWith(r'$')) {
       // If line starts with $, it's a package name
-      currentPackage =
-          line.substring(1); // Remove the $ and store the package name
+      currentPackage = line.substring(
+        1,
+      ); // Remove the $ and store the package name
       datasetsMap[currentPackage] = []; // Initialize an empty list for datasets
     } else if (line.contains('"') && currentPackage != null) {
       // If line contains dataset names (quoted), extract them separately

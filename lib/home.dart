@@ -404,14 +404,9 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
         // The title aligned to the left.
 
         //title: const Text(appTitle),
-
         title: Row(
           children: [
-            Image.asset(
-              'assets/icons/icon.png',
-              width: 40,
-              height: 40,
-            ),
+            Image.asset('assets/icons/icon.png', width: 40, height: 40),
             configWidgetGap,
             MarkdownBody(
               data: appTitle,
@@ -428,7 +423,6 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
         ),
 
         // Deploy the buttons aligned to the top right for actions.
-
         actions: [
           if (_isVersionLoaded)
             VersionWidget(
@@ -462,7 +456,6 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
           const SizedBox(width: 50),
 
           // Reset.
-
           MarkdownTooltip(
             message: '''
 
@@ -472,10 +465,7 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
 
             ''',
             child: IconButton(
-              icon: const Icon(
-                Icons.autorenew,
-                color: Colors.blue,
-              ),
+              icon: const Icon(Icons.autorenew, color: Colors.blue),
               onPressed: () async {
                 // Set isResetProvider to true
 
@@ -544,7 +534,6 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
                           );
                         }
                       // Disable the button if conditions are not met.
-
                       : null,
                 );
               },
@@ -570,7 +559,6 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
           // ),
 
           // Install R Packages
-
           MarkdownTooltip(
             message: '''
 
@@ -585,10 +573,7 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
 
             ''',
             child: IconButton(
-              icon: const Icon(
-                Icons.download,
-                color: Colors.blue,
-              ),
+              icon: const Icon(Icons.download, color: Colors.blue),
               onPressed: () async {
                 showOk(
                   context: context,
@@ -611,7 +596,6 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
           ),
 
           // Settings.
-
           MarkdownTooltip(
             key: const Key('settings_button'),
             message: '''
@@ -624,10 +608,7 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
 
             ''',
             child: IconButton(
-              icon: const Icon(
-                Icons.settings,
-                color: Colors.blue,
-              ),
+              icon: const Icon(Icons.settings, color: Colors.blue),
               onPressed: () async {
                 // Save the current random seed to shared preferences before
                 // showing the settings dialog. This ensures that any changes
@@ -643,7 +624,6 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
           ),
 
           // Info - about.
-
           MarkdownTooltip(
             message: '''
 
@@ -680,10 +660,7 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
                   ],
                 );
               },
-              icon: const Icon(
-                Icons.info,
-                color: Colors.blue,
-              ),
+              icon: const Icon(Icons.info, color: Colors.blue),
             ),
           ),
         ],
@@ -691,17 +668,16 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
 
       // Build the tab bar from the list of homeTabs, noting the tab title and
       // icon. We rotate the tab bar for placement on the left edge.
-
       body: Row(
         children: [
           ScrollConfiguration(
-            behavior:
-                ScrollConfiguration.of(context).copyWith(scrollbars: false),
+            behavior: ScrollConfiguration.of(
+              context,
+            ).copyWith(scrollbars: false),
             child: SingleChildScrollView(
               child: SizedBox(
                 // Constrain height to the height of the screen.
                 // To place the NavigationRail on top of the Column.
-
                 height: MediaQuery.of(context).size.height,
                 child: NavigationRail(
                   selectedIndex: _tabController.index,

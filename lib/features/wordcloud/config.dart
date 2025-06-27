@@ -160,7 +160,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
             ),
 
             // Checkbox for random order of words in the cloud.
-
             LabelledCheckbox(
               key: const Key('random_order'),
               tooltip: '''
@@ -224,10 +223,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
                   ref.read(wordCloudBuildProvider.notifier).state = timestamp();
                 },
-                icon: Icon(
-                  Icons.save_alt,
-                  color: Colors.blue,
-                ),
+                icon: Icon(Icons.save_alt, color: Colors.blue),
               ),
             ),
           ],
@@ -248,7 +244,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Options for the current functionality.
-
                   Row(
                     spacing: configWidgetSpace,
                     children: [
@@ -401,7 +396,6 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
         ),
 
         // Parameters for the current functionality.
-
         Align(
           alignment: Alignment.bottomCenter,
           child: Row(

@@ -57,12 +57,10 @@ FutureBuilder showMarkdownFile(
           // 20241215 gjw It is easier to read the overview text when it is not
           // too wide. For now, and assuming the default window width, place the
           // Markdown text into a row and half fill the row.
-
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // The text goes into the left pane.
-
               Expanded(
                 child: Markdown(
                   data: snapshot.data!,
@@ -73,7 +71,6 @@ FutureBuilder showMarkdownFile(
                   },
 
                   // Custom image builder to load assets.
-
                   sizedImageBuilder: (config) {
                     return Image.asset('$assetsPath/${config.uri.toString()}');
                   },
@@ -81,7 +78,6 @@ FutureBuilder showMarkdownFile(
               ),
 
               // 20241215 gjw The right pane is for an image.
-
               Expanded(
                 child: SvgPicture.asset(
                   svgAsset,

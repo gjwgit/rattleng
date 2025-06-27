@@ -65,25 +65,19 @@ void main() {
       await tapButton(tester, 'Rescale Variable Values');
       await tester.pump(delay);
       await gotoNextPage(tester);
-      await verifyPage(
-        'Dataset Summary',
-        'RRC_min_temp',
-      );
+      await verifyPage('Dataset Summary', 'RRC_min_temp');
       await scrollUntilFindKey(tester, 'text_page');
 
       // Verify specific statistical values for the imputed 'RRC_min_temp' variable.
 
-      await verifySelectableText(
-        tester,
-        [
-          'Min.   :-1.946941', // Minimum value of 'RRC_min_temp'.
-          '1st Qu.:-0.841097', // First quartile value of 'RRC_min_temp'.
-          'Median : 0.007221', // Median value of 'RRC_min_temp'.
-          'Mean   : 0.000000', // Mean value of 'RRC_min_temp'.
-          '3rd Qu.: 0.825243', // Third quartile value of 'RRC_min_temp'.
-          'Max.   : 2.143167', // Maximum value of 'RRC_min_temp'.
-        ],
-      );
+      await verifySelectableText(tester, [
+        'Min.   :-1.946941', // Minimum value of 'RRC_min_temp'.
+        '1st Qu.:-0.841097', // First quartile value of 'RRC_min_temp'.
+        'Median : 0.007221', // Median value of 'RRC_min_temp'.
+        'Mean   : 0.000000', // Mean value of 'RRC_min_temp'.
+        '3rd Qu.: 0.825243', // Third quartile value of 'RRC_min_temp'.
+        'Max.   : 2.143167', // Maximum value of 'RRC_min_temp'.
+      ]);
 
       await navigateToTab(tester, 'Dataset');
       await scrollDown(tester);

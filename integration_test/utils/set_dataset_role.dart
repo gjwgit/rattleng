@@ -120,11 +120,7 @@ Future<void> setDatasetRole(
 
   // Also ensure the chips container is visible in the viewport if needed.
 
-  await scrollWidgetIntoViewIfNeeded(
-    tester,
-    roleChipsFinder,
-    scrollableFinder,
-  );
+  await scrollWidgetIntoViewIfNeeded(tester, roleChipsFinder, scrollableFinder);
 
   expect(
     roleChipsFinder,
@@ -141,11 +137,7 @@ Future<void> setDatasetRole(
 
   // Potentially scroll again if the chip is off-screen horizontally or further down.
 
-  await scrollWidgetIntoViewIfNeeded(
-    tester,
-    roleChipFinder,
-    scrollableFinder,
-  );
+  await scrollWidgetIntoViewIfNeeded(tester, roleChipFinder, scrollableFinder);
 
   // Ensure the role chip is found and visible.
 

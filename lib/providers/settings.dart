@@ -77,11 +77,13 @@ final settingsGraphicThemeProvider =
 
 const int defaultRandomSeed = 42;
 
-final randomSeedSettingProvider =
-    StateProvider<int>((ref) => defaultRandomSeed);
+final randomSeedSettingProvider = StateProvider<int>(
+  (ref) => defaultRandomSeed,
+);
 
-final imageViewerSettingProvider =
-    StateProvider<String>((ref) => Platform.isWindows ? 'start' : 'open');
+final imageViewerSettingProvider = StateProvider<String>(
+  (ref) => Platform.isWindows ? 'start' : 'open',
+);
 
 final randomPartitionSettingProvider = StateProvider<bool>((ref) => false);
 

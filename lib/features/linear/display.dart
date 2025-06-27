@@ -52,18 +52,12 @@ class LinearDisplay extends ConsumerStatefulWidget {
 class _LinearDisplayState extends ConsumerState<LinearDisplay> {
   @override
   Widget build(BuildContext context) {
-    final pageController = ref.watch(
-      linearPageControllerProvider,
-    );
+    final pageController = ref.watch(linearPageControllerProvider);
     String stdout = ref.watch(stdoutProvider);
     String content = '';
 
     List<Widget> pages = [
-      showMarkdownFile(
-        context,
-        linearIntroFile,
-        'assets/svg/linear.svg',
-      ),
+      showMarkdownFile(context, linearIntroFile, 'assets/svg/linear.svg'),
     ];
 
     const String hd = 'Summary of the Linear Model.';
@@ -103,9 +97,6 @@ class _LinearDisplayState extends ConsumerState<LinearDisplay> {
       );
     }
 
-    return PageViewer(
-      pageController: pageController,
-      pages: pages,
-    );
+    return PageViewer(pageController: pageController, pages: pages);
   }
 }

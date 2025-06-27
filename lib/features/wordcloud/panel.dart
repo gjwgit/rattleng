@@ -54,8 +54,8 @@ class WordCloudPanel extends StatelessWidget {
           // underline is not lost. Thouoght to include this in config but then
           // I would need an extra Column widget(). Seems okay logically to add
           // the spacer here as part of the tab.
-
           panelGap,
+
           // TODO 20240605 gjw THIS FUNCTIONALITY TO MIGRATE TO THE APP SAVE
           // BUTTON TOP RIGHT. KEEP HERE AS A COMMENT UNTIL IMPLEMENTED.
           //
@@ -66,10 +66,7 @@ class WordCloudPanel extends StatelessWidget {
           // A text view that takes up the remaining space and displays the
           // Rattle welcome and getting started message. This will be
           // overwritten once a dataset is loaded.
-
-          Expanded(
-            child: WordCloudDisplay(),
-          ),
+          Expanded(child: WordCloudDisplay()),
         ],
       ),
     );

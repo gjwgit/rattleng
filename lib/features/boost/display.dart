@@ -70,8 +70,10 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
     final pageController = ref.watch(boostPageControllerProvider);
 
     if (algorithm == 'Extreme') {
-      String content =
-          rExtract(stdout, 'print(importance_dt, row.names = FALSE)');
+      String content = rExtract(
+        stdout,
+        'print(importance_dt, row.names = FALSE)',
+      );
 
       const String hd = 'Summary of the Extreme Boosting model.';
       final String fm = rExtractFormula(stdout);
@@ -204,9 +206,6 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
       );
     }
 
-    return PageViewer(
-      pageController: pageController,
-      pages: pages,
-    );
+    return PageViewer(pageController: pageController, pages: pages);
   }
 }

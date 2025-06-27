@@ -46,8 +46,9 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('WEATHER -> MODEL -> TREE -> CONFIG', () {
-    testWidgets('rpart with different parameter settings.',
-        (WidgetTester tester) async {
+    testWidgets('rpart with different parameter settings.', (
+      WidgetTester tester,
+    ) async {
       app.main();
       await tester.pumpAndSettle();
       await tester.pump(interact);

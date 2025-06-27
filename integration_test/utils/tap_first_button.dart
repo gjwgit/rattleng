@@ -27,10 +27,7 @@ library;
 
 import 'package:flutter_test/flutter_test.dart';
 
-Future<void> tapFirstButton(
-  WidgetTester tester,
-  String label,
-) async {
+Future<void> tapFirstButton(WidgetTester tester, String label) async {
   // Finds the first widget with the given text.
 
   final button = find.text(label).first;

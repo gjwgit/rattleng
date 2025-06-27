@@ -35,16 +35,11 @@ import 'package:rattle/providers/vars/roles.dart';
 /// Verify that a variable has been imputed in the dataset display.
 /// Check if the rolesProvider has the imputed variable.
 
-Future<void> verifyImputedVariable(
-  WidgetTester tester,
-  String variable,
-) async {
+Future<void> verifyImputedVariable(WidgetTester tester, String variable) async {
   // get the roles from the dataset display.
 
   final roles = tester
-      .state<ConsumerState>(
-        find.byType(DatasetDisplay),
-      )
+      .state<ConsumerState>(find.byType(DatasetDisplay))
       .ref
       .read(rolesProvider);
 

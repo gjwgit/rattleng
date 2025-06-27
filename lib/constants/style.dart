@@ -42,12 +42,6 @@ const TextStyle disabledTextStyle = TextStyle(
 
 /// A mono font used for displaying R script and output.
 
-const monoTextStyle = TextStyle(
-  fontFamily: 'RobotoMono',
-  fontSize: 16,
-);
+const monoTextStyle = TextStyle(fontFamily: 'RobotoMono', fontSize: 16);
 
-const monoSmallTextStyle = TextStyle(
-  fontFamily: 'RobotoMono',
-  fontSize: 12,
-);
+const monoSmallTextStyle = TextStyle(fontFamily: 'RobotoMono', fontSize: 12);

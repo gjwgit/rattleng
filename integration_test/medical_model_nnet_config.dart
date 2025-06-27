@@ -106,9 +106,7 @@ void main() {
       1,
       title: 'Neural Net Model - Summary and Weights',
     );
-    await verifySelectableText(tester, [
-      'A 7-11-1 network with 107 weights',
-    ]);
+    await verifySelectableText(tester, ['A 7-11-1 network with 107 weights']);
 
     // Ensure the SelectableText widget with the expected content exists.
 

@@ -73,13 +73,10 @@ void main() {
         1,
         title: 'Neural Net Model - Summary and Weights',
       );
-      await verifySelectableText(
-        tester,
-        [
-          'A 14-10-1 network with',
-          'Options were - skip-layer connections  entropy fitting',
-        ],
-      );
+      await verifySelectableText(tester, [
+        'A 14-10-1 network with',
+        'Options were - skip-layer connections  entropy fitting',
+      ]);
       await addDelay(tester, 2);
       await gotoNextPage(tester);
       await verifyPage('Neural Net Model - Visual');

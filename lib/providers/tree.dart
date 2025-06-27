@@ -70,8 +70,9 @@ final treePriorsProvider = StateProvider<String>((ref) => '');
 
 /// Provider for the tree algorithm.
 
-final treeAlgorithmProvider =
-    StateProvider<AlgorithmType>((ref) => AlgorithmType.traditional);
+final treeAlgorithmProvider = StateProvider<AlgorithmType>(
+  (ref) => AlgorithmType.traditional,
+);
 
 // Enum for tree algorithm types.
 

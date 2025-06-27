@@ -42,20 +42,8 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
       await loadDemoDataset(tester, 'Audit');
-      await verifyText(
-        tester,
-        [
-          'employment',
-          'income',
-        ],
-      );
-      await verifySelectableText(
-        tester,
-        [
-          '30, 50, 40',
-          'Female, Male, Male',
-        ],
-      );
+      await verifyText(tester, ['employment', 'income']);
+      await verifySelectableText(tester, ['30, 50, 40', 'Female, Male, Male']);
     });
   });
 }

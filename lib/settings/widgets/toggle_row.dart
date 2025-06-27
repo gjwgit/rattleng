@@ -48,14 +48,8 @@ class ToggleRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
-            label,
-            style: const TextStyle(fontSize: 16),
-          ),
-          Switch(
-            value: value,
-            onChanged: onChanged,
-          ),
+          Text(label, style: const TextStyle(fontSize: 16)),
+          Switch(value: value, onChanged: onChanged),
         ],
       ),
     );

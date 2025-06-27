@@ -37,9 +37,7 @@ import 'test_print.dart';
 
 /// Load the dataset and undertake basic tests that it loaded just fine.
 
-Future<void> setDefaultSetting(
-  WidgetTester tester,
-) async {
+Future<void> setDefaultSetting(WidgetTester tester) async {
   // Open the settings dialog.
 
   final settingsButtonFinder = find.byKey(const Key('settings_button'));
@@ -57,8 +55,9 @@ Future<void> setDefaultSetting(
 
   // Find and tap the Dataset Toggles Reset button using its key.
 
-  final datasetTogglesResetFinder =
-      find.byKey(const Key('dataset_toggles_reset_button'));
+  final datasetTogglesResetFinder = find.byKey(
+    const Key('dataset_toggles_reset_button'),
+  );
 
   expect(datasetTogglesResetFinder, findsOneWidget);
   await tester.tap(datasetTogglesResetFinder);

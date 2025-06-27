@@ -48,9 +48,7 @@ Future<void> checkVariableNotMissing(
   // Get the stdout from the DatasetDisplay widget's state.
 
   final stdout = tester
-      .state<ConsumerState>(
-        find.byType(DatasetDisplay),
-      )
+      .state<ConsumerState>(find.byType(DatasetDisplay))
       .ref
       .read(stdoutProvider);
 

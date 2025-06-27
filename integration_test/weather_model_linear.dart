@@ -67,29 +67,23 @@ void main() {
       await tapButton(tester, 'Build Linear Model');
       await tester.pump(delay);
       await navigateToPage(tester, 1, title: 'Linear Model');
-      await verifySelectableText(
-        tester,
-        [
-          'glm(formula = form, family = binomial(link = "logit"), data = trds)',
-          '(Intercept)     249.56414   85.79545   2.909  0.00363 **',
-        ],
-      );
+      await verifySelectableText(tester, [
+        'glm(formula = form, family = binomial(link = "logit"), data = trds)',
+        '(Intercept)     249.56414   85.79545   2.909  0.00363 **',
+      ]);
       await tester.pump(interact);
       await gotoNextPage(tester, title: 'Linear Model - Visual');
       await verifyImage(tester);
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
       await navigateToPage(tester, 1, title: 'Error Matrix');
-      await verifySelectableText(
-        tester,
-        [
-          'No   3  12  80.0',
-          'Yes  4   5  44.4',
-          'No  12.5 50.0  80.0',
-          'Yes 16.7 20.8  44.4',
-          'Overall Error = 66.67%; Average Error = 62.22%.',
-        ],
-      );
+      await verifySelectableText(tester, [
+        'No   3  12  80.0',
+        'Yes  4   5  44.4',
+        'No  12.5 50.0  80.0',
+        'Yes 16.7 20.8  44.4',
+        'Overall Error = 66.67%; Average Error = 62.22%.',
+      ]);
       // 20250306 gjw The titles on these pages is different widget?
       //
       //await gotoNextPage(tester, title: '(ROC)');

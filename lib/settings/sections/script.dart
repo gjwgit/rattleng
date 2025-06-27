@@ -56,10 +56,7 @@ class Script extends ConsumerWidget {
           children: [
             const Text(
               'Script',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             configRowGap,
             MarkdownTooltip(
@@ -98,12 +95,7 @@ class Script extends ConsumerWidget {
               ''',
               child: Row(
                 children: [
-                  const Text(
-                    'Strip comments',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
+                  const Text('Strip comments', style: TextStyle(fontSize: 16)),
                   configRowGap,
                   Switch(
                     value: stripComments,

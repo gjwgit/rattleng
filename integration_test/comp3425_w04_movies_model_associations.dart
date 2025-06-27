@@ -47,8 +47,9 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('COMP3425 W04 LAB MOVIES ASSOCIATION:', () {
-    testWidgets('model, impute occupation, model.',
-        (WidgetTester tester) async {
+    testWidgets('model, impute occupation, model.', (
+      WidgetTester tester,
+    ) async {
       app.main();
       await tester.pumpAndSettle();
       await setPartition(tester, false);
@@ -64,31 +65,25 @@ void main() {
         1,
         title: 'Association Rules — Meta Summary',
       );
-      await verifySelectableText(
-        tester,
-        [
-          'set of 44 rules',
-          '   support         confidence       coverage          lift           count',
-          'Min.   :0.1000   Min.   :0.200   Min.   :0.100   Min.   :0.500   Min.   :1.000',
-          '1st Qu.:0.1000   1st Qu.:0.500   1st Qu.:0.100   1st Qu.:1.250   1st Qu.:1.000',
-          'Median :0.1000   Median :0.550   Median :0.200   Median :2.500   Median :1.000',
-          'Mean   :0.1227   Mean   :0.675   Mean   :0.225   Mean   :2.661   Mean   :1.227',
-          '3rd Qu.:0.1000   3rd Qu.:1.000   3rd Qu.:0.300   3rd Qu.:5.000   3rd Qu.:1.000',
-          'Max.   :0.3000   Max.   :1.000   Max.   :0.500   Max.   :5.000   Max.   :3.000 ',
-          'list(support = 0.1, confidence = 0.1, minlen = 2)',
-        ],
-      );
+      await verifySelectableText(tester, [
+        'set of 44 rules',
+        '   support         confidence       coverage          lift           count',
+        'Min.   :0.1000   Min.   :0.200   Min.   :0.100   Min.   :0.500   Min.   :1.000',
+        '1st Qu.:0.1000   1st Qu.:0.500   1st Qu.:0.100   1st Qu.:1.250   1st Qu.:1.000',
+        'Median :0.1000   Median :0.550   Median :0.200   Median :2.500   Median :1.000',
+        'Mean   :0.1227   Mean   :0.675   Mean   :0.225   Mean   :2.661   Mean   :1.227',
+        '3rd Qu.:0.1000   3rd Qu.:1.000   3rd Qu.:0.300   3rd Qu.:5.000   3rd Qu.:1.000',
+        'Max.   :0.3000   Max.   :1.000   Max.   :0.500   Max.   :5.000   Max.   :3.000 ',
+        'list(support = 0.1, confidence = 0.1, minlen = 2)',
+      ]);
       await gotoNextPage(tester, title: 'Association Rules — Discovered Rules');
-      await verifySelectableText(
-        tester,
-        [
-          '[1]  {Patriot}                                => {Gladiator}',
-          '0.3     0.6000000  0.5      1.2000000 3',
-          '[9]  {Harry Potter1}                          => {LOTR2}',
-          '0.1     0.5000000  0.2      2.5000000 1',
-          '[44] {Green Mile, LOTR2, Sixth Sense}         => {Harry Potter1}',
-        ],
-      );
+      await verifySelectableText(tester, [
+        '[1]  {Patriot}                                => {Gladiator}',
+        '0.3     0.6000000  0.5      1.2000000 3',
+        '[9]  {Harry Potter1}                          => {LOTR2}',
+        '0.1     0.5000000  0.2      2.5000000 1',
+        '[44] {Green Mile, LOTR2, Sixth Sense}         => {Harry Potter1}',
+      ]);
       await verifySelectableText(tester, ['[45]'], present: false);
       await enterText(tester, 'association_config_limit_rules', '5000');
       await tapButton(tester, 'Build Association Rules');

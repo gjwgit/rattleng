@@ -32,10 +32,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'delays.dart';
 import 'set_default_setting.dart';
 
-Future<void> loadDatasetByPath(
-  WidgetTester tester,
-  String path,
-) async {
+Future<void> loadDatasetByPath(WidgetTester tester, String path) async {
   await setDefaultSetting(tester);
 
   // Locate the TextField where the file path is input.

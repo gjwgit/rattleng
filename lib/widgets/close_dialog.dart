@@ -97,11 +97,7 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
     return AlertDialog(
       title: Row(
         children: [
-          const Icon(
-            Icons.close,
-            size: 24,
-            color: Colors.blue,
-          ),
+          const Icon(Icons.close, size: 24, color: Colors.blue),
           const SizedBox(width: widthSpace),
           Text(_title),
         ],
@@ -112,17 +108,14 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Cancel'),
         ),
-        // Conditionally display the Save button
 
+        // Conditionally display the Save button
         if (_title != 'Script saved')
           TextButton(
             onPressed: () => _showFileNameDialog(context),
             child: const Text('Save'),
           ),
-        TextButton(
-          onPressed: _closeApp,
-          child: const Text('Close'),
-        ),
+        TextButton(onPressed: _closeApp, child: const Text('Close')),
       ],
     );
   }
@@ -158,14 +151,12 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
     } else {
       setState(() {
         _title = 'Error';
-        _content = wordWrap(
-          '''
+        _content = wordWrap('''
 
           No file selected.  You can still close the app or try saving the
           script again.
 
-            ''',
-        );
+            ''');
       });
     }
   }

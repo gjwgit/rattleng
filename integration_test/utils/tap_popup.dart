@@ -31,10 +31,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 /// Tap an [ElevatedButton] with the [text] label.
 
-Future<void> tapPopup(
-  WidgetTester tester,
-  String text,
-) async {
+Future<void> tapPopup(WidgetTester tester, String text) async {
   final button = find.text(text);
   expect(button, findsOneWidget);
   await tester.tap(button);

@@ -60,18 +60,15 @@ void main() {
       await tester.pump(hack);
       await gotoNextPage(tester);
       await verifyPage('Dataset Summary');
-      await verifySelectableText(
-        tester,
-        [
-          'IMP_middle_name',
-          'Missing: 1987', // Number of missing values imputed.
-          'lee    :  563', // Frequency of 'lee' in the imputed data.
-          'michael:  262', // Frequency of 'michael' in the imputed data.
-          'ann    :  253', // Frequency of 'ann' in the imputed data.
-          'wayne  :  239', // Frequency of 'wayne' in the imputed data.
-          'edward :  237', // Frequency of 'edward' in the imputed data.
-        ],
-      );
+      await verifySelectableText(tester, [
+        'IMP_middle_name',
+        'Missing: 1987', // Number of missing values imputed.
+        'lee    :  563', // Frequency of 'lee' in the imputed data.
+        'michael:  262', // Frequency of 'michael' in the imputed data.
+        'ann    :  253', // Frequency of 'ann' in the imputed data.
+        'wayne  :  239', // Frequency of 'wayne' in the imputed data.
+        'edward :  237', // Frequency of 'edward' in the imputed data.
+      ]);
 
       // Step 2.5: Navigate to the 'Dataset' tab to ensure the UI updates correctly.
 

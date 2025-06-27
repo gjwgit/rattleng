@@ -56,11 +56,7 @@ class _RescaleDisplayState extends ConsumerState<RescaleDisplay> {
     String stdout = ref.watch(stdoutProvider);
 
     List<Widget> pages = [
-      showMarkdownFile(
-        context,
-        rescaleIntroFile,
-        'assets/svg/rescale.svg',
-      ),
+      showMarkdownFile(context, rescaleIntroFile, 'assets/svg/rescale.svg'),
     ];
 
     // Second page is the data summary. Be sure to include the IGNOREd variables
@@ -90,9 +86,6 @@ class _RescaleDisplayState extends ConsumerState<RescaleDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    return PageViewer(
-      pageController: pageController,
-      pages: pages,
-    );
+    return PageViewer(pageController: pageController, pages: pages);
   }
 }

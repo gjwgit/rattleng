@@ -52,16 +52,12 @@ class DatasetPanel extends StatelessWidget {
           // underline is not lost. Thought to include this in config but then
           // I would need an extra Column widget(). Seems okay logically to add
           // the spacer here as part of the tab.
-
           panelGap,
 
           // A text view that takes up the remaining space and displays the
           // Rattle welcome and getting started message. This will be
           // overwritten once a dataset is loaded.
-
-          Expanded(
-            child: DatasetDisplay(),
-          ),
+          Expanded(child: DatasetDisplay()),
         ],
       ),
     );

@@ -31,10 +31,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 /// Tap an [ElevatedButton] with the [text] label.
 
-Future<void> tapButton(
-  WidgetTester tester,
-  String text,
-) async {
+Future<void> tapButton(WidgetTester tester, String text) async {
   final button = find.byWidgetPredicate(
     (Widget widget) =>
         widget is ElevatedButton &&
