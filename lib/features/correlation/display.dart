@@ -1,11 +1,12 @@
-/// Widget to display the CORRELATION introduction or output.
+/// Rattle - Data Science Next Generation
+///
+// Time-stamp: <Friday 2025-07-25 05:28:15 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
+///
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
-//
-// Time-stamp: <Saturday 2025-04-19 06:46:25 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -39,7 +40,7 @@ import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/text_page.dart';
 
-/// The panel displays the instructions or the output.
+/// Widget to display the CORRELATION introduction or output.
 
 class CorrelationDisplay extends ConsumerStatefulWidget {
   const CorrelationDisplay({super.key});
@@ -128,15 +129,16 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
     //
     // The **svg** only displays a black box in the app. The display of it using
     // the external viewer is just fine. The problem is the unhandled element
-    // <filter/> for the Svg loader. So we pass both the **svg** and the **png**
-    // (gjw 20250419).
+    // <filter/> for the Svg loader. So we pass both the **svg** and the
+    // **png**.  20250419 gjw.
 
     String imageSVG = '$tempDir/explore_correlation_ggcorrplot.svg';
     String imagePNG = '$tempDir/explore_correlation_ggcorrplot.png';
 
-    pages.add(
-      ImagePage(
-        title: '''
+    if (imageExists(imagePNG)) {
+      pages.add(
+        ImagePage(
+          title: '''
 
         # GGPlot Correlation
 
@@ -147,10 +149,11 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
         right. Our current SVG viewer does not support all SVG features.
 
         ''',
-        path: imageSVG,
-        display: imagePNG,
-      ),
-    );
+          path: imageSVG,
+          display: imagePNG,
+        ),
+      );
+    }
 
     ////////////////////////////////////////////////////////////////////////
 
