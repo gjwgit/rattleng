@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Friday 2025-05-02 07:56:19 +1000 Graham Williams>
+// Time-stamp: <Friday 2025-07-25 08:58:30 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 //
@@ -78,27 +78,30 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
   void initState() {
     super.initState();
 
-    // Get the path from the provider
+    // Get the current dataset path from the provider.
+
     String currentPath = ref.read(pathProvider);
 
-    // Filter tabs based on the file type in the path
+    // Filter tabs based on the file type in the path.
+
     if (currentPath.endsWith('.txt')) {
-      // Only show the Word Cloud tab for .txt files
+      // Only show the Word Cloud tab for .txt files.
+
       filteredModelPanels =
           modelPanels.where((panel) => panel['title'] == 'Text').toList();
-    } else if (currentPath.endsWith('.csv') ||
-        currentPath.endsWith('.xlsx') ||
-        // TODO 20250310 gjw Remove the deprecated weatherDemoFile
-        currentPath == weatherDemoFile) {
-      // For csv files and demo, show all tabs except the Word Cloud tab
+    } else if (currentPath.endsWith('.csv') || currentPath.endsWith('.xlsx')) {
+      // For csv/xslt files show all tabs except the Word Cloud tab.
+
       filteredModelPanels =
           modelPanels.where((panel) => panel['title'] != 'Text').toList();
     } else {
-      // For other files including no files
+      // For other files including no files.
+
       filteredModelPanels = modelPanels;
     }
 
-    // Initialize the TabController with the filtered panels
+    // Initialize the TabController with the filtered panels.
+
     _tabController = TabController(
       length: filteredModelPanels.length,
       vsync: this,
@@ -174,7 +177,8 @@ class _ModelTabsState extends ConsumerState<ModelTabs>
   }
 
   // Disable the automatic rebuild everytime we switch to the model tab.
-  // TODO 20240604 gjw WHY? ALWAYS GOOD TO EXPLAIN WHY
+  // TODO 20240604 gjw WHY IS THIS NEEDED?
+
   @override
   bool get wantKeepAlive => true;
 }

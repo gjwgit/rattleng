@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Tuesday 2025-05-13 07:19:02 +1000 Graham Williams>
+// Time-stamp: <Friday 2025-07-25 08:41:23 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -112,10 +112,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       // Process as corpus if the path exists and is a directory.
 
       _addCorpusPage(stdout, pages);
-    } else if (path == weatherDemoFile ||
-        // TODO 20250310 gjw Remo the deprecated weatherDemoFile
-        path.endsWith('.csv') ||
-        path.endsWith('.xlsx')) {
+    } else if (path.endsWith('.csv') || path.endsWith('.xlsx')) {
       // 20240815 gjw Update the metaData provider here if needed.
 
       updateMetaData(ref);

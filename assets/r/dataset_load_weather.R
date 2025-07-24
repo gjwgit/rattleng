@@ -1,11 +1,11 @@
-# Rattle Scripts: Load Rattle's default weather demo dataset as `ds`. 
+# Rattle Scripts: Load Rattle's default weather demo dataset as `ds`.
 #
-# Copyright (C) 2023, Togaware Pty Ltd.
+# Copyright (C) 2023-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2023-09-22 11:22:52 +1000 Graham Williams>
+# Time-stamp: <Friday 2025-07-25 08:57:43 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -36,9 +36,11 @@
 
 # The `r Rdataset(weather)` dataset is loaded into the template
 # variable `ds` (dataset), intialising the `dsname` (a printable name
-# for the dataset) and `vnames` (the variable names).
+# for the dataset) and `vnames` (the original variable names).
 
-weather <- rattle::weather # Ensure we have the original version.
+# Ensure we have the original version.
+
+weather <- rattle::weather
 
 dsname <- "weather"
 
