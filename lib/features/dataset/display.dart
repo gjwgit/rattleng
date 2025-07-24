@@ -35,7 +35,6 @@ import 'package:intl/intl.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:universal_io/io.dart';
 
-import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/meta_data.dart';

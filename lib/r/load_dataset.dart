@@ -1,6 +1,6 @@
 /// Load a dataset through the appropriate R script.
 ///
-/// Time-stamp: <Friday 2025-07-25 08:56:27 +1000 Graham Williams>
+/// Time-stamp: <Friday 2025-07-25 09:06:15 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -30,7 +30,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/datatype.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/source.dart';
@@ -52,8 +51,6 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
   // or an R package dataset.
 
   String path = ref.read(pathProvider);
-  String dataset = ref.read(datasetProvider);
-  String package = ref.read(packageProvider);
 
   // TODO 20231018 gjw IF A DATASET HAS ALREADY BEEN LOADED AND NOT YET
   // PROCESSED (dataset_template.R) THEN PROCESS ELSE ASK IF WE CAN OVERWRITE IT
