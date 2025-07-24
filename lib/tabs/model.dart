@@ -30,7 +30,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/constants/app.dart';
 import 'package:rattle/features/association/panel.dart';
 import 'package:rattle/features/boost/panel.dart';
 import 'package:rattle/features/cluster/panel.dart';
