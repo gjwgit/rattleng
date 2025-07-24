@@ -2,7 +2,7 @@
 #
 # Makefile template for Flutter
 #
-# Copyright 2021 (c) Graham.Williams@togaware.com
+# Copyright 2021-2025 (c) Graham.Williams@togaware.com
 #
 # License: Creative Commons Attribution-ShareAlike 4.0 International.
 #
@@ -14,7 +14,7 @@
 #   Trivial update or bug fix
 
 ifeq ($(VER),)
-  VER = $(shell egrep '^version:' pubspec.yaml | cut -d' ' -f2)
+  VER = $(if $(wildcard pubspec.yaml),$(shell egrep '^version:' pubspec.yaml | cut -d' ' -f2),)
 endif
 
 define FLUTTER_HELP
@@ -34,9 +34,14 @@ flutter:
   import_order      Run import order checking.
   import_order_fix  Run import order fixing.
 
+  pubspec         Choose actual/local pubspec using meld.
+  pubspec.local   Overwrite with local pubspec.
+  pubspec.actual  Overwrite with actual pubspec.
+
   fix             Run `dart fix --apply`.
   format          Run `dart format`.
-  analyze         Run flutter analyze.
+  analyze         Run `flutter analyze`.
+  depend	  Run `dart run dependency_validator`.
   ignore          Look for usage of ignore directives.
   license	  Look for missing top license in source code.
 
@@ -121,7 +126,7 @@ linux_config:
 	flutter config --enable-linux-desktop
 
 .PHONY: prep
-prep: analyze fix import_order_fix format ignore license todo
+prep: analyze fix import_order_fix format ignore license todo depend bakfind
 	@echo "ADVISORY: make tests docs"
 	@echo $(SEPARATOR)
 
@@ -131,6 +136,18 @@ docs::
 	chmod -R go+rX doc
 
 SEPARATOR="------------------------------------------------------------------------"
+
+.PHONY: pubspec
+pubspec:
+	meld pubspec.yaml.actual pubspec.yaml pubspec.yaml.local
+
+.PHONY: pubspec.local
+pubspec.local:
+	cp --backup pubspec.yaml.local pubspec.yaml
+
+.PHONY: pubspec.actual
+pubspec.actual:
+	cp --backup pubspec.yaml.actual pubspec.yaml
 
 .PHONY: fix
 fix:
@@ -146,6 +163,12 @@ format:
 
 # My emacs IDE is starting to add imports of backups automagically!
 
+.PHONY: bakfind
+bakfind:
+	@echo "Find imports of backups.\n"
+	@-! find lib -type f -name '*.dart' -exec grep '\.dart\.~\([0-9]\)~' {} +
+	@echo $(SEPARATOR)
+
 .PHONY: bakfix
 bakfix:
 	@echo "Find and fix imports of backups."
@@ -160,6 +183,14 @@ analyze:
 	@echo "Futter ANALYZE"
 	-flutter analyze lib
 #	dart run custom_lint
+	@echo $(SEPARATOR)
+
+# dart pub global activate dependency_validator
+
+.PHONY: depend
+depend:
+	@echo "Dart: REVIEW DEPENDENCIES."
+	-dependency_validator
 	@echo $(SEPARATOR)
 
 .PHONY: ignore
@@ -352,6 +383,8 @@ endif
 publish:
 	dart pub publish
 
+# dart pub global activate import_order_lint
+
 .PHONY: import_order
 import_order:
 	@echo "Dart: CHECK IMPORT ORDER"
@@ -361,7 +394,7 @@ import_order:
 .PHONY: import_order_fix
 import_order_fix:
 	@echo "Dart: FIX IMPORT ORDER"
-	dart run import_order_lint:fix_imports --project-name=rattle -r lib
+	fix_imports --project-name=rattle -r lib
 	@echo $(SEPARATOR)
 
 ### TODO THESE SHOULD BE CHECKED AND CLEANED UP
@@ -376,10 +409,10 @@ versions:
 	perl -pi -e 's|applicationVersion = ".*";|applicationVersion = "$(VER)";|' \
 	lib/constants/app.dart
 
-.PHONY: wc
-wc: lib/*.dart
-	@cat lib/*.dart lib/*/*.dart lib/*/*/*.dart \
-	| egrep -v '^/' \
+.PHONY: loc
+loc: lib/*.dart
+	@cat $(shell find lib -name '*.dart') \
+	| egrep -v '^ */' \
 	| egrep -v '^ *$$' \
 	| wc -l
 
