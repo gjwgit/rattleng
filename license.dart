@@ -1,6 +1,6 @@
-/// <DESCRIPTION>
+/// Rattle - Data Science Next Generation
 ///
-// Time-stamp: <Thursday 2025-01-30 08:35:17 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-07-25 05:25:07 +1000 Graham Williams>
 ///
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
