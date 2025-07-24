@@ -1,6 +1,6 @@
 /// Load a dataset through the appropriate R script.
 ///
-/// Time-stamp: <Wednesday 2025-05-07 08:50:59 +1000 Graham Williams>
+/// Time-stamp: <Friday 2025-07-25 08:56:27 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -30,7 +30,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:rattle/constants/app.dart';
 import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/datatype.dart';
 import 'package:rattle/providers/path.dart';
@@ -70,25 +69,16 @@ Future<void> rLoadDataset(BuildContext context, WidgetRef ref) async {
 
   String sl = 'session_library';
   String ss = 'session_setup';
-  // String dw = 'dataset_load_weather';
   String dc = 'dataset_load_csv';
   String dx = 'dataset_load_txt';
   String dp = 'dataset_prep'; // Dataset cleaning and prepartion pre-template.
   String dfp = 'dataset_load_from_package';
   String dxl = 'dataset_load_xls';
 
-  if (path == '' && dataset.isEmpty && package.isEmpty) {
-    // TODO 20250310 gjw Remove the deprecated weatherDemoFile
-
-    // 20241007 gjw If no path is specified then we load the sample dataset from
-    // Rattle. At this time through the GUI we do not have an empty path nor are
-    // we using the rattle::weather dataset which is rather dated. So this
-    // option is not currently utilised.
-    path = weatherDemoFile;
-  }
-
   if (isFromPackage(path)) {
-    // load from package first
+    // 20250725 gjw This is not yet supported but ready when we support datasets
+    // from packages, like rattle::weather.
+
     if (context.mounted) await rSource(context, ref, [sl, ss, dfp, dp]);
   } else if (path.endsWith('.csv')) {
     // 20241007 gjw We will load a CSV file into the R process. Note that we do

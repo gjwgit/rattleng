@@ -1,11 +1,13 @@
-/// App-Wide Constants for RattleNG
+/// Rattle - Data Science Next Generation
 ///
-/// Copyright (C) 2023, Togaware Pty Ltd.
+// Time-stamp: <Friday 2025-07-25 08:47:50 +1000 Graham Williams>
+///
+/// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Monday 2025-03-10 09:30:06 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-07-25 08:47:23 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -26,6 +28,8 @@
 
 library;
 
+/// App-Wide Constants for RattleNG.
+
 /// The Rattle app's title.
 
 const String appTitle = '[Rattle](https://rattle.togaware.com) '
@@ -38,12 +42,6 @@ const String assetsPath = 'assets';
 /// Location of the markdown file containing instructions for the SCRIPT tab.
 
 const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
-
-/// File name of demo file (weather.csv).
-
-// TODO 20250310 gjw This is deprecated.
-
-const String weatherDemoFile = 'rattle::weather';
 
 /// Links of R packages for reference.
 
