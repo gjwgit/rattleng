@@ -1,6 +1,6 @@
 /// Rattle - Data Science Next Generation
 ///
-// Time-stamp: <Friday 2025-07-25 05:28:15 +1000 Graham Williams>
+// Time-stamp: <Friday 2025-07-25 09:00:19 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///
@@ -64,8 +64,12 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
     List<String> lines = [];
 
     ////////////////////////////////////////////////////////////////////////
+    // COR
+    ////////////////////////////////////////////////////////////////////////
 
-    // 20250222 gjw Trying to get a properly aligned output for Windows.
+    // 20250222 gjw Trying to get a properly aligned output for Windows. There
+    // are some odd formatting happening from Windows, and we have not yet
+    // resolved the issue.
 
     // content = rExtract(stdout, 'print(round(cor,2))');
     content = rExtract(stdout, 'print(format(round(cor, 2)');
@@ -101,6 +105,8 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
       );
     }
 
+    ////////////////////////////////////////////////////////////////////////
+    // CORRPLOT
     ////////////////////////////////////////////////////////////////////////
 
     image = '$tempDir/explore_correlation.svg';
