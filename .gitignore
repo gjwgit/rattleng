@@ -4,6 +4,7 @@
 
 output
 tmp
+scripts
 *~
 !lib
 ignore
