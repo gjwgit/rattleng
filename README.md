@@ -249,7 +249,7 @@ The traditional missing data plots have been updated:
 
 ![](assets/screenshots/explore_missing_vim.png)
 
-The correlation plot removes repeated information from the plot:
+The correlation plot visually highlights related variables:
 
 ![](assets/screenshots/explore_correlation_corrplot.png)
 
