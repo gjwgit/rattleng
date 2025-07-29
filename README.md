@@ -219,7 +219,7 @@ Suggested tasks can be found as github issues.
 
 ## Some RattleNG teasers
 
-### Rattle's 5 Click to Your First AI Model
+### Rattle's 5 Clicks to Your First AI Model
 
 The traditional Rattle Welcome screen provides an overview of
 Rattle. To build your first model, simply click the **Dataset** button
