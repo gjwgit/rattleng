@@ -388,13 +388,13 @@ publish:
 .PHONY: import_order
 import_order:
 	@echo "Dart: CHECK IMPORT ORDER"
-	dart run custom_lint
+	import_order --check
 	@echo $(SEPARATOR)
 
 .PHONY: import_order_fix
 import_order_fix:
 	@echo "Dart: FIX IMPORT ORDER"
-	fix_imports --project-name=rattle -r lib
+	import_order
 	@echo $(SEPARATOR)
 
 ### TODO THESE SHOULD BE CHECKED AND CLEANED UP
@@ -414,6 +414,7 @@ loc: lib/*.dart
 	@cat $(shell find lib -name '*.dart') \
 	| egrep -v '^ */' \
 	| egrep -v '^ *$$' \
+	| egrep -v '^ *[)},]+, *$$' \
 	| wc -l
 
 #
