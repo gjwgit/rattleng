@@ -21,6 +21,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ CORRELATION: Add dendrogram plot [6.5.4 20250731 gjw]
 + BUG: Don't display empty CORRELATION image if not found [6.5.3 20250725 gjw]
 + INSTALLERS: Testing installers [6.5.2 20250520 gjw]
 + TEXT: Interactive update of corr term display [6.5.1 20250518 zy]
