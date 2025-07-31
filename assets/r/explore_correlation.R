@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2025-04-19 07:09:26 +1000 Graham Williams>
+# Time-stamp: <Thursday 2025-07-31 13:19:30 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -35,14 +35,15 @@
 # https://survivor.togaware.com/datascience/ for further details.
 
 # Generate a correlation plot for the variables. Correlations work for
-# numeric variables only.
+# numeric variables only. The first step is to generate the
+# correlation matrix.
 
-cor <- cor(ds[setdiff(numc, ignore)], use="pairwise", method="pearson")
+corm <- cor(ds[setdiff(numc, ignore)], use="pairwise", method="pearson")
 
 # The correlations are ordered by their strength.
 
-ord <- order(cor[1,])
-cor <- cor[ord, ord]
+ord <- order(corm[1,])
+corm <- corm[ord, ord]
 
 # Display a textual table of the actual correlations.
 ##
@@ -51,18 +52,18 @@ cor <- cor[ord, ord]
 ## copy the table and paste into Notepad we get the same misalignment.
 
 ##
-##print(round(cor,2))
+##print(round(corm,2))
 ##
-print(format(round(cor, 2), nsmall=2, width=6), quote=FALSE)
+print(format(round(corm, 2), nsmall=2, width=6), quote=FALSE)
 ##
-## print(format(round(cor, 2), nsmall = 2, width = 6), quote = FALSE)
+## print(format(round(corm, 2), nsmall = 2, width = 6), quote = FALSE)
 ##
-## knitr::kable(round(cor, 2))
+## knitr::kable(round(corm, 2))
 
 # Generate the chart.
 
 svg("<TEMPDIR>/explore_correlation.svg")
-corrplot::corrplot(cor,
+corrplot::corrplot(corm,
                    method = 'ellipse',
                    order  = 'AOE',
                    type   = 'full',
@@ -72,12 +73,31 @@ title(main = glue("Correlation {basename('<FILENAME>')} using Pearson"),
       sub  = paste("<TIMESTAMP>", username))
 dev.off()
 
-## <GGCORRPLOT>
+## GGCORRPLOT
 
 svg("<TEMPDIR>/explore_correlation_ggcorrplot.svg")
-ggcorrplot::ggcorrplot(cor, method='circle')
+ggcorrplot::ggcorrplot(corm, method='circle')
 dev.off()
 
 png("<TEMPDIR>/explore_correlation_ggcorrplot.png")
-ggcorrplot::ggcorrplot(cor, method='circle')
+ggcorrplot::ggcorrplot(corm, method='circle')
+dev.off()
+
+# GGDENRO Dendrogram
+
+#library(ggdendro)
+#library(ggplot2)
+
+# Calculate correlation and clustering.
+
+cor_matrix <- cor(mtcars)
+cord <- as.dist(1 - abs(corm))  # Use absolute correlation
+hc <- hclust(cord, method="ward.D2")
+
+# Create dendrogram plot.
+
+svg("<TEMPDIR>/explore_correlation_ggdendro.svg")
+ggdendro::ggdendrogram(hc, rotate = TRUE, size = 2) +
+  labs(title = "Variable Correlation Dendrogram") +
+  theme_minimal()
 dev.off()
