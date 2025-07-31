@@ -1,6 +1,6 @@
 /// Rattle - Data Science Next Generation
 ///
-// Time-stamp: <Friday 2025-07-25 09:00:19 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-07-31 13:23:45 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///
@@ -157,6 +157,28 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
         ''',
           path: imageSVG,
           display: imagePNG,
+        ),
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+    // GGDENDRO
+    ////////////////////////////////////////////////////////////////////////
+
+    image = '$tempDir/explore_correlation_ggdendro.svg';
+
+    if (imageExists(image)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+        # GGPlot Dendrogram
+
+        Generated using
+        [ggdendro::ggdenrogram()](https://www.rdocumentation.org/packages/ggdendro/topics/ggdendrogram).
+
+        ''',
+          path: image,
         ),
       );
     }
