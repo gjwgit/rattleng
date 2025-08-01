@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2025-04-29 15:27:02 +1000 Graham Williams>
+// Time-stamp: <Friday 2025-08-01 16:57:08 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -92,10 +92,10 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     'Ignored': '''
 
       **Ignored:** Choose this chip to remove from the dataset all columns
-      (variables) from the dataset that are marked as **Ignore* in the
-      **Dataset** tab's **Role** page. The variables to be removed will be
-      identified through a popup and you will have a chance to review them
-      before comitting to do so.
+      (variables) that are marked as *Ignore* in the **Dataset** tab's **Role**
+      page. Don't worry, the variables to be removed will be identified through
+      a popup so that you will have a chance to review them before comitting to
+      do so.
 
       ''',
   };
