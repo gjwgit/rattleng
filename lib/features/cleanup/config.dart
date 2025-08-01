@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2025-08-01 16:57:08 +1000 Graham Williams>
+// Time-stamp: <Friday 2025-08-01 17:01:32 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -330,6 +330,15 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
                   ref.read(selectedProvider.notifier).state = selected;
                   takeAction(method);
                 },
+                tooltip: '''
+
+                **Delete:** Tap here after you have chosen one of the available
+                options for what you want to delete from the dataset. You will
+                be asked to confirm the selection for deletion from the dataset
+                before it is actually done, so you can still back out at that
+                time.
+
+                ''',
                 child: const Text('Delete from Dataset'),
               ),
 
