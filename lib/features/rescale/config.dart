@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2025-02-05 08:44:24 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-08-01 17:07:32 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -107,7 +107,7 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
     'Rank': '''
 
     Rescale based on the rank order of the values of the variable so the values
-    start from 1 up to the number of different values for the variable..
+    start from 1 up to the number of different values for the variable.
 
     ''',
     'Interval': '''
@@ -178,7 +178,8 @@ class RescaleConfigState extends ConsumerState<RescaleConfig> {
 
           When rescaling a numeric variable using an Interval, the numeric value
           here is the maximum value for the resulting interval. A default
-          maximum value of 100 is often used. The minimum value is fixed as 0.
+          maximum value of 100 is often used. This actually means the maximum
+          value is 99 since the minimum value is fixed as 0.
 
           ''',
           controller: valCtrl,
