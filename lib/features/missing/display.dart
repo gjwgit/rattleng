@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2025-02-04 09:31:06 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-08-01 16:40:35 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -66,8 +66,44 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     List<String> lines = [];
 
     ////////////////////////////////////////////////////////////////////////
-    //
-    // Text pattern of missing values.
+    // COUNT OF MISSING VALUES - TEXTUAL
+    ////////////////////////////////////////////////////////////////////////
+
+    content = rExtract(stdout, 'aggr(');
+
+    // Remove the line beginning with + (a continuation)
+
+    lines = content.split('\n');
+
+    lines = lines.where((line) => !line.startsWith('+')).toList();
+
+    // Rejoin the lines.
+
+    content = lines.join('\n');
+
+    // Rename Count to Proportion!
+
+    content = content.replaceAll('     Count', 'Proportion');
+
+    if (content.isNotEmpty) {
+      pages.add(
+        TextPage(
+          title: '''
+
+          # Count of Missing Values - Textual
+
+          Generated using
+          [VIM::aggr(ds)](https://www.rdocumentation.org/packages/VIM/topics/aggr).
+
+          ''',
+          content: content,
+        ),
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+    // PATTERN OF MISSING VALUES - TEXTUAL
+    ////////////////////////////////////////////////////////////////////////
 
     content = rExtract(stdout, 'md.pattern(');
 
@@ -118,6 +154,8 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     }
 
     ////////////////////////////////////////////////////////////////////////
+    // PATTERN OF MISSING VALUES - VISUAL
+    ////////////////////////////////////////////////////////////////////////
 
     image = '$tempDir/explore_missing_mice.svg';
 
@@ -133,40 +171,6 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
         ''',
           path: image,
-        ),
-      );
-    }
-
-    ////////////////////////////////////////////////////////////////////////
-
-    content = rExtract(stdout, 'aggr(');
-
-    // Remove the line beginning with + (a continuation)
-
-    lines = content.split('\n');
-
-    lines = lines.where((line) => !line.startsWith('+')).toList();
-
-    // Rejoin the lines.
-
-    content = lines.join('\n');
-
-    // Rename Count to Proportion!
-
-    content = content.replaceAll('     Count', 'Proportion');
-
-    if (content.isNotEmpty) {
-      pages.add(
-        TextPage(
-          title: '''
-
-          # Aggregation of Missing Values - Textual
-
-          Generated using
-          [VIM::aggr(ds)](https://www.rdocumentation.org/packages/VIM/topics/aggr).
-
-          ''',
-          content: content,
         ),
       );
     }
