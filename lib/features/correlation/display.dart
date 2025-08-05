@@ -1,6 +1,6 @@
 /// Rattle - Data Science Next Generation
 ///
-// Time-stamp: <Thursday 2025-07-31 13:23:45 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2025-08-05 16:44:19 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///
@@ -72,7 +72,7 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
     // resolved the issue.
 
     // content = rExtract(stdout, 'print(round(cor,2))');
-    content = rExtract(stdout, 'print(format(round(cor, 2)');
+    content = rExtract(stdout, 'print(format(round(corm, 2)');
     // content = rExtract(stdout, 'knitr::kable(round(cor, 2))');
 
     // Add a blank line between each sub-table.

@@ -1,6 +1,6 @@
 /// Test the EXPLORE tab MISSING feature with th LARGE dataset.
 //
-// Time-stamp: <Friday 2025-03-21 08:58:53 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-08-05 16:56:04 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -53,11 +53,11 @@ void main() {
     // finished generating the various analyses.
     await tester.pump(delay);
     await gotoNextPage(tester);
+    await verifyPage('Count of Missing Values - Textual');
+    await gotoNextPage(tester);
     await verifyPage('Patterns of Missing Data - Textual');
     await gotoNextPage(tester);
     await verifyPage('Patterns of Missing Values - Visual');
-    await gotoNextPage(tester);
-    await verifyPage('Aggregation of Missing Values - Textual');
     await gotoNextPage(tester);
     await verifyPage('Aggregation of Missing Values - Visual');
     // 20250211 gjw I added this delay before the move to the next page since
