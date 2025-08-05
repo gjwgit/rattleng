@@ -1,6 +1,6 @@
 /// Test WEATHER dataset EXPLORE tab MISSING feature.
 //
-// Time-stamp: <Friday 2025-02-07 05:34:21 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-08-05 20:57:12 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -51,11 +51,11 @@ void main() {
     await gotoNextPage(tester);
     // 20250207 gjw Add a delay for ecosysl.
     await tester.pump(delay);
-    await verifyPage('Patterns of Missing Data - Textual', '380');
+    await verifyPage('Count of Missing Values - Textual');
+    await gotoNextPage(tester);
+    await verifyPage('Patterns of Missing Data - Textual');
     await gotoNextPage(tester);
     await verifyPage('Patterns of Missing Values - Visual');
-    await gotoNextPage(tester);
-    await verifyPage('Aggregation of Missing Values - Textual', '172');
     await gotoNextPage(tester);
     await verifyPage('Aggregation of Missing Values - Visual');
     await gotoNextPage(tester);
