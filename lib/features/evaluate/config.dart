@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2025-03-21 19:51:21 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-08-05 15:43:12 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -217,6 +217,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
     required BuildContext context,
     required dynamic ref,
   }) async {
+    // 20250805 gjw On removing `hand` from the list of scripts to run, due to
+    // `hmeasure` being removed from CRAN, [hd] below has become the empty
+    // string, for convenience, expecting the `hmeasure` package to resurface in
+    // CRAN, and so keeping [hd] in all the places where it needs to be. So
+    // check here and remove any empty strings in the list [parameters].
+
+    parameters.removeWhere((s) => s.isEmpty);
+
     // 20241220 gjw One of the following templates then needs to be
     // run to convert the appropriate predictions and probabilities
     // to the variables that are non-specific to a dataset
@@ -362,8 +370,12 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   String em = 'evaluate_measure_error_matrix';
                   String ro = 'evaluate_measure_roc';
                   String erc = 'evaluate_measure_riskchart';
-                  String hd = 'evaluate_measure_hand';
                   String ero = 'evaluate_measure_rocr';
+
+                  // 20250805 gjw The hmeasure package was removed from CRAN
+                  // 20250802.  String hd = 'evaluate_measure_hand';
+
+                  String hd = '';
 
                   // Execute evaluation for rpart model if it was executed and
                   // treeExecuted is true.
@@ -590,7 +602,9 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   )
                   .toList(),
 
-              // Set selected option, handling Tuning/Validation text swap and defaulting to Complete when partitions disabled.
+              // Set selected option, handling Tuning/Validation text swap and
+              // defaulting to Complete when partitions disabled.
+
               selectedOption: !ref.read(partitionProvider)
                   ? 'Complete'
                   : (datasetType == 'Tuning' &&
@@ -619,6 +633,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
               ),
 
               // Handle selection changes by updating state and provider.
+
               onSelected: (chosen) {
                 setState(() {
                   if (chosen != null) {

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Monday 2025-05-05 16:56:25 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2025-08-05 15:46:37 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -30,6 +30,9 @@
 #
 # @williams:2017:essentials Chapter 7.
 # https://survivor.togaware.com/datascience/ for further details.
+#
+# 20250805 gjw The hmeasure package has been removed from CRAN so
+# remove it from Rattle for now. This script is currently not run.
 
 title <- glue(
   "H-Measures - {mdesc} - ",

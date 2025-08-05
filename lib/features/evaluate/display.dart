@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2025-03-12 08:30:19 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-08-05 14:00:01 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -106,7 +106,12 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
     // distinct naming scheme and we need to coordinate the names we use here
     // with those in `assets/r/evaluate_model_*.R` (20250312 gjw).
 
-    final evaluationTypes = ['roc', 'riskchart', 'hand', 'rocr'];
+    final evaluationTypes = [
+      'roc',
+      'riskchart',
+      // 'hand', The hmeasure package was removed from CRAN 20250802.
+      'rocr',
+    ];
 
     final modelDisplayNames = {
       'rpart': 'RPART',
@@ -142,11 +147,14 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
             'machine-learning/crash-course/classification/roc-and-auc).',
       },
       'riskchart': {'title': 'Risk Chart', 'documentation': null},
-      'hand': {
-        'title': 'H-Measure &#8212; Coherent Alternative to AUC',
-        'documentation': 'Built using [hmeasure::HMeasure](https://'
-            'www.rdocumentation.org/packages/hmeasure).',
-      },
+      // 20250805 gjw The hmeasure package was removed from 20250802.
+      //
+      // 'hand': {
+      //   'title': 'H-Measure &#8212; Coherent Alternative to AUC',
+      //   'documentation': 'Built using [hmeasure::HMeasure](https://'
+      //       'www.rdocumentation.org/packages/hmeasure).',
+      // },
+      //
       'rocr': {
         'title': 'Combined Metrics: Cost, Lift, Sensitivity, and Precision',
         'documentation':
