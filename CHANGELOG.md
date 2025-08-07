@@ -21,6 +21,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ VISUALISE: Fix OPEN plot bug - was not showing the copied image [6.5.6 20250807 gjw]
 + EVALUATE: The R hmeasure package no longer available [6.5.5 20250805 gjw]
 + CORRELATION: Add dendrogram plot [6.5.4 20250731 gjw]
 + BUG: Don't display empty CORRELATION image if not found [6.5.3 20250725 gjw]
