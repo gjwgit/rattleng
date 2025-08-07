@@ -1,6 +1,6 @@
 /// A widget to build the a common single image based pages.
 //
-// Time-stamp: <Friday 2025-06-27 14:28:44 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-08-07 10:08:26 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -276,8 +276,11 @@ class ImagePage extends ConsumerWidget {
                                   '.svg',
                                 );
 
-                            // Generate a unique file name for the new file in the
-                            // temporary directory with the correct extension.
+                            // Generate a unique file name for the new file in
+                            // the temporary directory with the correct
+                            // extension. We do this since the original filename
+                            // will be overwritten by a new plot in Rattle, thus
+                            // losing the displayed file. 20250807 gjw
 
                             String extension = isSvg ? 'svg' : 'png';
                             String fileName =
@@ -288,8 +291,8 @@ class ImagePage extends ConsumerWidget {
 
                             await File(path).copy(tempFile.path);
 
-                            // Get the image viewer app from SharedPreferences or use the provider default
-                            // if not set.
+                            // Get the image viewer app from SharedPreferences
+                            // or use the provider default if not set.
 
                             final prefs = await SharedPreferences.getInstance();
                             final savedImageViewer = prefs.getString(
@@ -310,7 +313,7 @@ class ImagePage extends ConsumerWidget {
                                     ],
                                     runInShell: true,
                                   )
-                                : Process.run(imageViewerApp!, [path]);
+                                : Process.run(imageViewerApp!, [tempFile.path]);
                           },
                         ),
                       ),
