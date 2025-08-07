@@ -1,6 +1,6 @@
 /// A widget to build the a common single image based pages.
 //
-// Time-stamp: <Thursday 2025-08-07 10:08:26 +1000 Graham Williams>
+// Time-stamp: <Thursday 2025-08-07 10:12:39 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -279,7 +279,7 @@ class ImagePage extends ConsumerWidget {
                             // Generate a unique file name for the new file in
                             // the temporary directory with the correct
                             // extension. We do this since the original filename
-                            // will be overwritten by a new plot in Rattle, thus
+                            // will be overwritten by a new plot within Rattle, thus
                             // losing the displayed file. 20250807 gjw
 
                             String extension = isSvg ? 'svg' : 'png';
@@ -299,8 +299,8 @@ class ImagePage extends ConsumerWidget {
                               'imageViewerApp',
                             );
 
-                            // If the shared preferences image viewer app is null(not set),
-                            // use the provider default.
+                            // If the shared preferences image viewer app is
+                            // null(not set), use the provider default.
 
                             final imageViewerApp = savedImageViewer ??
                                 ref.read(imageViewerSettingProvider);
