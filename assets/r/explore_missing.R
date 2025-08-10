@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2024-08-29 17:26:43 +0800 Graham Williams>
+# Time-stamp: <Sunday 2025-08-10 12:38:32 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -93,4 +93,27 @@ dev.off()
 
 svg("<TEMPDIR>/explore_missing_naniar_ggmissupset.svg", width=16)
 naniar::gg_miss_upset(tds)
+dev.off()
+
+####################################
+## CORRELATION OF MISSING VALUES
+####################################
+
+# Generate a correlation plot for the variables with missing values.
+
+svg("<TEMPDIR>/explore_missing_correlation.svg")
+ds[unique(unique(inputs, risk), target)] %>%
+  dplyr::select_if(~any(is.na(.))) %>%
+  dplyr::mutate(dplyr::across(tidyselect::everything(), ~as.numeric(is.na(.)))) ->
+dsm
+corm <- cor(dsm, use = "complete.obs")
+corrplot::corrplot(corm,
+                   method = "ellipse",
+                   order  = "AOE",
+                   type   = "full",
+                   tl.srt = 45,
+                   tl.col = "black",
+                   mar    = c(0,0,1,0))
+title(main = glue("Correlation of MIssing Values {basename('<FILENAME>')} using Pearson"),
+      sub  = paste("<TIMESTAMP>", username))
 dev.off()
