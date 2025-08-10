@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2025-08-10 12:35:26 +1000 Graham Williams>
+// Time-stamp: <Sunday 2025-08-10 17:22:40 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -187,7 +187,12 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
         # Correlation of Missing Values - Visual
 
         Generated using
+        [stats::cor())](https://www.rdocumentation.org/packages/stats/topics/cor) and
         [corrplot::corrplot())](https://www.rdocumentation.org/packages/corrplot/topics/corrplot).
+
+        Considering only the variables with missing values, this plot identifies
+        correlations between the missingness of values for variables across the
+        same observations.
 
         ''',
           path: image,

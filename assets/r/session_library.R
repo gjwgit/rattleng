@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-05-07 08:48:05 +1000 Graham Williams>
+# Time-stamp: <Sunday 2025-08-10 17:25:03 +1000 Graham Williams>
 #
 # Rattle version <VERSION>.
 #
@@ -37,9 +37,9 @@
 # order. (gjw 20250507)
 
 # Loading packages requires they are already installed into a local
-# library. The RattleNG installation instructions recommends
+# library. The Rattle installation instructions recommends
 # installing these packages before running rattle for the first
-# time. From within RattleNG, tap the DOWNLOAD button at the top right
+# time. From within Rattle, tap the DOWNLOAD button at the top right
 # bar of buttons which will run the `packages.R` script to check and
 # install any missing packages. (20250507 gjw)
 

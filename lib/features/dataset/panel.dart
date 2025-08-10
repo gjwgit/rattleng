@@ -1,6 +1,6 @@
 /// Dataset tab.
 ///
-/// Time-stamp: <Saturday 2024-09-21 18:30:45 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2025-08-10 17:30:34 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -33,14 +33,14 @@ import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/features/dataset/config.dart';
 import 'package:rattle/features/dataset/display.dart';
 
-/// The dataset tab introduces RattleNG and supports loading a dataset.
+/// The dataset tab introduces Rattle and supports loading a dataset.
 
 class DatasetPanel extends StatelessWidget {
   const DatasetPanel({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // A per the RattleNG pattern, a Tab consists of a Config bar and the
+    // A per the Rattle pattern, a Tab consists of a Config bar and the
     // results Panel.
 
     return const Scaffold(

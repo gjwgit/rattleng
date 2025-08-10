@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: <Tuesday 2025-05-13 17:16:05 +1000 Graham Williams>
+// Time-stamp: <Sunday 2025-08-10 17:30:04 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -344,7 +344,7 @@ Future<void> rSource(
   // Replace Global template patterns with their values. These are not specific
   // to any particular feature,
 
-  code = code.replaceAll('<TIMESTAMP>', 'RattleNG ${timestamp()}');
+  code = code.replaceAll('<TIMESTAMP>', 'Rattle ${timestamp()}');
 
   PackageInfo info = await PackageInfo.fromPlatform();
 

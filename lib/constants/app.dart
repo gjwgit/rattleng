@@ -1,6 +1,6 @@
 /// Rattle - Data Science Next Generation
 ///
-// Time-stamp: <Friday 2025-07-25 08:47:50 +1000 Graham Williams>
+// Time-stamp: <Sunday 2025-08-10 17:27:11 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -28,7 +28,7 @@
 
 library;
 
-/// App-Wide Constants for RattleNG.
+/// App-Wide Constants for Rattle.
 
 /// The Rattle app's title.
 

@@ -1,11 +1,11 @@
-/// Wordcloud specific constants for RattleNG
+/// Wordcloud specific constants for Rattle
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Thursday 2025-05-08 11:28:13 +1000 Graham Williams>
+// Time-stamp: <Sunday 2025-08-10 17:27:25 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///

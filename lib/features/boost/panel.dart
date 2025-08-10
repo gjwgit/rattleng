@@ -38,7 +38,7 @@ class BoostPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // As per the RattleNG pattern, a Tab consists of a Config bar and the
+    // As per the Rattle pattern, a Tab consists of a Config bar and the
     // results Display().
 
     return const Scaffold(

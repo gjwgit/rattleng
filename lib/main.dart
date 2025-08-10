@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll for the data scientist.
 ///
-/// Time-stamp: <Monday 2025-04-07 05:52:36 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2025-08-10 17:27:44 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -167,7 +167,7 @@ Future<void> main() async {
       // size: Size(950, 600),
 
       // The [title] is used for the window manager's window title.
-      title: 'RattleNG - Data Science with R',
+      title: 'Rattle - Data Science with R',
     );
 
     // The window should be on top now, so show the window, give it focus, and

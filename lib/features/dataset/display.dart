@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Friday 2025-07-25 08:41:23 +1000 Graham Williams>
+// Time-stamp: <Sunday 2025-08-10 17:30:49 +1000 Graham Williams>
 //
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -63,7 +63,7 @@ import 'package:rattle/widgets/text_page.dart';
 
 const smallSpace = Gap(10);
 
-/// The dataset panel displays the RattleNG welcome on the first page and the
+/// The dataset panel displays the Rattle welcome on the first page and the
 /// ROLES as the second page.
 
 class DatasetDisplay extends ConsumerStatefulWidget {
