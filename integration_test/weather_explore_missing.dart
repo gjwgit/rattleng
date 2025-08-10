@@ -1,6 +1,6 @@
 /// Test WEATHER dataset EXPLORE tab MISSING feature.
 //
-// Time-stamp: <Tuesday 2025-08-05 20:57:12 +1000 Graham Williams>
+// Time-stamp: <Sunday 2025-08-10 16:12:56 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -56,6 +56,8 @@ void main() {
     await verifyPage('Patterns of Missing Data - Textual');
     await gotoNextPage(tester);
     await verifyPage('Patterns of Missing Values - Visual');
+    await gotoNextPage(tester);
+    await verifyPage('Correlation of Missing Values - Visual');
     await gotoNextPage(tester);
     await verifyPage('Aggregation of Missing Values - Visual');
     await gotoNextPage(tester);
