@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2025-08-01 16:40:35 +1000 Graham Williams>
+// Time-stamp: <Sunday 2025-08-10 12:35:26 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -168,6 +168,26 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
         Generated using
         [mice::md.pattern(ds)](https://www.rdocumentation.org/packages/mice/topics/md.pattern)
+
+        ''',
+          path: image,
+        ),
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+
+    image = '$tempDir/explore_missing_correlation.svg';
+
+    if (imageExists(image)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+        # Correlation of Missing Values - Visual
+
+        Generated using
+        [corrplot::corrplot())](https://www.rdocumentation.org/packages/corrplot/topics/corrplot).
 
         ''',
           path: image,
