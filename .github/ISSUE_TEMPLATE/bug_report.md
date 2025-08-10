@@ -37,6 +37,7 @@ $ commands
 Where has the issue been observed:
 
  - [ ] Android
+ - [ ] Chrome
  - [ ] iOS
  - [ ] Linux
  - [ ] macOS
