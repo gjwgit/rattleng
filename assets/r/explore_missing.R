@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-08-10 12:38:32 +1000 Graham Williams>
+# Time-stamp: <Sunday 2025-08-10 12:43:18 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -109,7 +109,7 @@ dsm
 corm <- cor(dsm, use = "complete.obs")
 corrplot::corrplot(corm,
                    method = "ellipse",
-                   order  = "AOE",
+                   order  = "hclust",
                    type   = "full",
                    tl.srt = 45,
                    tl.col = "black",
