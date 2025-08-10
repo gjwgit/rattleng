@@ -1,6 +1,6 @@
 /// Test the EXPLORE tab MISSING feature with th LARGE dataset.
 //
-// Time-stamp: <Sunday 2025-08-10 16:11:57 +1000 Graham Williams>
+// Time-stamp: <Sunday 2025-08-10 19:20:51 +1000 >
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd
 ///
@@ -58,6 +58,8 @@ void main() {
     await verifyPage('Patterns of Missing Data - Textual');
     await gotoNextPage(tester);
     await verifyPage('Patterns of Missing Values - Visual');
+    // 20250810 gjw Add extra wait here for ecosysl to pass the test.
+    await tester.pump(delay);
     await gotoNextPage(tester);
     await verifyPage('Correlation of Missing Values - Visual');
     await gotoNextPage(tester);
