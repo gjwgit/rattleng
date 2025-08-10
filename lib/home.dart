@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: <Wednesday 2025-04-30 13:40:40 +1000 Graham Williams>
+/// Time-stamp: <Sunday 2025-08-10 17:31:21 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -380,7 +380,7 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
   String about = '''${wordWrap('''
 
-  RattleNG is a modern rewrite of the very popular Rattle Data Mining and Data
+  Rattle V6 is a modern rewrite of the very popular Rattle Data Mining and Data
   Science tool. Visit the [Rattle Home Page](https://rattle.togaware.com) for
   details.
 

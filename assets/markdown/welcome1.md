@@ -12,12 +12,12 @@ Guide](https://survivor.togaware.com/datascience) provides an
 introduction to data science and a guide to using Rattle. It is freely
 available from [Togaware](https://togaware.com).
 
-Rattle V6 (RattleNG) is implemented using
-[Flutter](https://flutter.dev) for the front-end, retaining
-[R](https://r-project.org) for the back-end while updating many of the
-original Rattle scripts. You are invited to report any issues you
-notice on [github](https://github.com/gjwgit/rattleng) where code
-contributions are also most welcome.
+Rattle V6 (Rattle) is implemented using [Flutter](https://flutter.dev)
+for the front-end, retaining [R](https://r-project.org) for the
+back-end while updating many of the original Rattle scripts. You are
+invited to report any issues you notice on
+[github](https://github.com/gjwgit/rattleng) where code contributions
+are also most welcome.
 
 ---
 
@@ -33,7 +33,7 @@ contributions are also most welcome.
   you to use forever.
 + Also visit Togaware's [Data Science Portal](https://togaware.com/onepager.html).
 
-Rattle comes with **NO WARRANTY**. Rattle, RattleNG, and the
+Rattle comes with **NO WARRANTY**. Rattle and the
 collection of R template scripts are Copyright © 2006-2025 Togaware
 Pty Ltd. Rattle is a registered trademark of Togaware Pty Ltd. Tap the
 About (Info) button for acknowledgements.

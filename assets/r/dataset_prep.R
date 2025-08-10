@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-02-05 16:09:10 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-08-10 17:25:29 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,7 +24,7 @@
 #
 # Author: Graham Williams
 
-# RattleNG <TIMESTAMP>
+# Rattle <TIMESTAMP>
 #
 # Run this after the raw dataset has been loaded into the variable
 # `ds` in R and before the R data template script is run (on leaving

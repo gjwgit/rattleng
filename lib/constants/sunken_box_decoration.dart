@@ -1,11 +1,11 @@
-/// App-Wide sunken box for RattleNG
+/// App-Wide sunken box for Rattle
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2024-06-23 20:21:25 +1000 Graham Williams>
+// Time-stamp: <Sunday 2025-08-10 17:26:52 +1000 Graham Williams>
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///

@@ -41,7 +41,7 @@ class TreePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // A per the RattleNG pattern, a Tab consists of a Config bar and the
+    // A per the Rattle pattern, a Tab consists of a Config bar and the
     // results Display().
 
     return Scaffold(

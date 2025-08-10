@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-08-10 12:43:18 +1000 Graham Williams>
+# Time-stamp: <Sunday 2025-08-10 17:17:49 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -114,6 +114,6 @@ corrplot::corrplot(corm,
                    tl.srt = 45,
                    tl.col = "black",
                    mar    = c(0,0,1,0))
-title(main = glue("Correlation of MIssing Values {basename('<FILENAME>')} using Pearson"),
+title(main = glue("Correlation of Missing Values {basename('<FILENAME>')} using Pearson"),
       sub  = paste("<TIMESTAMP>", username))
 dev.off()

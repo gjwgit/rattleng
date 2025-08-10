@@ -1,6 +1,6 @@
 /// Gloabl variable status as text for the status bar.
 ///
-/// Time-stamp: <Wednesday 2025-01-08 20:10:43 +1100 Graham Williams>
+/// Time-stamp: <Sunday 2025-08-10 17:26:04 +1000 Graham Williams>
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -33,7 +33,7 @@ final scriptProvider = StateProvider<String>(
 #
 # Copyright (C) 2023-2025, Togaware Pty Ltd.
 #
-# RattleNG Version VERSION.
+# Rattle Version VERSION.
 #
 # TIMESTAMP.
 #
