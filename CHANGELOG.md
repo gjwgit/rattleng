@@ -21,6 +21,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ RESCALE: Fix type re recenter - using sd not rms [6.5.8 20250811 gjw]
 + MISSING: Add variable missing value correlation [6.5.7 20250810 gjw]
 + VISUALISE: Fix OPEN plot bug - was not showing the copied image [6.5.6 20250807 gjw]
 + EVALUATE: The R hmeasure package no longer available [6.5.5 20250805 gjw]
