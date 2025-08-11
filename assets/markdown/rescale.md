@@ -22,10 +22,10 @@ transformation.
 
 + [Recenter](https://survivor.togaware.com/datascience/rescale-data-using-recenter-in-rattle.html)
   is a common normalisation which subtracts the mean from each
-  observation and divides each observation by the root-mean-square,
+  observation and divides each observation by the standard deviation,
   resulting in values centered around 0 and spreading across the
-  negative to positive values, using
-  [base::scale](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/scale).
+  negative to positive values to have a standard deviation of 1, using
+  [base::scale()](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/scale).
 
 + **Scale [0,1]** operation supports another common requirement to
   remap the data to the [0,1] range.
