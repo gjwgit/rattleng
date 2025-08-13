@@ -143,6 +143,7 @@ pubspec:
 
 .PHONY: pubspec.local
 pubspec.local:
+	cp --backup pubspec.yaml pubspec.yaml.actual
 	cp --backup pubspec.yaml.local pubspec.yaml
 
 .PHONY: pubspec.actual
