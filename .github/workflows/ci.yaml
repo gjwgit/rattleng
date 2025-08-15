@@ -16,6 +16,7 @@ jobs:
 
   analyze:
     runs-on: ubuntu-latest
+    if: github.event.repository.private == false
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -27,6 +28,7 @@ jobs:
 
   format:
     runs-on: ubuntu-latest
+    if: github.event.repository.private == false
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -38,6 +40,7 @@ jobs:
 
   import_order:
     runs-on: ubuntu-latest
+    if: github.event.repository.private == false
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -50,6 +53,7 @@ jobs:
 
   markdown:
     runs-on: ubuntu-latest
+    if: github.event.repository.private == false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -61,6 +65,7 @@ jobs:
 
   copyright:
     runs-on: ubuntu-latest
+    if: github.event.repository.private == false
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -91,6 +96,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    if: github.event.repository.private == false
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
