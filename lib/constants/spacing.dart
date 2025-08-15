@@ -1,6 +1,6 @@
 /// Constants used for spacing different widget contexts.
 //
-// Time-stamp: <Saturday 2024-12-14 21:15:05 +1100 Graham Williams>
+// Time-stamp: "Saturday 2024-12-14 21:15:05 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

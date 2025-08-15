@@ -1,6 +1,6 @@
 /// Record variable selection on the dataset tab
 //
-// Time-stamp: <Sunday 2024-07-21 07:33:03 +1000 Graham Williams>
+// Time-stamp: "Sunday 2024-07-21 07:33:03 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

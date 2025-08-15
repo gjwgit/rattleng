@@ -1,6 +1,6 @@
 /// An integer vector input field.
 //
-// Time-stamp: <Sunday 2025-03-30 07:31:33 +1100 Graham Williams>
+// Time-stamp: "Sunday 2025-03-30 07:31:33 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

@@ -1,6 +1,6 @@
 /// Display a warning if a value is out of the valid range (0-100).
 //
-// Time-stamp: <Monday 2025-01-06 15:20:25 +1100 Graham Williams>
+// Time-stamp: "Monday 2025-01-06 15:20:25 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

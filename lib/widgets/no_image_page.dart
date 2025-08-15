@@ -1,6 +1,6 @@
 /// An image placeholder page.
 //
-// Time-stamp: <Sunday 2025-01-05 10:11:31 +1100 Graham Williams>
+// Time-stamp: "Sunday 2025-01-05 10:11:31 +1100 Graham Williams"
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///

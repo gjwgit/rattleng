@@ -1,6 +1,6 @@
 /// Partition controls.
 //
-// Time-stamp: <Friday 2025-03-14 13:58:20 +1100 Graham Williams>
+// Time-stamp: "Friday 2025-03-14 13:58:20 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

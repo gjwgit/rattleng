@@ -1,6 +1,6 @@
 /// A numerical text input field.
 //
-// Time-stamp: <Friday 2025-06-27 14:29:28 +1000 Graham Williams>
+// Time-stamp: "Friday 2025-06-27 14:29:28 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

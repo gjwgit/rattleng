@@ -1,6 +1,6 @@
 /// FOREST Tab
 //
-// Time-stamp: <Friday 2024-06-14 10:02:22 +1000 Graham Williams>
+// Time-stamp: "Friday 2024-06-14 10:02:22 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

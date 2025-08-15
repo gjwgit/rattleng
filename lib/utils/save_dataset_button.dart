@@ -1,6 +1,6 @@
 /// CSV Save button.
 //
-// Time-stamp: <Monday 2025-05-12 11:14:01 +1000 Graham Williams>
+// Time-stamp: "Monday 2025-05-12 11:14:01 +1000 Graham Williams"
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///

@@ -1,6 +1,6 @@
 /// MISSING feature made up of config and panel widgets.
 //
-// Time-stamp: <Saturday 2024-06-29 20:02:51 +1000 Graham Williams>
+// Time-stamp: "Saturday 2024-06-29 20:02:51 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

@@ -1,6 +1,6 @@
 /// Query the roles provider for the list of variables in play.
 //
-// Time-stamp: <Wednesday 2025-01-15 16:25:50 +1100 Graham Williams>
+// Time-stamp: "Wednesday 2025-01-15 16:25:50 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

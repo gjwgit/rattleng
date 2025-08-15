@@ -1,6 +1,6 @@
 /// Widget for multiple images across the page.
 //
-// Time-stamp: <Friday 2025-06-27 14:29:09 +1000 Graham Williams>
+// Time-stamp: "Friday 2025-06-27 14:29:09 +1000 Graham Williams"
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///

@@ -1,6 +1,6 @@
 /// Show the settings dialog.
 //
-// Time-stamp: <Wednesday 2025-01-15 15:50:09 +1100 Graham Williams>
+// Time-stamp: "Wednesday 2025-01-15 15:50:09 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

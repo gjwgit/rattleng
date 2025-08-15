@@ -1,6 +1,6 @@
 /// Update variable state in flutter based on its state in R
 //
-// Time-stamp: <Sunday 2025-03-30 08:10:33 +1100 Graham Williams>
+// Time-stamp: "Sunday 2025-03-30 08:10:33 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
