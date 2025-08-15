@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Friday 2025-08-15 13:49:37 +1000 Graham Williams>
+// Time-stamp: <Friday 2025-08-15 20:48:02 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -54,6 +54,7 @@ class TextPage extends StatelessWidget {
     // Create a ScrollController for horizontal scrolling.
 
     final ScrollController horizontalScrollController = ScrollController();
+    final ScrollController verticalScrollController = ScrollController();
 
     // Modify the content to format each line, capitalize it, and add word wrap.
 
@@ -125,27 +126,26 @@ class TextPage extends StatelessWidget {
             child: Scrollbar(
               thumbVisibility: true,
               trackVisibility: true,
-
-              // Attach the horizontal controller.
-              controller: horizontalScrollController,
-              child: SingleChildScrollView(
-                // Attach a vertical controller for independent scrolling.
-                key: PageStorageKey('text_page'),
-
-                controller: ScrollController(),
-                scrollDirection: Axis.vertical,
+              controller: verticalScrollController,
+              child: Scrollbar(
+                thumbVisibility: true,
+                trackVisibility: true,
+                controller: horizontalScrollController,
+                notificationPredicate: (ScrollNotification notification) {
+                  return notification.depth ==
+                      1; // Only respond to horizontal scroll
+                },
                 child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  controller: horizontalScrollController,
-                  child: SizedBox(
-                    // Ensure width matches the full container.
-                    width: MediaQuery.of(context).size.width,
+                  key: PageStorageKey('text_page'),
+                  controller: verticalScrollController,
+                  scrollDirection: Axis.vertical,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    controller: horizontalScrollController,
                     child: SelectableText(
                       content,
                       style: monoTextStyle,
                       textAlign: TextAlign.left,
-
-                      // Handle text selection changes in the content.
                       onSelectionChanged: (selection, cause) {
                         // Only copy text when user long presses or drags to select.
 
