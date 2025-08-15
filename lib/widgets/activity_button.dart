@@ -1,6 +1,6 @@
 /// An ElevatedButton implementing Activity/Build initiation for Rattle.
 //
-// Time-stamp: <Friday 2024-12-20 16:33:38 +1100 Graham Williams>
+// Time-stamp: "Friday 2024-12-20 16:33:38 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

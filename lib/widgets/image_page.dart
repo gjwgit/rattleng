@@ -1,6 +1,6 @@
 /// A widget to build the a common single image based pages.
 //
-// Time-stamp: <Thursday 2025-08-07 10:12:39 +1000 Graham Williams>
+// Time-stamp: "Thursday 2025-08-07 10:12:39 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

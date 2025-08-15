@@ -1,6 +1,6 @@
 /// Return those veriables with an INPUT role or tranformed and now ignored.
 //
-// Time-stamp: <Wednesday 2025-02-05 08:41:37 +1100 Graham Williams>
+// Time-stamp: "Wednesday 2025-02-05 08:41:37 +1100 Graham Williams"
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///

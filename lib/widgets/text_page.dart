@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Friday 2025-08-15 13:49:37 +1000 Graham Williams>
+// Time-stamp: "Friday 2025-08-15 13:49:37 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

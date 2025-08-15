@@ -1,6 +1,6 @@
 /// Scrape the latest json from rattle::meta_data and update the provider.
 //
-// Time-stamp: <Thursday 2024-10-17 21:32:32 +1100 Graham Williams>
+// Time-stamp: "Thursday 2024-10-17 21:32:32 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

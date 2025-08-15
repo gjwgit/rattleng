@@ -1,6 +1,6 @@
 /// A dialog to show a message and only allow OK.
 //
-// Time-stamp: <Sunday 2024-07-21 17:25:02 +1000 Graham Williams>
+// Time-stamp: "Sunday 2024-07-21 17:25:02 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

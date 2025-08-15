@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Wednesday 2024-10-09 17:08:15 +1100 Graham Williams>
+// Time-stamp: "Wednesday 2024-10-09 17:08:15 +1100 Graham Williams"
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///

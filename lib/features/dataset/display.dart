@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Sunday 2025-08-10 17:30:49 +1000 Graham Williams>
+// Time-stamp: "Sunday 2025-08-10 17:30:49 +1000 Graham Williams"
 //
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///

@@ -1,6 +1,6 @@
 /// Providers for text mining.
 //
-// Time-stamp: <Monday 2025-05-12 11:25:41 +1000 Graham Williams>
+// Time-stamp: "Monday 2025-05-12 11:25:41 +1000 Graham Williams"
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///

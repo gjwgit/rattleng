@@ -1,6 +1,6 @@
 /// Settings provider.
 //
-// Time-stamp: <Tuesday 2025-01-14 18:59:56 +1100 Graham Williams>
+// Time-stamp: "Tuesday 2025-01-14 18:59:56 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

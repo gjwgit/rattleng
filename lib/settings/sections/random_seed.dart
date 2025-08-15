@@ -1,6 +1,6 @@
 /// Random seed section.
 //
-// Time-stamp: <Wednesday 2025-05-14 08:18:22 +1000 Graham Williams>
+// Time-stamp: "Wednesday 2025-05-14 08:18:22 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

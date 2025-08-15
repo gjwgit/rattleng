@@ -1,6 +1,6 @@
 /// ASSOCIATION tab made up of config and panel widgets.
 //
-// Time-stamp: <Friday 2024-06-14 09:52:24 +1000 Graham Williams>
+// Time-stamp: "Friday 2024-06-14 09:52:24 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

@@ -1,6 +1,6 @@
 /// Image viewer text field.
 //
-// Time-stamp: <Wednesday 2025-01-15 15:53:34 +1100 Graham Williams>
+// Time-stamp: "Wednesday 2025-01-15 15:53:34 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

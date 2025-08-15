@@ -1,6 +1,6 @@
 /// Get missing observations
 //
-// Time-stamp: <Sunday 2025-03-30 09:11:01 +1100 Graham Williams>
+// Time-stamp: "Sunday 2025-03-30 09:11:01 +1100 Graham Williams"
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///

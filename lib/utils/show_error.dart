@@ -1,6 +1,6 @@
 /// A dialog to show an error message with a customizable OK button action.
 //
-// Time-stamp: <Sunday 2024-07-21 17:25:02 +1000 Graham Williams>
+// Time-stamp: "Sunday 2024-07-21 17:25:02 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

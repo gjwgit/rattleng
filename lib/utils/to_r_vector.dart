@@ -1,6 +1,6 @@
 /// Converts a list of strings into an R vector format string
 //
-// Time-stamp: <Monday 2024-09-16 05:24:22 +1000 Graham Williams>
+// Time-stamp: "Monday 2024-09-16 05:24:22 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

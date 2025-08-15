@@ -1,6 +1,6 @@
 /// A provider manages the state of box plot notch checkbox
 //
-// Time-stamp: <Thursday 2024-09-26 17:03:52 +1000 Graham Williams>
+// Time-stamp: "Thursday 2024-09-26 17:03:52 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

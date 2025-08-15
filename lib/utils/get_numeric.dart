@@ -1,6 +1,6 @@
 /// get the numeric variables that are not ignored.
 //
-// Time-stamp: <Sunday 2024-09-22 16:00:27 +1000 Graham Williams>
+// Time-stamp: "Sunday 2024-09-22 16:00:27 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

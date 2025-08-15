@@ -1,6 +1,6 @@
 /// Partition section.
 //
-// Time-stamp: <Wednesday 2025-01-15 16:05:52 +1100 Graham Williams>
+// Time-stamp: "Wednesday 2025-01-15 16:05:52 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Tuesday 2025-05-13 07:38:53 +1000 Graham Williams>
+// Time-stamp: "Tuesday 2025-05-13 07:38:53 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
