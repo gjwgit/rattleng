@@ -1,6 +1,6 @@
 /// A text widget showing the current rattle state.
 ///
-/// Time-stamp: <Sunday 2025-03-30 11:49:40 +1100 Graham Williams>
+/// Time-stamp: "Sunday 2025-03-30 11:49:40 +1100 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///

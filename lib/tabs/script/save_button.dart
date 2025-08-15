@@ -1,6 +1,6 @@
 /// A button to save the script to file.
 ///
-/// Time-stamp: <Monday 2025-05-12 11:13:46 +1000 Graham Williams>
+/// Time-stamp: "Monday 2025-05-12 11:13:46 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///

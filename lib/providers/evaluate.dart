@@ -1,6 +1,6 @@
 /// A provider for the parameters for evaluate.
 ///
-/// Time-stamp: <Friday 2025-01-17 13:54:49 +1100 Graham Williams>
+/// Time-stamp: "Friday 2025-01-17 13:54:49 +1100 Graham Williams"
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///

@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll for the data scientist.
 ///
-/// Time-stamp: <Sunday 2025-08-10 17:27:44 +1000 Graham Williams>
+/// Time-stamp: "Sunday 2025-08-10 17:27:44 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///

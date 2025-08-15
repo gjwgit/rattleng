@@ -1,6 +1,6 @@
 /// Boost settings for different boost algorithms.
 ///
-/// Time-stamp: <Saturday 2024-12-14 21:25:32 +1100 Graham Williams>
+/// Time-stamp: "Saturday 2024-12-14 21:25:32 +1100 Graham Williams"
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///

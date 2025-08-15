@@ -1,6 +1,6 @@
 /// Providers for parameters association settings.
 ///
-/// Time-stamp: <Wednesday 2025-02-05 16:04:51 +1100 Graham Williams>
+/// Time-stamp: "Wednesday 2025-02-05 16:04:51 +1100 Graham Williams"
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///

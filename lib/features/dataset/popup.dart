@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Tuesday 2025-05-13 08:33:23 +1000 Graham Williams>
+/// Time-stamp: "Tuesday 2025-05-13 08:33:23 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
