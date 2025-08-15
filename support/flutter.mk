@@ -182,7 +182,7 @@ tests:: test qtest
 .PHONY: analyze
 analyze:
 	@echo "Futter ANALYZE"
-	-flutter analyze lib
+	-flutter analyze
 #	dart run custom_lint
 	@echo $(SEPARATOR)
 
