@@ -91,7 +91,7 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
           [arules::apriori()](https://www.rdocumentation.org/packages/arules/topics/apriori).
 
           ''',
-          content: '$content',
+          content: content,
         ),
       );
     }
@@ -156,7 +156,7 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
           Generated using `apriori()`
 
           ''',
-          content: '$content',
+          content: content,
         ),
       );
     }

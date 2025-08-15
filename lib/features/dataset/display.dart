@@ -246,11 +246,11 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
         // Update roles for each selected row
 
-        selectedRows.forEach((index) {
+        for (var index in selectedRows) {
           String columnName = vars[index].name;
           ref.read(rolesProvider.notifier).state[columnName] =
               newRole == 'Ignore' ? Role.ignore : Role.input;
-        });
+        }
 
         // Clear selection after updating
 
@@ -613,7 +613,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
   Widget _buildRoleChips(String columnName, Map<String, Role> currentRoles) {
     return Wrap(
-      key: Key('role-${columnName}'),
+      key: Key('role-$columnName'),
       spacing: 5.0,
       runSpacing: choiceChipRowSpace,
       children: choices.map((choice) {

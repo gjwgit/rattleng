@@ -184,14 +184,17 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                 // widget was removed from the tree during that time.
 
                 if (type == 'KMeans') {
-                  if (context.mounted)
+                  if (context.mounted) {
                     await rSource(context, ref, [mt, km, pp]);
+                  }
                 } else if (type == 'Ewkm') {
-                  if (context.mounted)
+                  if (context.mounted) {
                     await rSource(context, ref, [mt, ew, pp]);
+                  }
                 } else if (type == 'Hierarchical') {
-                  if (context.mounted)
+                  if (context.mounted) {
                     await rSource(context, ref, [mt, hi, pp]);
+                  }
                 } else if (type == 'BiCluster') {
                   if (context.mounted) await rSource(context, ref, [mt, bi]);
                 }
@@ -256,7 +259,7 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                 rExecute(
                   ref,
                   'vars <- 1:${_pairSizeController.text}\n'
-                  'svg(glue("${tempDir}/{pair_file}"))\n'
+                  'svg(glue("$tempDir/{pair_file}"))\n'
                   'pairs(tds[smpl, vars], col  = cluster_assignments[smpl], main = plot_title, pch  = 20, cex  = 0.6)\n'
                   'mtext(paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]), side = 1, line = 4, cex = 0.8)\n'
                   'dev.off()',

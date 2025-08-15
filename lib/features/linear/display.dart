@@ -74,7 +74,7 @@ class _LinearDisplayState extends ConsumerState<LinearDisplay> {
         TextPage(
           title: '# Linear Model\n\n'
               'Built using `glm()`.\n\n',
-          content: '$displayContent',
+          content: displayContent,
         ),
       );
     }

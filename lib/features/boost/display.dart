@@ -92,7 +92,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
           [xgb::xgboost()](https://www.rdocumentation.org/packages/xgboost/topics/xgb.train).
 
             ''',
-            content: '$displayContent',
+            content: displayContent,
           ),
         );
       }
@@ -138,7 +138,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
           [ada::ada()](https://www.rdocumentation.org/packages/ada/topics/ada).
 
             ''',
-            content: '$content',
+            content: content,
           ),
         );
       }

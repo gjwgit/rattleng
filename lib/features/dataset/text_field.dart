@@ -40,6 +40,8 @@ import 'package:rattle/utils/set_status.dart';
 import 'package:rattle/utils/show_dataset_alert_dialog.dart';
 
 class DatasetTextField extends ConsumerStatefulWidget {
+  const DatasetTextField({super.key});
+
   @override
   _DatasetTextFieldState createState() => _DatasetTextFieldState();
 }

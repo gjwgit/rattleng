@@ -73,7 +73,7 @@ List<Widget> ctreePages(WidgetRef ref) {
         Built using [partykit::ctree()](https://www.rdocumentation.org/packages/partykit/topics/ctree).
 
         ''',
-        content: '$displayContent',
+        content: displayContent,
       ),
     );
   }

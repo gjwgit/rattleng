@@ -69,7 +69,7 @@ List<Widget> rpartPages(WidgetRef ref) {
           [rpart::rpart.control()](https://www.rdocumentation.org/packages/rpart/topics/rpart.control).
 
           ''',
-        content: '$content',
+        content: content,
       ),
     );
   }
