@@ -139,7 +139,7 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
 
     final outputPath = await FilePicker.platform.saveFile(
       dialogTitle: 'Provide a .R filename to save the R script to',
-      fileName: 'script_$yyyymmdd${dsname.isNotEmpty ? "_" : ""}${dsname}.R',
+      fileName: 'script_$yyyymmdd${dsname.isNotEmpty ? "_" : ""}$dsname.R',
       type: FileType.custom,
       allowedExtensions: ['R'],
     );

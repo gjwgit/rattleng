@@ -792,7 +792,7 @@ Future<void> rSource(
   // important though. (gjw 20250513)
 
   if (lines.length > 200) {
-    String code1 = lines.take(200).join('\n') + '\n';
+    String code1 = '${lines.take(200).join('\n')}\n';
     String code2 = lines.skip(200).join('\n');
 
     ref.read(ptyProvider).write(const Utf8Encoder().convert(code1));

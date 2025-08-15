@@ -577,7 +577,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   ),
                 ],
               );
-            }).toList(),
+            }),
           ],
         ),
 

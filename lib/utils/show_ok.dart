@@ -32,7 +32,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 
-showOk({
+void showOk({
   required BuildContext context,
   required String title,
   required String content,

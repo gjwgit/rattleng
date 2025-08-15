@@ -152,7 +152,7 @@ $weights
           [nnet::nnet()](https://www.rdocumentation.org/packages/nnet/topics/nnet).
 
             ''',
-            content: '$displayContent',
+            content: displayContent,
           ),
         );
       }
@@ -234,7 +234,7 @@ $weights
             [nnet::neuralnet()](https://www.rdocumentation.org/packages/neuralnet/versions/1.44.2/topics/neuralnet).
 
             ''',
-            content: '$displayContent',
+            content: displayContent,
           ),
         );
       }

@@ -116,7 +116,7 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
                     child: SingleChildScrollView(
                       controller: _scrollController,
                       scrollDirection: Axis.vertical,
-                      child: Container(
+                      child: SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: scriptWidget,
                       ),

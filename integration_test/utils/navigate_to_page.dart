@@ -74,7 +74,7 @@ Future<void> navigateToPage(
 
   // Check for the expected title.
 
-  if (title.length > 0) {
+  if (title.isNotEmpty) {
     final titleFinder = find.text(title);
     expect(titleFinder, findsOneWidget);
   }

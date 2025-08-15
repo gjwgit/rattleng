@@ -174,7 +174,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
       content = rExtract(
         stdout,
-        'printRandomForest(model_randomForest, ${forestNo}, max.rules = ${forestMaxRules})',
+        'printRandomForest(model_randomForest, $forestNo, max.rules = $forestMaxRules)',
       );
 
       // Changing parameters makes Sample Rules disappear.
@@ -314,7 +314,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
       content = rExtract(
         stdout,
-        'prettytree(model_conditionalForest@ensemble[[${forestNo}]]',
+        'prettytree(model_conditionalForest@ensemble[[$forestNo]]',
       );
 
       // Remove a continuation line.

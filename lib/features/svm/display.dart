@@ -81,7 +81,7 @@ class _SvmDisplayState extends ConsumerState<SvmDisplay> {
           [kernlab::ksvm()](https://www.rdocumentation.org/packages/kernlab/topics/ksvm.html)
 
           ''',
-          content: '$displayContent',
+          content: displayContent,
         ),
       );
     }

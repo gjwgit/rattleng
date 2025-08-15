@@ -325,7 +325,7 @@ class _SummaryDisplayState extends ConsumerState<SummaryDisplay> {
           distribution of the data is.
 
           ''',
-          content: '$content',
+          content: content,
         ),
       );
     }

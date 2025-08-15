@@ -94,11 +94,12 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
             // The BUILD button.
             ActivityButton(
               onPressed: () async {
-                if (context.mounted)
+                if (context.mounted) {
                   await rSource(context, ref, [
                     'model_template',
                     'model_build_association',
                   ]);
+                }
                 await ref.read(associationControllerProvider).animateToPage(
                       // Index of the second page.
                       1,

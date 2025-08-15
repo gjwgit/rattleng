@@ -63,8 +63,8 @@ Future<String> datasetSelectPackage(
                         'update path provider to ${ref.read(pathProvider)}',
                       );
 
-                      ref.read(datasetProvider.notifier).state = '$dataset';
-                      ref.read(packageProvider.notifier).state = '${entry.key}';
+                      ref.read(datasetProvider.notifier).state = dataset;
+                      ref.read(packageProvider.notifier).state = entry.key;
 
                       path = ref.read(pathProvider);
 
