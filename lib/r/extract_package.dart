@@ -1,4 +1,4 @@
-/// <DESCRIPTION>
+/// DESCRIPTION
 ///
 // Time-stamp: "Saturday 2025-04-12 09:56:07 +1000 Graham Williams"
 ///
