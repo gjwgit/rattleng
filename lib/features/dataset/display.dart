@@ -237,7 +237,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     // Function to update the role for multiple selected rows.
 
-    void _updateRoleForSelectedRows(String newRole) {
+    void updateRoleForSelectedRows(String newRole) {
       setState(() {
         final selectedRows = ref.read(selectedRowIndicesProvider);
         String stdout = ref.watch(stdoutProvider);
@@ -308,7 +308,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                               } else {
                                 // Proceed to update the role if rows are selected.
 
-                                _updateRoleForSelectedRows(roleKey);
+                                updateRoleForSelectedRows(roleKey);
                               }
                             },
                             child: Text(roleKey),
@@ -463,7 +463,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     Map<String, Role> currentRoles = ref.watch(rolesProvider);
     final selectedRows = ref.watch(selectedRowIndicesProvider);
 
-    final ScrollController _horizontalScrollController = ScrollController();
+    final ScrollController horizontalScrollController = ScrollController();
 
     var formatter = NumberFormat('#,###');
 
@@ -471,11 +471,11 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       key: const Key('roles listView'),
       height: 800,
       child: Scrollbar(
-        controller: _horizontalScrollController,
+        controller: horizontalScrollController,
         thumbVisibility: true,
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          controller: _horizontalScrollController,
+          controller: horizontalScrollController,
           child: SizedBox(
             width: 1300, // Set the width to avoid truncated label.
             child: DataTable2(

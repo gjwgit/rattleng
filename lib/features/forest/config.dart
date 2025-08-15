@@ -116,7 +116,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
     /// Returns null if valid, or an error message string if invalid.
     /// Sample size values must be positive integers not exceeding class frequencies.
 
-    String? _validateSampleSize(String? value) {
+    String? validateSampleSize(String? value) {
       // Allow empty/null values.
 
       if (value == null || value.isEmpty) {
@@ -158,11 +158,11 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
       return null;
     }
 
-    /// Uses [_validateSampleSize] to check if [value] is valid.
-    /// If valid (i.e., _validateSampleSize returns null) and [value] is not null,
+    /// Uses [validateSampleSize] to check if [value] is valid.
+    /// If valid (i.e., validateSampleSize returns null) and [value] is not null,
     /// returns 'c($value)'. Otherwise, returns the validation error.
 
-    String _formatSampleSize(String? value) {
+    String formatSampleSize(String? value) {
       // If value matches the pattern c(...), return it directly.
       // - This check ensures we don't re-wrap an already wrapped value.
 
@@ -172,7 +172,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
 
       // Validate the value.
 
-      final validationError = _validateSampleSize(value);
+      final validationError = validateSampleSize(value);
 
       // If there's a validation error, return that error.
 
@@ -209,7 +209,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
                   forestPageControllerProvider, // Optional navigation
 
               onPressed: () async {
-                String? sampleSizeError = _validateSampleSize(
+                String? sampleSizeError = validateSampleSize(
                   _rfSampleSizeController.text,
                 );
 
@@ -260,7 +260,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
                 if (selectedAlgorithm == AlgorithmType.traditional) {
                   ref.read(randomForestEvaluateProvider.notifier).state = true;
                   ref.read(forestSampleSizeProvider.notifier).state =
-                      _formatSampleSize(_rfSampleSizeController.text);
+                      formatSampleSize(_rfSampleSizeController.text);
                 } else if (selectedAlgorithm == AlgorithmType.conditional) {
                   ref.read(conditionalForestEvaluateProvider.notifier).state =
                       true;
@@ -421,7 +421,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
 
                 ''',
               enabled: selectedAlgorithm != AlgorithmType.conditional,
-              validator: (value) => _validateSampleSize(value),
+              validator: (value) => validateSampleSize(value),
               inputFormatter: FilteringTextInputFormatter.allow(
                 RegExp('[0-9,]'),
               ),

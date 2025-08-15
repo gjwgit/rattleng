@@ -138,7 +138,7 @@ class MultiImagePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     imageCache.clear();
     imageCache.clearLiveImages();
-    final ScrollController _scrollController = ScrollController();
+    final ScrollController scrollController = ScrollController();
 
     return Scaffold(
       appBar: AppBar(
@@ -172,14 +172,14 @@ class MultiImagePage extends ConsumerWidget {
         children: [
           Expanded(
             child: Scrollbar(
-              controller: _scrollController,
+              controller: scrollController,
               thumbVisibility: true,
               thickness: 8,
               radius: const Radius.circular(
                 4,
               ), // Optional: customize scrollbar appearance
               child: ListView.builder(
-                controller: _scrollController,
+                controller: scrollController,
                 scrollDirection: Axis.horizontal,
                 itemCount: paths.length,
                 itemBuilder: (context, index) {
