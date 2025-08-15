@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-24 12:23:52 +1100 Graham Williams>
+# Time-stamp: <Friday 2025-08-15 11:42:28 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -160,6 +160,8 @@ tds <- tds[,which(colnames(tds) != "NA")]
 # Reorder the columns to have the colours correspdong the other plots.
 
 tds %<>% relocate(c(All, Benford), .after=last_col())
+
+tds
 
 dsm <- reshape::melt(tds, id.vars = "digit")
 len <- nchar(as.character(tds[1, 1]))
