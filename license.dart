@@ -1,6 +1,6 @@
 /// Rattle - Data Science Next Generation
 ///
-// Time-stamp: <Friday 2025-07-25 05:25:07 +1000 Graham Williams>
+// Time-stamp: <Friday 2025-08-15 13:45:32 +1000 Graham Williams>
 ///
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -19,8 +19,8 @@
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
-// this program.  If not, see <https://www.gnu.org/licenses/>.
+// this program.  If not, see https://www.gnu.org/licenses/.
 ///
-/// Authors: <AUTHORS>
+/// Authors: AUTHORS
 
 library;
