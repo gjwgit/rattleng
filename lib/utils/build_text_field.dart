@@ -23,7 +23,7 @@
 ///
 /// Authors: Zheyuan Xu, Graham Williams
 
-library
+library;
 
 import 'dart:async';
 
