@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Wednesday 2025-04-16 12:11:41 +1000 Graham Williams>
+// Time-stamp: <Friday 2025-08-15 13:49:37 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -137,7 +137,7 @@ class TextPage extends StatelessWidget {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   controller: horizontalScrollController,
-                  child: Container(
+                  child: SizedBox(
                     // Ensure width matches the full container.
                     width: MediaQuery.of(context).size.width,
                     child: SelectableText(
@@ -398,6 +398,8 @@ class TextPage extends StatelessWidget {
 
       // Show a SnackBar with the file path and open the PDF.
 
+      if (!context.mounted) return;
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('PDF saved as $filePath'),
@@ -411,6 +413,8 @@ class TextPage extends StatelessWidget {
       );
     } else {
       // Handle case when no file is selected.
+
+      if (!context.mounted) return;
 
       ScaffoldMessenger.of(
         context,
