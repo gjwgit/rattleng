@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2025-04-15 14:56:30 +1000 Graham Williams>
+// Time-stamp: <Friday 2025-08-15 13:26:31 +1000 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -89,6 +89,26 @@ class _VisualDisplayState extends ConsumerState<VisualDisplay> {
           Asterisk is the **mean**. Horizontal line is the **median**.
 
               ''',
+            path: image,
+          ),
+        );
+      }
+
+      ////////////////////////////////////////////////////////////////////////
+
+      image = '$tempDir/explore_visual_histogram.svg';
+
+      if (imageExists(image)) {
+        pages.add(
+          ImagePage(
+            title: '''
+
+          # Histogram
+
+          Visit
+          [ggplot2::geom_histogram()](https://www.rdocumentation.org/packages/ggplot2/topics/geom_freqpoly).
+
+          ''',
             path: image,
           ),
         );

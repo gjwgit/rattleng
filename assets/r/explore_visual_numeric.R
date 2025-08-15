@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-08-15 11:42:28 +1000 Graham Williams>
+# Time-stamp: <Friday 2025-08-15 13:26:55 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -51,7 +51,7 @@ if (<IGNORE_MISSING_GROUP_BY>) {
 
 # Ensure the group-by variable is a factor in out temporary dataset.
 
-tds <- dplyr::mutate(tds, <GROUP_BY_VAR>=as.factor(<GROUP_BY_VAR>))
+tds %<>% dplyr::mutate(<GROUP_BY_VAR>=as.factor(<GROUP_BY_VAR>))
 
 ########################################################################
 # BOX PLOT
@@ -91,6 +91,23 @@ tds %>%
   ggplot2::xlab(paste("<GROUP_BY_VAR>\n\n", paste("<TIMESTAMP>", username), sep="")) +
   ggplot2::ggtitle("Distribution of <SELECTED_VAR> by <GROUP_BY_VAR>") +
   <SETTINGS_GRAPHIC_THEME>()
+dev.off()
+
+########################################################################
+# <HISTOGRAM>
+########################################################################
+
+svg("<TEMPDIR>/explore_visual_histogram.svg", width=10)
+tds %>%
+  dplyr::select(min_temp, rain_tomorrow) %>%
+  ggplot2::ggplot(ggplot2::aes(x=min_temp)) +
+  ggplot2::geom_histogram(ggplot2::aes(fill=rain_tomorrow), alpha=0.55, position="identity", bins=30) +
+  ggplot2::xlab(paste("min_temp\n\n", paste("Rattle 2025-08-15 11:58:32", username), sep="")) +
+  ggplot2::xlab(paste("<GROUP_BY_VAR>\n\n", paste("<TIMESTAMP>", username), sep="")) +
+  ggplot2::ggtitle("Histogram of <SELECTED_VAR> by <GROUP_BY_VAR>") +
+  ggplot2::labs(fill="<GROUP_BY_VAR>", y="Count") +
+  <SETTINGS_GRAPHIC_THEME>()
+  ggthemes::theme_solarized()
 dev.off()
 
 ########################################################################
