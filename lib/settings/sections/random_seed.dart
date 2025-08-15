@@ -42,7 +42,7 @@ class RandomSeed extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final randomPartition = ref.watch(randomPartitionSettingProvider);
 
-    Future<void> _saveRandomSeed(int value) async {
+    Future<void> saveRandomSeed(int value) async {
       final prefs = await SharedPreferences.getInstance();
 
       // Save "Random Seed" state to preferences.
@@ -50,7 +50,7 @@ class RandomSeed extends ConsumerWidget {
       await prefs.setInt('randomSeed', value);
     }
 
-    Future<void> _saveRandomPartition(bool value) async {
+    Future<void> saveRandomPartition(bool value) async {
       final prefs = await SharedPreferences.getInstance();
 
       // Save "Random Partition" state to preferences.
@@ -102,7 +102,7 @@ class RandomSeed extends ConsumerWidget {
                 onChanged: (value) {
                   ref.read(randomPartitionSettingProvider.notifier).state =
                       value;
-                  _saveRandomPartition(value);
+                  saveRandomPartition(value);
                 },
               ),
             ),
@@ -119,11 +119,11 @@ class RandomSeed extends ConsumerWidget {
                 onPressed: () {
                   ref.read(randomSeedSettingProvider.notifier).state =
                       defaultRandomSeed;
-                  _saveRandomSeed(defaultRandomSeed);
+                  saveRandomSeed(defaultRandomSeed);
 
                   ref.read(randomPartitionSettingProvider.notifier).state =
                       false;
-                  _saveRandomPartition(false);
+                  saveRandomPartition(false);
                 },
                 child: const Text('Reset'),
               ),

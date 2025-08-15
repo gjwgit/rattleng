@@ -39,7 +39,7 @@ class Partition extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Future<void> _savePartitionTrain(int value) async {
+    Future<void> savePartitionTrain(int value) async {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt('train', value);
       ref.read(partitionTrainProvider.notifier).state = value;
@@ -52,7 +52,7 @@ class Partition extends ConsumerWidget {
       ];
     }
 
-    Future<void> _savePartitionTune(int value) async {
+    Future<void> savePartitionTune(int value) async {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt('tune', value);
       ref.read(partitionTuneProvider.notifier).state = value;
@@ -65,7 +65,7 @@ class Partition extends ConsumerWidget {
       ];
     }
 
-    Future<void> _savePartitionTest(int value) async {
+    Future<void> savePartitionTest(int value) async {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt('test', value);
       ref.read(partitionTestProvider.notifier).state = value;
@@ -78,7 +78,7 @@ class Partition extends ConsumerWidget {
       ];
     }
 
-    Future<void> _saveValidation(bool value) async {
+    Future<void> saveValidation(bool value) async {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('useValidation', value);
       ref.read(useValidationSettingProvider.notifier).state = value;
@@ -106,10 +106,10 @@ class Partition extends ConsumerWidget {
             ),
             configRowGap,
             PartitionControls(
-              onTrainChanged: _savePartitionTrain,
-              onTuneChanged: _savePartitionTune,
-              onTestChanged: _savePartitionTest,
-              onValidationChanged: _saveValidation,
+              onTrainChanged: savePartitionTrain,
+              onTuneChanged: savePartitionTune,
+              onTestChanged: savePartitionTest,
+              onValidationChanged: saveValidation,
               showOutOfRangeWarning: () => showOutOfRangeWarning(context),
             ),
             configRowGap,
@@ -126,11 +126,11 @@ class Partition extends ConsumerWidget {
                   // the new values to shared preferences and
                   // providers.
 
-                  await _savePartitionTrain(70);
-                  await _savePartitionTune(15);
-                  await _savePartitionTest(15);
+                  await savePartitionTrain(70);
+                  await savePartitionTune(15);
+                  await savePartitionTest(15);
 
-                  _saveValidation(false);
+                  saveValidation(false);
                 },
                 child: const Text('Reset'),
               ),
