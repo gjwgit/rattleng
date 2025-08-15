@@ -23,6 +23,8 @@
 ///
 /// Authors: Zheyuan Xu, Graham Williams
 
+library
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';

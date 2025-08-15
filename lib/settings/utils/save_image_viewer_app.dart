@@ -22,6 +22,8 @@
 ///
 /// Authors: Kevin Wang
 
+library
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> saveImageViewerApp(String value) async {

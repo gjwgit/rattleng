@@ -25,6 +25,8 @@
 /// Authors: Kevin Wang
 ///
 
+library
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Define a provider to store selected row indices
