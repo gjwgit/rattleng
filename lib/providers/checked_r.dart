@@ -1,6 +1,6 @@
 /// A bool provider to check if R loaded correctly
 ///
-/// Time-stamp: <Wednesday 2024-11-20 16:50:57 +1100 Graham Williams>
+/// Time-stamp: "Wednesday 2024-11-20 16:50:57 +1100 Graham Williams"
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///

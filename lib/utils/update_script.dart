@@ -1,6 +1,6 @@
 /// Update the script provider to capture R code to replicate the project.
 ///
-/// Time-stamp: <Monday 2024-10-07 19:02:29 +1100 Graham Williams>
+/// Time-stamp: "Monday 2024-10-07 19:02:29 +1100 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
