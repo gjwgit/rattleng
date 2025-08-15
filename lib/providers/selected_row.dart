@@ -25,7 +25,7 @@
 /// Authors: Kevin Wang
 ///
 
-library
+library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

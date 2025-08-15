@@ -24,7 +24,7 @@
 ///
 /// Authors: Kevin Wang
 
-library
+library;
 
 import 'package:flutter/material.dart';
 
