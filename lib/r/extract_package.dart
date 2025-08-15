@@ -1,6 +1,6 @@
 /// <DESCRIPTION>
 ///
-// Time-stamp: <Saturday 2025-04-12 09:56:07 +1000 Graham Williams>
+// Time-stamp: "Saturday 2025-04-12 09:56:07 +1000 Graham Williams"
 ///
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///

@@ -1,6 +1,6 @@
 /// Check for a numeric type (dbl or int).
 //
-// Time-stamp: <Sunday 2024-09-08 12:19:37 +1000 Graham Williams>
+// Time-stamp: "Sunday 2024-09-08 12:19:37 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

@@ -1,6 +1,6 @@
 /// Return a list of the names of categoric variables from the dataset.
 //
-// Time-stamp: <Monday 2025-03-17 12:10:58 +1100 Graham Williams>
+// Time-stamp: "Monday 2025-03-17 12:10:58 +1100 Graham Williams"
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
