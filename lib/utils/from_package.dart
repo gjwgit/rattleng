@@ -23,6 +23,8 @@
 ///
 /// Authors: Yixiang Yin
 
+library
+
 bool isFromPackage(String input) {
   // Define the regular expression pattern: a string followed by '::' followed by another string
   RegExp regExp = RegExp(r'^[^:]+::[^:]+$');

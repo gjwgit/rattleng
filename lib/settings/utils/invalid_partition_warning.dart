@@ -22,6 +22,8 @@
 ///
 /// Authors: Kevin Wang
 
+library
+
 import 'package:flutter/material.dart';
 
 void showInvalidPartitionWarning(BuildContext context) {

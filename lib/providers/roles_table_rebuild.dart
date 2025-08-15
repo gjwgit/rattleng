@@ -24,6 +24,8 @@
 ///
 /// Authors: Kevin Wang
 
+library
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final rebuildTriggerProvider = StateProvider<int>((ref) => 0);

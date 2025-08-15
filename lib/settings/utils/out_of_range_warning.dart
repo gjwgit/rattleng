@@ -23,6 +23,8 @@
 ///
 /// Authors: Kevin Wang
 
+library
+
 import 'package:flutter/material.dart';
 
 void showOutOfRangeWarning(BuildContext context) {
