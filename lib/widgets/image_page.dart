@@ -1,6 +1,6 @@
 /// A widget to build the a common single image based pages.
 //
-// Time-stamp: "Thursday 2025-08-07 10:12:39 +1000 Graham Williams"
+// Time-stamp: "Saturday 2025-08-16 10:03:54 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -41,6 +41,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gap/gap.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -354,7 +355,7 @@ class ImagePage extends ConsumerWidget {
 
                                   await File(path).copy(pathToSave);
                                 }
-                              } else {
+                              } else if (context.mounted) {
                                 // If the user selected an unsupported file
                                 // extension show an error dialog.
 
@@ -371,15 +372,17 @@ class ImagePage extends ConsumerWidget {
 
                                       ''',
                                 );
+                              } else {
+                                return;
                               }
                             }
                           },
                         ),
                       ),
-                      const SizedBox(width: 5),
+                      const Gap(5),
                     ],
                   ),
-                  const SizedBox(height: 5),
+                  const Gap(5),
                   LayoutBuilder(
                     builder: (context, constraints) {
                       // The max available width from LayoutBuilder.

@@ -1,6 +1,6 @@
 /// Chip choice widget used across the app.
 //
-// Time-stamp: "Sunday 2025-03-30 08:09:22 +1100 Graham Williams"
+// Time-stamp: "Saturday 2025-08-16 07:04:33 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -51,7 +51,7 @@ class ChoiceChipTip<T> extends StatelessWidget {
     this.isOptionDisabled,
   }) : getLabel = getLabel ?? _defaultGetLabel;
 
-  static String _defaultGetLabel(option) => option.toString();
+  static String _defaultGetLabel<T>(T option) => option.toString();
 
   @override
   Widget build(BuildContext context) {
