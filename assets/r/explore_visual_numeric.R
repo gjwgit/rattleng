@@ -1,11 +1,11 @@
 # Rattle Scripts: For dataset `ds` generate useful plots of numeric variable.
 #
-# Copyright (C) 2024, Togaware Pty Ltd.
+# Copyright (C) 2024-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-08-15 13:38:34 +1000 Graham Williams>
+# Time-stamp: <Sunday 2025-08-17 06:13:41 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -176,12 +176,16 @@ tds <- tds[,which(colnames(tds) != "NA")]
 
 tds %<>% relocate(c(All, Benford), .after=last_col())
 
-tds
+# Present the digital distribution textually.
+
+tds %>%
+  dplyr::mutate(dplyr::across(-digit, ~ round(.x *100, 2))) %>%
+  print(row.names=FALSE)
 
 dsm <- reshape::melt(tds, id.vars = "digit")
 len <- nchar(as.character(tds[1, 1]))
 
-# Plot the digital distribution
+# Plot the digital distribution.
 
 p <- ggplot2::ggplot(dsm,
                      ggplot2::aes_string(x      = "digit",
