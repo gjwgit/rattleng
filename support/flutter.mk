@@ -126,8 +126,8 @@ linux_config:
 	flutter config --enable-linux-desktop
 
 .PHONY: prep
-prep: analyze fix import_order_fix format ignore license todo depend bakfind
-	@echo "ADVISORY: make tests docs"
+prep: analyze fix import_order_fix format ignore license todo depend bakfind test
+	@echo "ADVISORY:\n\nmake tests docs"
 	@echo $(SEPARATOR)
 
 .PHONY: docs
@@ -197,7 +197,7 @@ depend:
 .PHONY: ignore
 ignore:
 	@echo "Files that override lint checks with IGNORE:\n"
-	@-if grep -r -n ignore: lib; then exit 1; else exit 0; fi
+	@-if grep -r -n 'ignore: ' lib; then exit 1; else exit 0; fi
 	@echo $(SEPARATOR)
 
 .PHONY: todo
@@ -246,7 +246,7 @@ desktops:
 .PHONY: test
 test:
 	@echo "Unit TEST:"
-	-flutter test test
+	@-if [ -d test ]; then flutter test test; else echo "\nNo test folder found."; fi
 	@echo $(SEPARATOR)
 
 # For a specific interactive test we think of it as providing a
