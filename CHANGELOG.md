@@ -21,6 +21,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ BENFORD: Include table output in CONSOLE [6.5.11 20250817 gjw]
 + LINT: Extensive lint cleanup [6.5.10 20250816 gjw]
 + VISUAL: Add HISTOGRAM [6.5.9 20250816 gjw]
 + RESCALE: Fix type re recenter - using sd not rms [6.5.8 20250811 gjw]
