@@ -61,7 +61,7 @@ dependencies:
   universal_io: ^2.2.2
   url_launcher: ^6.3.0
   version_widget: ^1.0.2
-  window_manager: ^0.4.3
+  window_manager: ^0.5.1
   xterm: ^4.0.0
   yaml: ^3.1.3
 
