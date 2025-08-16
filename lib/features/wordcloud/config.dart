@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: "Saturday 2025-08-16 10:31:30 +1000 Graham Williams"
+// Time-stamp: "Saturday 2025-08-16 20:59:19 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -489,7 +489,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 tapDelay: 1000,
               ),
 
-              buildTextField(
+              BuildTextField(
                 label: 'Cor Term',
                 controller: textCorWordController,
                 key: const Key('textCorWordField'),

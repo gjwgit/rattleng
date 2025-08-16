@@ -1,6 +1,6 @@
 /// Build a text field widget for the input of numeric values.
 //
-// Time-stamp: "Monday 2025-06-23 08:03:17 +1000 Graham Williams"
+// Time-stamp: "Saturday 2025-08-16 20:57:27 +1000 Graham Williams"
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -41,7 +41,7 @@ import 'package:rattle/providers/forest.dart';
 /// support our standard [tooltip] widget. The field has a specified [textStyle]
 /// with configurable [maxWidth], an [inputFormatter], and [validator] rules.
 
-class buildTextField extends ConsumerStatefulWidget {
+class BuildTextField extends ConsumerStatefulWidget {
   final String label;
   final TextEditingController controller;
   final TextStyle textStyle;
@@ -54,7 +54,7 @@ class buildTextField extends ConsumerStatefulWidget {
   final VoidCallback? onUpDownPressed;
   final int? tapDelay;
 
-  const buildTextField({
+  const BuildTextField({
     super.key,
     required this.label,
     required this.controller,
@@ -70,10 +70,10 @@ class buildTextField extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<buildTextField> createState() => _buildTextFieldState();
+  ConsumerState<BuildTextField> createState() => _BuildTextFieldState();
 }
 
-class _buildTextFieldState extends ConsumerState<buildTextField> {
+class _BuildTextFieldState extends ConsumerState<BuildTextField> {
   Timer? _debounceTimer;
 
   @override
