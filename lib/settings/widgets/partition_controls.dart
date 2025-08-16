@@ -1,6 +1,6 @@
 /// Partition controls.
 //
-// Time-stamp: "Friday 2025-03-14 13:58:20 +1100 Graham Williams"
+// Time-stamp: "Saturday 2025-08-16 10:21:11 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -130,9 +130,8 @@ class PartitionControls extends ConsumerWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Container(
-              child: MarkdownTooltip(
-                message: '''
+            MarkdownTooltip(
+              message: '''
 
                 **Validation or Tuning:** Some data scientists think of the
                 second dataset of the partitions as a dataset to use for
@@ -142,18 +141,17 @@ class PartitionControls extends ConsumerWidget {
                 any material impact on any analysis.
 
                 ''',
-                child: Row(
-                  children: [
-                    const Text('Use Tuning', style: TextStyle(fontSize: 16)),
-                    Switch(
-                      value: useValidation,
-                      onChanged: (value) {
-                        onValidationChanged(value);
-                      },
-                    ),
-                    const Text('or Validation', style: TextStyle(fontSize: 16)),
-                  ],
-                ),
+              child: Row(
+                children: [
+                  const Text('Use Tuning', style: TextStyle(fontSize: 16)),
+                  Switch(
+                    value: useValidation,
+                    onChanged: (value) {
+                      onValidationChanged(value);
+                    },
+                  ),
+                  const Text('or Validation', style: TextStyle(fontSize: 16)),
+                ],
               ),
             ),
           ],

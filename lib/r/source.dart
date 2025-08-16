@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: "Sunday 2025-08-10 17:30:04 +1000 Graham Williams"
+// Time-stamp: "Saturday 2025-08-16 10:40:29 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -329,6 +329,8 @@ Future<void> rSource(
     debugText('R SOURCE', '$script.R');
 
     String asset = 'assets/r/$script.R';
+
+    if (!context.mounted) return;
 
     newCode = await DefaultAssetBundle.of(context).loadString(asset);
     newCode = rStripHeader(newCode);

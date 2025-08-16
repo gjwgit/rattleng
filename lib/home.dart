@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: "Sunday 2025-08-10 17:31:21 +1000 Graham Williams"
+/// Time-stamp: "Saturday 2025-08-16 10:33:53 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -527,6 +527,8 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
 
                           // Show a confirmation or snack bar.
 
+                          if (!context.mounted) return;
+
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Random seed changed to: $newSeed'),
@@ -617,6 +619,8 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
                 int randomSeed = ref.read(randomSeedSettingProvider);
                 final prefs = await SharedPreferences.getInstance();
                 prefs.setInt('randomSeed', randomSeed);
+
+                if (!context.mounted) return;
 
                 showSettingsDialog(context);
               },
