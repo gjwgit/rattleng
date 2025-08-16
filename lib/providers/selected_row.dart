@@ -1,6 +1,6 @@
 ///  Provider for selected row indices in a table
 ///
-/// Time-stamp: <Sunday 2024-10-13 10:36:28 +1100 Graham Williams>
+/// Time-stamp: "Sunday 2024-10-13 10:36:28 +1100 Graham Williams"
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -24,6 +24,8 @@
 ///
 /// Authors: Kevin Wang
 ///
+
+library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

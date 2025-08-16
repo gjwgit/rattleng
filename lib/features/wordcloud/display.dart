@@ -1,6 +1,6 @@
 /// Display for word cloud.
 //
-// Time-stamp: <Monday 2025-05-12 09:59:26 +1000 Graham Williams>
+// Time-stamp: "Monday 2025-05-12 09:59:26 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

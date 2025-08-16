@@ -1,6 +1,6 @@
 /// Helper widget to build the common text based pages.
 //
-// Time-stamp: <Friday 2025-08-15 13:49:37 +1000 Graham Williams>
+// Time-stamp: "Saturday 2025-08-16 10:10:13 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -33,6 +33,7 @@ import 'package:flutter/services.dart';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:gap/gap.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -99,7 +100,7 @@ class TextPage extends StatelessWidget {
                   ),
 
                   // Add a small space between the buttons.
-                  SizedBox(width: 8),
+                  Gap(8),
 
                   // Button to save as PDF.
                   MarkdownTooltip(

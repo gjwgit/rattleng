@@ -1,6 +1,6 @@
 /// CLUSTER Tab entry into config and panel.
 //
-// Time-stamp: <Friday 2024-06-14 09:53:31 +1000 Graham Williams>
+// Time-stamp: "Friday 2024-06-14 09:53:31 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

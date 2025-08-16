@@ -1,6 +1,6 @@
 /// Utilities to check for and count missing values in the target variable.
 //
-// Time-stamp: <Thursday 2024-07-18 16:48:49 +1000 Graham Williams>
+// Time-stamp: "Thursday 2024-07-18 16:48:49 +1000 Graham Williams"
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///

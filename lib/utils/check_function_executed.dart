@@ -1,6 +1,6 @@
 /// Check if the function has been executed.
 //
-// Time-stamp: <Friday 2024-10-25 08:27:46 +1100 Graham Williams>
+// Time-stamp: "Friday 2024-10-25 08:27:46 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

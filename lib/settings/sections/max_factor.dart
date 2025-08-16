@@ -1,6 +1,6 @@
 /// Max factor section.
 //
-// Time-stamp: <Tuesday 2025-03-25 16:52:43 +1100 Graham Williams>
+// Time-stamp: "Tuesday 2025-03-25 16:52:43 +1100 Graham Williams"
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///

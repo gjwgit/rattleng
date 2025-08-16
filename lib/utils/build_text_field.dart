@@ -1,6 +1,6 @@
 /// Build a text field widget for the input of numeric values.
 //
-// Time-stamp: <Monday 2025-06-23 08:03:17 +1000 Graham Williams>
+// Time-stamp: "Monday 2025-06-23 08:03:17 +1000 Graham Williams"
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -22,6 +22,8 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Zheyuan Xu, Graham Williams
+
+library;
 
 import 'dart:async';
 

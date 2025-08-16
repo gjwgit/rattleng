@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: <Sunday 2025-08-10 17:30:49 +1000 Graham Williams>
+// Time-stamp: "Sunday 2025-08-10 17:30:49 +1000 Graham Williams"
 //
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -237,7 +237,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
     // Function to update the role for multiple selected rows.
 
-    void _updateRoleForSelectedRows(String newRole) {
+    void updateRoleForSelectedRows(String newRole) {
       setState(() {
         final selectedRows = ref.read(selectedRowIndicesProvider);
         String stdout = ref.watch(stdoutProvider);
@@ -246,11 +246,11 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
         // Update roles for each selected row
 
-        selectedRows.forEach((index) {
+        for (var index in selectedRows) {
           String columnName = vars[index].name;
           ref.read(rolesProvider.notifier).state[columnName] =
               newRole == 'Ignore' ? Role.ignore : Role.input;
-        });
+        }
 
         // Clear selection after updating
 
@@ -308,7 +308,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                               } else {
                                 // Proceed to update the role if rows are selected.
 
-                                _updateRoleForSelectedRows(roleKey);
+                                updateRoleForSelectedRows(roleKey);
                               }
                             },
                             child: Text(roleKey),
@@ -463,7 +463,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     Map<String, Role> currentRoles = ref.watch(rolesProvider);
     final selectedRows = ref.watch(selectedRowIndicesProvider);
 
-    final ScrollController _horizontalScrollController = ScrollController();
+    final ScrollController horizontalScrollController = ScrollController();
 
     var formatter = NumberFormat('#,###');
 
@@ -471,11 +471,11 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       key: const Key('roles listView'),
       height: 800,
       child: Scrollbar(
-        controller: _horizontalScrollController,
+        controller: horizontalScrollController,
         thumbVisibility: true,
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          controller: _horizontalScrollController,
+          controller: horizontalScrollController,
           child: SizedBox(
             width: 1300, // Set the width to avoid truncated label.
             child: DataTable2(
@@ -613,7 +613,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
   Widget _buildRoleChips(String columnName, Map<String, Role> currentRoles) {
     return Wrap(
-      key: Key('role-${columnName}'),
+      key: Key('role-$columnName'),
       spacing: 5.0,
       runSpacing: choiceChipRowSpace,
       children: choices.map((choice) {

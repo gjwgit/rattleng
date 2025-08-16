@@ -1,6 +1,6 @@
 /// A provider for page controller.
 ///
-/// Time-stamp: <Wednesday 2024-10-09 09:43:42 +1100 Graham Williams>
+/// Time-stamp: "Wednesday 2024-10-09 09:43:42 +1100 Graham Williams"
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///

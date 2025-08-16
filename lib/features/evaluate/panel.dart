@@ -1,6 +1,6 @@
 /// EVALUATE Tab
 //
-// Time-stamp: <Friday 2024-11-15 09:59:33 +1100 Graham Williams>
+// Time-stamp: "Friday 2024-11-15 09:59:33 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

@@ -1,6 +1,6 @@
 /// Initiate the R sub-process and setup the capture of its output.
 //
-// Time-stamp: <Wednesday 2025-05-07 08:49:48 +1000 Graham Williams>
+// Time-stamp: "Wednesday 2025-05-07 08:49:48 +1000 Graham Williams"
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///

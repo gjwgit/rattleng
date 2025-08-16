@@ -1,6 +1,6 @@
 /// Widget for multiple images across the page.
 //
-// Time-stamp: <Friday 2025-06-27 14:29:09 +1000 Graham Williams>
+// Time-stamp: "Saturday 2025-08-16 10:03:50 +1000 Graham Williams"
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -36,6 +36,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gap/gap.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -138,7 +139,7 @@ class MultiImagePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     imageCache.clear();
     imageCache.clearLiveImages();
-    final ScrollController _scrollController = ScrollController();
+    final ScrollController scrollController = ScrollController();
 
     return Scaffold(
       appBar: AppBar(
@@ -172,14 +173,14 @@ class MultiImagePage extends ConsumerWidget {
         children: [
           Expanded(
             child: Scrollbar(
-              controller: _scrollController,
+              controller: scrollController,
               thumbVisibility: true,
               thickness: 8,
               radius: const Radius.circular(
                 4,
               ), // Optional: customize scrollbar appearance
               child: ListView.builder(
-                controller: _scrollController,
+                controller: scrollController,
                 scrollDirection: Axis.horizontal,
                 itemCount: paths.length,
                 itemBuilder: (context, index) {
@@ -227,7 +228,7 @@ class MultiImagePage extends ConsumerWidget {
                                         },
                                       ),
                                     ),
-                                    const SizedBox(width: 8),
+                                    const Gap(8),
                                     MarkdownTooltip(
                                       message: '''
                                                 **Enlarge.** Tap here to view the plot enlarged to the
@@ -243,7 +244,7 @@ class MultiImagePage extends ConsumerWidget {
                                         },
                                       ),
                                     ),
-                                    const SizedBox(width: 8),
+                                    const Gap(8),
                                     MarkdownTooltip(
                                       message: '''
                                                 **Open.** Tap here to open the plot in a separate window
@@ -300,7 +301,7 @@ class MultiImagePage extends ConsumerWidget {
                                         },
                                       ),
                                     ),
-                                    const SizedBox(width: 8),
+                                    const Gap(8),
                                     MarkdownTooltip(
                                       message: '''
                                                 **Save.** Tap here to save the plot in your preferred
@@ -348,7 +349,7 @@ class MultiImagePage extends ConsumerWidget {
                                                 paths[index],
                                                 pathToSave,
                                               );
-                                            } else {
+                                            } else if (context.mounted) {
                                               showOk(
                                                 title: 'Error',
                                                 context: context,
@@ -359,15 +360,17 @@ class MultiImagePage extends ConsumerWidget {
                                               supported extensions: .svg, .pdf, or .png.
                                               ''',
                                               );
+                                            } else {
+                                              return;
                                             }
                                           }
                                         },
                                       ),
                                     ),
-                                    const SizedBox(width: 5),
+                                    const Gap(5),
                                   ],
                                 ),
-                                const SizedBox(height: 8),
+                                const Gap(8),
                                 Container(
                                   constraints: const BoxConstraints(
                                     maxHeight: 450,

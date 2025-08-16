@@ -1,6 +1,6 @@
 /// Utility to strip TODO lines from an R script file.
 ///
-/// Time-stamp: <Tuesday 2024-12-10 17:03:56 +1100 Graham Williams>
+/// Time-stamp: "Tuesday 2024-12-10 17:03:56 +1100 Graham Williams"
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///

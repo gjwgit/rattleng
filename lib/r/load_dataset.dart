@@ -1,6 +1,6 @@
 /// Load a dataset through the appropriate R script.
 ///
-/// Time-stamp: <Friday 2025-07-25 09:06:15 +1000 Graham Williams>
+/// Time-stamp: "Friday 2025-07-25 09:06:15 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///

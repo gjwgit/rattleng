@@ -1,6 +1,6 @@
 /// BOOST tab made up of config and panel widgets.
 //
-// Time-stamp: <Friday 2024-11-15 10:06:15 +1100 Graham Williams>
+// Time-stamp: "Friday 2024-11-15 10:06:15 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

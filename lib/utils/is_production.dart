@@ -1,6 +1,6 @@
 /// Is this a production build?
 //
-// Time-stamp: <Tuesday 2024-09-24 09:46:43 +1000 Graham Williams>
+// Time-stamp: "Tuesday 2024-09-24 09:46:43 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

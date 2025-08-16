@@ -1,6 +1,6 @@
 /// Check for a numeric type (dbl or int).
 //
-// Time-stamp: <Sunday 2024-09-08 12:19:37 +1000 Graham Williams>
+// Time-stamp: "Sunday 2024-09-08 12:19:37 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: <AUTHORS>
+/// Authors:
 
 library;
 

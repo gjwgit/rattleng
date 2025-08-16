@@ -1,6 +1,6 @@
 /// A dialog to prompte user on closing app with SAVE and CANCEL options
 ///
-/// Time-stamp: <Sunday 2025-03-30 07:51:28 +1100 Graham Williams>
+/// Time-stamp: "Sunday 2025-03-30 07:51:28 +1100 Graham Williams"
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -139,7 +139,7 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
 
     final outputPath = await FilePicker.platform.saveFile(
       dialogTitle: 'Provide a .R filename to save the R script to',
-      fileName: 'script_$yyyymmdd${dsname.isNotEmpty ? "_" : ""}${dsname}.R',
+      fileName: 'script_$yyyymmdd${dsname.isNotEmpty ? "_" : ""}$dsname.R',
       type: FileType.custom,
       allowedExtensions: ['R'],
     );

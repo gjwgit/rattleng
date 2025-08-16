@@ -1,6 +1,6 @@
 /// Show image dialog with Uint8List bytes.
 //
-// Time-stamp: <Thursday 2024-07-25 11:21:08 +1000 Graham Williams>
+// Time-stamp: "Thursday 2024-07-25 11:21:08 +1000 Graham Williams"
 //
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
