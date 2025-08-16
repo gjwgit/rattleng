@@ -17,10 +17,14 @@ environment:
 # (gjw 20250429)
 
 dependencies:
+  catppuccin_flutter: ^1.0.0
+  data_table_2: ^2.6.0
+  file_picker: ^10.1.2
+  file_selector: ^1.0.3
   flutter:
     sdk: flutter
-
-  # flutter_pty: ^0.4.0
+  flutter_markdown: ^0.7.7
+  # flutter_pty: ^0.4.2
   #
   # The following git source fixes the problem with R not being able
   # to access the user's installed packages. It is a PR on the
@@ -34,19 +38,12 @@ dependencies:
   # error: call to undeclared function 'waitpid'; ISO C99 and later do
   # not support implicit function declarations
   # [-Wimplicit-function-declaration]
-
   flutter_pty:
     git:
       url: https://github.com/Lutra-Fs/flutter_pty.git
       # Migrate to locally managed updates
       # url: https://github.com/anusii/flutter_pty.git
       ref: main
-
-  catppuccin_flutter: ^1.0.0
-  data_table_2: ^2.6.0
-  file_picker: ^10.1.2
-  file_selector: ^1.0.3
-  flutter_markdown: ^0.7.7
   flutter_riverpod: ^2.6.1
   flutter_svg: ^2.1.0
   gap: ^3.0.1
