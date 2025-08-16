@@ -43,10 +43,10 @@ class DatasetTextField extends ConsumerStatefulWidget {
   const DatasetTextField({super.key});
 
   @override
-  _DatasetTextFieldState createState() => _DatasetTextFieldState();
+  DatasetTextFieldState createState() => DatasetTextFieldState();
 }
 
-class _DatasetTextFieldState extends ConsumerState<DatasetTextField> {
+class DatasetTextFieldState extends ConsumerState<DatasetTextField> {
   late TextEditingController _textController;
 
   @override
