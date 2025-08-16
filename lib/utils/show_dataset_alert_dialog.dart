@@ -89,13 +89,14 @@ void showDatasetAlertDialog(
               if (context.mounted) Navigator.of(context).pop();
 
               if (loadNewDataset) {
-                if (context.mounted)
+                if (context.mounted) {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return const DatasetPopup();
                     },
                   );
+                }
               }
             },
           ),

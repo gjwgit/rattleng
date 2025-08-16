@@ -1,6 +1,6 @@
 /// A widget to run an interactive, writable, readable R console.
 ///
-/// Time-stamp: <Saturday 2024-12-14 19:55:09 +1100 Graham Williams>
+/// Time-stamp: "Saturday 2024-12-14 19:55:09 +1100 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///

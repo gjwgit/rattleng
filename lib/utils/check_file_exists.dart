@@ -1,6 +1,6 @@
 /// Check if the path to a file exists and popup if not.
 //
-// Time-stamp: <Friday 2024-10-25 08:27:46 +1100 Graham Williams>
+// Time-stamp: "Friday 2024-10-25 08:27:46 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

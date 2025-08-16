@@ -1,6 +1,6 @@
 /// Support untility for checking if a string is a dataset from a pacakge
 //
-// Time-stamp: <Friday 2024-12-20 16:37:54 +1100 Graham Williams>
+// Time-stamp: "Saturday 2025-08-16 06:52:45 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -22,6 +22,8 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Yixiang Yin
+
+library;
 
 bool isFromPackage(String input) {
   // Define the regular expression pattern: a string followed by '::' followed by another string

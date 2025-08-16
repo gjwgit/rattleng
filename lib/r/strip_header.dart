@@ -1,6 +1,6 @@
 /// Utility to strip header comments from an R script file.
 ///
-/// Time-stamp: <Monday 2024-12-02 09:08:14 +1100 Graham Williams>
+/// Time-stamp: "Monday 2024-12-02 09:08:14 +1100 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///

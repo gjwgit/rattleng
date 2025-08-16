@@ -1,6 +1,6 @@
 /// Check for whether chr variable can be recoded as categoric.
 //
-// Time-stamp: <Thursday 2025-03-27 13:15:52 +1100 Graham Williams>
+// Time-stamp: "Thursday 2025-03-27 13:15:52 +1100 Graham Williams"
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///

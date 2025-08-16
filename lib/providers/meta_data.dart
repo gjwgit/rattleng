@@ -1,6 +1,6 @@
 /// Record the meta data from rattle::meta_data(ds)
 //
-// Time-stamp: <Wednesday 2025-03-26 09:00:23 +1100 Graham Williams>
+// Time-stamp: "Wednesday 2025-03-26 09:00:23 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

@@ -1,6 +1,6 @@
-/// <DESCRIPTION>
+/// DESCRIPTION
 ///
-// Time-stamp: <Saturday 2025-04-12 09:56:07 +1000 Graham Williams>
+// Time-stamp: "Saturday 2025-04-12 09:56:07 +1000 Graham Williams"
 ///
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: <AUTHORS>
+/// Authors:
 
 library;
 // Function to parse the input text

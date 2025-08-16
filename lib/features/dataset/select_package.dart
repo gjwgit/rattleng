@@ -1,6 +1,6 @@
 /// Choose a dataset from a package
 ///
-/// Time-stamp: <Friday 2025-01-17 19:32:55 +1100 Graham Williams>
+/// Time-stamp: "Friday 2025-01-17 19:32:55 +1100 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -63,8 +63,8 @@ Future<String> datasetSelectPackage(
                         'update path provider to ${ref.read(pathProvider)}',
                       );
 
-                      ref.read(datasetProvider.notifier).state = '$dataset';
-                      ref.read(packageProvider.notifier).state = '${entry.key}';
+                      ref.read(datasetProvider.notifier).state = dataset;
+                      ref.read(packageProvider.notifier).state = entry.key;
 
                       path = ref.read(pathProvider);
 

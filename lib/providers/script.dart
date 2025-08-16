@@ -1,6 +1,6 @@
 /// Gloabl variable status as text for the status bar.
 ///
-/// Time-stamp: <Sunday 2025-08-10 17:26:04 +1000 Graham Williams>
+/// Time-stamp: "Sunday 2025-08-10 17:26:04 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///

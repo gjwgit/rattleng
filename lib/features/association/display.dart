@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Saturday 2025-04-19 07:25:46 +1000 Graham Williams>
+// Time-stamp: "Saturday 2025-04-19 07:25:46 +1000 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -91,7 +91,7 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
           [arules::apriori()](https://www.rdocumentation.org/packages/arules/topics/apriori).
 
           ''',
-          content: '$content',
+          content: content,
         ),
       );
     }
@@ -156,7 +156,7 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
           Generated using `apriori()`
 
           ''',
-          content: '$content',
+          content: content,
         ),
       );
     }

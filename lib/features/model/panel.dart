@@ -1,6 +1,6 @@
 /// SVM tab made up of config and panel widgets.
 //
-// Time-stamp: <Sunday 2024-12-15 19:10:13 +1100 Graham Williams>
+// Time-stamp: "Sunday 2024-12-15 19:10:13 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

@@ -1,6 +1,6 @@
 /// Get the risk variable from the rolesProvider and metaDataProvider.
 //
-// Time-stamp: <Thursday 2024-06-06 05:58:50 +1000 Graham Williams>
+// Time-stamp: "Thursday 2024-06-06 05:58:50 +1000 Graham Williams"
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///

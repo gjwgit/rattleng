@@ -1,6 +1,6 @@
 /// LINEAR tab made up of config and panel widgets.
 //
-// Time-stamp: <Thursday 2024-06-13 17:13:55 +1000 Graham Williams>
+// Time-stamp: "Thursday 2024-06-13 17:13:55 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

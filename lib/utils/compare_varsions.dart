@@ -1,6 +1,6 @@
 /// Compare version s in the form of major.minor.patch.
 //
-// Time-stamp: <Wednesday 2025-01-29 12:03:20 +1100 Graham Williams>
+// Time-stamp: "Wednesday 2025-01-29 12:03:20 +1100 Graham Williams"
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///

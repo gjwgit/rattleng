@@ -1,6 +1,6 @@
 /// CSV Save button.
 //
-// Time-stamp: <Monday 2025-05-12 11:14:01 +1000 Graham Williams>
+// Time-stamp: "Monday 2025-05-12 11:14:01 +1000 Graham Williams"
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///
@@ -39,7 +39,7 @@ import 'package:rattle/r/execute.dart';
 /// to save the current dataset 'ds' to that file.
 
 class SaveDatasetButton extends ConsumerWidget {
-  const SaveDatasetButton({Key? key}) : super(key: key);
+  const SaveDatasetButton({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -50,7 +50,7 @@ class SaveDatasetButton extends ConsumerWidget {
         "${(now.day).toString().padLeft(2, '0')}";
 
     String suggestedName =
-        'dataset_$yyyymmdd${dsname.isNotEmpty ? "_" : ""}${dsname}.csv';
+        'dataset_$yyyymmdd${dsname.isNotEmpty ? "_" : ""}$dsname.csv';
 
     return MarkdownTooltip(
       message: '''

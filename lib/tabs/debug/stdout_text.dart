@@ -1,6 +1,6 @@
 /// A text widget showing the stdout from the R process.
 ///
-/// Time-stamp: <Sunday 2025-03-30 11:48:42 +1100 Graham Williams>
+/// Time-stamp: "Sunday 2025-03-30 11:48:42 +1100 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///

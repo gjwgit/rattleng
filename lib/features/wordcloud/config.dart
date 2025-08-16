@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Tuesday 2025-05-13 07:38:53 +1000 Graham Williams>
+// Time-stamp: "Saturday 2025-08-16 10:31:30 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -216,6 +216,8 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                       corpusSafePath;
 
                   // Build the R command to save the dataset to the selected path.
+
+                  if (!context.mounted) return;
 
                   await rSource(context, ref, ['dataset_save_corpus']);
 

@@ -1,6 +1,6 @@
 /// Validate partition total when pressing cancel button.
 //
-// Time-stamp: <Monday 2025-01-06 15:20:25 +1100 Graham Williams>
+// Time-stamp: "Monday 2025-01-06 15:20:25 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -22,6 +22,8 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Kevin Wang
+
+library;
 
 import 'package:flutter/material.dart';
 

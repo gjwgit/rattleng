@@ -1,6 +1,6 @@
 /// A provider for the stderr output from the R process.
 ///
-/// Time-stamp: <Thursday 2023-11-02 08:26:18 +1100 Graham Williams>
+/// Time-stamp: "Thursday 2023-11-02 08:26:18 +1100 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///

@@ -1,6 +1,6 @@
 /// A dialog to show a message and only allow OK.
 //
-// Time-stamp: <Sunday 2024-07-21 17:25:02 +1000 Graham Williams>
+// Time-stamp: "Sunday 2024-07-21 17:25:02 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -32,7 +32,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 
-showOk({
+void showOk({
   required BuildContext context,
   required String title,
   required String content,

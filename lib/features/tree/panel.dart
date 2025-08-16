@@ -1,6 +1,6 @@
 /// TREE tab
 //
-// Time-stamp: <Monday 2024-12-02 05:41:53 +1100 Graham Williams>
+// Time-stamp: "Monday 2024-12-02 05:41:53 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

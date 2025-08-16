@@ -1,5 +1,5 @@
 /// Constants used for different widget text styles.
-// Time-stamp: <Thursday 2024-09-26 08:23:26 +1000 Graham Williams>
+// Time-stamp: "Thursday 2024-09-26 08:23:26 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
