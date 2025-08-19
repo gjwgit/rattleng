@@ -211,7 +211,7 @@ jobs:
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: Build artifacts
-        run: flutter build macos --release --target-platform macos-arm64
+        run: flutter build macos --release -d macos-arm64
 
       - name: Archive Release
         uses: thedoctor0/zip-release@master
