@@ -5,7 +5,6 @@
 # distribution.
 
 APP=$(basename "$(dirname "$(pwd)")")
-APP=${APP::-2}
 REP=$(git remote get-url origin | sed -E 's#.*[/:]([^/]+)/[^/]+(\.git)?$#\1#')
 
 HOST=togaware.com

@@ -34,7 +34,7 @@ dependencies:
   #
   # However this then does not compile for Linux
   #
-  # /home/gjw/git/github/gjwgit/rattleng/linux/flutter/ephemeral/.plugin_symlinks/flutter_pty/src/flutter_pty_unix.c:114:5:
+  # /home/gjw/git/github/gjwgit/rattle/linux/flutter/ephemeral/.plugin_symlinks/flutter_pty/src/flutter_pty_unix.c:114:5:
   # error: call to undeclared function 'waitpid'; ISO C99 and later do
   # not support implicit function declarations
   # [-Wimplicit-function-declaration]

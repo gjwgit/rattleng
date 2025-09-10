@@ -1,7 +1,6 @@
 #!/bin/bash
 
 APP=$(pwd | rev | cut -d'/' -f2 | rev)
-APP=${APP::-2}
 
 VER=$(egrep '^version:' ../pubspec.yaml | cut -d' ' -f2 | cut -d'+' -f1)
 
