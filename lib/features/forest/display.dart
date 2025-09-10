@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Thursday 2025-05-08 14:41:57 +1000 Graham Williams>
+// Time-stamp: "Thursday 2025-05-08 14:41:57 +1000 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -174,7 +174,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
       content = rExtract(
         stdout,
-        'printRandomForest(model_randomForest, ${forestNo}, max.rules = ${forestMaxRules})',
+        'printRandomForest(model_randomForest, $forestNo, max.rules = $forestMaxRules)',
       );
 
       // Changing parameters makes Sample Rules disappear.
@@ -314,7 +314,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
       content = rExtract(
         stdout,
-        'prettytree(model_conditionalForest@ensemble[[${forestNo}]]',
+        'prettytree(model_conditionalForest@ensemble[[$forestNo]]',
       );
 
       // Remove a continuation line.

@@ -1,6 +1,6 @@
 /// Providers for NEURAL feature NNET and NEURALNET options.
 ///
-/// Time-stamp: <Friday 2025-03-21 12:53:56 +1100 Graham Williams>
+/// Time-stamp: "Friday 2025-03-21 12:53:56 +1100 Graham Williams"
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///

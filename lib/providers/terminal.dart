@@ -1,6 +1,6 @@
 /// A provider of the path that identifies the dataset to load.
 ///
-/// Time-stamp: <Saturday 2023-11-04 15:22:54 +1100 Graham Williams>
+/// Time-stamp: "Saturday 2023-11-04 15:22:54 +1100 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///

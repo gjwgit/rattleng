@@ -1,6 +1,6 @@
 /// Constants used for spacing different widget contexts.
 //
-// Time-stamp: <Saturday 2024-12-14 21:15:05 +1100 Graham Williams>
+// Time-stamp: "Wednesday 2025-09-10 12:48:36 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -107,7 +107,3 @@ const textPageBottomGap = Gap(20);
 /// Gap in height between widgets.
 
 const panelGap = Gap(10);
-
-/// Width to fit 5 ChoiceChips in a Row.
-
-const choiceChipRowWidth = 400.0;

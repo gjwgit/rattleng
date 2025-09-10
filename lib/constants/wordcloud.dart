@@ -5,7 +5,7 @@
 /// License: https://www.gnu.org/licenses/gpl-3.0.en.html
 ///
 //
-// Time-stamp: <Sunday 2025-08-10 17:27:25 +1000 Graham Williams>
+// Time-stamp: "Sunday 2025-08-10 17:27:25 +1000 Graham Williams"
 //
 // Licensed under the GNU General Public License, Version 3 (the "License");
 ///

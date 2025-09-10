@@ -1,6 +1,6 @@
 /// Riverpod provider to maintain the state of the "Include Cross Tab" checkbox.
 ///
-/// Time-stamp: <Saturday 2024-10-12 20:56:05 +1100 Graham Williams>
+/// Time-stamp: "Saturday 2024-10-12 20:56:05 +1100 Graham Williams"
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///

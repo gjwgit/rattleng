@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Monday 2024-12-23 15:30:47 +1100 Graham Williams>
+// Time-stamp: "Monday 2024-12-23 15:30:47 +1100 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -92,7 +92,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
           [xgb::xgboost()](https://www.rdocumentation.org/packages/xgboost/topics/xgb.train).
 
             ''',
-            content: '$displayContent',
+            content: displayContent,
           ),
         );
       }
@@ -138,7 +138,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
           [ada::ada()](https://www.rdocumentation.org/packages/ada/topics/ada).
 
             ''',
-            content: '$content',
+            content: content,
           ),
         );
       }

@@ -1,6 +1,6 @@
 /// A provider for the second selected variable across multiple configs.
 ///
-/// Time-stamp: <Tuesday 2024-07-23 08:54:25 +1000 Graham Williams>
+/// Time-stamp: "Tuesday 2024-07-23 08:54:25 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///

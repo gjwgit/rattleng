@@ -4,7 +4,7 @@
 
 printf "\e[33;1m%s\e[0m\n" 'Running dart format.'
 
-result=$(dart format lib integration_test)
+result=$(dart format lib)
 result_lines=$(echo "$result" | wc -l)
 
 if [ "$result_lines" -gt 1 ]; then

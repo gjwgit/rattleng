@@ -1,6 +1,6 @@
 /// Choose and load a file or folder as the dataset source.
 ///
-/// Time-stamp: <Monday 2025-03-10 05:33:13 +1100 Graham Williams>
+/// Time-stamp: "Monday 2025-03-10 05:33:13 +1100 Graham Williams"
 ///
 /// Copyright (C) 2025, Togaware Pty Ltd.
 ///

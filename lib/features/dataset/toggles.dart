@@ -166,11 +166,11 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
     // Declare variables to store the states of the toggles.
 
-    final cleanse;
+    final bool cleanse;
 
-    final normalise;
+    final bool normalise;
 
-    final partition;
+    final bool partition;
 
     // Check if "Keep in Sync" is enabled.
 

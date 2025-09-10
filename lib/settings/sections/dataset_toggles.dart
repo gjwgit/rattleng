@@ -1,6 +1,6 @@
 /// Dataset section.
 //
-// Time-stamp: <Wednesday 2025-01-15 16:05:18 +1100 Graham Williams>
+// Time-stamp: "Wednesday 2025-01-15 16:05:18 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -24,6 +24,8 @@
 /// Authors: Kevin Wang
 ///
 ///
+
+library;
 
 import 'package:flutter/material.dart';
 
@@ -91,7 +93,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
       _maxFactorController.text = currentMaxFactor;
     }
 
-    Future<void> _saveToggleStates() async {
+    Future<void> saveToggleStates() async {
       final prefs = await SharedPreferences.getInstance();
 
       // Save the latest provider states to preferences.
@@ -103,7 +105,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
       await prefs.setInt('randomSeed', ref.read(randomSeedSettingProvider));
     }
 
-    void _resetToggleStates(bool resetMaxFactor, bool resetRandomSeed) {
+    void resetToggleStates(bool resetMaxFactor, bool resetRandomSeed) {
       // Only reset toggle providers if reset button is not for random seed or max factor.
 
       if (!resetMaxFactor && !resetRandomSeed) {
@@ -118,10 +120,10 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
       // Save the reset states to preferences.
 
-      _saveToggleStates();
+      saveToggleStates();
     }
 
-    Future<void> _saveKeepInSync(bool value) async {
+    Future<void> saveKeepInSync(bool value) async {
       final prefs = await SharedPreferences.getInstance();
 
       // Save "Keep in Sync" state to preferences.
@@ -173,7 +175,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
                 value: cleanse,
                 onChanged: (value) {
                   ref.read(cleanseProvider.notifier).state = value;
-                  _saveToggleStates();
+                  saveToggleStates();
                 },
                 tooltipMessage: '''
 
@@ -196,7 +198,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
                 value: normalise,
                 onChanged: (value) {
                   ref.read(normaliseProvider.notifier).state = value;
-                  _saveToggleStates();
+                  saveToggleStates();
                 },
                 tooltipMessage: '''
 
@@ -219,7 +221,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
                 value: partition,
                 onChanged: (value) {
                   ref.read(partitionProvider.notifier).state = value;
-                  _saveToggleStates();
+                  saveToggleStates();
                 },
                 tooltipMessage: '''
 
@@ -264,7 +266,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
                 value: keepInSync,
                 onChanged: (value) {
                   ref.read(keepInSyncProvider.notifier).state = value;
-                  _saveKeepInSync(value);
+                  saveKeepInSync(value);
                 },
               ),
             ),
@@ -281,7 +283,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
               ''',
               child: ElevatedButton(
                 key: const Key('dataset_toggles_reset_button'),
-                onPressed: () => _resetToggleStates(false, false),
+                onPressed: () => resetToggleStates(false, false),
                 child: const Text('Reset'),
               ),
             ),
@@ -321,7 +323,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
                     ''',
                     child: ElevatedButton(
-                      onPressed: () => _resetToggleStates(true, false),
+                      onPressed: () => resetToggleStates(true, false),
                       child: const Text('Reset'),
                     ),
                   ),

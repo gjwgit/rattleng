@@ -1,6 +1,6 @@
 /// Record types for each variables
 //
-// Time-stamp: <Wednesday 2024-07-24 11:10:35 +1000 Graham Williams>
+// Time-stamp: "Wednesday 2024-07-24 11:10:35 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

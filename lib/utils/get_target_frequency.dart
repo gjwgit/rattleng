@@ -1,6 +1,6 @@
 /// Gets frequency vector of target variable.
 //
-// Time-stamp: <Monday 2025-03-17 12:29:25 +1100 Graham Williams>
+// Time-stamp: "Monday 2025-03-17 12:29:25 +1100 Graham Williams"
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///

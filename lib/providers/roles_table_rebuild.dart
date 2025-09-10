@@ -1,6 +1,6 @@
 ///  Provider for rebuilding the roles table
 ///
-/// Time-stamp: <Sunday 2024-10-13 10:36:28 +1100 Graham Williams>
+/// Time-stamp: "Sunday 2024-10-13 10:36:28 +1100 Graham Williams"
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
@@ -23,6 +23,8 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Kevin Wang
+
+library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

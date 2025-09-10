@@ -1,6 +1,6 @@
 /// A provider for number (transform/recode)
 ///
-/// Time-stamp: <Tuesday 2024-07-30 11:11:48 +1000 Graham Williams>
+/// Time-stamp: "Tuesday 2024-07-30 11:11:48 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///

@@ -1,26 +1,18 @@
-# Configure the analyzer which statically analyzes Dart code.
+# Configure the analyzer for static analysis of Dart code.
+#
+# Add the following to pubspec.yaml:
+#
+#   dev_dependencies:
+#     flutter_lints: ^6.0.0
 #
 # Invoke the analyzer from the command line:
 #
-# `flutter analyze`
+#   flutter analyze
 
 # Activate recommended lints for Flutter apps, packages, and plugins
 # designed to encourage good coding practices.
 
-# include: package:flutter_lints/flutter.yaml
-
-analyzer:
-  plugins:
-    - custom_lint
-  exclude:
-    - ignore/**
-
-custom_lint:
-  rules:
-    - import_order_lint
-  options:
-    import_order_lint:
-      project_name: rattle
+include: package:flutter_lints/flutter.yaml
 
 linter:
   rules:
@@ -28,3 +20,10 @@ linter:
     prefer_single_quotes: true
     require_trailing_commas: true
     directives_ordering: false
+
+# Identify directories to ignore.
+
+analyzer:
+  exclude:
+    - ignore/**
+    - ignore/

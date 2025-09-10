@@ -1,6 +1,6 @@
 /// An "Under Construction" dialog to popup as required.
 //
-// Time-stamp: <Thursday 2024-07-18 16:48:49 +1000 Graham Williams>
+// Time-stamp: "Thursday 2024-07-18 16:48:49 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

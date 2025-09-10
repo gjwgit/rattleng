@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2025-02-05 08:46:16 +1100 Graham Williams>
+// Time-stamp: "Saturday 2025-08-16 10:24:27 +1000 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -166,7 +166,7 @@ class RecodeConfigState extends ConsumerState<RecodeConfig> {
     }
   }
 
-  Widget recodeChooser(inputs, selected2) {
+  Widget recodeChooser(List<String> inputs, String selected2) {
     final TextEditingController valCtrl = TextEditingController();
     valCtrl.text = ref.read(numberProvider.notifier).state.toString();
 

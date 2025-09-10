@@ -1,6 +1,6 @@
 /// The app's status bar.
 ///
-/// Time-stamp: <Thursday 2025-03-27 05:38:58 +1100 Graham Williams>
+/// Time-stamp: "Saturday 2025-08-16 06:23:15 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -50,7 +50,7 @@ class StatusBar extends ConsumerWidget {
     if (path != '') path = '$path   ';
     String stdout = ref.watch(stdoutProvider);
 
-    String _buildTargetDisplay(String target) {
+    String buildTargetDisplay(String target) {
       // Builds the target display string for the status bar.
       //
       // Returns a markdown formatted string with the target if one exists,
@@ -89,7 +89,7 @@ class StatusBar extends ConsumerWidget {
                   '[togware.com](https://togaware.com)  '
                   '${basename(path)}'
                   '${rExtractRowsColumns(rExtractGlimpse(stdout))}'
-                  '${_buildTargetDisplay(getTarget(ref))}   '
+                  '${buildTargetDisplay(getTarget(ref))}   '
                   '${ref.watch(statusProvider)}',
               styleSheet: MarkdownStyleSheet(
                 p: Theme.of(

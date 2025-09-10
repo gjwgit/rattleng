@@ -1,6 +1,6 @@
 /// A popup with choices for sourcing the dataset.
 ///
-/// Time-stamp: <Tuesday 2025-05-13 08:33:23 +1000 Graham Williams>
+/// Time-stamp: "Saturday 2025-08-16 10:32:37 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -161,6 +161,8 @@ class DatasetPopup extends ConsumerWidget {
                     // for loading a corpus and in saving the SCRIPT package
                     // magrittr has not been loaded from the library. (gjw
                     // 20250507)
+
+                    if (!context.mounted) return;
 
                     String sl = 'session_library';
                     String ss = 'session_setup';

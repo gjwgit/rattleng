@@ -5,7 +5,7 @@
 // VALUE. MIGHT BE OKAY FOR A WIDGET WATCHING A VARIABLE TO CHANGE AS IN forest
 // config AND display THROUGH THE PROVIDER forestMaxRules.
 ///
-/// Time-stamp: <Sunday 2025-05-11 10:44:35 +1000 Graham Williams>
+/// Time-stamp: "Sunday 2025-05-11 10:44:35 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///

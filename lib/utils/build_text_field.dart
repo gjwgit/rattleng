@@ -1,6 +1,6 @@
 /// Build a text field widget for the input of numeric values.
 //
-// Time-stamp: <Monday 2025-06-23 08:03:17 +1000 Graham Williams>
+// Time-stamp: "Wednesday 2025-09-10 11:53:28 +1000 Graham Williams"
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -23,6 +23,8 @@
 ///
 /// Authors: Zheyuan Xu, Graham Williams
 
+library;
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -39,7 +41,7 @@ import 'package:rattle/providers/forest.dart';
 /// support our standard [tooltip] widget. The field has a specified [textStyle]
 /// with configurable [maxWidth], an [inputFormatter], and [validator] rules.
 
-class buildTextField extends ConsumerStatefulWidget {
+class BuildTextField extends ConsumerStatefulWidget {
   final String label;
   final TextEditingController controller;
   final TextStyle textStyle;
@@ -48,11 +50,11 @@ class buildTextField extends ConsumerStatefulWidget {
   final String? Function(String?) validator;
   final TextInputFormatter inputFormatter;
   final int maxWidth;
-  final WidgetRef? ref;
+  final WidgetRef ref;
   final VoidCallback? onUpDownPressed;
   final int? tapDelay;
 
-  const buildTextField({
+  const BuildTextField({
     super.key,
     required this.label,
     required this.controller,
@@ -68,10 +70,10 @@ class buildTextField extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<buildTextField> createState() => _buildTextFieldState();
+  ConsumerState<BuildTextField> createState() => _BuildTextFieldState();
 }
 
-class _buildTextFieldState extends ConsumerState<buildTextField> {
+class _BuildTextFieldState extends ConsumerState<BuildTextField> {
   Timer? _debounceTimer;
 
   @override
@@ -127,19 +129,19 @@ class _buildTextFieldState extends ConsumerState<buildTextField> {
                 // explanation here for this please. Or else implement the
                 // special case through extra parameters.
                 onEditingComplete: () {
-                  if (widget.label == 'Sample Size:' && widget.ref != null) {
+                  if (widget.label == 'Sample Size:') {
                     ref.read(forestSampleSizeProvider.notifier).state =
                         widget.controller.text;
                   }
                 },
                 onSaved: (value) {
-                  if (widget.label == 'Sample Size:' && widget.ref != null) {
+                  if (widget.label == 'Sample Size:') {
                     ref.read(forestSampleSizeProvider.notifier).state =
                         widget.controller.text;
                   }
                 },
                 onTapOutside: (event) {
-                  if (widget.label == 'Sample Size:' && widget.ref != null) {
+                  if (widget.label == 'Sample Size:') {
                     ref.read(forestSampleSizeProvider.notifier).state =
                         widget.controller.text;
                   }

@@ -1,6 +1,6 @@
 /// A provider for the svm output from the R process.
 ///
-/// Time-stamp: <Saturday 2024-11-09 18:27:10 +1100 Graham Williams>
+/// Time-stamp: "Saturday 2024-11-09 18:27:10 +1100 Graham Williams"
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///

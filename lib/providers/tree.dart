@@ -1,6 +1,6 @@
 /// A provider for rpart and ctree configurations.
 ///
-/// Time-stamp: <Monday 2025-03-17 08:30:26 +1100 Graham Williams>
+/// Time-stamp: "Monday 2025-03-17 08:30:26 +1100 Graham Williams"
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///

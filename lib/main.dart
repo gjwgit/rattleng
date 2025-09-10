@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll for the data scientist.
 ///
-/// Time-stamp: <Sunday 2025-08-10 17:27:44 +1000 Graham Williams>
+/// Time-stamp: "Saturday 2025-08-16 10:37:33 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -93,7 +93,7 @@ Future<void> main() async {
                 for details.
 
                 ''',
-                  context: context,
+                  context: context.mounted ? context : exit(0),
                   title: 'R Installation Error',
                   onOkPressed: () {
                     exit(0);

@@ -1,6 +1,6 @@
 /// A button to save the script to file.
 ///
-/// Time-stamp: <Monday 2025-05-12 11:13:46 +1000 Graham Williams>
+/// Time-stamp: "Monday 2025-05-12 11:13:46 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -84,7 +84,7 @@ class ScriptSaveButton extends ConsumerWidget {
       // If there is not yet a dataset laoded then we need to make sure the
       // resulting saved filename is `script_yyyymmdd.R` and not
       // `script_yyyymmdd_.R` with the trailing underscore. (gjw 20250113)
-      fileName: 'script_$yyyymmdd${dsname.isNotEmpty ? "_" : ""}${dsname}.R',
+      fileName: 'script_$yyyymmdd${dsname.isNotEmpty ? "_" : ""}$dsname.R',
       type: FileType.custom,
       allowedExtensions: ['R'],
     );
@@ -159,7 +159,7 @@ class ScriptSaveButton extends ConsumerWidget {
     lines = lines.where((line) => !line.trim().startsWith('rat <-')).toList();
     lines = lines.where((line) => !line.trim().startsWith('rat(')).toList();
 
-    lines = lines.map((line) => line.replaceAll(tempDir + '/', '')).toList();
+    lines = lines.map((line) => line.replaceAll('$tempDir/', '')).toList();
 
     // As a convenience for any of the demo datasets, when I export
     // the R script I add the path `assets/data` to the `read_csv()` so it runs

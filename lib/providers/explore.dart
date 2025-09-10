@@ -1,6 +1,6 @@
 /// A provider for the explore type.
 ///
-/// Time-stamp: <Monday 2024-06-10 09:36:56 +1000 Graham Williams>
+/// Time-stamp: "Monday 2024-06-10 09:36:56 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///

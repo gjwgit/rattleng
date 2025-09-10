@@ -1,6 +1,6 @@
-/// <DESCRIPTION>
+/// DESCRIPTION
 //
-// Time-stamp: <Thursday 2024-06-06 05:58:50 +1000 Graham Williams>
+// Time-stamp: "Thursday 2024-06-06 05:58:50 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: <AUTHORS>
+/// Authors:
 
 library;
 

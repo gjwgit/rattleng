@@ -73,6 +73,9 @@ export FLUTTER_HELP
 help::
 	@echo "$$FLUTTER_HELP"
 
+TICK=\033[0;32m✔\033[0m
+CROSS=\033[31m❌\033[0m
+
 .PHONY: chrome
 chrome:
 	flutter run -d chrome --release
@@ -126,7 +129,7 @@ linux_config:
 	flutter config --enable-linux-desktop
 
 .PHONY: prep
-prep: analyze fix import_order_fix format ignore license todo depend bakfind
+prep: analyze fix import_order_fix format dcm ignore license locmax todo markdown depend bakfind test
 	@echo "ADVISORY: make tests docs"
 	@echo $(SEPARATOR)
 
@@ -143,6 +146,7 @@ pubspec:
 
 .PHONY: pubspec.local
 pubspec.local:
+	cp --backup pubspec.yaml pubspec.yaml.actual
 	cp --backup pubspec.yaml.local pubspec.yaml
 
 .PHONY: pubspec.actual
@@ -181,7 +185,7 @@ tests:: test qtest
 .PHONY: analyze
 analyze:
 	@echo "Futter ANALYZE"
-	-flutter analyze lib
+	-flutter analyze
 #	dart run custom_lint
 	@echo $(SEPARATOR)
 
@@ -193,23 +197,78 @@ depend:
 	-dependency_validator
 	@echo $(SEPARATOR)
 
+LINES ?= 300
+
+.PHONY: locmax
+locmax:
+	@echo "Files with EXCESS LINES OF CODE:\n"
+	@-output=$$(find lib -name "*.dart" -exec sh -c ' \
+		lines=$$(bash support/loc.sh "$$1"); \
+		if [ $$lines -gt $(LINES) ]; then \
+			printf "%4d %s\n" $$lines "$$1"; \
+		fi \
+	' _ {} \; | sort -nr); \
+	if [ -n "$$output" ]; then \
+		echo "$$output"; \
+		echo "\n$(CROSS) Error: Files with more than $(LINES) lines found"; \
+		exit 1; \
+	else \
+		echo "$(TICK) All files are under $(LINES) lines"; \
+	fi
+	@echo $(SEPARATOR)
+
+# Check and fail if any files exceed limit
+
+PHONY: locmax-enforce
+locmax-enforce:
+	@output=$$(find lib -name "*.dart" -exec sh -c ' \
+		lines=$$(bash support/loc.sh "$$1"); \
+		if [ $$lines -gt $(LINES) ]; then \
+			printf "%4d %s\n" $$lines "$$1"; \
+		fi \
+	' _ {} \; | sort -nr); \
+	if [ -n "$$output" ]; then \
+		echo "$$output"; \
+		echo "$(CROSS) Error: Files with more than $(LINES) lines found"; \
+		exit 1; \
+	else \
+		echo "$(TICK) All files are under $(LINES) lines"; \
+	fi
+
+
+# dart pub global activate dependency_validator
+
+.PHONY: markdown
+markdown:
+	@echo "Markdown: MARKDOWN FORMAT CHECK."
+	-markdownlint --disable MD036 -- *.md lib assets installers
+	@echo
+	@echo $(SEPARATOR)
+
 .PHONY: ignore
 ignore:
 	@echo "Files that override lint checks with IGNORE:\n"
-	@-if grep -r -n ignore: lib; then exit 1; else exit 0; fi
+	@-if grep -r -n 'ignore: ' lib; then exit 1; else exit 0; fi
 	@echo $(SEPARATOR)
 
 .PHONY: todo
 todo:
 	@echo "Files that include TODO items to be resolved:\n"
-	@-if grep -r -n ' TODO ' lib; then exit 1; else exit 0; fi
+	@-if grep -r -n ' TODO ' lib; then echo; exit 1; else exit 0; fi
 	@echo $(SEPARATOR)
 
 .PHONY: license
 license:
 	@echo "Files without a LICENSE:\n"
-	@-find lib -type f -not -name '*~' -not -name 'README*' \
-	! -exec grep -qE '^(/// .*|/// Copyright|/// Licensed)' {} \; -print | xargs printf "\t%s\n"
+	@-output=$$(find lib -type f -not -name '*~' -not -name 'README*' -not -name '*.g.dart' \
+	! -exec grep -qE '^(/// Copyright|/// Licensed)' {} \; -print | xargs printf "\t%s\n"); \
+	if [ $$(echo "$$output" | wc -w) -ne 0 ]; then \
+		echo "$$output"; \
+		echo "\n$(CROSS) Error: Files with no license found."; \
+		exit 1; \
+	else \
+		echo "$(TICK) All source files contain a license."; \
+	fi
 	@echo $(SEPARATOR)
 
 .PHONY: riverpod
@@ -245,7 +304,7 @@ desktops:
 .PHONY: test
 test:
 	@echo "Unit TEST:"
-	-flutter test test
+	@-if [ -d test ]; then flutter test test; else echo "\nNo test folder found."; fi
 	@echo $(SEPARATOR)
 
 # For a specific interactive test we think of it as providing a
@@ -397,8 +456,36 @@ import_order_fix:
 	import_order
 	@echo $(SEPARATOR)
 
-### TODO THESE SHOULD BE CHECKED AND CLEANED UP
+# dart pub global activate dart_code_metrics
 
+.PHONY: dcm
+dcm: nullable unused_code unused_files metrics
+
+.PHONY: nullable
+nullable:
+	@echo "Dart Code Metrics: NULLABLE"
+	-metrics check-unnecessary-nullable --disable-sunset-warning lib
+	@echo $(SEPARATOR)
+
+.PHONY: unused_code
+unused_code:
+	@echo "Dart Code Metrics: UNUSED CODE"
+	-metrics check-unused-code --disable-sunset-warning lib
+	@echo $(SEPARATOR)
+
+.PHONY: unused_files
+unused_files:
+	@echo "Dart Code Metrics: UNUSED FILES"
+	-metrics check-unused-files --disable-sunset-warning lib
+	@echo $(SEPARATOR)
+
+.PHONY: metrics
+metrics:
+	@echo "Dart Code Metrics: METRICS"
+	-metrics analyze --disable-sunset-warning lib --reporter=console
+	@echo $(SEPARATOR)
+
+### TODO THESE SHOULD BE CHECKED AND CLEANED UP
 
 .PHONY: docs
 docs::

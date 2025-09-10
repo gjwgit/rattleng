@@ -1,6 +1,6 @@
 /// Check if the target variable is numeric.
 //
-// Time-stamp: <Friday 2024-10-25 08:27:46 +1100 Graham Williams>
+// Time-stamp: "Friday 2024-10-25 08:27:46 +1100 Graham Williams"
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///

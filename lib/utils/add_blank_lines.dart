@@ -1,6 +1,6 @@
 /// Add an empty line before header lines in the given string.
 //
-// Time-stamp: <Saturday 2025-03-22 09:31:34 +1100 Graham Williams>
+// Time-stamp: "Saturday 2025-03-22 09:31:34 +1100 Graham Williams"
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///

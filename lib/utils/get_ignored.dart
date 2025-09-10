@@ -1,6 +1,6 @@
 /// Query the roles provider to return the list of ignored variables.
 //
-// Time-stamp: <Wednesday 2025-02-05 08:56:27 +1100 Graham Williams>
+// Time-stamp: "Wednesday 2025-02-05 08:56:27 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

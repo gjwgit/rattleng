@@ -1,4 +1,4 @@
-# Architecture for RattleNG
+# RattleNG Architecture
 
 ## Goals
 
@@ -33,10 +33,10 @@
 
 ## Riverpod
 
-Riverpod supports these principles easily and effectively.  
+Riverpod supports these principles easily and effectively.
 
 Riverpod providers are used to create and manage the app state and
-data, and to inject them into the UI or business logic components. 
+data, and to inject them into the UI or business logic components.
 
 Riverpod providers can also be used to create and combine different
 kinds of abstractions, such as state providers, future providers,
@@ -50,7 +50,7 @@ or follow them without understanding the rationale behind them.
 
 ## Architecture for RattleNG
 
-Exploring mermaid for inline diagrams: https://mermaid.live/edit
+Exploring mermaid for inline diagrams: [edit](https://mermaid.live/edit)
 
 ```mermaid
 graph TD

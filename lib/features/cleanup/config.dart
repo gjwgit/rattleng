@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Friday 2025-08-01 17:01:32 +1000 Graham Williams>
+// Time-stamp: "Saturday 2025-08-16 10:41:26 +1000 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -115,7 +115,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
 
   RegExp squares = RegExp(r'[\[\]]');
 
-  String warning(method) {
+  String warning(String method) {
     return switch (method) {
       'Ignored' => '''
 
@@ -155,7 +155,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     };
   }
 
-  String dispatch(method) {
+  String dispatch(String method) {
     return switch (method) {
       'Ignored' => 'transform_clean_delete_ignored',
       'Variable' => 'transform_clean_delete_selected',
@@ -220,7 +220,7 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
     }
   }
 
-  void takeAction(method) {
+  void takeAction(String method) {
     // Run the R scripts.  For different selected cleanup, the text will be
     // different as well as the script to execute.
 

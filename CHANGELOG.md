@@ -21,12 +21,16 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ MACOS: Build using Flutter 3.35.3 for NULL fix [6.5.12 20250909 gjw]
++ BENFORD: Include table output in CONSOLE [6.5.11 20250817 gjw]
++ LINT: Extensive lint cleanup [6.5.10 20250816 gjw]
++ VISUAL: Add HISTOGRAM [6.5.9 20250816 gjw]
 + RESCALE: Fix type re recenter - using sd not rms [6.5.8 20250811 gjw]
 + MISSING: Add variable missing value correlation [6.5.7 20250810 gjw]
-+ VISUALISE: Fix OPEN plot bug - was not showing the copied image [6.5.6 20250807 gjw]
++ VISUALISE: OPEN plot bug - not showing copied image [6.5.6 20250807 gjw]
 + EVALUATE: The R hmeasure package no longer available [6.5.5 20250805 gjw]
 + CORRELATION: Add dendrogram plot [6.5.4 20250731 gjw]
-+ BUG: Don't display empty CORRELATION image if not found [6.5.3 20250725 gjw]
++ BUG: Empty CORRELATION image if not found [6.5.3 20250725 gjw]
 + INSTALLERS: Testing installers [6.5.2 20250520 gjw]
 + TEXT: Interactive update of corr term display [6.5.1 20250518 zy]
 + Initial release of the 6.5 series [6.5.0 20250515 gjw]
@@ -163,7 +167,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 + Improve inbuilt R package downloader. [6.3.26 20241121 gjw]
 + Update Version with a tooltip to explain CHANGELOG link [6.3.25 20241121 gjw]
 + Save SETTINGS between sessions [6.3.24 20241121 kev]
-+ Check that R is installed and starts up properly on app startup [6.3.23 20241121 kev]
++ Check R installed and starts properly on app startup [6.3.23 20241121 kev]
 + Bug fix for changing plot themes. Bob Muenchen updates. [6.3.22 20241119 gjw]
 + Add Sherlock dataset for Word Cloud demo [6.3.21 20241118 gjw]
 + ROLES selection in table [6.3.20 20241113 kev]
@@ -187,16 +191,16 @@ Visit [togaware](https://rattle.togaware.com) for details.
 + Implement Boost. Cleanup and review and bug fixes [6.3.4 20241013]
 + Review and rename test scripts [6.3.3 20240925 gjw]
 + SCRIPT remembers location [6.3.3 20240925 zy]
-+ Ensure pty started before send R code particularly for WINDOWS [6.3.2 20240923 lutra]
++ Ensure pty started before send R code -  WINDOWS [6.3.2 20240923 lutra]
 + Refactor DATASET display [6.3.2 20240923 lutra]
 + On QUIT check for confirmation [6.3.2 20240923 lutra]
 + Update NEURAL. [6.3.1 20240923 gjw]
 + Remove unused Android/iOS/Web support. [6.3.1 20240923 lutra]
 
-## 6.2 Wrangle tab implementation, interface updates, extensive testing.
+## 6.2 Wrangle tab implementation, interface updates, extensive testing
 
 + DATASET updated weather.csv to 2023-2024 [6.3.0 20240921 gjw]
-+ INSTALL update windows build using Inno. Bug fixes for Windows [6.2.78 20240919 gjw]
++ WINDOWS Update build using Inno. Bug fixes [6.2.78 20240919 gjw]
 + NAVIGATION activate dots. Tuning and bug fixes [6.2.77 20240919 kev,gjw,zy]
 + NAVIGATION: Update to a non overlapping page navigator [6.2.76 20240913 zy]
 + DATASET: update welcome; move GLIMPSE to SUMMARY [6.2.75 20240911 gjw]
@@ -225,11 +229,11 @@ Visit [togaware](https://rattle.togaware.com) for details.
 + Bug fix navigator dots not updating [6.2.53 20240814 kev]
 + Support console copy and paste [6.2.53 20240814 zy]
 + Review and fine tune  [6.2.52 20240814 gjw]
-+ Only num vars for rescale. Disable numeric imputes for categorics [6.2.52 20240814 yyx]
++ Num vars for rescale. No numeric imputes for categorics [6.2.52 20240814 yyx]
 + Merge choice chips. [6.2.52 20240814 zy]
 + Review and code cleanup [6.2.51 20240813 zy]
 + Extra string cleaning for Windows 10 [6.2.50 20240812 gjw]
-+ Doc updates. Modernise R code. Trial await CONSOLE startup [6.2.49 20240812 gjw]
++ Doc updates. Modernise R code. Trial await CONSOLE [6.2.49 20240812 gjw]
 + Bug fixes [6.2.48 20240811 gjw]
 + Re-engineer and rewrite CLEANUP [6.2.47 20240811 gjw]
 + Fix Windows version display. [6.2.46 20240810 bz]
@@ -276,14 +280,14 @@ Visit [togaware](https://rattle.togaware.com) for details.
 + Add group by selector for VISUALISE [6.2.8 20240723 yyx]
 + Add variable selection to VISUALISE [6.2.7 20240723 yyx]
 + Add glimpse to TRANSFORM
-+ Add transform R scripts. Activate URL links. VISUALISE risk var [6.2.6 20240722 gjw]
++ R transform scripts. Activate URL links. VISUALISE risk [6.2.6 20240722 gjw]
 + Add a shell for the Wrangle tab functionality [6.2.5 20240719 gjw]
 + Move Page navigation to the bottom [6.2.4 20240718 yyx]
 + Refactor dataset feature [6.2.3 20240715 gjw]
 + Initial R code and integration of exploration plots [6.2.2 20240715 gjw]
 + Add EXPORT to ImagePage() [6.2.1 20240712 gjw]
 
-## 6.1 Dataset Roles, Display Pages.
+## 6.1 Dataset Roles, Display Pages
 
 + Move to SVG images [20240711 yyx]
 + Implement ImagePage() [20240711 yyx]

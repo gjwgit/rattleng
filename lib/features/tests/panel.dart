@@ -1,6 +1,6 @@
 /// TESTS tab made up of config and panel widgets.
 //
-// Time-stamp: <Monday 2024-06-10 09:26:31 +1000 Graham Williams>
+// Time-stamp: "Monday 2024-06-10 09:26:31 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
