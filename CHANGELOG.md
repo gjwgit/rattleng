@@ -21,6 +21,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ MACOS: Build using Flutter 3.35.3 for NULL fix [6.5.12 20250909 gjw]
 + BENFORD: Include table output in CONSOLE [6.5.11 20250817 gjw]
 + LINT: Extensive lint cleanup [6.5.10 20250816 gjw]
 + VISUAL: Add HISTOGRAM [6.5.9 20250816 gjw]
