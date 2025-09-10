@@ -1,6 +1,6 @@
 /// Rattle - Data Science Next Generation
 ///
-// Time-stamp: "Sunday 2025-08-10 17:27:11 +1000 Graham Williams"
+// Time-stamp: "Wednesday 2025-09-10 12:48:08 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -42,22 +42,3 @@ const String assetsPath = 'assets';
 /// Location of the markdown file containing instructions for the SCRIPT tab.
 
 const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
-
-/// Links of R packages for reference.
-
-const nnetModelLink = 'https://cran.r-project.org/web/packages/nnet/index.html';
-
-const List<String> months = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-];

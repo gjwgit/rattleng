@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: "Sunday 2025-08-10 17:30:49 +1000 Graham Williams"
+// Time-stamp: "Wednesday 2025-09-10 12:49:09 +1000 Graham Williams"
 //
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -30,7 +30,6 @@ import 'package:flutter/services.dart';
 
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:universal_io/io.dart';
@@ -60,8 +59,6 @@ import 'package:rattle/utils/update_meta_data.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/text_page.dart';
-
-const smallSpace = Gap(10);
 
 /// The dataset panel displays the Rattle welcome on the first page and the
 /// ROLES as the second page.
