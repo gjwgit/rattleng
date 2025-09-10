@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: "Saturday 2025-08-16 20:58:33 +1000 Graham Williams"
+// Time-stamp: "Wednesday 2025-09-10 11:58:21 +1000 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -162,11 +162,11 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
     /// If valid (i.e., validateSampleSize returns null) and [value] is not null,
     /// returns 'c($value)'. Otherwise, returns the validation error.
 
-    String formatSampleSize(String? value) {
+    String formatSampleSize(String value) {
       // If value matches the pattern c(...), return it directly.
       // - This check ensures we don't re-wrap an already wrapped value.
 
-      if (value != null && RegExp(r'^c\(.*\)$').hasMatch(value)) {
+      if (RegExp(r'^c\(.*\)$').hasMatch(value)) {
         return value;
       }
 
@@ -182,7 +182,7 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
 
       // If the value is null or empty, there's no conversion to 'c(...)'.
 
-      if (value == null || value.isEmpty) {
+      if (value.isEmpty) {
         return '';
       }
 
