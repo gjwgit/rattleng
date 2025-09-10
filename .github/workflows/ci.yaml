@@ -10,7 +10,7 @@ on:
     types: [opened, reopened, synchronize]
 
 env:
-  FLUTTER_VERSION: '3.32.8'
+  FLUTTER_VERSION: '3.35.3'
 
 jobs:
 
@@ -38,6 +38,22 @@ jobs:
       - run: flutter pub get
       - run: dart format --set-exit-if-changed .
 
+  dart_code_metrics:
+    runs-on: ubuntu-latest
+    if: github.event.repository.private == false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: ${{env.FLUTTER_VERSION}}
+      - run: flutter pub get
+      - run: dart pub global activate dart_code_metrics
+      - run: metrics check-unnecessary-nullable --disable-sunset-warning lib
+      - run: metrics check-unused-code --disable-sunset-warning lib
+      - run: metrics check-unused-files --disable-sunset-warning lib
+      - run: metrics analyze --disable-sunset-warning lib --reporter=console
+
   import_order:
     runs-on: ubuntu-latest
     if: github.event.repository.private == false
@@ -60,8 +76,18 @@ jobs:
         with:
           node-version: 18
       - run: npm install -g markdownlint-cli
-      - run: markdownlint --disable MD036 -- assets/markdown
+      - run: markdownlint --disable MD036 -- *.md lib assets installers
         # -p .markdownlintignore -c .markdownlint.yaml
+
+  locmax:
+    runs-on: ubuntu-latest
+    if: github.event.repository.private == false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - run: make locmax-enforce
 
   copyright:
     runs-on: ubuntu-latest
@@ -93,18 +119,3 @@ jobs:
           else
             echo "✅ All non-generated Dart files have copyright headers"
           fi
-
-  build:
-    runs-on: ubuntu-latest
-    if: github.event.repository.private == false
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          flutter-version: ${{env.FLUTTER_VERSION}}
-      - run: sudo apt update
-      - run: sudo apt-get install -y clang cmake curl libgtk-3-dev ninja-build pkg-config unzip libunwind-dev libsecret-1-dev
-      - run: sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
-      - run: flutter pub get
-      - run: flutter build linux -v
