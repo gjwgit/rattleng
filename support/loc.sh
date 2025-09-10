@@ -35,4 +35,5 @@ cat "${FILE}" |
     sed "/'''/,/'''/d" |
     sed '/^[[:space:]]*[})]*[,;]*$/d' |
     grep -v '^ *], *$' |
+    grep -v '^import ' |
     wc -l
