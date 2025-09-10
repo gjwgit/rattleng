@@ -258,23 +258,23 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: ${{env.FLUTTER_VERSION}}
-        channel: 'stable'
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{env.FLUTTER_VERSION}}
+          channel: 'stable'
 
-    - name: Install dependencies
-      run: flutter pub get
+      - name: Install dependencies
+        run: flutter pub get
 
-    - name: Enable macOS desktop
-      run: flutter config --enable-macos-desktop
+      - name: Enable macOS desktop
+        run: flutter config --enable-macos-desktop
 
-    - name: Build Flutter macOS app
-      run: flutter build macos --release
+      - name: Build Flutter macOS app
+        run: flutter build macos --release
 
     # - name: Import Code-Signing Certificates
     #   if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
@@ -307,16 +307,11 @@ jobs:
     #     # Sign the DMG
     #     codesign --force --verify --verbose --sign "${{ secrets.DEVELOPER_ID_APPLICATION }}" "YourAppName-${{ github.ref_name }}.dmg"
 
-    - name: Create DMG (Unsigned)
-      run: |
-        # Create a temporary directory for DMG contents
+      - name: Create DMG (Unsigned)
+        run: |
         mkdir -p dmg_temp
         cp -R "build/macos/Build/Products/Release/${{ env.APP }}.app" dmg_temp/
-
-        # Create symbolic link to Applications folder
         ln -s /Applications dmg_temp/Applications
-
-        # Create DMG without signing (for testing)
         hdiutil create -volname "${{ env.APP }}" \
           -srcfolder dmg_temp \
           -ov -format UDZO \
