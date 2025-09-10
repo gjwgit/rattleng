@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Wednesday 2025-04-09 08:31:55 +1000 Graham Williams>
+// Time-stamp: "Wednesday 2025-09-10 12:52:05 +1000 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -25,83 +25,6 @@
 library;
 
 import 'package:rattle/r/extract.dart';
-
-// TODO 20250409 THIS IS NO LONGER USED IN THE CODE?
-
-List<String> rExtractVars(String txt) {
-  // Command/string to identify start point of the extracttion.
-
-  String cmd = '> names(ds)';
-
-  // Split the string based on lines.
-
-  List<String> lines = txt.split('\n');
-
-  // The result is a list of variable names (Strings).
-
-  List<String> result = [];
-
-  // Find the start of the latest string of interest, searching from the last
-  // line backwards. Begin by initializing a value that indicates no start index
-  // found.
-
-  int startIndex = -1;
-
-  for (int i = lines.length - 1; i >= 0; i--) {
-    if (lines[i].contains(cmd)) {
-      startIndex = i;
-      break;
-    }
-  }
-
-  // If the pattern of interest was found then begin collecting lines of output
-  // from the R Console.
-
-  if (startIndex != -1) {
-    for (int i = startIndex + 1; i < lines.length; i++) {
-      if (lines[i].startsWith('>')) {
-        // Found the next line starting with the R prompt '>'. Stop adding lines
-        // to the result. Assumes no lines, after the pattern of interest, that
-        // contain the output we want to capture start with the R prompt '>'.
-
-        break;
-      }
-
-      result.add(lines[i]);
-    }
-  }
-
-  // Join all lines into one string to work on it now to extract the variable
-  // names.
-
-  String vars = result.join(' ');
-
-  // debugPrint('R EXTRACT VARS JOIN: $vars');
-
-  // Remove the [1] etc line numbering in the output.
-
-  vars = vars.replaceAll(RegExp(r' *\[\d+\] *'), ' ');
-
-  // Remove the quotes around the var names.
-
-  vars = vars.replaceAll('"', '');
-
-  // Remove extra spaces.
-
-  vars = vars.replaceAll(RegExp(r' +'), ' ');
-  vars = vars.replaceAll(RegExp(r'^ +'), '');
-  vars = vars.replaceAll(RegExp(r' +$'), '');
-
-  // Split into the list of variable names.
-
-  result = vars.split(' ');
-
-  // Return the list of variable names.
-
-  // debugPrint('R EXTRACT VARS FINAL: $result');
-
-  return result;
-}
 
 // TODO 20250409 RENAME THIS AS rExtractVars In LINE WITH FILE NAME
 

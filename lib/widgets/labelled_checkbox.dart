@@ -1,6 +1,6 @@
 /// A widget for a labelled checkbox with  a tooltip updating the provider.
 //
-// Time-stamp: <Friday 2024-09-27 09:41:14 +1000 Graham Williams>
+// Time-stamp: "Friday 2024-09-27 09:41:14 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

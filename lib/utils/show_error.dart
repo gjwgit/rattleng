@@ -1,6 +1,6 @@
 /// A dialog to show an error message with a customizable OK button action.
 //
-// Time-stamp: <Sunday 2024-07-21 17:25:02 +1000 Graham Williams>
+// Time-stamp: "Saturday 2025-08-16 08:01:35 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,8 +25,6 @@
 
 library;
 
-// Group imports by dart, flutter, packages, local. Then alphabetically.
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -39,7 +37,7 @@ void showError({
   required VoidCallback onOkPressed,
 }) {
   // Set up the Exit button
-  Widget ExitButton = TextButton(
+  Widget exitButton = TextButton(
     child: const Text('Exit'),
     onPressed: () {
       // Execute the custom behavior
@@ -61,7 +59,7 @@ void showError({
       selectable: true,
       softLineBreak: true,
     ),
-    actions: [ExitButton],
+    actions: [exitButton],
   );
 
   // Show the dialog

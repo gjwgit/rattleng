@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD041 -->
+
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 [![R](https://img.shields.io/badge/r-%23276DC3.svg?style=for-the-badge&logo=r&logoColor=white)](https://www.r-project.org/)
@@ -43,13 +45,13 @@ edition of the Rattle book will soon be available.
 Over the past 15 years we have also matured in how we deliver data
 science and analytics. RattleNG delivers a new perspective on
 scripting data science in R through templates as introduced in my more
-recent book, *The Essentials of Data Science*
-(https://bit.ly/essentials_data_science). The concept of templates for
-data science now provides the foundations for a flexible and
-extensible application in RattleNG.
+recent book, [The Essentials of Data
+Science](https://bit.ly/essentials_data_science). The concept of
+templates for data science now provides the foundations for a flexible
+and extensible application in RattleNG.
 
-You can also review my Desktop Data Mining Survival Guide published
-online by Togaware, available from (https://datamining.togaware.com).
+You can also review my [Desktop Data Mining Survival
+Guide](https://datamining.togaware.com) published online by Togaware.
 
 The detailed coding documentation for our new Flutter/Dart based
 RattleNG is available online from the [Solid Community
@@ -62,8 +64,8 @@ contributions have also been made by Yixiang Yin.
 
 ## Quick Start and Current Status 2025-01-06
 
-You will need to install R, separate to the  app itself. Visit
-https://www.r-project.org/ for details.
+You will need to install R, separate to the app itself. Visit the [R
+Project](https://www.r-project.org/) for details.
 
 Then install RattleNG for your operating system as detailed in the
 installers
@@ -109,10 +111,10 @@ Currently implemented features as of version 6.3.48 (2025-01-06):
 + Dataset
   + Demo
     + Weather
-	+ Audit
+    + Audit
     + Protein
-	+ Movies
-	+ Sherlock
+    + Movies
+    + Sherlock
   + CSV
   + TXT
   + Roles
@@ -191,7 +193,7 @@ directory where you cloned the rattle repository (it should contain a
 `lib` sub-directory) and type the following command, changing `<os>`
 to be one of `windows`, `macos`, or `linux`.
 
-```
+```bash
 flutter run -d <os>
 ```
 
@@ -215,7 +217,8 @@ Suggested tasks can be found as github issues.
 
 ## Rattle Resources
 
-+ Bob Meunchen's review of Rattle: https://r4stats.com/articles/software-reviews/rattle/
++ Bob Meunchen's [Review of
+  Rattle](https://r4stats.com/articles/software-reviews/rattle/)
 
 ## Some RattleNG teasers
 
@@ -227,38 +230,38 @@ to choose **Demo**, which will load the `rattle::weather`
 dataset. Then click the **Model** tab and the **Tree** feature to then
 **Build** your first decision tree (an AI model).
 
-![](assets/screenshots/data_page.png)
+![data_page](assets/screenshots/data_page.png)
 
 Click the **Dataset** button to have options to load the data from a
 file, from an R package, or the demo weather dataset.
 
-![](assets/screenshots/data_source.png)
+![data_source](assets/screenshots/data_source.png)
 
 After the data is loaded we are presented with a summary.
 
-![](assets/screenshots/data_summary.png)
+![data_summary](assets/screenshots/data_summary.png)
 
 ### Exploring Data Visually
 
 All of the popular Rattle visualisations are available, modernised
 using `ggplot` and the `tidyverse`.
 
-![](assets/screenshots/explore_plot.png)
+![explore_plot](assets/screenshots/explore_plot.png)
 
 The traditional missing data plots have been updated:
 
-![](assets/screenshots/explore_missing_vim.png)
+![explore_missing_vim](assets/screenshots/explore_missing_vim.png)
 
 The correlation plot visually highlights related variables:
 
-![](assets/screenshots/explore_correlation_corrplot.png)
+![explore_correlation_corrplot](assets/screenshots/explore_correlation_corrplot.png)
 
 ### Summarising Through WordClouds
 
 For a text file we can gain an insight into the document through a
 word cloud.
 
-![](assets/screenshots/explore_wordcloud.png)
+![explore_wordcloud](assets/screenshots/explore_wordcloud.png)
 
 ### Wrangling the Data
 
@@ -269,18 +272,18 @@ transformed using the RECENTER feature and each of the transform
 functions available. The new variables are prefixed with an indicator
 of the type of transformation performed.
 
-![](assets/screenshots/wrangle_recenter.png)
+![wrangle_recenter](assets/screenshots/wrangle_recenter.png)
 
 ### Building Models
 
 A decision tree model is one of the most widely built AI models.
 
-![](assets/screenshots/model_rpart.png)
+![model_rpart](assets/screenshots/model_rpart.png)
 
 Visualisations are now built and presented by default, compared to
 Rattle of Old.
 
-![](assets/screenshots/model_rpart_plot.png)
+![model_rpart_plot](assets/screenshots/model_rpart_plot.png)
 
 ### The R Console
 
@@ -291,7 +294,7 @@ console saved to file. Compare this **Export** to that of the
 **Script** page where a documented and formatted script is saved to
 file.
 
-![](assets/screenshots/console_page.png)
+![console_page](assets/screenshots/console_page.png)
 
 ### Everything Captured as Scripts
 
@@ -303,4 +306,4 @@ to file and replicate your whole project simply by asking R to run the
 script. It is also he starting point for modifying a script to do
 precisely what you want, beyond what Rattle supports. No lock-in.
 
-![](assets/screenshots/script_page.png)
+![script_page](assets/screenshots/script_page.png)

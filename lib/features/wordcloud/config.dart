@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: <Tuesday 2025-05-13 07:38:53 +1000 Graham Williams>
+// Time-stamp: "Saturday 2025-08-16 20:59:19 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -216,6 +216,8 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                       corpusSafePath;
 
                   // Build the R command to save the dataset to the selected path.
+
+                  if (!context.mounted) return;
 
                   await rSource(context, ref, ['dataset_save_corpus']);
 
@@ -487,7 +489,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 tapDelay: 1000,
               ),
 
-              buildTextField(
+              BuildTextField(
                 label: 'Cor Term',
                 controller: textCorWordController,
                 key: const Key('textCorWordField'),

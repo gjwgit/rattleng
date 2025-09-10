@@ -1,6 +1,6 @@
 /// Rescale tab made up of config and panel widgets.
 //
-// Time-stamp: <Friday 2024-07-19 09:11:23 +1000 Graham Williams>
+// Time-stamp: "Friday 2024-07-19 09:11:23 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

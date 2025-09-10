@@ -1,6 +1,6 @@
 /// Check if the path to an image file exists.
 //
-// Time-stamp: <Sunday 2024-09-08 12:21:31 +1000 Graham Williams>
+// Time-stamp: "Sunday 2024-09-08 12:21:31 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

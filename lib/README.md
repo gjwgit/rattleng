@@ -11,5 +11,3 @@ project.
 R data extraction from the R console (PTY) belongs here.
 
 ## utils
-
-

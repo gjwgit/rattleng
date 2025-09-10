@@ -1,6 +1,6 @@
 /// A provider for the parameters for forest.
 ///
-/// Time-stamp: <Wednesday 2025-05-07 16:29:24 +1000 Graham Williams>
+/// Time-stamp: "Wednesday 2025-05-07 16:29:24 +1000 Graham Williams"
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///

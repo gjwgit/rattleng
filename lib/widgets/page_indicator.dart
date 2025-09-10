@@ -1,6 +1,6 @@
-/// <DESCRIPTION>
+/// A new page indicator.
 //
-// Time-stamp: <Friday 2024-10-25 09:38:26 +1100 Graham Williams>
+// Time-stamp: "Saturday 2025-08-16 06:33:35 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

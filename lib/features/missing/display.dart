@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2025-08-12 15:56:29 +1000 Graham Williams>
+// Time-stamp: "Thursday 2025-09-11 07:55:24 +1000 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -109,7 +109,7 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     // Add a blank line between each sub-table.
 
-    lines = content.split('\n');
+    // lines = content.split('\n');
 
     // 20250203 gjw Remove this processing for now - it was not working for the
     // US Population dataset.
@@ -120,7 +120,7 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     //   }
     // }
 
-    content = lines.join('\n');
+    // content = lines.join('\n');
 
     if (content.isNotEmpty) {
       pages.add(

@@ -1,6 +1,6 @@
 /// A provider for the stdout output from the R process.
 ///
-/// Time-stamp: <Saturday 2023-11-04 18:27:10 +1100 Graham Williams>
+/// Time-stamp: "Saturday 2023-11-04 18:27:10 +1100 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///

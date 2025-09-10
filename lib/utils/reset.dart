@@ -1,6 +1,6 @@
 // Reset the app.
 //
-// Time-stamp: <Sunday 2025-03-30 08:12:22 +1100 Graham Williams>
+// Time-stamp: "Sunday 2025-03-30 08:12:22 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///

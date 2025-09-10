@@ -1,6 +1,6 @@
 /// Cluster setting for different cluster types.
 ///
-/// Time-stamp: <Saturday 2025-04-19 14:34:58 +1000 Graham Williams>
+/// Time-stamp: "Saturday 2025-04-19 14:34:58 +1000 Graham Williams"
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///

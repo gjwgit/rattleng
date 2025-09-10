@@ -1,11 +1,11 @@
 # Rattle Scripts: For dataset `ds` generate useful plots of numeric variable.
 #
-# Copyright (C) 2024, Togaware Pty Ltd.
+# Copyright (C) 2024-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-24 12:23:52 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-08-17 06:13:41 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -51,7 +51,7 @@ if (<IGNORE_MISSING_GROUP_BY>) {
 
 # Ensure the group-by variable is a factor in out temporary dataset.
 
-tds <- dplyr::mutate(tds, <GROUP_BY_VAR>=as.factor(<GROUP_BY_VAR>))
+tds %<>% dplyr::mutate(<GROUP_BY_VAR>=as.factor(<GROUP_BY_VAR>))
 
 ########################################################################
 # BOX PLOT
@@ -90,6 +90,21 @@ tds %>%
   ggplot2::stat_summary(ggplot2::aes(x=<GROUP_BY_VAR>), fun=mean, geom="point", shape=8) +
   ggplot2::xlab(paste("<GROUP_BY_VAR>\n\n", paste("<TIMESTAMP>", username), sep="")) +
   ggplot2::ggtitle("Distribution of <SELECTED_VAR> by <GROUP_BY_VAR>") +
+  <SETTINGS_GRAPHIC_THEME>()
+dev.off()
+
+########################################################################
+# <HISTOGRAM>
+########################################################################
+
+svg("<TEMPDIR>/explore_visual_histogram.svg", width=10)
+tds %>%
+  dplyr::select(<SELECTED_VAR>, <GROUP_BY_VAR>) %>%
+  ggplot2::ggplot(ggplot2::aes(x=<SELECTED_VAR>)) +
+  ggplot2::geom_histogram(ggplot2::aes(fill=<GROUP_BY_VAR>), alpha=0.55, position="identity", bins=30) +
+  ggplot2::xlab(paste("<SELECTED_VAR>\n\n", paste("<TIMESTAMP>", username), sep="")) +
+  ggplot2::ggtitle("Histogram of <SELECTED_VAR> by <GROUP_BY_VAR>") +
+  ggplot2::labs(fill="<GROUP_BY_VAR>", y="Count") +
   <SETTINGS_GRAPHIC_THEME>()
 dev.off()
 
@@ -161,10 +176,16 @@ tds <- tds[,which(colnames(tds) != "NA")]
 
 tds %<>% relocate(c(All, Benford), .after=last_col())
 
+# Present the digital distribution textually.
+
+tds %>%
+  dplyr::mutate(dplyr::across(-digit, ~ round(.x *100, 2))) %>%
+  print(row.names=FALSE)
+
 dsm <- reshape::melt(tds, id.vars = "digit")
 len <- nchar(as.character(tds[1, 1]))
 
-# Plot the digital distribution
+# Plot the digital distribution.
 
 p <- ggplot2::ggplot(dsm,
                      ggplot2::aes_string(x      = "digit",

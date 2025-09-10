@@ -1,6 +1,6 @@
 /// Configuration for tree models.
 //
-// Time-stamp: <Monday 2025-06-23 08:16:41 +1000 Graham Williams>
+// Time-stamp: "Saturday 2025-08-16 20:59:01 +1000 Graham Williams"
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///
@@ -374,7 +374,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 interval: 0.0005,
                 decimalPlaces: 4,
               ),
-              buildTextField(
+              BuildTextField(
                 label: 'Priors:',
                 controller: _priorsController,
                 key: const Key('priorsField'),
@@ -400,7 +400,7 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 maxWidth: 10,
                 ref: ref,
               ),
-              buildTextField(
+              BuildTextField(
                 label: 'Loss Matrix:',
                 controller: _lossMatrixController,
                 key: const Key('lossMatrixField'),

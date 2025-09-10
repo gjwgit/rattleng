@@ -1,6 +1,6 @@
 /// Number field.
 //
-// Time-stamp: <Monday 2025-01-06 15:20:25 +1100 Graham Williams>
+// Time-stamp: "Wednesday 2025-09-10 11:49:11 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -23,6 +23,8 @@
 ///
 /// Authors: Kevin Wang
 
+library;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -32,14 +34,14 @@ class SettingNumberField extends StatelessWidget {
   final String label;
   final int value;
   final ValueChanged<int> onChanged;
-  final String? tooltip;
+  final String tooltip;
 
   const SettingNumberField({
     super.key,
     required this.label,
     required this.value,
     required this.onChanged,
-    this.tooltip,
+    required this.tooltip,
   });
 
   @override
@@ -47,7 +49,7 @@ class SettingNumberField extends StatelessWidget {
     final controller = TextEditingController(text: value.toString());
 
     return MarkdownTooltip(
-      message: tooltip ?? '',
+      message: tooltip,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

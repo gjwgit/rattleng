@@ -1,6 +1,6 @@
 /// Providers for parameters boost settings.
 ///
-/// Time-stamp: <Sunday 2024-08-18 08:41:34 +1000 Graham Williams>
+/// Time-stamp: "Sunday 2024-08-18 08:41:34 +1000 Graham Williams"
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///

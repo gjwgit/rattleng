@@ -1,6 +1,6 @@
 /// Settings provider.
 //
-// Time-stamp: <Tuesday 2025-01-14 18:59:56 +1100 Graham Williams>
+// Time-stamp: "Wednesday 2025-09-10 12:50:16 +1000 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -29,18 +29,6 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-// Define a provider for managing settings.
-
-class SettingsNotifier extends StateNotifier<String> {
-  // Default value.
-
-  SettingsNotifier() : super('theme_rattle');
-
-  void setGraphicTheme(String newTheme) {
-    state = newTheme;
-  }
-}
 
 // The provider we will use in the app.
 
@@ -88,8 +76,6 @@ final imageViewerSettingProvider = StateProvider<String>(
 final randomPartitionSettingProvider = StateProvider<bool>((ref) => false);
 
 final useValidationSettingProvider = StateProvider<bool>((ref) => true);
-
-final rExecutablePathProvider = StateProvider<String>((ref) => '');
 
 // Partition setting provider with default values.
 

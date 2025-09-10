@@ -1,6 +1,6 @@
 /// Test WEATHER dataset EXPLORE tab VISUAL feature.
 //
-// Time-stamp: <Sunday 2025-01-26 07:38:59 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-08-15 13:31:59 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -52,6 +52,7 @@ void main() {
     expect(boxPlotFinder, findsNWidgets(2)); // Title and CheckBox
     final boxImageFinder = find.byType(ImagePage);
     expect(boxImageFinder, findsOneWidget);
+    await gotoNextPage(tester);
     await gotoNextPage(tester);
     final densityImageFinder = find.byType(ImagePage);
     expect(densityImageFinder, findsOneWidget);

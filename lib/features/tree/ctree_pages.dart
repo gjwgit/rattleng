@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2025-01-05 19:24:48 +1100 Graham Williams>
+// Time-stamp: "Sunday 2025-01-05 19:24:48 +1100 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -73,7 +73,7 @@ List<Widget> ctreePages(WidgetRef ref) {
         Built using [partykit::ctree()](https://www.rdocumentation.org/packages/partykit/topics/ctree).
 
         ''',
-        content: '$displayContent',
+        content: displayContent,
       ),
     );
   }

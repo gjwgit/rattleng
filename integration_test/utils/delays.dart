@@ -1,6 +1,6 @@
 /// Constant delays as used for testing.
 //
-// Time-stamp: <Tuesday 2024-09-24 13:16:24 +1000 Graham Williams>
+// Time-stamp: <Friday 2025-08-15 13:43:03 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -36,7 +36,7 @@ library;
 /// flutter test --device-id linux --dart-define=INTERACT=0 integration_test/app_test.dart
 ///
 /// If a test works when [interact] is non-zero but fails when it is zero then you
-/// probably need to use a <delay> or a <hack> rather than a [interact].
+/// probably need to use a delay or a hack rather than a [interact].
 
 const String envINTERACT = String.fromEnvironment(
   'INTERACT',
@@ -44,7 +44,7 @@ const String envINTERACT = String.fromEnvironment(
 );
 final Duration interact = Duration(seconds: int.parse(envINTERACT));
 
-/// The default <delay> can be used where a delay is always useful. We use a
+/// The default delay can be used where a delay is always useful. We use a
 /// default here of 2s though we have previously tried 1s, seems 2s is more
 /// likely to be enough.
 
@@ -52,16 +52,16 @@ const Duration delay = Duration(seconds: 2);
 
 /// 20240902 gjw There are currently times when we need to wait for the R Script
 /// to finish in the current architecture which needs to be fixed,
-/// eventually. For now we introduce a <hack> delay. By naming the delay as a
-/// <hack> we are marking it as a delay that we want to com back and fix some
+/// eventually. For now we introduce a hack delay. By naming the delay as a
+/// hack we are marking it as a delay that we want to com back and fix some
 /// time.
 
 const Duration hack = Duration(seconds: 10);
 
 /// TODO 20240922 zy DO WE NEED longHack?
 ///
-/// 20240922 Rather than introducing a <longHack> @Zheyuan, unless there is a
-/// good reason that you explain here, please just use multiple <hack>
+/// 20240922 Rather than introducing a longHack @Zheyuan, unless there is a
+/// good reason that you explain here, please just use multiple hack
 /// delays. Also, please comment when you add things like this to avoid others
 /// having to waste their time.
 

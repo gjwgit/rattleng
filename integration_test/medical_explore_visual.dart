@@ -1,6 +1,6 @@
 /// Test EXPLORE tab VISUAL feature LARGE dataset.
 //
-// Time-stamp: <Friday 2025-01-24 06:44:01 +1100 Graham Williams>
+// Time-stamp: <Friday 2025-08-15 13:30:51 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -53,6 +53,8 @@ void main() {
     await tester.pump(delay);
     await gotoNextPage(tester);
     await verifyPage('Box Plot Notch');
+    await gotoNextPage(tester);
+    await verifyPage('Histogram');
     await gotoNextPage(tester);
     await verifyPage('Density Plot of Values');
     await gotoNextPage(tester);

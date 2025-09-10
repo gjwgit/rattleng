@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Tuesday 2025-08-05 15:43:12 +1000 Graham Williams>
+// Time-stamp: "Saturday 2025-08-16 10:29:26 +1000 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -53,8 +53,8 @@ class EvaluateConfig extends ConsumerStatefulWidget {
 }
 
 class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
-  final List<_ModelConfig> modelConfigs = [
-    _ModelConfig(
+  final List<ModelConfig> modelConfigs = [
+    ModelConfig(
       key: 'treeEvaluate',
       label: 'Tree',
       checkCommands: [
@@ -67,7 +67,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       ],
       provider: treeEvaluateProvider,
     ),
-    _ModelConfig(
+    ModelConfig(
       key: 'forestEvaluate',
       label: 'Forest',
       checkCommands: [
@@ -84,7 +84,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       ],
       provider: forestEvaluateProvider,
     ),
-    _ModelConfig(
+    ModelConfig(
       key: 'boostEvaluate',
       label: 'Boost',
       checkCommands: [
@@ -97,7 +97,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       ],
       provider: boostEvaluateProvider,
     ),
-    _ModelConfig(
+    ModelConfig(
       key: 'svmEvaluate',
       label: 'SVM',
       checkCommands: [
@@ -106,7 +106,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       checkFiles: [[]],
       provider: svmEvaluateProvider,
     ),
-    _ModelConfig(
+    ModelConfig(
       key: 'linearEvaluate',
       label: 'Linear',
       checkCommands: [
@@ -120,7 +120,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       ],
       provider: linearEvaluateProvider,
     ),
-    _ModelConfig(
+    ModelConfig(
       key: 'neuralNetEvaluate',
       label: 'Neural',
       checkCommands: [
@@ -133,7 +133,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       ],
       provider: neuralEvaluateProvider,
     ),
-    _ModelConfig(
+    ModelConfig(
       key: 'KMeansEvaluate',
       label: 'KMeans',
       checkCommands: [
@@ -144,7 +144,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
       ],
       provider: kMeansEvaluateProvider,
     ),
-    _ModelConfig(
+    ModelConfig(
       key: 'HClustEvaluate',
       label: 'HClust',
       checkCommands: [
@@ -188,7 +188,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
     ''',
   };
 
-  bool _isEvaluationEnabled(_ModelConfig config) {
+  bool _isEvaluationEnabled(ModelConfig config) {
     for (var i = 0; i < config.checkCommands.length; i++) {
       if (checkFunctionExecuted(
         ref,
@@ -401,6 +401,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                           ? [ec, em, ro, hd, ero]
                           : [ec, em, ro, erc, hd, ero];
 
+                  if (!context.mounted) return;
+
                   await executeEvaluation(
                     executed: ctreeExecuted && treeExecuted,
                     parameters: ctreeParams,
@@ -416,6 +418,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                       datasetRisk == 'NULL' || datasetRisk.isEmpty
                           ? [erf, em, ro, hd, ero]
                           : [erf, em, ro, erc, hd, ero];
+
+                  if (!context.mounted) return;
 
                   await executeEvaluation(
                     executed: randomForestExecuted && forestTicked,
@@ -433,6 +437,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                           ? [ecf, em, ro, hd, ero]
                           : [ecf, em, ro, erc, hd, ero];
 
+                  if (!context.mounted) return;
+
                   await executeEvaluation(
                     executed: conditionalForestExecuted && forestTicked,
                     parameters: cforestParams,
@@ -448,6 +454,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                       datasetRisk == 'NULL' || datasetRisk.isEmpty
                           ? [ea, em, ro, hd, ero]
                           : [ea, em, ro, erc, hd, ero];
+
+                  if (!context.mounted) return;
 
                   await executeEvaluation(
                     executed: adaBoostExecuted && boostTicked,
@@ -465,6 +473,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                           ? [ex, em, ro, hd, ero]
                           : [ex, em, ro, erc, hd, ero];
 
+                  if (!context.mounted) return;
+
                   await executeEvaluation(
                     executed: xgBoostExecuted && boostTicked,
                     parameters: xgbParams,
@@ -480,6 +490,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                           ? [es, em, ro, hd, ero]
                           : [es, em, ro, erc, hd, ero];
 
+                  if (!context.mounted) return;
+
                   await executeEvaluation(
                     executed: svmExecuted,
                     parameters: svmParams,
@@ -494,6 +506,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                       datasetRisk == 'NULL' || datasetRisk.isEmpty
                           ? [el, em, ro, hd, ero]
                           : [el, em, ro, erc, hd, ero];
+
+                  if (!context.mounted) return;
 
                   await executeEvaluation(
                     executed: linearExecuted,
@@ -511,6 +525,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                           ? [en, em, ro, hd, ero]
                           : [en, em, ro, erc, hd, ero];
 
+                  if (!context.mounted) return;
+
                   await executeEvaluation(
                     executed: neuralTicked && nnetExecuted,
                     parameters: nnetParams,
@@ -526,6 +542,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                       datasetRisk == 'NULL' || datasetRisk.isEmpty
                           ? [ent, em, ro, hd, ero]
                           : [ent, em, ro, erc, hd, ero];
+
+                  if (!context.mounted) return;
 
                   await executeEvaluation(
                     executed: neuralTicked && neuralNetExecuted,
@@ -577,7 +595,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                   ),
                 ],
               );
-            }).toList(),
+            }),
           ],
         ),
 
@@ -650,14 +668,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
   }
 }
 
-class _ModelConfig {
+class ModelConfig {
   final String key;
   final String label;
   final List<List<String>> checkCommands;
   final List<List<String>> checkFiles;
   final StateProvider<bool> provider;
 
-  const _ModelConfig({
+  const ModelConfig({
     required this.key,
     required this.label,
     required this.checkCommands,

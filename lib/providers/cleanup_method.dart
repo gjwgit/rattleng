@@ -1,6 +1,6 @@
 /// A provider of the clean up method that to delete missing from dataset.
 ///
-/// Time-stamp: <Sunday 2024-08-18 08:41:34 +1000 Graham Williams>
+/// Time-stamp: "Sunday 2024-08-18 08:41:34 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///

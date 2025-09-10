@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: <Sunday 2025-03-30 11:45:43 +1100 Graham Williams>
+// Time-stamp: "Saturday 2025-08-16 10:19:06 +1000 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -43,10 +43,10 @@ class ScriptText extends ConsumerStatefulWidget {
   const ScriptText({super.key});
 
   @override
-  _ScriptTextState createState() => _ScriptTextState();
+  ScriptTextState createState() => ScriptTextState();
 }
 
-class _ScriptTextState extends ConsumerState<ScriptText> {
+class ScriptTextState extends ConsumerState<ScriptText> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _searchController = TextEditingController();
 
@@ -116,7 +116,7 @@ class _ScriptTextState extends ConsumerState<ScriptText> {
                     child: SingleChildScrollView(
                       controller: _scrollController,
                       scrollDirection: Axis.vertical,
-                      child: Container(
+                      child: SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: scriptWidget,
                       ),

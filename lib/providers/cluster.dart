@@ -1,6 +1,6 @@
 /// A provider for the parameters for cluster.
 ///
-/// Time-stamp: <Monday 2024-12-02 09:32:57 +1100 Graham Williams>
+/// Time-stamp: "Monday 2024-12-02 09:32:57 +1100 Graham Williams"
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///

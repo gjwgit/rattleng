@@ -1,6 +1,6 @@
 /// A conveinence function to set the status provider.
 ///
-/// Time-stamp: <Wednesday 2023-11-01 08:41:55 +1100 Graham Williams>
+/// Time-stamp: "Wednesday 2023-11-01 08:41:55 +1100 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
