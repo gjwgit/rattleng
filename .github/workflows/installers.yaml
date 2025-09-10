@@ -13,7 +13,7 @@ on:
 
 env:
   APP: rattle
-  FLUTTER_VERSION: '3.35.1'
+  FLUTTER_VERSION: '3.35.3'
 
 jobs:
 
@@ -211,8 +211,7 @@ jobs:
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: Build artifacts
-        # The following chooses arm64 over x86_64
-        run: flutter build -d macos --release
+        run: flutter build macos --release
 
       - name: Archive Release
         uses: thedoctor0/zip-release@master
