@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: "Sunday 2025-03-30 08:11:19 +1100 Graham Williams"
+// Time-stamp: "Wednesday 2025-09-10 13:12:44 +1000 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -39,7 +39,7 @@ Widget variableChooser(
   required bool enabled,
   required String tooltip,
   // Add a callback for onChanged to handle custom logic.
-  Function(String?)? onChanged,
+  void Function(String?)? onChanged,
 }) {
   return MarkdownTooltip(
     message: tooltip,
@@ -56,11 +56,7 @@ Widget variableChooser(
       onSelected: (String? value) {
         if (enabled) {
           ref.read(stateProvider.notifier).state = value ?? 'IMPOSSIBLE';
-          if (onChanged != null) {
-            // Call the custom callback if provided.
-
-            onChanged(value);
-          }
+          onChanged?.call(value);
         }
       },
 
