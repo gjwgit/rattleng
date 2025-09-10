@@ -203,7 +203,7 @@ LINES ?= 300
 locmax:
 	@echo "Files with EXCESS LINES OF CODE:\n"
 	@-output=$$(find lib -name "*.dart" -exec sh -c ' \
-		lines=$$(grep -v "^\s*$$" "$$1" | grep -v "^\s*//" | sed "/\/\*/,/\*\//d" | wc -l); \
+		lines=$$(bash support/loc.sh "$$1"); \
 		if [ $$lines -gt $(LINES) ]; then \
 			printf "%4d %s\n" $$lines "$$1"; \
 		fi \
@@ -222,7 +222,7 @@ locmax:
 PHONY: locmax-enforce
 locmax-enforce:
 	@output=$$(find lib -name "*.dart" -exec sh -c ' \
-		lines=$$(grep -v "^\s*$$" "$$1" | grep -v "^\s*//" | sed "/\/\*/,/\*\//d" | wc -l); \
+		lines=$$(bash support/loc.sh "$$1"); \
 		if [ $$lines -gt $(LINES) ]; then \
 			printf "%4d %s\n" $$lines "$$1"; \
 		fi \
