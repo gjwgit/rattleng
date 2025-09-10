@@ -1,6 +1,6 @@
 /// Build a text field widget for the input of numeric values.
 //
-// Time-stamp: "Saturday 2025-08-16 20:57:27 +1000 Graham Williams"
+// Time-stamp: "Wednesday 2025-09-10 11:53:28 +1000 Graham Williams"
 //
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -50,7 +50,7 @@ class BuildTextField extends ConsumerStatefulWidget {
   final String? Function(String?) validator;
   final TextInputFormatter inputFormatter;
   final int maxWidth;
-  final WidgetRef? ref;
+  final WidgetRef ref;
   final VoidCallback? onUpDownPressed;
   final int? tapDelay;
 
@@ -129,19 +129,19 @@ class _BuildTextFieldState extends ConsumerState<BuildTextField> {
                 // explanation here for this please. Or else implement the
                 // special case through extra parameters.
                 onEditingComplete: () {
-                  if (widget.label == 'Sample Size:' && widget.ref != null) {
+                  if (widget.label == 'Sample Size:') {
                     ref.read(forestSampleSizeProvider.notifier).state =
                         widget.controller.text;
                   }
                 },
                 onSaved: (value) {
-                  if (widget.label == 'Sample Size:' && widget.ref != null) {
+                  if (widget.label == 'Sample Size:') {
                     ref.read(forestSampleSizeProvider.notifier).state =
                         widget.controller.text;
                   }
                 },
                 onTapOutside: (event) {
-                  if (widget.label == 'Sample Size:' && widget.ref != null) {
+                  if (widget.label == 'Sample Size:') {
                     ref.read(forestSampleSizeProvider.notifier).state =
                         widget.controller.text;
                   }
