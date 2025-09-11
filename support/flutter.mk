@@ -202,18 +202,28 @@ LINES ?= 300
 .PHONY: locmax
 locmax:
 	@echo "Files with EXCESS LINES OF CODE:\n"
-	@-output=$$(find lib -name "*.dart" -exec sh -c ' \
+	@-loc=$$(cat $(shell find lib -name '*.dart') \
+		| egrep -v '^ */' \
+		| egrep -v '^ *$$' \
+		| egrep -v '^ *[)},]+, *$$' \
+		| wc -l \
+		| numfmt --grouping); \
+	numf=$$(find lib -name "*.dart" -type f | wc -l); \
+	output=$$(find lib -name "*.dart" -exec sh -c ' \
 		lines=$$(bash support/loc.sh "$$1"); \
 		if [ $$lines -gt $(LINES) ]; then \
 			printf "%4d %s\n" $$lines "$$1"; \
 		fi \
 	' _ {} \; | sort -nr); \
+	locm=$$(echo $$output | wc -w | awk '{print $$1/2}'); \
 	if [ -n "$$output" ]; then \
 		echo "$$output"; \
-		echo "\n$(CROSS) Error: Files with more than $(LINES) lines found"; \
+		echo "\nTotal $$loc lines of code across $$numf files."; \
+		echo "\n$(CROSS) Error: Found $$locm files with more than $(LINES) lines of code."; \
 		exit 1; \
 	else \
-		echo "$(TICK) All files are under $(LINES) lines"; \
+		echo "Total $$loc lines of code across $$numf files."; \
+		echo "\n$(TICK) All files are under $(LINES) lines."; \
 	fi
 	@echo $(SEPARATOR)
 
@@ -221,17 +231,27 @@ locmax:
 
 PHONY: locmax-enforce
 locmax-enforce:
-	@output=$$(find lib -name "*.dart" -exec sh -c ' \
+	@loc=$$(cat $(shell find lib -name '*.dart') \
+		| egrep -v '^ */' \
+		| egrep -v '^ *$$' \
+		| egrep -v '^ *[)},]+, *$$' \
+		| wc -l \
+		| numfmt --grouping); \
+	numf=$$(find lib -name "*.dart" -type f | wc -l); \
+	output=$$(find lib -name "*.dart" -exec sh -c ' \
 		lines=$$(bash support/loc.sh "$$1"); \
 		if [ $$lines -gt $(LINES) ]; then \
 			printf "%4d %s\n" $$lines "$$1"; \
 		fi \
 	' _ {} \; | sort -nr); \
+	locm=$$(echo $$output | wc -w | awk '{print $$1/2}'); \
 	if [ -n "$$output" ]; then \
 		echo "$$output"; \
-		echo "$(CROSS) Error: Files with more than $(LINES) lines found"; \
+		echo "Total $$loc lines of code across $$numf files."; \
+		echo "$(CROSS) Error: Found $$locm files with more than $(LINES) lines of code."; \
 		exit 1; \
 	else \
+		echo "Total $$loc lines of code across $$numf files."; \
 		echo "$(TICK) All files are under $(LINES) lines"; \
 	fi
 
