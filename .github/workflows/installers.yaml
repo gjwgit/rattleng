@@ -312,10 +312,10 @@ jobs:
         mkdir -p dmg_temp
         cp -R "build/macos/Build/Products/Release/${{ env.APP }}.app" dmg_temp/
         ln -s /Applications dmg_temp/Applications
-        hdiutil create -volname "${{ env.APP }}" \
-          -srcfolder dmg_temp \
-          -ov -format UDZO \
-          "${{ env.APP }}-${{github.ref_name}}-macos-unsigned.dmg"
+#        hdiutil create -volname "${{ env.APP }}" \
+#          -srcfolder dmg_temp \
+#          -ov -format UDZO \
+#          "${{ env.APP }}-${{github.ref_name}}-macos-unsigned.dmg"
 
     # - name: Notarize DMG
     #   if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
