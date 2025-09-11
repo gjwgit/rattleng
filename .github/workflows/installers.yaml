@@ -337,13 +337,15 @@ jobs:
     #     path: "*.dmg"
 
       - name: Review Bundle Contents
-        run: ls -lh build/macos/Build/Products/Release
+        run: |
+          ls -lh build/macos/Build/Products/Release
+          pwd
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.APP }}-macos-dmg
-          path: build/macos/Build/Products/Release/${{ env.APP }}-${{github.ref_name}}-macos-unsigned.dmg
+          path: /Users/runner/work/${{ env.APP }}/${{ env.APP }}/${{ env.APP }}-${{github.ref_name}}-macos-unsigned.dmg
 
     # - name: Create Release
     #   if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
