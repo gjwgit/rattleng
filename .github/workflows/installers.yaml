@@ -88,7 +88,7 @@ jobs:
   build-windows-inno:
     if: |
       contains(github.event.head_commit.message, 'bump version') ||
-      contains(github.event.head_commit.message, 'build inno') ||
+      contains(github.event.head_commit.message, 'build windows) ||
       contains(github.event.head_commit.message, 'build installers')
     runs-on: windows-latest
 
@@ -106,11 +106,34 @@ jobs:
       - name: Install Project Dependencies
         run: flutter pub get
 
-      - name: Enable Windows Build
+      - name: Enable Windows Desktop
         run: flutter config --enable-windows-desktop
 
-      - name: Build Artifact
-        run: flutter build windows
+      # This is a special case and not generally required. Removing
+      # for now from the template. 20250912 gjw
+      #
+      # - name: Generate intermediates
+      #   run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Build Flutter Windows app
+        run: flutter build windows --release
+
+      # Build ZIP
+
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          filename: ${{ env.APP }}-${{github.ref_name}}-windows.zip
+          directory: build/windows/x64/runner/Release
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.APP }}-windows-zip
+          path: build/windows/x64/runner/Release/${{ env.APP }}-${{github.ref_name}}-windows.zip
+
+      # Build EXE
 
       - name: Check the DLLs for Inclusion in the .iss script
         run: dir D:\a\${{ env.APP }}\${{ env.APP }}\build\windows\x64\runner\Release\
@@ -143,54 +166,11 @@ jobs:
 
   ########################################################################
 
-  build-windows-zip:
+  build-macos:
     if: |
       contains(github.event.head_commit.message, 'bump version') ||
-      contains(github.event.head_commit.message, 'build installers')
-    runs-on: windows-latest
-
-    steps:
-      - name: Clone Repository
-        uses: actions/checkout@v4
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          architecture: x64
-          flutter-version: ${{env.FLUTTER_VERSION}}
-
-      - name: Install project dependencies
-        run: flutter pub get
-
-      - name: Generate intermediates
-        run: flutter pub run build_runner build --delete-conflicting-outputs
-
-      - name: Enable windows build
-        run: flutter config --enable-windows-desktop
-
-      - name: Build artifacts
-        run: flutter build windows --release
-
-      - name: Archive Release
-        uses: thedoctor0/zip-release@master
-        with:
-          type: 'zip'
-          filename: ${{ env.APP }}-${{github.ref_name}}-windows.zip
-          directory: build/windows/x64/runner/Release
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.APP }}-windows-zip
-          path: build/windows/x64/runner/Release/${{ env.APP }}-${{github.ref_name}}-windows.zip
-
-  ########################################################################
-
-  build-macos-zip:
-    if: |
-      contains(github.event.head_commit.message, 'bump version') ||
-      contains(github.event.head_commit.message, 'build installers')
+      contains(github.event.head_commit.message, 'build installers') ||
+      contains(github.event.head_commit.message, 'build macos')
     runs-on: macos-latest
 
     steps:
@@ -201,111 +181,27 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          architecture: x64
           flutter-version: ${{env.FLUTTER_VERSION}}
 
       - name: Install Project Dependencies
         run: flutter pub get
 
-      - name: Generate intermediates
-        run: flutter pub run build_runner build --delete-conflicting-outputs
-
-      - name: Enable macOS build
-        run: flutter config --enable-macos-desktop
-
-      - name: Build artifacts
-        run: flutter build macos --release
-
-      - name: Archive Release
-        uses: thedoctor0/zip-release@master
-        with:
-          type: 'zip'
-          directory: build/macos/Build/Products/Release
-          path: ${{ env.APP }}.app
-          filename: ${{ env.APP }}-${{github.ref_name}}-macos.zip
-
-      - name: Review Bundle Contents
-        run: ls -lh build/macos/Build/Products/Release
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.APP }}-macos-zip
-          path: build/macos/Build/Products/Release/${{ env.APP }}-${{github.ref_name}}-macos.zip
-
-  ########################################################################
-  #
-  # 20250911 gjw Begin getting a dmg build under way.
-  #
-  # First step is to create an unsigned DMG
-  #
-  # Required Repository Secrets
-  # Add these secrets in your GitHub repository settings (Settings > Secrets and variables > Actions):
-  # For signed releases:
-  #
-  # CERTIFICATES_P12: Base64 encoded p12 certificate file
-  # CERTIFICATES_P12_PASSWORD: Password for the p12 certificate
-  # DEVELOPER_ID_APPLICATION: Your Developer ID Application certificate name (e.g., "Developer ID Application: Your Name (TEAM_ID)")
-  # APPLE_ID: Your Apple ID email
-  # APP_SPECIFIC_PASSWORD: App-specific password from Apple ID
-  # TEAM_ID: Your Apple Developer Team ID
-
-  build-macos-dmg:
-    if: |
-      contains(github.event.head_commit.message, 'bump version') ||
-      contains(github.event.head_commit.message, 'build installers') ||
-      contains(github.event.head_commit.message, 'build dmg')
-    runs-on: macos-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: ${{env.FLUTTER_VERSION}}
-          channel: 'stable'
-
-      - name: Install dependencies
-        run: flutter pub get
-
       - name: Enable macOS desktop
         run: flutter config --enable-macos-desktop
+
+      # This is a special case and not generally required. Removing
+      # for now from the template. 20250912 gjw
+      #
+      # - name: Generate intermediates
+      #   run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: Build Flutter macOS app
         run: flutter build macos --release
 
-    # - name: Import Code-Signing Certificates
-    #   if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
-    #   uses: Apple-Actions/import-codesign-certs@v2
-    #   with:
-    #     p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
-    #     p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
-
-    # - name: Sign the app bundle
-    #   if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
-    #   run: |
-    #     codesign --deep --force --verify --verbose --sign "${{ secrets.DEVELOPER_ID_APPLICATION }}" "build/macos/Build/Products/Release/YourAppName.app"
-
-    # - name: Create DMG (Signed)
-    #   if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
-    #   run: |
-    #     # Create a temporary directory for DMG contents
-    #     mkdir -p dmg_temp
-    #     cp -R "build/macos/Build/Products/Release/YourAppName.app" dmg_temp/
-
-    #     # Create symbolic link to Applications folder
-    #     ln -s /Applications dmg_temp/Applications
-
-    #     # Create DMG
-    #     hdiutil create -volname "YourAppName" \
-    #       -srcfolder dmg_temp \
-    #       -ov -format UDZO \
-    #       "YourAppName-${{ github.ref_name }}.dmg"
-
-    #     # Sign the DMG
-    #     codesign --force --verify --verbose --sign "${{ secrets.DEVELOPER_ID_APPLICATION }}" "YourAppName-${{ github.ref_name }}.dmg"
+      - name: Note the build location
+        run: |
+          pwd
+          ls -lh build/macos/Build/Products/Release
 
       - name: Create DMG (Unsigned)
         run: |
@@ -317,180 +213,29 @@ jobs:
             -ov -format UDZO \
             "${{ env.APP }}-${{github.ref_name}}-macos-unsigned.dmg"
 
-    # - name: Notarize DMG
-    #   if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
-    #   run: |
-    #     # Submit for notarization
-    #     xcrun notarytool submit "YourAppName-${{ github.ref_name }}.dmg" \
-    #       --apple-id "${{ secrets.APPLE_ID }}" \
-    #       --password "${{ secrets.APP_SPECIFIC_PASSWORD }}" \
-    #       --team-id "${{ secrets.TEAM_ID }}" \
-    #       --wait
-
-    #     # Staple the notarization
-    #     xcrun stapler staple "YourAppName-${{ github.ref_name }}.dmg"
-
-    # - name: Upload DMG artifact
-    #   uses: actions/upload-artifact@v4
-    #   with:
-    #     name: macos-dmg
-    #     path: "*.dmg"
-
-      - name: Review Bundle Contents
+      - name: Note the DMG created
         run: |
-          ls -lh build/macos/Build/Products/Release
-          pwd
+          ls -lh
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.APP }}-macos-dmg
-          path: /Users/runner/work/${{ env.APP }}/${{ env.APP }}/${{ env.APP }}-${{github.ref_name}}-macos-unsigned.dmg
+          path: ${{ env.APP }}-${{github.ref_name}}-macos-unsigned.dmg
 
-    # - name: Create Release
-    #   if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
-    #   uses: softprops/action-gh-release@v1
-    #   with:
-    #     files: "*.dmg"
-    #     draft: false
-    #     prerelease: false
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create ZIP
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          directory: build/macos/Build/Products/Release
+          path: ${{ env.APP }}.app
+          filename: ${{ env.APP }}-${{github.ref_name}}-macos.zip
 
-  #     - name: Review Bundle Contents
-  #       run: ls -lh build/macos/Build/Products/Release
+      - name: Review ZIP exists
+        run: ls -lh build/macos/Build/Products/Release
 
-  #     - name: Upload Artifact
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: ${{ env.APP }}-macos-zip
-  #         path: build/macos/Build/Products/Release/${{ env.APP }}-${{github.ref_name}}-macos.zip
-
-########################################################################
-#
-# 20241023 gjw Currently failing due to various things, including the
-# password having special characters. Abort the attempt to build apk
-# for now.
-
-  # build-android-apk:
-  #   if: contains(github.event.head_commit.message, 'bump android')
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     - name: Clone Repository
-  #       uses: actions/checkout@v4
-
-  #     - name: Confirm Branch
-  #       run: git status
-
-  #     - name: Install OS Dependencies
-  #       run: |
-  #         sudo apt-get update -y
-  #         sudo apt-get install -y ninja-build libgtk-3-dev
-  #         sudo apt-get install -y clang cmake adb
-
-  #     - name: Set up JDK
-  #       uses: actions/setup-java@v4
-  #       with:
-  #         distribution: 'zulu'
-  #         java-version: '17'
-
-  #     - name: Set up Flutter
-  #       uses: subosito/flutter-action@v2
-  #       with:
-  #         channel: stable
-  #         architecture: x64
-  #         flutter-version: 3.24.3
-
-  #     - name: Confirm Flutter Version
-  #       run: flutter --version
-
-  #     # Decode and store keystore file.
-
-  #     - name: Decode Keystore
-  #       run: echo $ANDROID_KEYSTORE | base64 -d > android/app/keystore.jks
-  #       env:
-  #         ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
-
-  #     # Set up environment variables for signing. If the password
-  #     # contains special shell characters we need to handle them
-  #     # specifically. We handle some cases below for illustration.
-
-  #     - name: Set up environment for signing
-  #       run: |
-  #         export KEYSTORE_FILE=$GITHUB_WORKSPACE/android/app/keystore.jks
-  #         export KEYSTORE_PASSWORD="${{ secrets.KEYSTORE_PASSWORD }}"
-  #         export KEY_ALIAS=${{ secrets.KEY_ALIAS }}
-  #         export KEY_PASSWORD="${{ secrets.KEY_PASSWORD }}"
-
-  #     # - name: Set up environment for signing
-  #     #   run: |
-  #     #     echo "KEYSTORE_FILE=$GITHUB_WORKSPACE/android/app/keystore.jks" >> $GITHUB_ENV
-  #     #     echo "KEYSTORE_PASSWORD=\"${{ secrets.KEYSTORE_PASSWORD }}\"" >> $GITHUB_ENV
-  #     #     echo "KEY_ALIAS=${{ secrets.KEY_ALIAS }}" >> $GITHUB_ENV
-  #     #     echo "KEY_PASSWORD=\"${{ secrets.KEY_PASSWORD }}\"" >> $GITHUB_ENV
-
-  #     - name: Confirm Flutter Installation
-  #       run: flutter doctor
-
-  #     - name: Install flutter project dependencies
-  #       run: flutter pub get
-
-  #     - name: Build APK Artifact
-  #       run: flutter build apk --release
-
-  #     - name: Upload APK Artifact
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: innerpod-android-apk
-  #         path: build/app/outputs/apk/release/app-release.apk
-
-########################################################################
-
-  # ########################################################################
-
-  # build-ios-zip:
-  #   if: |
-  #     contains(github.event.head_commit.message, 'bump version') ||
-  #     contains(github.event.head_commit.message, 'build installers')
-  #   runs-on: macos-latest
-
-  #   steps:
-  #     - name: Clone Repository
-  #       uses: actions/checkout@v4
-
-  #     - name: Set up Flutter
-  #       uses: subosito/flutter-action@v2
-  #       with:
-  #         channel: 'stable'
-  #         architecture: x64
-  #         flutter-version: ${{env.FLUTTER_VERSION}}
-
-  #     - name: Install Project Dependencies
-  #       run: flutter pub get
-
-  #     - name: Generate intermediates
-  #       run: flutter pub run build_runner build --delete-conflicting-outputs
-
-  #     - name: Enable macOS build
-  #       run: flutter config --enable-macos-desktop
-
-  #     - name: Build artifacts
-  #       run: flutter build ios --release --nocodesign
-
-  #     - name: Archive Release
-  #       uses: thedoctor0/zip-release@master
-  #       with:
-  #         type: 'zip'
-  #         directory: build/macos/Build/Products/Release
-  #         path: ${{ env.APP }}.app
-  #         filename: ${{ env.APP }}-${{github.ref_name}}-ios.zip
-
-  #     - name: Review Bundle Contents
-  #       run: ls -lh build/macos/Build/Products/Release
-
-  #     - name: Upload Artifact
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: ${{ env.APP }}-macos-zip
-  #         path: build/macos/Build/Products/Release/${{ env.APP }}-${{github.ref_name}}-macos.zip
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.APP }}-macos-zip
+          path: build/macos/Build/Products/Release/${{ env.APP }}-${{github.ref_name}}-macos.zip
