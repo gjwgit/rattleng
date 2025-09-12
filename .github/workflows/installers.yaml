@@ -46,15 +46,12 @@ jobs:
       - name: Install OS Dependencies
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y ninja-build libgtk-3-dev
+          printf '#%.0s' {1..72}
+          sudo apt-get install -y ninja-build
+          printf '#%.0s' {1..72}
+          sudo apt-get install -y libgtk-3-dev
+          printf '#%.0s' {1..72}
           sudo apt-get install -y clang cmake
-          # This is a special case and not generally
-          # required. Removing for now from the template. If required
-          # then the template update should account or this. 20250912
-          # gjw
-          #
-          # sudo apt-get install -y libunwind-dev libsecret-1-dev
-          # sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -71,13 +68,6 @@ jobs:
 
       - name: Enable Linux Build
         run: flutter config --enable-linux-desktop
-
-      # This is a special case and not generally required. Removing
-      # for now from the template. If required then the template
-      # update should account or this. 20250912 gjw
-      #
-      # - name: Generate intermediates
-      #   run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: Build Flutter Linux app
         run: flutter build linux --release
@@ -96,92 +86,6 @@ jobs:
         with:
           name: ${{ env.APP }}-linux-zip
           path: build/linux/x64/release/bundle/${{ env.APP }}-${{ github.ref_name }}-linux.zip
-
-  ########################################################################
-  # WINDOWS
-
-  package-windows-zip-exe:
-    if: |
-      contains(github.event.head_commit.message, 'bump version') ||
-      contains(github.event.head_commit.message, 'build installers') ||
-      contains(github.event.head_commit.message, 'build windows')
-    runs-on: windows-latest
-
-    steps:
-      - name: Clone Repository
-        uses: actions/checkout@v4
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          architecture: x64
-          flutter-version: ${{env.FLUTTER_VERSION}}
-
-      - name: Confirm Flutter Version
-        run: flutter --version
-
-      - name: Install Flutter Project Dependencies
-        run: flutter pub get
-
-      - name: Enable Windows Desktop
-        run: flutter config --enable-windows-desktop
-
-      # This is a special case and not generally required. Removing
-      # for now from the template. If required then the template
-      # update should account or this. 20250912 gjw
-      #
-      # - name: Generate intermediates
-      #   run: flutter pub run build_runner build --delete-conflicting-outputs
-
-      - name: Build Flutter Windows app
-        run: flutter build windows --release
-
-      # Package as ZIP
-
-      - name: Archive Release
-        uses: thedoctor0/zip-release@master
-        with:
-          type: 'zip'
-          filename: ${{ env.APP }}-${{github.ref_name}}-windows.zip
-          directory: build/windows/x64/runner/Release
-
-      - name: Upload Artefact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.APP }}-windows-zip
-          path: build/windows/x64/runner/Release/${{ env.APP }}-${{github.ref_name}}-windows.zip
-
-      # Package as EXE
-
-      - name: Check the DLLs for Inclusion in the .iss script
-        run: dir D:\a\${{ env.APP }}\${{ env.APP }}\build\windows\x64\runner\Release\
-
-      - name: Get Version from pubspec.yaml
-        run: |
-          $version = (Get-Content pubspec.yaml | Select-String '^version:[^^]*' | ForEach-Object { $_.ToString().Split(":")[1].Trim().Split("+")[0].Trim() })
-          echo "APP_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
-
-      - name: Compile .ISS to .EXE Installer
-
-        # The github repo for the github action Minionguyjpro/Inno-Setup-Action@v1.2.5
-        # disappeared completely (user and repo). I found a recent fork from the
-        # Wayback machine and forked it myself and that seems to
-        # work as above. (gjw 20250403)
-        #
-        # Seems like it is now back. (gjw 20250423)
-        #
-        # uses: gjwgit/Inno-Setup-Action@v1.2.5
-        uses: Minionguyjpro/Inno-Setup-Action@v1.2.5
-        with:
-          path: installers/app-windows.iss
-          options: /O+
-
-      - name: Upload Artefact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.APP }}-windows-inno
-          path: D:\a\${{ env.APP }}\${{ env.APP }}\installers\installers\${{ env.APP }}-dev-windows-inno.exe
 
   ########################################################################
   # MACOS
@@ -211,12 +115,6 @@ jobs:
 
       - name: Enable macOS desktop
         run: flutter config --enable-macos-desktop
-
-      # This is a special case and not generally required. Removing
-      # for now from the template. 20250912 gjw
-      #
-      # - name: Generate intermediates
-      #   run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: Build Flutter macOS app
         run: flutter build macos --release
@@ -267,3 +165,73 @@ jobs:
         with:
           name: ${{ env.APP }}-macos-zip
           path: build/macos/Build/Products/Release/${{ env.APP }}-${{github.ref_name}}-macos.zip
+
+  ########################################################################
+  # WINDOWS
+
+  package-windows-zip-exe:
+    if: |
+      contains(github.event.head_commit.message, 'bump version') ||
+      contains(github.event.head_commit.message, 'build installers') ||
+      contains(github.event.head_commit.message, 'build windows')
+    runs-on: windows-latest
+
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          architecture: x64
+          flutter-version: ${{env.FLUTTER_VERSION}}
+
+      - name: Confirm Flutter Version
+        run: flutter --version
+
+      - name: Install Flutter Project Dependencies
+        run: flutter pub get
+
+      - name: Enable Windows Desktop
+        run: flutter config --enable-windows-desktop
+
+      - name: Build Flutter Windows app
+        run: flutter build windows --release
+
+      # Package as ZIP
+
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          filename: ${{ env.APP }}-${{github.ref_name}}-windows.zip
+          directory: build/windows/x64/runner/Release
+
+      - name: Upload Artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.APP }}-windows-zip
+          path: build/windows/x64/runner/Release/${{ env.APP }}-${{github.ref_name}}-windows.zip
+
+      # Package as EXE
+
+      - name: Check the DLLs for Inclusion in the .iss script
+        run: dir D:\a\${{ env.APP }}\${{ env.APP }}\build\windows\x64\runner\Release\
+
+      - name: Get Version from pubspec.yaml
+        run: |
+          $version = (Get-Content pubspec.yaml | Select-String '^version:[^^]*' | ForEach-Object { $_.ToString().Split(":")[1].Trim().Split("+")[0].Trim() })
+          echo "APP_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      - name: Compile .ISS to .EXE Installer
+        uses: Minionguyjpro/Inno-Setup-Action@v1.2.5
+        with:
+          path: installers/app-windows.iss
+          options: /O+
+
+      - name: Upload Artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.APP }}-windows-inno
+          path: D:\a\${{ env.APP }}\${{ env.APP }}\installers\installers\${{ env.APP }}-dev-windows-inno.exe
