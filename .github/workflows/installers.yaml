@@ -46,11 +46,11 @@ jobs:
       - name: Install OS Dependencies
         run: |
           sudo apt-get update -y
-          printf '#%.0s' {1..72}; echo '\nninja-build'
+          printf '#%.0s' {1..72}; printf '\nninja-build\n'
           sudo apt-get install -y ninja-build
-          printf '#%.0s' {1..72}; echo '\nlibgtk-3-dev'
+          printf '#%.0s' {1..72}; printf '\nlibgtk-3-dev\n'
           sudo apt-get install -y libgtk-3-dev
-          printf '#%.0s' {1..72}; echo '\nclang cmake'
+          printf '#%.0s' {1..72}; printf '\nclang cmake\n'
           sudo apt-get install -y clang cmake
 
       - name: Set up Flutter
