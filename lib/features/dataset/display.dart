@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: "Wednesday 2025-09-10 12:49:09 +1000 Graham Williams"
+// Time-stamp: "Friday 2025-09-12 17:12:21 +1000 Graham Williams"
 //
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -55,6 +55,7 @@ import 'package:rattle/utils/is_numeric.dart';
 import 'package:rattle/utils/save_dataset_button.dart';
 import 'package:rattle/utils/show_markdown_file_2.dart';
 import 'package:rattle/utils/show_ok.dart';
+import 'package:rattle/utils/truncate_content.dart';
 import 'package:rattle/utils/update_meta_data.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/widgets/page_viewer.dart';
@@ -594,7 +595,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                       ),
                     ),
                     DataCell(
-                      SelectableText(_truncateContent(variable.details)),
+                      SelectableText(truncateContent(variable.details)),
                     ),
                   ],
                 );
@@ -664,16 +665,5 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         debugText('  $choice', columnName);
       }
     });
-  }
-
-  // Truncate content for display.
-
-  String _truncateContent(String content) {
-    int maxLength = 45;
-    String subStr =
-        content.length > maxLength ? content.substring(0, maxLength) : content;
-    int lastCommaIndex = subStr.lastIndexOf(',') + 1;
-
-    return '${lastCommaIndex > 0 ? content.substring(0, lastCommaIndex) : subStr} ...';
   }
 }
