@@ -38,6 +38,7 @@ import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/features/dataset/add_corpus_page.dart';
 import 'package:rattle/features/dataset/add_text_file_page.dart';
+import 'package:rattle/features/dataset/initialise_roles.dart';
 import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
@@ -56,7 +57,6 @@ import 'package:rattle/utils/truncate_content.dart';
 import 'package:rattle/utils/update_meta_data.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/widgets/page_viewer.dart';
-import 'package:rattle/features/dataset/initialise_roles.dart';
 
 /// The dataset panel displays the Rattle welcome on the first page and the
 /// ROLES as the second page.
