@@ -21,6 +21,8 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ INSTALLERS: Update build script for packaging [6.5.14 20250912 gjw]
++ REPO: Renamed from rattleng to rattle [6.5.13 20250912 gjw]
 + MACOS: Build using Flutter 3.35.3 for NULL fix [6.5.12 20250909 gjw]
 + BENFORD: Include table output in CONSOLE [6.5.11 20250817 gjw]
 + LINT: Extensive lint cleanup [6.5.10 20250816 gjw]
