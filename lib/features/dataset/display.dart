@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: "Friday 2025-09-12 17:12:21 +1000 Graham Williams"
+// Time-stamp: "Friday 2025-09-12 21:08:52 +1000 Graham Williams"
 //
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -36,6 +36,8 @@ import 'package:universal_io/io.dart';
 
 import 'package:rattle/constants/markdown.dart';
 import 'package:rattle/constants/spacing.dart';
+import 'package:rattle/features/dataset/add_corpus_page.dart';
+import 'package:rattle/features/dataset/add_text_file_page.dart';
 import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
@@ -43,15 +45,10 @@ import 'package:rattle/providers/roles_table_rebuild.dart';
 import 'package:rattle/providers/selected_row.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/roles.dart';
-import 'package:rattle/providers/vars/types.dart';
 import 'package:rattle/r/execute.dart';
-import 'package:rattle/r/extract.dart';
 import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/get_large_factors.dart';
-import 'package:rattle/utils/get_target.dart';
-import 'package:rattle/utils/get_unique_columns.dart';
-import 'package:rattle/utils/is_numeric.dart';
 import 'package:rattle/utils/save_dataset_button.dart';
 import 'package:rattle/utils/show_markdown_file_2.dart';
 import 'package:rattle/utils/show_ok.dart';
@@ -59,7 +56,7 @@ import 'package:rattle/utils/truncate_content.dart';
 import 'package:rattle/utils/update_meta_data.dart';
 import 'package:rattle/utils/update_roles_provider.dart';
 import 'package:rattle/widgets/page_viewer.dart';
-import 'package:rattle/widgets/text_page.dart';
+import 'package:rattle/features/dataset/initialise_roles.dart';
 
 /// The dataset panel displays the Rattle welcome on the first page and the
 /// ROLES as the second page.
@@ -104,11 +101,11 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     // Handle different file types.
 
     if (path.endsWith('.txt')) {
-      _addTextFilePage(stdout, pages);
+      addTextFilePage(stdout, pages);
     } else if (Directory(path).existsSync()) {
       // Process as corpus if the path exists and is a directory.
 
-      _addCorpusPage(stdout, pages);
+      addCorpusPage(stdout, pages);
     } else if (path.endsWith('.csv') || path.endsWith('.xlsx')) {
       // 20240815 gjw Update the metaData provider here if needed.
 
@@ -144,54 +141,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
 
   ////////////////////////////////////////////////////////////////////////
 
-  // Add a page for text file (a .txt file) content for Word Cloud.
-
-  void _addTextFilePage(String stdout, List<Widget> pages) {
-    String content = rExtract(stdout, '> cat(txt,');
-    String title = '''
-
-        # Text Content
-
-        Generated using
-        [base::cat(txt)](https://www.rdocumentation.org/packages/base/topics/cat).
-
-        ''';
-
-    if (content.isNotEmpty) {
-      pages.add(TextPage(title: title, content: '\n$content'));
-    }
-  }
-
-  ////////////////////////////////////////////////////////////////////////
-
-  // Add a page for corpus content.
-
-  void _addCorpusPage(String stdout, List<Widget> pages) {
-    String docs = rExtract(stdout, '> docs');
-    String inspect = rExtract(stdout, '> tm::inspect(dtm)');
-    String docinfo = rExtract(stdout, '> for (i in 1:length(docs)) {');
-    String content = '## Summary of the Docs\n\n$docs\n\n'
-        '## Summary of the Document Term Matrix\n\n$inspect\n\n'
-        '## Individual Documents\n\n$docinfo\n\n';
-
-    if (docs.isNotEmpty || inspect.isNotEmpty || docinfo.isNotEmpty) {
-      pages.add(
-        TextPage(
-          title: '''
-
-        # Corpus Content
-
-        Built using [tm::inspect()](https://www.rdocumentation.org/packages/tm/topics/Corpus).
-
-        ''',
-          content: content,
-        ),
-      );
-    }
-  }
-
-  ////////////////////////////////////////////////////////////////////////
-
   // Add a page for dataset summary.
 
   void _addDatasetPage(String stdout, List<Widget> pages) {
@@ -199,7 +148,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
     List<VariableInfo> vars = extractVariables(stdout);
     List<String> highVars = getLargeFactors(ref);
 
-    _initializeRoles(vars, highVars, currentRoles);
+    initialiseRoles(vars, highVars, currentRoles, ref);
 
     // When a new row is added after transformation, initialize its role and
     // update the role of the old variable.
@@ -359,87 +308,6 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
         ],
       ),
     );
-  }
-
-  // Initialize roles.
-
-  void _initializeRoles(
-    List<VariableInfo> vars,
-    List<String> highVars,
-    Map<String, Role> currentRoles,
-  ) {
-    if (currentRoles.isEmpty && vars.isNotEmpty) {
-      for (var column in vars) {
-        _setInitialRole(column, ref);
-      }
-      _setTargetRole(vars, ref);
-      _setIdentRole(ref);
-
-      // 20241213 gjw Let's turn off the IGNORE heursitic for now. Leave it to a
-      // user to decide. For the PROTEIN dataset we want COUNTRY to be IDENT r
-      // TARGET rather than IGNORE.
-
-      // _setIgnoreRoleForHighVars(highVars, ref);
-    }
-  }
-
-  // Set initial role for a variable.
-
-  void _setInitialRole(VariableInfo column, WidgetRef ref) {
-    String name = column.name.toLowerCase();
-
-    // Default is INPUT unless a prefix is found.
-
-    Role role = Role.input;
-
-    if (name.startsWith('risk_')) role = Role.risk;
-    if (name.startsWith('ignore_')) role = Role.ignore;
-    if (name.startsWith('target_')) role = Role.target;
-
-    ref.read(rolesProvider.notifier).state[column.name] = role;
-    ref.read(typesProvider.notifier).state[column.name] =
-        isNumeric(column.type) ? Type.numeric : Type.categoric;
-  }
-
-  // Treat the last variable as a TARGET by default. We will eventually
-  // implement Rattle heuristics to identify the TARGET if the final
-  // variable has more than 5 levels. If so we'll check if the first
-  // variable looks like a TARGET (another common practise) and if not
-  // then no TARGET will be identified by default.
-
-  void _setTargetRole(List<VariableInfo> vars, WidgetRef ref) {
-    String target = getTarget(ref);
-
-    if (target == 'NULL') {
-      ref.read(rolesProvider.notifier).state[vars.last.name] = Role.target;
-    } else if (target != '""') {
-      // TODO 20241216 gjw HOW DOES target BECOME '""' - TO BE FIXED.
-
-      ref.read(rolesProvider.notifier).state[target] = Role.target;
-    }
-  }
-
-  void _setIdentRole(WidgetRef ref) {
-    // Any variables that have a unique value for every row in the dataset is
-    // considered to be an IDENTifier.
-
-    for (var id in getUniqueColumns(ref)) {
-      ref.read(rolesProvider.notifier).state[id] = Role.ident;
-    }
-
-    Map metaData = ref.read(metaDataProvider);
-
-    // 20241211 gjw A hueristic that says if there are only two columns in the
-    // dataset, expect it to be a basket dataset for association rule
-    // analysis. Set the firt column as the basket identifier (IDENT) and the
-    // second column as the basket item (TARGET). As we move away from the
-    // DATASET tab we also set the BASKETS checkbox in the ASSOCIATE feature to
-    // match this heuristic. That is done in `lib/home.dart`.
-
-    if (metaData.length == 2) {
-      ref.read(rolesProvider.notifier).state[metaData.keys.first] = Role.ident;
-      ref.read(rolesProvider.notifier).state[metaData.keys.last] = Role.target;
-    }
   }
 
   // Set ignore role for high cardinality variables.
