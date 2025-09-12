@@ -1,10 +1,10 @@
 name: Build Installers
 
 # 20241024 gjw Construct bundles for various distributions. The
-# bundles (as .zip and .exe files) are created as artefacts that can
-# be downloaded locally using the github command line `gh`. I am not
-# utilising github SECRETS yet but could do so to push the packages
-# directly to togaware.com.
+# bundles (.zip or .exe or .dmg files) are created as artefacts that
+# can be downloaded locally using the github command line `gh`. I am
+# not utilising github SECRETS yet but will do so to push the packages
+# directly to togaware.com and to build signed packages.
 
 on:
   push:
@@ -13,12 +13,13 @@ on:
 
 env:
   APP: rattle
-
   FLUTTER_VERSION: '3.35.3'
 
 jobs:
 
   ########################################################################
+  # LINUX
+  #
   # 20250110 gjw Originally I was building on Ubuntu 22.04 since my
   # 24.04 version would not run on Mint 21.3. Then moved even older to
   # Ubuntu 20.04 to get it more widely available. Seems to work on
@@ -31,18 +32,29 @@ jobs:
   # https://github.com/gjwgit/rattleng/actions/runs/13753262146.
   # Move to 22.04 to get broadest deployment.
 
-  build-linux-zip:
+  package-linux-zip:
     if: |
       contains(github.event.head_commit.message, 'bump version') ||
-      contains(github.event.head_commit.message, 'build installers')
+      contains(github.event.head_commit.message, 'build installers') ||
+      contains(github.event.head_commit.message, 'build linux')
     runs-on: ubuntu-latest
 
     steps:
       - name: Clone Repository
         uses: actions/checkout@v4
 
-      - name: Confirm Branch
-        run: git status
+      - name: Install OS Dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ninja-build libgtk-3-dev
+          sudo apt-get install -y clang cmake
+          # This is a special case and not generally
+          # required. Removing for now from the template. If required
+          # then the template update should account or this. 20250912
+          # gjw
+          #
+          # sudo apt-get install -y libunwind-dev libsecret-1-dev
+          # sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -54,21 +66,23 @@ jobs:
       - name: Confirm Flutter Version
         run: flutter --version
 
-      - name: Install OS Dependencies
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y ninja-build libgtk-3-dev
-          sudo apt-get install -y clang cmake
-          sudo apt-get install -y libunwind-dev libsecret-1-dev
-          sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
       - name: Install Flutter Project Dependencies
         run: flutter pub get
 
       - name: Enable Linux Build
         run: flutter config --enable-linux-desktop
 
-      - name: Build Artifact
+      # This is a special case and not generally required. Removing
+      # for now from the template. If required then the template
+      # update should account or this. 20250912 gjw
+      #
+      # - name: Generate intermediates
+      #   run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Build Flutter Linux app
         run: flutter build linux --release
+
+      # Package as ZIP
 
       - name: Zip Bundle
         uses: thedoctor0/zip-release@master
@@ -77,19 +91,20 @@ jobs:
           filename: ${{ env.APP }}-${{ github.ref_name }}-linux.zip
           directory: build/linux/x64/release/bundle
 
-      - name: Upload Artifact
+      - name: Upload Artefact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.APP }}-linux-zip
           path: build/linux/x64/release/bundle/${{ env.APP }}-${{ github.ref_name }}-linux.zip
 
   ########################################################################
+  # WINDOWS
 
-  build-windows-inno:
+  package-windows-zip-exe:
     if: |
       contains(github.event.head_commit.message, 'bump version') ||
-      contains(github.event.head_commit.message, 'build windows') ||
-      contains(github.event.head_commit.message, 'build installers')
+      contains(github.event.head_commit.message, 'build installers') ||
+      contains(github.event.head_commit.message, 'build windows')
     runs-on: windows-latest
 
     steps:
@@ -103,14 +118,18 @@ jobs:
           architecture: x64
           flutter-version: ${{env.FLUTTER_VERSION}}
 
-      - name: Install Project Dependencies
+      - name: Confirm Flutter Version
+        run: flutter --version
+
+      - name: Install Flutter Project Dependencies
         run: flutter pub get
 
       - name: Enable Windows Desktop
         run: flutter config --enable-windows-desktop
 
       # This is a special case and not generally required. Removing
-      # for now from the template. 20250912 gjw
+      # for now from the template. If required then the template
+      # update should account or this. 20250912 gjw
       #
       # - name: Generate intermediates
       #   run: flutter pub run build_runner build --delete-conflicting-outputs
@@ -118,7 +137,7 @@ jobs:
       - name: Build Flutter Windows app
         run: flutter build windows --release
 
-      # Build ZIP
+      # Package as ZIP
 
       - name: Archive Release
         uses: thedoctor0/zip-release@master
@@ -127,13 +146,13 @@ jobs:
           filename: ${{ env.APP }}-${{github.ref_name}}-windows.zip
           directory: build/windows/x64/runner/Release
 
-      - name: Upload Artifact
+      - name: Upload Artefact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.APP }}-windows-zip
           path: build/windows/x64/runner/Release/${{ env.APP }}-${{github.ref_name}}-windows.zip
 
-      # Build EXE
+      # Package as EXE
 
       - name: Check the DLLs for Inclusion in the .iss script
         run: dir D:\a\${{ env.APP }}\${{ env.APP }}\build\windows\x64\runner\Release\
@@ -158,15 +177,16 @@ jobs:
           path: installers/app-windows.iss
           options: /O+
 
-      - name: Upload Artifact
+      - name: Upload Artefact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.APP }}-windows-inno
           path: D:\a\${{ env.APP }}\${{ env.APP }}\installers\installers\${{ env.APP }}-dev-windows-inno.exe
 
   ########################################################################
+  # MACOS
 
-  build-macos:
+  build-macos-dmg-zip:
     if: |
       contains(github.event.head_commit.message, 'bump version') ||
       contains(github.event.head_commit.message, 'build installers') ||
@@ -183,7 +203,10 @@ jobs:
           channel: 'stable'
           flutter-version: ${{env.FLUTTER_VERSION}}
 
-      - name: Install Project Dependencies
+      - name: Confirm Flutter Version
+        run: flutter --version
+
+      - name: Install Flutter Project Dependencies
         run: flutter pub get
 
       - name: Enable macOS desktop
@@ -203,6 +226,9 @@ jobs:
           pwd
           ls -lh build/macos/Build/Products/Release
 
+
+      # Package as DMG
+
       - name: Create DMG (Unsigned)
         run: |
           mkdir -p dmg_temp
@@ -217,11 +243,13 @@ jobs:
         run: |
           ls -lh
 
-      - name: Upload Artifact
+      - name: Upload Artefact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.APP }}-macos-dmg
           path: ${{ env.APP }}-${{github.ref_name}}-macos-unsigned.dmg
+
+      # Package as ZIP
 
       - name: Create ZIP
         uses: thedoctor0/zip-release@master
@@ -234,7 +262,7 @@ jobs:
       - name: Review ZIP exists
         run: ls -lh build/macos/Build/Products/Release
 
-      - name: Upload Artifact
+      - name: Upload Artefact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.APP }}-macos-zip
