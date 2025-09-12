@@ -1,6 +1,6 @@
 /// Support for running an R script using R source().
 ///
-// Time-stamp: "Saturday 2025-08-16 10:40:29 +1000 Graham Williams"
+// Time-stamp: "Friday 2025-09-12 14:16:42 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -31,16 +31,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:universal_io/io.dart' show Platform;
 
-import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/association.dart';
-import 'package:rattle/providers/boost.dart';
 import 'package:rattle/providers/cleanse.dart';
 import 'package:rattle/providers/cluster.dart';
-import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/forest.dart';
 import 'package:rattle/providers/group_by.dart';
@@ -52,7 +47,6 @@ import 'package:rattle/providers/neural.dart';
 import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/partition.dart';
-import 'package:rattle/providers/path.dart';
 import 'package:rattle/providers/pty.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
@@ -60,10 +54,14 @@ import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/summary_crosstab.dart';
 import 'package:rattle/providers/svm.dart';
-import 'package:rattle/providers/tree.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/visualise.dart';
 import 'package:rattle/providers/wordcloud.dart';
+import 'package:rattle/r/map_boost.dart';
+import 'package:rattle/r/map_global.dart';
+import 'package:rattle/r/map_rpart.dart';
+import 'package:rattle/r/map_neural.dart';
+import 'package:rattle/r/map_word_cloud.dart';
 import 'package:rattle/r/strip_comments.dart';
 import 'package:rattle/r/strip_header.dart';
 import 'package:rattle/r/strip_todo.dart';
@@ -71,7 +69,6 @@ import 'package:rattle/utils/debug_text.dart';
 import 'package:rattle/utils/get_ignored.dart';
 import 'package:rattle/utils/get_missing.dart';
 import 'package:rattle/utils/set_status.dart';
-import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/utils/to_r_vector.dart';
 import 'package:rattle/utils/update_script.dart';
 
@@ -193,44 +190,20 @@ Future<void> rSource(
   int randomSeedSetting = ref.read(randomSeedSettingProvider);
   bool randomPartitionSetting = ref.read(randomPartitionSettingProvider);
 
-  bool checkbox = ref.read(checkboxProvider);
   bool cleanse = ref.read(cleanseProvider);
   bool normalise = ref.read(normaliseProvider);
   bool partition = ref.read(partitionProvider);
-  bool punctuation = ref.read(punctuationProvider);
-  bool stem = ref.read(stemProvider);
-  bool stopword = ref.read(stopwordProvider);
-  bool lowerCase = ref.read(lowerCaseProvider);
-  bool removeNumbers = ref.read(removeNumbersProvider);
-  bool stripWhitespace = ref.read(stripWhitespaceProvider);
-  bool removeSparse = ref.read(removeSparseProvider);
-  double textSparseMax = ref.read(sparseMaxProvider);
-  String textCorWord = ref.read(textCorWordProvider);
   String corpusSaveName = ref.read(corpusSaveNameProvider);
-  double textCorLimit = ref.read(textCorLimitProvider);
-  int textCorFreq = ref.read(textCorFreqProvider);
-  int maxWord = ref.read(maxWordProvider);
 
   String groupBy = ref.read(groupByProvider);
   String imputed = ref.read(imputedProvider);
-  String language = ref.read(languageProvider);
-  String minFreq = ref.read(minFreqProvider).toString();
-  String path = ref.read(pathProvider);
   String selected = ref.read(selectedProvider);
   String selected2 = ref.read(selected2Provider);
 
-  int minSplit = ref.read(treeMinSplitProvider);
-  int maxDepth = ref.read(treeMaxDepthProvider);
   int maxFactor = ref.read(maxFactorProvider);
 
-  String priors = ref.read(treePriorsProvider);
-  bool treeIncludeMissing = ref.read(treeIncludeMissingProvider);
   bool nnetTrace = ref.read(traceNeuralProvider);
   bool nnetSkip = ref.read(neuralSkipProvider);
-  bool neuralIgnoreCategoric = ref.read(ignoreCategoricNeuralProvider);
-  int minBucket = ref.read(treeMinBucketProvider);
-  double complexity = ref.read(treeComplexityProvider);
-  String lossMatrix = ref.read(treeLossMatrixProvider);
   List<double> partitionRatios = ref.read(partitionSettingProvider);
   String partitionString =
       '${partitionRatios.first}, ${partitionRatios[1]}, ${partitionRatios.last}';
@@ -246,17 +219,6 @@ Future<void> rSource(
   );
   String associationRulesSortBy =
       ref.read(sortByAssociationProvider).toLowerCase();
-
-  // BOOST
-
-  int boostMaxDepth = ref.read(maxDepthBoostProvider);
-  int boostMinSplit = ref.read(minSplitBoostProvider);
-  int boostXVal = ref.read(xValueBoostProvider);
-  int boostThreads = ref.read(threadsBoostProvider);
-  int boostIterations = ref.read(iterationsBoostProvider);
-  double boostLearningRate = ref.read(learningRateBoostProvider);
-  double boostComplexity = ref.read(complexityBoostProvider);
-  String boostObjective = ref.read(objectiveBoostProvider);
 
   // CLUSTER
 
@@ -285,18 +247,6 @@ Future<void> rSource(
   // LINEAR
 
   String linearFamily = ref.read(familyLinearProvider).toLowerCase();
-
-  // NEURAL
-
-  double neuralThreshold = ref.read(thresholdNeuralProvider);
-
-  int hiddenLayerSizes = ref.read(hiddenLayerNeuralProvider);
-  int neuralStepMax = ref.read(stepMaxNeuralProvider);
-  int nnetMaxit = ref.read(maxitNeuralProvider);
-
-  String hiddenNeurons = ref.read(hiddenLayersNeuralProvider);
-  String neuralActivationFct = ref.read(activationFctNeuralProvider);
-  String neuralErrorFct = ref.read(errorFctNeuralProvider);
 
   // SETTINGS
 
@@ -340,33 +290,7 @@ Future<void> rSource(
     code += newCode;
   }
 
-  ////////////////////////////////////////////////////////////////////////
-  // GLOBAL
-  //
-  // Replace Global template patterns with their values. These are not specific
-  // to any particular feature,
-
-  code = code.replaceAll('<TIMESTAMP>', 'Rattle ${timestamp()}');
-
-  PackageInfo info = await PackageInfo.fromPlatform();
-
-  code = code.replaceAll('<VERSION>', info.version);
-
-  // 20240825 lutra Fix the path to the dataset to ensure that the Windows path
-  // has been correctly converted to a Unix path for R.
-
-  if (Platform.isWindows) {
-    path = path.replaceAll(r'\', '/');
-  }
-  code = code.replaceAll('<FILENAME>', path);
-
-  code = code.replaceAll('<TEMPDIR>', tempDir);
-
-  String package = ref.read(packageProvider);
-  code = code.replaceAll('<PACKAGE>', package);
-
-  String dataset = ref.read(datasetProvider);
-  code = code.replaceAll('<DATASET>', dataset);
+  code = await mapGlobal(ref, code);
 
   ////////////////////////////////////////////////////////////////////////
   // SETTINGS
@@ -482,17 +406,7 @@ Future<void> rSource(
   List<String> result = getMissing(ref);
   code = code.replaceAll('<MISSING_VARS>', toRVector(result));
 
-  ////////////////////////////////////////////////////////////////////////
-  // BOOST
-
-  code = code.replaceAll('<BOOST_MAX_DEPTH>', boostMaxDepth.toString());
-  code = code.replaceAll('<BOOST_MIN_SPLIT>', boostMinSplit.toString());
-  code = code.replaceAll('<BOOST_X_VALUE>', boostXVal.toString());
-  code = code.replaceAll('<BOOST_LEARNING_RATE>', boostLearningRate.toString());
-  code = code.replaceAll('<BOOST_COMPLEXITY>', boostComplexity.toString());
-  code = code.replaceAll('<BOOST_THREADS>', boostThreads.toString());
-  code = code.replaceAll('<BOOST_ITERATIONS>', boostIterations.toString());
-  code = code.replaceAll('<BOOST_OBJECTIVE>', '"$boostObjective"');
+  code = mapBoost(ref, code);
 
   ////////////////////////////////////////////////////////////////////////
 
@@ -546,30 +460,7 @@ Future<void> rSource(
 
   code = code.replaceAll('<DATA_SPLIT_TR_TU_TE>', partitionString);
 
-  ////////////////////////////////////////////////////////////////////////
-  // RPART
-
-  code = code.replaceAll(
-    '<RPART_INCLUDE_MISSING>',
-    treeIncludeMissing
-        ? ''
-        : 'usesurrogate = 0,\n                          maxsurrogate = 0,\n                          ',
-  );
-  code = code.replaceAll('<MINSPLIT>', 'minsplit     = ${minSplit.toString()}');
-  code = code.replaceAll(
-    '<MINBUCKET>',
-    'minbucket    = ${minBucket.toString()}',
-  );
-  code = code.replaceAll('<MAXDEPTH>', 'maxdepth     = ${maxDepth.toString()}');
-  code = code.replaceAll('<CP>', 'cp           = ${complexity.toString()}');
-  code = code.replaceAll(
-    '<PRIORS>',
-    priors.isNotEmpty ? ', prior = c($priors)' : '',
-  );
-  code = code.replaceAll(
-    '<LOSS>',
-    lossMatrix.isNotEmpty ? ', loss = matrix(c($lossMatrix))' : '',
-  );
+  code = mapRpart(ref, code);
 
   ////////////////////////////////////////////////////////////////////////
   // ASSOCIATE
@@ -600,19 +491,6 @@ Future<void> rSource(
     '<ASSOCIATION_RULES_SORT_BY>',
     '"$associationRulesSortBy"',
   );
-
-  ////////////////////////////////////////////////////////////////////////
-
-  // BOOST
-
-  code = code.replaceAll('<BOOST_MAX_DEPTH>', boostMaxDepth.toString());
-  code = code.replaceAll('<BOOST_MIN_SPLIT>', boostMinSplit.toString());
-  code = code.replaceAll('<BOOST_X_VALUE>', boostXVal.toString());
-  code = code.replaceAll('<BOOST_LEARNING_RATE>', boostLearningRate.toString());
-  code = code.replaceAll('<BOOST_COMPLEXITY>', boostComplexity.toString());
-  code = code.replaceAll('<BOOST_THREADS>', boostThreads.toString());
-  code = code.replaceAll('<BOOST_ITERATIONS>', boostIterations.toString());
-  code = code.replaceAll('<BOOST_OBJECTIVE>', '"$boostObjective"');
 
   ////////////////////////////////////////////////////////////////////////
   // CLUSTER
@@ -671,43 +549,7 @@ Future<void> rSource(
             : ', sampsize = c($forestSampleSize)',
   );
 
-  ////////////////////////////////////////////////////////////////////////
-  // NEURAL
-
-  code = code.replaceAll('<NNET_HIDDEN_LAYERS>', hiddenLayerSizes.toString());
-
-  code = code.replaceAll('<NEURAL_HIDDEN_LAYERS>', 'c($hiddenNeurons)');
-  code = code.replaceAll('<NEURAL_MAXIT>', nnetMaxit.toString());
-  code = code.replaceAll(
-    '<NEURAL_MAX_NWTS>',
-    ref.read(neuralMaxWeightsProvider).toString(),
-  );
-  code = code.replaceAll(
-    '<NEURAL_ERROR_FCT>',
-    '"${neuralErrorFct.toString()}"',
-  );
-  code = code.replaceAll(
-    '<NEURAL_ACT_FCT>',
-    '"${neuralActivationFct.toString()}"',
-  );
-  if (neuralActivationFct != 'relu') {
-    code = code.replaceAll(
-      '<NEURAL_ACT_FCT>',
-      '"${neuralActivationFct.toString()}"',
-    );
-  } else if (neuralActivationFct == 'relu') {
-    // relu corresponds to the ReLU function from the sigmoid package in R.
-
-    code = code.replaceAll('<NEURAL_ACT_FCT>', 'relu');
-  }
-
-  code = code.replaceAll('<NEURAL_THRESHOLD>', neuralThreshold.toString());
-  code = code.replaceAll('<NEURAL_STEP_MAX>', neuralStepMax.toString());
-
-  code = code.replaceAll(
-    '<NEURAL_IGNORE_CATEGORIC>',
-    neuralIgnoreCategoric.toString().toUpperCase(),
-  );
+  code = mapNeural(ref, code);
 
   ////////////////////////////////////////////////////////////////////////
   // SVM
@@ -715,34 +557,7 @@ Future<void> rSource(
   code = code.replaceAll('<SVM_KERNEL>', '"${svmKernel.toString()}"');
   code = code.replaceAll('<SVM_DEGREE>', svmDegree.toString());
 
-  ////////////////////////////////////////////////////////////////////////
-  // WORD CLOUD
-
-  code = code.replaceAll('<RANDOMORDER>', checkbox.toString().toUpperCase());
-  code = code.replaceAll('<TEXT_STEM>', stem ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('<TEXT_PUNCTUATION>', punctuation ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('<TEXT_STOPWORD>', stopword ? 'TRUE' : 'FALSE');
-  code = code.replaceAll('<LANGUAGE>', language);
-  code = code.replaceAll('<MINFREQ>', minFreq);
-  code = code.replaceAll('<MAXWORD>', maxWord.toString());
-  code = code.replaceAll('<TEXT_LOWER_CASE>', lowerCase ? 'TRUE' : 'FALSE');
-  code = code.replaceAll(
-    '<TEXT_REMOVE_SPARSE>',
-    removeSparse ? 'TRUE' : 'FALSE',
-  );
-  code = code.replaceAll(
-    '<TEXT_REMOVE_NUMBERS>',
-    removeNumbers ? 'TRUE' : 'FALSE',
-  );
-  code = code.replaceAll(
-    '<TEXT_STRIP_WHITESPACE>',
-    stripWhitespace ? 'TRUE' : 'FALSE',
-  );
-  code = code.replaceAll('<TEXT_SPARSE_MAX>', textSparseMax.toString());
-  code = code.replaceAll('<TEXT_COR_WORD>', textCorWord);
-  code = code.replaceAll('<TEXT_COR_LIMIT>', textCorLimit.toString());
-  code = code.replaceAll('<TEXT_COR_FREQ>', textCorFreq.toString());
-  code = code.replaceAll('<MINFREQ>', minFreq);
+  code = mapWordCloud(ref, code);
 
   // Handle DTM CSV save path.
 
