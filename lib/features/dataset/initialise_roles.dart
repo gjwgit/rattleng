@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/providers/vars/roles.dart';
 import 'package:rattle/providers/vars/types.dart';
+import 'package:rattle/r/extract_vars.dart';
 import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/get_unique_columns.dart';
-import 'package:rattle/providers/meta_data.dart';
 import 'package:rattle/utils/is_numeric.dart';
-import 'package:rattle/r/extract_vars.dart';
 
 // Set initial role for a variable.
 
