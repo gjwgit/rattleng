@@ -14,92 +14,46 @@ env:
 
 jobs:
 
-  analyze:
-    runs-on: ubuntu-latest
-    if: github.event.repository.private == false
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          flutter-version: ${{env.FLUTTER_VERSION}}
-      - run: flutter pub get
-      - run: flutter analyze --fatal-infos
-
-  format:
-    runs-on: ubuntu-latest
-    if: github.event.repository.private == false
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          flutter-version: ${{env.FLUTTER_VERSION}}
-      - run: flutter pub get
-      - run: dart format --set-exit-if-changed .
-
-  dart_code_metrics:
-    runs-on: ubuntu-latest
-    if: github.event.repository.private == false
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          flutter-version: ${{env.FLUTTER_VERSION}}
-      - run: flutter pub get
-      - run: dart pub global activate dart_code_metrics
-      - run: metrics check-unnecessary-nullable --disable-sunset-warning lib
-      - run: metrics check-unused-code --disable-sunset-warning lib
-      - run: metrics check-unused-files --disable-sunset-warning lib
-      - run: metrics analyze --disable-sunset-warning lib --reporter=console
-
-  import_order:
-    runs-on: ubuntu-latest
-    if: github.event.repository.private == false
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          flutter-version: ${{env.FLUTTER_VERSION}}
-      - run: flutter pub get
-      - run: dart pub global activate import_order_lint
-      - run: import_order --check
-
-  markdown:
+  lint_checks:
     runs-on: ubuntu-latest
     if: github.event.repository.private == false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-      - run: npm install -g markdownlint-cli
-      - run: markdownlint --disable MD036 -- *.md lib assets installers
-        # -p .markdownlintignore -c .markdownlint.yaml
-
-  locmax:
-    runs-on: ubuntu-latest
-    if: github.event.repository.private == false
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-      - run: make locmax-enforce
-
-  copyright:
-    runs-on: ubuntu-latest
-    if: github.event.repository.private == false
-    steps:
-      - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           flutter-version: ${{env.FLUTTER_VERSION}}
       - run: flutter pub get
-      - name: Check copyright headers
+
+      - name: Analyze
+        run: flutter analyze --fatal-infos
+
+      - name: Format
+        run: dart format --set-exit-if-changed .
+
+      - name: Dart code metrics
+        run: |
+          dart pub global activate dart_code_metrics
+          metrics check-unnecessary-nullable --disable-sunset-warning lib
+          metrics check-unused-code --disable-sunset-warning lib
+          metrics check-unused-files --disable-sunset-warning lib
+          metrics analyze --disable-sunset-warning lib --reporter=console
+
+      - name: Import order lint
+        run: |
+          dart pub global activate import_order_lint
+          import_order --check
+
+      - name: Markdown
+        run: |
+          npm install -g markdownlint-cli
+          markdownlint --disable MD036 -- *.md lib assets installers
+
+      - name: Lines of code
+        run: make locmax-enforce
+
+      - name: Copyright headers
         run: |
           # Find Dart files without proper copyright headers, excluding generated files
           missing_copyright=$(find lib -type f -name '*.dart' \
