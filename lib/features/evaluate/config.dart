@@ -1,11 +1,11 @@
-/// Widget to configure the EVALUATE tab.
+/// A widget to configure the EVALUATE tab.
 ///
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://www.gnu.org/licenses/gpl-3.0.en.html
 //
-// Time-stamp: "Friday 2025-09-12 16:53:43 +1000 Graham Williams"
+// Time-stamp: "Wednesday 2025-09-17 09:04:51 +1000 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
