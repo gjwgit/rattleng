@@ -1,6 +1,6 @@
 /// Initialise variable roles.
 ///
-// Time-stamp: "Saturday 2025-09-13 14:55:28 +1000 Graham Williams"
+// Time-stamp: "Wednesday 2025-09-17 09:04:16 +1000 Graham Williams"
 ///
 /// Copyright (C) 2025, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see https://www.gnu.org/licenses/.
 ///
-/// Authors: AUTHORS
+/// Authors: Graham Williams
 
 library;
 

@@ -1,6 +1,11 @@
 name: Lint Checks
 
 # Always run the checks on a push and a PR.
+#
+# 20250914 gjw Run the tests as separate jobs so we see the individual
+# results. We can instead run then as a single job with multiple
+# steps, but then it stops on the first fail and so not as
+# informative.
 
 on:
   push:
@@ -36,7 +41,7 @@ jobs:
       - run: flutter pub get
       - run: dart format --set-exit-if-changed .
 
-  dart_code_metrics:
+  nullable:
     runs-on: ubuntu-latest
     if: github.event.repository.private == false
     steps:
@@ -48,9 +53,32 @@ jobs:
       - run: flutter pub get
       - run: dart pub global activate dart_code_metrics
       - run: metrics check-unnecessary-nullable --disable-sunset-warning lib
+
+  unused_code:
+    runs-on: ubuntu-latest
+    if: github.event.repository.private == false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: ${{env.FLUTTER_VERSION}}
+      - run: flutter pub get
+      - run: dart pub global activate dart_code_metrics
       - run: metrics check-unused-code --disable-sunset-warning lib
+
+  unused_files:
+    runs-on: ubuntu-latest
+    if: github.event.repository.private == false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: ${{env.FLUTTER_VERSION}}
+      - run: flutter pub get
+      - run: dart pub global activate dart_code_metrics
       - run: metrics check-unused-files --disable-sunset-warning lib
-      - run: metrics analyze --disable-sunset-warning lib --reporter=console
 
   import_order:
     runs-on: ubuntu-latest
