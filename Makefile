@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Thursday 2025-05-15 20:13:22 +1000 Graham Williams>
+# Time-stamp: <Monday 2025-09-22 11:27:58 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -29,8 +29,8 @@ DEST=/var/www/html/$(APP)
 # the download folder, and the URL to the downloads.
 
 REPO=togaware.com
-RLOC=apps/access
-DWLD=https://$(REPO)/installers
+RLOC=apps/access/
+DWLD=https://access.togaware.com/
 
 ########################################################################
 # Supported Makefile modules.
@@ -44,7 +44,7 @@ INC_BASE=support
 # Specific Makefiles will be loaded if they are found in
 # INC_BASE. Sometimes the INC_BASE is shared by multiple local
 # Makefiles and we want to skip specific makes. Simply define the
-# appropriate INC to a non-existant location and it will be skipped.
+# appropriate INC to a non-existent location and it will be skipped.
 
 INC_DOCKER=skip
 INC_MLHUB=skip
@@ -66,9 +66,11 @@ endif
 define HELP
 $(APP):
 
-  ginstall	After a github build download bundles and upload to $(REPO)
+  ginstall   After a github build download bundles and upload to $(REPO)
 
-  rtest       	Run the R script tests.
+  local	     Install to $(HOME)/.local/share/$(APP)
+    tgz	     Upload the installer to $(REPO)
+  apk	     Upload the installer to $(REPO)
 
 endef
 export HELP
@@ -79,33 +81,27 @@ help::
 ########################################################################
 # LOCAL TARGETS
 
-.PHONY: rtests
-rtests:
-	@bash r_test/rpart_test.sh
+#
+# Manage the production install on the remote server.
+#
 
-# realclean::
-# 	snapcraft clean rattle
+clean::
+	rm -f README.html
 
-.PHONY: snap
-snap:
-	flutter clean
-	snapcraft clean rattle
-	perl -pi -e 's|version: .*|version: $(VER)|' snap/snapcraft.yaml
-	snapcraft
-	scp rattle_$(VER)_amd64.snap togaware.com:apps/access/rattle_dev_amd64.snap
+# Linux: Install locally.
 
-.PHONY: isnap
-isnap:
-	snap install --dangerous rattle_0.0.1_amd64.snap
+local: tgz
+	tar zxvf installers/$(APP).tar.gz -C $(HOME)/.local/share/
 
-rattle.zip:
-	rm -f rattle.zip
-	flutter build linux
-	rsync -avzh build/linux/x64/release/bundle/ rattle/
-	zip -r rattle.zip rattle
-	rm -rf rattle
+# Linux: Upload the installers for general access from the repository.
 
-OS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
+tgz::
+	chmod a+r installers/$(APP)*.tar.gz
+	rsync -avzh installers/$(APP)*.tar.gz $(REPO):/var/www/html/installers/
+	ssh $(REPO) chmod -R go+rX /var/www/html/installers/
+	ssh $(REPO) chmod go=x /var/www/html/installers/
+
+# Android: Upload to Solid Community installers for general access.
 
 # Make apk on this machine to deal with signing. Then a ginstall of
 # the built bundles from github, installed to solidcommunity.au and
@@ -113,38 +109,30 @@ OS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
 
 apk::
 	rsync -avzh installers/$(APP).apk $(REPO):$(RLOC)
-	ssh $(REPO) chmod a+r $(RLOC)/$(APP).apk
-	mv -f installers/$(APP)-*.apk installers/ARCHIVE/$(APP)_$(VER).apk
+	ssh $(REPO) chmod a+r $(RLOC)$(APP).apk
+	mv -f installers/$(APP)-*.apk installers/ARCHIVE/
 	rm -f installers/$(APP).apk
 
 deb:
 	(cd installers; make $@)
-	rsync -avzh installers/rattle_$(VER)_amd64.deb $(REPO):$(RLOC)/rattle_amd64.deb
-	ssh $(REPO) chmod a+r $(RLOC)/rattle_amd64.deb
-	wget https://access.togaware.com/rattle_amd64.deb -O rattle_amd64.deb
-	wajig install rattle_amd64.deb
-	rm -f rattle_amd64.deb
-	mv -f installers/rattle_*.deb installers/ARCHIVE
+	rsync -avzh installers/$(APP)_$(VER)_amd64.deb $(REPO):$(RLOC)$(APP)_amd64.deb
+	ssh $(REPO) chmod a+r $(RLOC)$(APP)_amd64.deb
+	wget $(DWLD)$(APP)_amd64.deb -O $(APP)_amd64.deb
+	wajig install $(APP)_amd64.deb
+	rm -f $(APP)_amd64.deb
+	mv -f installers/$(APP)_*.deb installers/ARCHIVE/
 
+# 20250110 gjw A ginstall of the github built bundles, and the locally
+# built apk installed to the repository and moved into ARCHIVE.
+#
+# 20250218 gjw Remove the deb build for now as it is placing the data
+# and lib folders into /ust/bin/ which when we try to add another
+# package also tries to do that, which is how I found the issue.
+#
+# 20250222 gjw Solved the issue by putting the package files into
+# /usr/lib/rattle and then symlinked the executable to
+# /usr/bin/rattle. This is working so add deb into the install and now
+# utilise that for the default install on my machine.
 
-# A ginstall will install the github built bundles, and the locally
-# built apk installed to the repository and moved into ARCHIVE. (gjw
-# 20250110)
-#
-# The deb build for a while was placing the data and lib folders into
-# /ust/bin/ which when we try to add another package (healthpod) also
-# tries to do the same and so conflicts. This was subsequently
-# fixed. (gjw 20250218)
-#
-# Solved the issue by putting the package files into /usr/lib/rattle
-# and then symlinked the executable to /usr/bin/rattle. This is
-# working so add deb into the install and now utilise that for the
-# default install on my machine.  (gjw 20250222)
-#
-# Move the apk build to last as I am not usually waiting on it at
-# present, while I am waiting on the deb install to deploy to teaching
-# labs. (gjw 20250321)
-
-ginstall: deb
+ginstall: deb apk
 	(cd installers; make $@)
-	make apk

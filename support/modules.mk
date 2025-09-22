@@ -4,6 +4,7 @@
 # Often the support Makefiles will be in the local support folder, or
 # else installed in the local user's shares.
 
+INC_LOCAL    ?= $(INC_BASE)/local.mk
 INC_CLEAN    ?= $(INC_BASE)/clean.mk
 INC_BOOKDOWN ?= $(INC_BASE)/bookdown.mk
 INC_R        ?= $(INC_BASE)/r.mk
@@ -20,6 +21,9 @@ INC_MLHUB    ?= $(INC_BASE)/mlhub.mk
 INC_WEBCAM   ?= $(INC_BASE)/webcam.mk
 INC_INSTALL  ?= $(INC_BASE)/install.mk
 
+ifneq ("$(wildcard $(INC_LOCAL))","")
+  include $(INC_LOCAL)
+endif
 ifneq ("$(wildcard $(INC_CLEAN))","")
   include $(INC_CLEAN)
 endif
@@ -65,4 +69,3 @@ endif
 ifneq ("$(wildcard $(INC_INSTALL))","")
   include $(INC_INSTALL)
 endif
-
