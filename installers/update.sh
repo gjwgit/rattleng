@@ -7,9 +7,11 @@
 APP=$(basename "$(dirname "$(pwd)")")
 REP=$(git remote get-url origin | sed -E 's#.*[/:]([^/]+)/[^/]+(\.git)?$#\1#')
 
-HOST=togaware.com
-FLDR=apps/access/
+HOST=solidcommunity.au
+FLDR=/var/www/html/installers/
 DEST=${HOST}:${FLDR}
+
+ssh ${HOST} 'if [ ! -d ${FLDR} ]; then mkdir ${FLDR}; chown gjw:gjw ${FLDR}; fi'
 
 # From the recent 'Build Installers' workflows, identify the 'Bump
 # version' pushes to the repository and get the latest one as the one
@@ -18,14 +20,6 @@ DEST=${HOST}:${FLDR}
 bumpId=$(gh run list --limit 100 --json databaseId,displayTitle,workflowName \
 	     | jq -r '.[] | select(.workflowName | startswith("Build Installers")) | select(.displayTitle | startswith("Bump version")) | .databaseId' \
 	     | head -n 1)
-
-# A temporary patch. Comment the above and uncomment below to do the
-# 'Build inno' path for a quick build of the windows inno exe for
-# debugging (gjw 20250314).
-
-# bumpId=$(gh run list --limit 100 --json databaseId,displayTitle,workflowName \
-# 	     | jq -r '.[] | select(.workflowName | startswith("Build Installers")) | select(.displayTitle | startswith("Build inno")) | .databaseId' \
-# 	     | head -n 1)
 
 echo "github action id: $bumpId"
 

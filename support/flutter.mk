@@ -76,6 +76,10 @@ help::
 TICK=\033[0;32m✔\033[0m
 CROSS=\033[31m❌\033[0m
 
+DART_CODE=lib \
+	$(if $(wildcard test/),test) \
+	$(if $(wildcard integration_test/),integration_test)
+
 .PHONY: chrome
 chrome:
 	flutter run -d chrome --release
@@ -469,25 +473,20 @@ import_order:
 	@echo "Dart: CHECK IMPORT ORDER"
 	@which import_order > /dev/null 2>&1 \
 	|| { echo "Error: Install with 'dart pub global activate import_order_lint'."; exit 1; }
-	import_order --check
+	import_order --check $(DART_CODE)
 	@echo $(SEPARATOR)
 
 .PHONY: import_order_fix
 import_order_fix:
 	@echo "Dart: FIX IMPORT ORDER"
-	@import_order --check || import_order
+	@import_order --check $(DART_CODE) \
+	|| import_order lib $(DART_CODE)
 	@echo $(SEPARATOR)
 
 # dart pub global activate dart_code_metrics
 
 .PHONY: dcm
-dcm: nullable unused_code unused_files metrics
-
-.PHONY: nullable
-nullable:
-	@echo "Dart Code Metrics: NULLABLE"
-	-metrics check-unnecessary-nullable --disable-sunset-warning lib
-	@echo $(SEPARATOR)
+dcm: unused_code unused_files
 
 .PHONY: unused_code
 unused_code:
@@ -499,12 +498,6 @@ unused_code:
 unused_files:
 	@echo "Dart Code Metrics: UNUSED FILES"
 	-metrics check-unused-files --disable-sunset-warning lib
-	@echo $(SEPARATOR)
-
-.PHONY: metrics
-metrics:
-	@echo "Dart Code Metrics: METRICS"
-	-metrics analyze --disable-sunset-warning lib --reporter=console
 	@echo $(SEPARATOR)
 
 ### TODO THESE SHOULD BE CHECKED AND CLEANED UP
