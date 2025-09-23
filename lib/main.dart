@@ -48,7 +48,7 @@ Future<bool> checkRInstallation() async {
   if (Platform.isAndroid) return true;
 
   try {
-    final result = await Process.run('R', ['--version']);
+    final result = await Process.run('/usr/local/bin/R', ['--version']);
 
     // Check if "R version" is present in the output.
 
