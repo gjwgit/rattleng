@@ -1,6 +1,6 @@
 /// A provider of the pseudo terminal running R.
 ///
-/// Time-stamp: "Sunday 2025-01-26 08:04:36 +1100 Graham Williams"
+/// Time-stamp: "Wednesday 2025-09-24 08:27:18 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
@@ -81,7 +81,7 @@ final ptyProvider = StateProvider<Pty>((ref) {
 /// Linux and MacOS desktops initiate R simply through the R command. Windows
 /// does an R.exe.
 
-// Rewrite code to remove nesting to pass the DCM  test.
+// Rewrite code to remove nesting to pass lint.
 
 String get shell {
   if (Platform.isWindows) {
