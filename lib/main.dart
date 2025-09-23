@@ -1,6 +1,6 @@
 /// Shake, rattle, and roll for the data scientist.
 ///
-/// Time-stamp: "Saturday 2025-08-16 10:37:33 +1000 Graham Williams"
+/// Time-stamp: "Wednesday 2025-09-24 05:38:14 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -42,7 +42,7 @@ import 'package:rattle/utils/show_error.dart';
 Future<bool> checkRInstallation() async {
   // Try to run the R command to check its availability.
 
-  // 20250113 gjw Exploring Andriod deployment. For no ignore the check for R
+  // 20250113 gjw Exploring Andriod deployment. For now ignore the check for R
   // installed.
 
   if (Platform.isAndroid) return true;

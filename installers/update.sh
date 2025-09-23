@@ -21,7 +21,7 @@ bumpId=$(gh run list --limit 100 --json databaseId,displayTitle,workflowName \
 	     | jq -r '.[] | select(.workflowName | startswith("Build Installers")) | select(.displayTitle | startswith("Bump version")) | .databaseId' \
 	     | head -n 1)
 
-echo "github action id: $bumpId"
+echo "Found github action id: $bumpId"
 
 if [[ -z "${bumpId}" ]]; then
     echo "No workflow found."
@@ -30,6 +30,11 @@ fi
 
 status=$(gh run view ${bumpId} --json status --jq '.status')
 conclusion=$(gh run view ${bumpId} --json conclusion --jq '.conclusion')
+
+# Determine the latest version from pubspec.yaml. Assumes the
+# latest Bump Version push is the same version.
+
+version=$(grep version ../pubspec.yaml | head -1 | cut -d ':' -f 2 | sed 's/ //g')
 
 # Only proceed if the latest action hase been completed successfully
 
@@ -49,13 +54,9 @@ conclusion=$(gh run view ${bumpId} --json conclusion --jq '.conclusion')
 
 if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
 
+    echo "Uploading ${APP} version ${version}"
     echo "Uploads are going to ${DEST}."
     echo
-
-    # Determine the latest version from pubspec.yaml. Assumes the
-    # latest Bump Version push is the same version.
-
-    version=$(grep version ../pubspec.yaml | head -1 | cut -d ':' -f 2 | sed 's/ //g')
 
     echo '***** UPLOAD LINUX ZIP.'
 

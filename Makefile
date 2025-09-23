@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Monday 2025-09-22 11:27:58 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2025-09-23 07:15:08 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -114,6 +114,7 @@ apk::
 	rm -f installers/$(APP).apk
 
 deb:
+	@echo "Build $(APP) version $(VER)"
 	(cd installers; make $@)
 	rsync -avzh installers/$(APP)_$(VER)_amd64.deb $(REPO):$(RLOC)$(APP)_amd64.deb
 	ssh $(REPO) chmod a+r $(RLOC)$(APP)_amd64.deb
