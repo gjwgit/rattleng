@@ -31,7 +31,7 @@ are also most welcome.
 + Rattle is licensed under the [GNU General Public License, Version
   3](https://www.gnu.org/licenses/gpl-3.0.en.html), making it free for
   you to use forever.
-+ Also visit Togaware's [Data Science Portal](https://togaware.com/onepager.html).
++ Also visit Togaware's [Data Science Portal](https://togaware.com/onepager).
 
 Rattle comes with **NO WARRANTY**. Rattle and the
 collection of R template scripts are Copyright © 2006-2025 Togaware

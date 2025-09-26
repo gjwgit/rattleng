@@ -1,0 +1,9 @@
+web/index.html
+windows/flutter/ephemeral/
+build/
+.dart_tool/
+android/app/build/
+ios/build/
+linux/build/
+macos/build/
+web/build/

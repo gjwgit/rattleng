@@ -14,7 +14,7 @@ GNU/Linux
 MacOS
 [**zip**](https://access.togaware.com/rattle-dev-macos.zip) -
 Windows
-[**zip**](https://access.togaware.com/rattle-dev-windows-zip.exe) or
+[**zip**](https://access.togaware.com/rattle-dev-windows.zip) or
 [**inno**](https://access.togaware.com/rattle-dev-windows-inno.exe).
 
 Visit [togaware](https://rattle.togaware.com) for details.

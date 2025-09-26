@@ -24,7 +24,7 @@ Plots](https://survivor.togaware.com/datascience/density-plot.html),
 [Cumulative
 Plots](https://survivor.togaware.com/datascience/cumulative-plot.html),
 and the [Benford's
-Plot](https://survivor.togaware.com/datascience/benfords-plot.html).
+Plot](https://survivor.togaware.com/datascience/benford-plot.html).
 
 For **categoric** data Rattle supports [Bar
 Charts](https://survivor.togaware.com/datascience/bar-chart.html),
