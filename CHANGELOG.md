@@ -7,7 +7,7 @@ description of the update. Updates in the 6.5.n series are heading
 toward a 6.6 release.  The `[version timestamp user]` string is
 utilised by the flutter version_widget package.
 
-Binaries to download latest version:
+To download the latest version of the app:
 GNU/Linux
 [**deb**](https://access.togaware.com/rattle_amd64.deb) or
 [**zip**](https://access.togaware.com/rattle-dev-linux.zip) -
@@ -15,7 +15,7 @@ MacOS
 [**zip**](https://access.togaware.com/rattle-dev-macos.zip) -
 Windows
 [**zip**](https://access.togaware.com/rattle-dev-windows.zip) or
-[**inno**](https://access.togaware.com/rattle-dev-windows-inno.exe).
+[**exe**](https://access.togaware.com/rattle-dev-windows-inno.exe).
 
 Visit [togaware](https://rattle.togaware.com) for details.
 
