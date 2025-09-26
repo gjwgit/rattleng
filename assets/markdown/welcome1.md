@@ -29,7 +29,7 @@ are also most welcome.
 + Rattle utilises R templates as introduced in
   [The Essentials of Data Science](https://bit.ly/essentials_data_science)
 + Rattle is licensed under the [GNU General Public License, Version
-  3](https://www.gnu.org/licenses/gpl-3.0.en.html), making it free for
+  3](https://opensource.org/license/gpl-3-0), making it free for
   you to use forever.
 + Also visit Togaware's [Data Science Portal](https://togaware.com/onepager).
 
