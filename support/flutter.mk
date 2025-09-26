@@ -138,7 +138,7 @@ linux_config:
 	flutter config --enable-linux-desktop
 
 .PHONY: prep
-prep: analyze fix import_order_fix format dcm ignore license todo locmax markdown depend bakfind test
+prep: analyze fix import_order_fix format dcm ignore license todo locmax markdown lychee depend bakfind test
 	@echo "ADVISORY: make tests docs"
 	@echo $(SEPARATOR)
 
@@ -503,6 +503,12 @@ unused_code:
 unused_files:
 	@echo "Dart Code Metrics: UNUSED FILES"
 	-metrics check-unused-files --disable-sunset-warning lib
+	@echo $(SEPARATOR)
+
+.PHONY: lychee
+lychee:
+	@echo "Lychee: CHECK LINKS."
+	-lychee --no-progress --format compact 'assets/**/*.md' 'assets/**/*.html' 'lib/**/*.dart'
 	@echo $(SEPARATOR)
 
 ### TODO THESE SHOULD BE CHECKED AND CLEANED UP
