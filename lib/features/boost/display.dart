@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://opensource.org/license/gpl-3-0
 //
-// Time-stamp: "Monday 2024-12-23 15:30:47 +1100 Graham Williams"
+// Time-stamp: "Saturday 2025-09-27 07:38:48 +1000 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -87,7 +87,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
           # XGBoost - Summary
 
           Visit the
-          [Guide](https://xgboost.readthedocs.io/en/stable/R-package/xgboostPresentation.html). Built
+          [Guide](https://xgboost.readthedocs.io/en/stable/R-package). Built
           using
           [xgb::xgboost()](https://www.rdocumentation.org/packages/xgboost/topics/xgb.train).
 

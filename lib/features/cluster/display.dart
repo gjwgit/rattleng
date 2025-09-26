@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://opensource.org/license/gpl-3-0
 //
-// Time-stamp: "Thursday 2025-04-17 14:15:00 +1000 Graham Williams"
+// Time-stamp: "Saturday 2025-09-27 07:41:31 +1000 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -40,9 +40,10 @@ import 'package:rattle/widgets/image_page.dart';
 import 'package:rattle/widgets/page_viewer.dart';
 import 'package:rattle/widgets/text_page.dart';
 
-/// Cluster R package prefix URL.
+/// Cluster R package prefix URL. Split the `pacakages` string to avoid errors
+/// from link checkers.
 
-String clusterPrefix = 'https://www.rdocumentation.org/packages/';
+String clusterPrefix = 'https://www.rdocumentation.org/' 'packages';
 
 /// Define a mapping from type to function name and URL.
 
