@@ -80,6 +80,11 @@ DART_CODE=lib \
 	$(if $(wildcard test/),test) \
 	$(if $(wildcard integration_test/),integration_test)
 
+# Cater for the case where the support folder is one directory up.
+
+LOC := $(shell if [ -f support/loc.sh ]; then echo support/loc.sh; \
+       elif [ -f ../support/loc.sh ]; then echo ../support/loc.sh; fi)
+
 .PHONY: chrome
 chrome:
 	flutter run -d chrome --release
@@ -166,7 +171,7 @@ fix:
 .PHONY: format
 format:
 	@echo "Dart: FORMAT"
-	dart format lib/
+	dart format lib/ $(if $(shell test -d example && echo yes),example/)
 	@echo $(SEPARATOR)
 
 # My emacs IDE is starting to add imports of backups automagically!
@@ -214,7 +219,7 @@ locmax:
 		| numfmt --grouping); \
 	numf=$$(find lib -name "*.dart" -type f | wc -l); \
 	output=$$(find lib -name "*.dart" -exec sh -c ' \
-		lines=$$(bash support/loc.sh "$$1"); \
+		lines=$$(bash $(LOC) "$$1"); \
 		if [ $$lines -gt $(LINES) ]; then \
 			printf "%4d %s\n" $$lines "$$1"; \
 		fi \
@@ -243,7 +248,7 @@ locmax-enforce:
 		| numfmt --grouping); \
 	numf=$$(find lib -name "*.dart" -type f | wc -l); \
 	output=$$(find lib -name "*.dart" -exec sh -c ' \
-		lines=$$(bash support/loc.sh "$$1"); \
+		lines=$$(bash $(LOC) "$$1"); \
 		if [ $$lines -gt $(LINES) ]; then \
 			printf "%4d %s\n" $$lines "$$1"; \
 		fi \
@@ -285,7 +290,7 @@ todo:
 license:
 	@echo "Files without a LICENSE:\n"
 	@-output=$$(find lib -type f -not -name '*~' -not -name 'README*' -not -name '*.g.dart' \
-	! -exec grep -qE '^(/// Copyright|/// Licensed)' {} \; -print | xargs printf "\t%s\n"); \
+	! -exec grep -qE '^(///? Copyright|///? Licensed)' {} \; -print | xargs printf "\t%s\n"); \
 	if [ $$(echo "$$output" | wc -w) -ne 0 ]; then \
 		echo "$$output"; \
 		echo "\n$(CROSS) Error: Files with no license found."; \
