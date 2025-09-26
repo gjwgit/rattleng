@@ -7,8 +7,8 @@
 APP=$(basename "$(dirname "$(pwd)")")
 REP=$(git remote get-url origin | sed -E 's#.*[/:]([^/]+)/[^/]+(\.git)?$#\1#')
 
-HOST=solidcommunity.au
-FLDR=/var/www/html/installers/
+HOST=togaware.com
+FLDR=apps/access/
 DEST=${HOST}:${FLDR}
 
 ssh ${HOST} 'if [ ! -d ${FLDR} ]; then mkdir ${FLDR}; chown gjw:gjw ${FLDR}; fi'
@@ -74,40 +74,6 @@ if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
 
     echo ""
 
-    echo '***** UPLOAD WINDOWS INNO'
-
-    ## gh run download ${bumpId} --name ${APP}-windows-inno
-
-    artifactId=$(gh api -H "Accept: application/vnd.github+json" /repos/${REP}/${APP}/actions/artifacts \
-		    --jq '.artifacts[] | select(.name | endswith("-windows-inno")) | .id' | head -n 1)
-    echo "artifact id: $artifactId"
-    gh api -H "Accept: application/vnd.github+json" repos/${REP}/${APP}/actions/artifacts/${artifactId}/zip > artifact.zip
-    unzip artifact.zip
-    rm -f artifact.zip
-
-    rsync -avzh ${APP}-dev-windows-inno.exe ${DEST}
-    mv ${APP}-dev-windows-inno.exe ARCHIVE/${APP}_${version}_windows-inno.exe
-
-    echo ""
-
-    echo '***** UPLOAD WINDOWS ZIP'
-
-    ## gh run download ${bumpId} --name ${APP}-windows-zip
-
-    artifactId=$(gh api -H "Accept: application/vnd.github+json" /repos/${REP}/${APP}/actions/artifacts \
-		    --jq '.artifacts[] | select(.name | endswith("-windows-zip")) | .id' | head -n 1)
-    echo "artifact id: $artifactId"
-    gh api -H "Accept: application/vnd.github+json" repos/${REP}/${APP}/actions/artifacts/${artifactId}/zip > artifact.zip
-    unzip artifact.zip
-    rm -f artifact.zip
-
-    rsync -avzh ${APP}-dev-windows.zip ${DEST}
-    mv -f ${APP}-dev-windows.zip ARCHIVE/${APP}_${version}_windows.zip
-    ssh ${HOST} "cd ${FLDR}; chmod a+r ${APP}-dev-*.zip ${APP}-dev-*.exe"
-
-
-    echo ""
-
     echo '***** UPLOAD MACOS DMG'
 
     ## gh run download ${bumpId} --name ${APP}-macos-zip
@@ -138,6 +104,39 @@ if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
 
     rsync -avzh ${APP}-dev-macos.zip ${DEST}
     mv ${APP}-dev-macos.zip ARCHIVE/${APP}_${version}_macos.zip
+    ssh ${HOST} "cd ${FLDR}; chmod a+r ${APP}-dev-*.zip ${APP}-dev-*.exe"
+
+    echo ""
+
+    echo '***** UPLOAD WINDOWS INNO'
+
+    ## gh run download ${bumpId} --name ${APP}-windows-inno
+
+    artifactId=$(gh api -H "Accept: application/vnd.github+json" /repos/${REP}/${APP}/actions/artifacts \
+		    --jq '.artifacts[] | select(.name | endswith("-windows-inno")) | .id' | head -n 1)
+    echo "artifact id: $artifactId"
+    gh api -H "Accept: application/vnd.github+json" repos/${REP}/${APP}/actions/artifacts/${artifactId}/zip > artifact.zip
+    unzip artifact.zip
+    rm -f artifact.zip
+
+    rsync -avzh ${APP}-dev-windows-inno.exe ${DEST}
+    mv ${APP}-dev-windows-inno.exe ARCHIVE/${APP}_${version}_windows-inno.exe
+
+    echo ""
+
+    echo '***** UPLOAD WINDOWS ZIP'
+
+    ## gh run download ${bumpId} --name ${APP}-windows-zip
+
+    artifactId=$(gh api -H "Accept: application/vnd.github+json" /repos/${REP}/${APP}/actions/artifacts \
+		    --jq '.artifacts[] | select(.name | endswith("-windows-zip")) | .id' | head -n 1)
+    echo "artifact id: $artifactId"
+    gh api -H "Accept: application/vnd.github+json" repos/${REP}/${APP}/actions/artifacts/${artifactId}/zip > artifact.zip
+    unzip artifact.zip
+    rm -f artifact.zip
+
+    rsync -avzh ${APP}-dev-windows.zip ${DEST}
+    mv -f ${APP}-dev-windows.zip ARCHIVE/${APP}_${version}_windows.zip
     ssh ${HOST} "cd ${FLDR}; chmod a+r ${APP}-dev-*.zip ${APP}-dev-*.exe"
 
 else
