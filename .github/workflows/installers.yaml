@@ -13,7 +13,6 @@ on:
 
 env:
   APP: rattle
-  LINUX_PKGS:
   FLUTTER_VERSION: '3.35.4'
 
 jobs:
