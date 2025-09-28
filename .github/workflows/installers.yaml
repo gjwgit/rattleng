@@ -14,7 +14,7 @@ on:
 env:
   APP: rattle
   LINUX_PKGS:
-  FLUTTER_VERSION: '3.35.3'
+  FLUTTER_VERSION: '3.35.4'
 
 jobs:
 
@@ -222,6 +222,11 @@ jobs:
           path: build/windows/x64/runner/Release/${{ env.APP }}-${{github.ref_name}}-windows.zip
 
       # Package as EXE
+
+      - name: Check directories
+        run: |
+          dir
+          dir installers
 
       - name: Check the DLLs for Inclusion in the .iss script
         run: dir D:\a\${{ env.APP }}\${{ env.APP }}\build\windows\x64\runner\Release\
