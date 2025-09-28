@@ -232,7 +232,8 @@ jobs:
           echo "APP_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Compile .ISS to .EXE Installer
-        uses: Minionguyjpro/Inno-Setup-Action@v1.2.5
+        # uses: Minionguyjpro/Inno-Setup-Action@v1.2.5
+        uses: Minionguyjpro/Inno-Setup-Action@11b1cb96144a501c6580661c8d0bdf4bb790171c
         with:
           path: installers/app-windows.iss
           options: /O+
