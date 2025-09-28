@@ -181,7 +181,7 @@ jobs:
       contains(github.event.head_commit.message, 'bump version') ||
       contains(github.event.head_commit.message, 'build installers') ||
       contains(github.event.head_commit.message, 'build windows')
-    runs-on: windows-latest
+    runs-on: windows-2025
 
     steps:
       - name: Clone Repository
