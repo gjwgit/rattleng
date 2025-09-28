@@ -222,31 +222,31 @@ jobs:
 
       # Package as EXE
 
-      - name: Check directories
-        run: |
-          dir
-          dir installers
-          dir installers/app-windows.iss
-          type installers/app-windows.iss
-          dir C:\hostedtoolcache\windows\flutter\stable-3.35.4-x64
-          dir C:\Users\runneradmin\AppData\Local\Pub\Cache
+      # - name: Check directories
+      #   run: |
+      #     dir
+      #     dir installers
+      #     dir installers/app-windows.iss
+      #     type installers/app-windows.iss
+      #     dir C:\hostedtoolcache\windows\flutter\stable-3.35.4-x64
+      #     dir C:\Users\runneradmin\AppData\Local\Pub\Cache
 
-      - name: Check the DLLs for Inclusion in the .iss script
-        run: dir D:\a\${{ env.APP }}\${{ env.APP }}\build\windows\x64\runner\Release\
+      # - name: Check the DLLs for Inclusion in the .iss script
+      #   run: dir D:\a\${{ env.APP }}\${{ env.APP }}\build\windows\x64\runner\Release\
 
-      - name: Get Version from pubspec.yaml
-        run: |
-          $version = (Get-Content pubspec.yaml | Select-String '^version:[^^]*' | ForEach-Object { $_.ToString().Split(":")[1].Trim().Split("+")[0].Trim() })
-          echo "APP_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
+      # - name: Get Version from pubspec.yaml
+      #   run: |
+      #     $version = (Get-Content pubspec.yaml | Select-String '^version:[^^]*' | ForEach-Object { $_.ToString().Split(":")[1].Trim().Split("+")[0].Trim() })
+      #     echo "APP_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
 
-      - name: Compile .ISS to .EXE Installer
-        uses: Minionguyjpro/Inno-Setup-Action@v1.2.5
-        with:
-          path: installers/app-windows.iss
-          options: /O+
+      # - name: Compile .ISS to .EXE Installer
+      #   uses: Minionguyjpro/Inno-Setup-Action@v1.2.5
+      #   with:
+      #     path: installers/app-windows.iss
+      #     options: /O+
 
-      - name: Upload Artefact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.APP }}-windows-inno
-          path: D:\a\${{ env.APP }}\${{ env.APP }}\installers\installers\${{ env.APP }}-dev-windows-inno.exe
+      # - name: Upload Artefact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: ${{ env.APP }}-windows-inno
+      #     path: D:\a\${{ env.APP }}\${{ env.APP }}\installers\installers\${{ env.APP }}-dev-windows-inno.exe
