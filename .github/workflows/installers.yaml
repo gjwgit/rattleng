@@ -226,6 +226,10 @@ jobs:
         run: |
           dir
           dir installers
+          dir installers/app-windows.iss
+          type installers/app-windows.iss
+          dir C:\hostedtoolcache\windows\flutter\stable-3.35.4-x64
+          dir C:\Users\runneradmin\AppData\Local\Pub\Cache
 
       - name: Check the DLLs for Inclusion in the .iss script
         run: dir D:\a\${{ env.APP }}\${{ env.APP }}\build\windows\x64\runner\Release\
