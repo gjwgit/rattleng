@@ -181,7 +181,7 @@ jobs:
       contains(github.event.head_commit.message, 'bump version') ||
       contains(github.event.head_commit.message, 'build installers') ||
       contains(github.event.head_commit.message, 'build windows')
-    runs-on: windows-latest # randomly not working with inno 1.2.7
+    runs-on: windows-latest # randomly not working (choco fails) with inno 1.2.7
 
     steps:
       - name: Clone Repository
@@ -232,7 +232,7 @@ jobs:
           echo "APP_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Compile .ISS to .EXE Installer
-        uses: Minionguyjpro/Inno-Setup-Action@v1.2.7
+        uses: Minionguyjpro/Inno-Setup-Action@v1.2.5
         with:
           path: installers/app-windows.iss
           options: /O+

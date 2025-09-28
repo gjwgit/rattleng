@@ -19,6 +19,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ Update inno build for windows-latest [6.5.19 20250929 gjw]
 + Lint clean. VersionWidget update [6.5.18 20250928 gjw]
 + Fix macOS crash on startup due to PATH [6.5.17 20250924 adiar11]
 + Reduce tech debt - dataset and fix locmax lint [6.5.16 20250913 gjw]
