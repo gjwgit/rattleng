@@ -231,11 +231,21 @@ jobs:
           $version = (Get-Content pubspec.yaml | Select-String '^version:[^^]*' | ForEach-Object { $_.ToString().Split(":")[1].Trim().Split("+")[0].Trim() })
           echo "APP_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
 
-      - name: Compile .ISS to .EXE Installer
+       - name: Check the files location
+        run: |
+          dir
+          dir installers
+          pwd
+          ls -la
+          ls -la installers
+          ls -la build/windows/runner/Release/
+
+     - name: Compile .ISS to .EXE Installer
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.5
         with:
           path: installers/app-windows.iss
           options: /O+
+        working-directory: D:\a\rattle\rattle
 
       - name: Upload Artefact
         uses: actions/upload-artifact@v4
