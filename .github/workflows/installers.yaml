@@ -181,7 +181,7 @@ jobs:
       contains(github.event.head_commit.message, 'bump version') ||
       contains(github.event.head_commit.message, 'build installers') ||
       contains(github.event.head_commit.message, 'build windows')
-    runs-on: windows-2025 # latest not working with inno 1.2.5 or above!
+    runs-on: windows-latest # randomly not working with inno 1.2.7
 
     steps:
       - name: Clone Repository
