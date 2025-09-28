@@ -103,6 +103,7 @@ jobs:
       - name: Link Checker
         id: lychee
         uses: lycheeverse/lychee-action@v2
+        args: 'assets/**/*.md' 'assets/**/*.html' 'lib/**/*.dart'
         with: # Don't fail for now but then create an issue - useful?
           fail: false
 
