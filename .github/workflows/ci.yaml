@@ -13,7 +13,7 @@ on:
     types: [opened, reopened, synchronize]
 
 env:
-  FLUTTER_VERSION: '3.35.3'
+  FLUTTER_VERSION: '3.35.4'
 
 jobs:
 
@@ -99,6 +99,7 @@ jobs:
       issues: write # required for peter-evans/create-issue-from-file
     steps:
       - uses: actions/checkout@v4
+
       - name: Link Checker
         id: lychee
         uses: lycheeverse/lychee-action@v2
