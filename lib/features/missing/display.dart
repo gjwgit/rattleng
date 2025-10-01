@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://opensource.org/license/gpl-3-0
 //
-// Time-stamp: "Tuesday 2025-08-12 16:41:02 +1000 Graham Williams"
+// Time-stamp: "Wednesday 2025-10-01 16:34:40 +1000 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -69,7 +69,9 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     // COUNT OF MISSING VALUES - TEXTUAL
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, 'aggr(');
+    content = rExtract(stdout, 'VIM::aggr(');
+
+    print(content);
 
     // Remove the line beginning with + (a continuation)
 
