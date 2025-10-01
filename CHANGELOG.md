@@ -19,6 +19,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ MISSING: Bug fix for VIM::aggr() warning [6.5.21 20251001 gjw]
 + Update file_picker resolve custom issue - labs [6.5.20 20250929 gjw]
 + Update inno build for windows-latest [6.5.19 20250929 gjw]
 + Lint clean. VersionWidget update [6.5.18 20250928 gjw]
