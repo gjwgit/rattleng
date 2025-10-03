@@ -104,7 +104,12 @@ jobs:
         id: lychee
         uses: lycheeverse/lychee-action@v2
         with: # Don't fail for now but then create an issue - useful?
-          args: --verbose --no-progress 'assets/**/*.md' 'assets/**/*.html' 'lib/**/*.dart'
+          args:
+            --verbose
+            --no-progress
+            'assets/**/*.md'
+            'assets/**/*.html'
+            'lib/**/*.dart'
           fail: false
 
       - name: Create Issue From File

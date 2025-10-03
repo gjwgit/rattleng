@@ -94,6 +94,52 @@ jobs:
           name: ${{ env.APP }}-linux-zip
           path: build/linux/x64/release/bundle/${{ env.APP }}-${{ github.ref_name }}-linux.zip
 
+
+  package-linux-snap:
+    if: |
+      contains(github.event.head_commit.message, 'bump version') ||
+      contains(github.event.head_commit.message, 'build installers') ||
+      contains(github.event.head_commit.message, 'build linux') ||
+      contains(github.event.head_commit.message, 'build snap')
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Clone Repository
+        uses: actions/checkout@v4
+
+      - name: Build snap
+        if: hashFiles('snap/**') != ''
+        uses: snapcore/action-build@v1
+        id: build
+
+      - name: Upload snap artifact
+        if: hashFiles('snap/**') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.APP }}-linux-snap
+          path: ${{ steps.build.outputs.snap }}
+
+  # publish:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   # Only publish on tag pushes
+  #   if: startsWith(github.ref, 'refs/tags/v')
+  #   steps:
+  #     - name: Download snap artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: snap-package
+
+  #     - name: Publish to Snap Store
+  #       uses: snapcore/action-publish@v1
+  #       env:
+  #         SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
+  #       with:
+  #         snap: '*.snap'
+  #         release: stable
+
   ########################################################################
   # MACOS
 
