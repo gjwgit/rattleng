@@ -100,3 +100,15 @@ final stripCommentsProvider = StateProvider<bool>((ref) => false);
 final askOnExitProvider = StateProvider<bool>((ref) => true);
 
 final ignoreMissingTargetProvider = StateProvider<bool>((ref) => true);
+
+// Window size settings providers
+// Default window size values (can be overridden by platform-specific defaults if needed)
+
+const double defaultWindowWidth = 1280.0;
+const double defaultWindowHeight = 720.0;
+
+final windowWidthProvider = StateProvider<double>((ref) => defaultWindowWidth);
+
+final windowHeightProvider = StateProvider<double>((ref) => defaultWindowHeight);
+
+final rememberWindowSizeProvider = StateProvider<bool>((ref) => true);

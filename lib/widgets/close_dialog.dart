@@ -120,7 +120,24 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
     );
   }
 
-  void _closeApp() {
+  void _closeApp() async {
+    // save window size before closing if the setting is enabled
+    final rememberSize = ref.read(rememberWindowSizeProvider);
+    if (rememberSize) {
+      try {
+        final size = await WindowManager.instance.getSize();
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setDouble('windowWidth', size.width);
+        await prefs.setDouble('windowHeight', size.height);
+
+        // update providers to reflect saved values
+        ref.read(windowWidthProvider.notifier).state = size.width;
+        ref.read(windowHeightProvider.notifier).state = size.height;
+      } catch (e) {
+        debugPrint('Error saving window size: $e');
+      }
+    }
+
     Navigator.of(context).pop();
     cleanUpTempDirs();
     WindowManager.instance.setPreventClose(false);

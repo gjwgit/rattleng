@@ -42,6 +42,7 @@ import 'package:rattle/settings/sections/dataset_toggles.dart';
 import 'package:rattle/settings/sections/graphic_theme.dart';
 import 'package:rattle/settings/sections/script.dart';
 import 'package:rattle/settings/sections/session.dart';
+import 'package:rattle/settings/sections/window_size.dart';
 import 'package:rattle/settings/utils/handle_cancel_button.dart';
 
 class SettingsDialog extends ConsumerStatefulWidget {
@@ -117,6 +118,17 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
 
     ref.read(ignoreMissingTargetProvider.notifier).state =
         prefs.getBool('ignoreMissingTarget') ?? true;
+
+    // Load window size settings from shared preferences
+
+    ref.read(windowWidthProvider.notifier).state =
+        prefs.getDouble('windowWidth') ?? defaultWindowWidth;
+
+    ref.read(windowHeightProvider.notifier).state =
+        prefs.getDouble('windowHeight') ?? defaultWindowHeight;
+
+    ref.read(rememberWindowSizeProvider.notifier).state =
+        prefs.getBool('rememberWindowSize') ?? true;
   }
 
   /// Load all numeric settings from shared preferences.
@@ -190,6 +202,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       DatasetToggles(),
                       GraphicTheme(),
                       Session(),
+                      const WindowSize(),
                       Script(),
                     ],
                   ),

@@ -36,9 +36,11 @@ import 'package:window_manager/window_manager.dart';
 import 'package:rattle/app.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/pty.dart';
+import 'package:rattle/providers/settings.dart';
 import 'package:rattle/utils/is_desktop.dart';
 import 'package:rattle/utils/is_production.dart';
 import 'package:rattle/utils/show_error.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<bool> checkRInstallation() async {
   // Try to run the R command to check its availability.
@@ -170,23 +172,21 @@ Future<void> main() async {
 
     await windowManager.ensureInitialized();
 
-    WindowOptions windowOptions = const WindowOptions(
+    // Load saved window size from SharedPreferences.
+    final prefs = await SharedPreferences.getInstance();
+    final savedWidth = prefs.getDouble('windowWidth') ?? defaultWindowWidth;
+    final savedHeight = prefs.getDouble('windowHeight') ?? defaultWindowHeight;
+
+    WindowOptions windowOptions = WindowOptions(
       // Setting [alwaysOnTop] here will ensure the desktop app starts on top of
       // other apps on the desktop so that it is visible.
       //
       // We later turn it off as we don't want to force it always on top.
       alwaysOnTop: true,
 
-      // We can override the size in the first instance by, for example in
-      // Linux, editing linux/my_application.cc.
-      //
-      // Setting it here has effect when Restarting the app while debugging.
-
-      // However, since Windows has 1280x720 by default in the windows-specific
-      // windows/runner/main.cpp, line 29, it is best not to override it here
-      // since under Windows 950x600 is too small.
-
-      // size: Size(950, 600),
+      // Use saved window size if available, otherwise use platform defaults
+      // The saved size is loaded from SharedPreferences
+      size: Size(savedWidth, savedHeight),
 
       // The [title] is used for the window manager's window title.
       title: 'Rattle - Data Science with R',
