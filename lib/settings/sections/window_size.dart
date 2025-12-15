@@ -43,7 +43,7 @@ class WindowSize extends ConsumerStatefulWidget {
   ConsumerState<WindowSize> createState() => _WindowSizeState();
 }
 
-class _WindowSizeState extends ConsumerState<WindowSize> {
+class _WindowSizeState extends ConsumerState<WindowSize> with WindowListener {
   late final TextEditingController _widthController;
   late final TextEditingController _heightController;
   double? _currentWidth;
@@ -54,12 +54,14 @@ class _WindowSizeState extends ConsumerState<WindowSize> {
     super.initState();
     _widthController = TextEditingController();
     _heightController = TextEditingController();
+    windowManager.addListener(this);
     _loadCurrentWindowSize();
     _loadSettings();
   }
 
   @override
   void dispose() {
+    windowManager.removeListener(this);
     _widthController.dispose();
     _heightController.dispose();
     super.dispose();
@@ -122,15 +124,7 @@ class _WindowSizeState extends ConsumerState<WindowSize> {
         await windowManager.setSize(Size(width, height));
         await _loadCurrentWindowSize();
         await _saveWindowSizeSettings();
-        
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Window size applied and saved'),
-              duration: Duration(seconds: 2),
-            ),
-          );
-        }
+
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -156,6 +150,20 @@ class _WindowSizeState extends ConsumerState<WindowSize> {
     await windowManager.setSize(Size(defaultWindowWidth, defaultWindowHeight));
 
     _saveWindowSizeSettings();
+  }
+
+  @override
+  void onWindowResize() async {
+    if (!mounted) return;
+    try {
+      final size = await windowManager.getSize();
+      setState(() {
+        _currentWidth = size.width;
+        _currentHeight = size.height;
+      });
+    } catch (e) {
+      debugPrint('Error updating window size on resize: $e');
+    }
   }
 
   @override
