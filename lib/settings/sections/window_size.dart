@@ -75,7 +75,6 @@ class _WindowSizeState extends ConsumerState<WindowSize> {
           _currentHeight = size.height;
         });
       } catch (e) {
-        // Window manager might not be available
         debugPrint('Error loading current window size: $e');
       }
     }
@@ -90,7 +89,7 @@ class _WindowSizeState extends ConsumerState<WindowSize> {
     _heightController.text = savedHeight.toStringAsFixed(0);
   }
 
-  /// Save window size settings to shared preferences.
+  /// Save window size settings to shared preferences
   Future<void> _saveWindowSizeSettings() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -107,12 +106,12 @@ class _WindowSizeState extends ConsumerState<WindowSize> {
       await prefs.setDouble('windowHeight', height);
     }
 
-    // Save remember window size setting.
+    // Save remember window size setting
     final rememberSize = ref.read(rememberWindowSizeProvider);
     await prefs.setBool('rememberWindowSize', rememberSize);
   }
 
-  /// Apply the window size from the text fields to the actual window.
+  /// Apply the window size from the text fields to the actual window
   Future<void> _applyWindowSize() async {
 
     final width = double.tryParse(_widthController.text);
@@ -145,14 +144,16 @@ class _WindowSizeState extends ConsumerState<WindowSize> {
     }
   }
 
-  /// Reset window size settings to defaults.
-  void _resetWindowSize() {
+  /// Reset window size settings to defaults
+  Future<void> _resetWindowSize() async {
     ref.read(windowWidthProvider.notifier).state = defaultWindowWidth;
     ref.read(windowHeightProvider.notifier).state = defaultWindowHeight;
     ref.read(rememberWindowSizeProvider.notifier).state = true;
 
     _widthController.text = defaultWindowWidth.toStringAsFixed(0);
     _heightController.text = defaultWindowHeight.toStringAsFixed(0);
+
+    await windowManager.setSize(Size(defaultWindowWidth, defaultWindowHeight));
 
     _saveWindowSizeSettings();
   }
@@ -164,7 +165,7 @@ class _WindowSizeState extends ConsumerState<WindowSize> {
     final savedWidth = ref.watch(windowWidthProvider);
     final savedHeight = ref.watch(windowHeightProvider);
 
-    // Keep controllers in sync with providers.
+    // Keep controllers in sync with providers
     if (_widthController.text != savedWidth.toStringAsFixed(0)) {
       _widthController.text = savedWidth.toStringAsFixed(0);
     }
@@ -173,6 +174,7 @@ class _WindowSizeState extends ConsumerState<WindowSize> {
     }
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
@@ -196,14 +198,11 @@ class _WindowSizeState extends ConsumerState<WindowSize> {
           ],
         ),
         configRowGap,
-        // Display current window size.
+        // Display current window size
         if (_currentWidth != null && _currentHeight != null)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              'Current window size: ${_currentWidth!.toInt()} × ${_currentHeight!.toInt()}',
-              style: const TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
-            ),
+          Text(
+            'Current window size: ${_currentWidth!.toInt()} × ${_currentHeight!.toInt()}',
+            style: const TextStyle(fontSize: 16,),
           ),
         configRowGap,
         Row(
