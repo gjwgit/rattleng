@@ -1,1 +1,52 @@
-web/index.html
+# Lychee link checker ignore patterns
+# These URLs are expected to fail in CI but are valid in context
+
+# Localhost OAuth callbacks used in integration tests
+
+http://localhost:44007/
+
+http://localhost:8000/
+
+# POD OAuth endpoints that require authentication parameters
+
+https://pods.dev.solidcommunity.au/.oidc/auth
+https://pods.dev.solidcommunity.au/.oidc/token
+
+# Example POD URLs that are protected resources
+
+https://pods.solidcommunity.au/my-moviestar/profile/card#me
+
+# POD server base URL - has temporary availability issues.
+
+https://pods.solidcommunity.au/
+
+# ANU Software Innovation Institute website (frequent timeouts in CI)
+
+https://sii.anu.edu.au/
+
+# OpenStreetMap APIs - require User-Agent headers (400 Bad Request in CI)
+
+https://nominatim.openstreetmap.org/reverse
+https://tile.openstreetmap.org/
+
+# Map Tile Providers (Regex patterns) from geopod
+
+https://tiles\.stadiamaps\.com/.*
+https://server\.arcgisonline\.com/.*
+https://.*\.basemaps\.cartocdn\.com/.*
+https://.*\.tile-cyclosm\.openstreetmap\.fr/.*
+
+# Ignore the template index file.
+
+web/**
+
+# Licenses. Note that gnu.org is throttled so do not check it.
+
+https://www.gnu.org/licenses/
+https://opensource.org/license/gpl-3-0
+
+# Ontology definitions
+
+http://xmlns.com/foaf/0.1/
+http://purl.org/dc/terms/
+https://solidcommunity.au/predicates/*
