@@ -1,16 +1,19 @@
 name: Lint Checks
 
-# Always run the checks on a push to dev and a PR.
+# Always run the checks on a push and a PR.
+#
+# 20250914 gjw Run the tests as separate jobs so we see the individual
+# results. We can instead run then as a single job with multiple
+# steps, but then it stops on the first fail and so not as
+# informative.
 
 on:
   push:
-    branches:
-      - dev
   pull_request:
     types: [opened, reopened, synchronize]
 
 env:
-  FLUTTER_VERSION: '3.35.3'
+  FLUTTER_VERSION: '3.35.4'
 
 jobs:
 
@@ -38,7 +41,7 @@ jobs:
       - run: flutter pub get
       - run: dart format --set-exit-if-changed .
 
-  dart_code_metrics:
+  unused_code:
     runs-on: ubuntu-latest
     if: github.event.repository.private == false
     steps:
@@ -49,10 +52,20 @@ jobs:
           flutter-version: ${{env.FLUTTER_VERSION}}
       - run: flutter pub get
       - run: dart pub global activate dart_code_metrics
-      - run: metrics check-unnecessary-nullable --disable-sunset-warning lib
       - run: metrics check-unused-code --disable-sunset-warning lib
+
+  unused_files:
+    runs-on: ubuntu-latest
+    if: github.event.repository.private == false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: ${{env.FLUTTER_VERSION}}
+      - run: flutter pub get
+      - run: dart pub global activate dart_code_metrics
       - run: metrics check-unused-files --disable-sunset-warning lib
-      - run: metrics analyze --disable-sunset-warning lib --reporter=console
 
   import_order:
     runs-on: ubuntu-latest
@@ -79,14 +92,39 @@ jobs:
       - run: markdownlint --disable MD036 -- *.md lib assets installers
         # -p .markdownlintignore -c .markdownlint.yaml
 
+  link_checker:
+    runs-on: ubuntu-latest
+    if: github.event.repository.private == false
+    permissions:
+      issues: write # required for peter-evans/create-issue-from-file
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Link Checker
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with: # Don't fail for now but then create an issue - useful?
+          args:
+            --verbose
+            --no-progress
+            'assets/**/*.md'
+            'assets/**/*.html'
+            'lib/**/*.dart'
+          fail: false
+
+      - name: Create Issue From File
+        if: steps.lychee.outputs.exit_code != 0
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: Link Checker Report
+          content-filepath: ./lychee/out.md
+          labels: report, automated issue
+
   locmax:
     runs-on: ubuntu-latest
     if: github.event.repository.private == false
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
       - run: make locmax-enforce
 
   copyright:

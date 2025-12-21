@@ -7,20 +7,27 @@ description of the update. Updates in the 6.5.n series are heading
 toward a 6.6 release.  The `[version timestamp user]` string is
 utilised by the flutter version_widget package.
 
-Binaries to download latest version:
-GNU/Linux
+To download the latest version of the app: GNU/Linux
 [**deb**](https://access.togaware.com/rattle_amd64.deb) or
-[**zip**](https://access.togaware.com/rattle-dev-linux.zip) -
-MacOS
-[**zip**](https://access.togaware.com/rattle-dev-macos.zip) -
-Windows
-[**zip**](https://access.togaware.com/rattle-dev-windows-zip.exe) or
-[**inno**](https://access.togaware.com/rattle-dev-windows-inno.exe).
+[**zip**](https://access.togaware.com/rattle-dev-linux.zip) - MacOS
+[**zip**](https://access.togaware.com/rattle-dev-macos.zip) - Windows
+[**zip**](https://access.togaware.com/rattle-dev-windows.zip) or
+[**exe**](https://access.togaware.com/rattle-dev-windows-inno.exe)
+(self installing).
 
 Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ MISSING: Bug fix for VIM::aggr() warning [6.5.21 20251001 gjw]
++ Update file_picker resolve custom issue - labs [6.5.20 20250929 gjw]
++ Update inno build for windows-latest [6.5.19 20250929 gjw]
++ Lint clean. VersionWidget update [6.5.18 20250928 gjw]
++ Fix macOS crash on startup due to PATH [6.5.17 20250924 adiar11]
++ Reduce tech debt - dataset and fix locmax lint [6.5.16 20250913 gjw]
++ REFACTOR: Reduce tech debt - r/source [6.5.15 20250912 gjw]
++ INSTALLERS: Update build script for packaging [6.5.14 20250912 gjw]
++ REPO: Renamed from rattleng to rattle [6.5.13 20250912 gjw]
 + MACOS: Build using Flutter 3.35.3 for NULL fix [6.5.12 20250909 gjw]
 + BENFORD: Include table output in CONSOLE [6.5.11 20250817 gjw]
 + LINT: Extensive lint cleanup [6.5.10 20250816 gjw]

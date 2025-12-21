@@ -3,7 +3,7 @@
 /// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
-/// https://www.gnu.org/licenses/gpl-3.0.en.html
+/// https://opensource.org/license/gpl-3-0
 //
 // Time-stamp: "Tuesday 2025-08-05 14:00:01 +1000 Graham Williams"
 //
@@ -18,7 +18,7 @@
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
-// this program.  If not, see <https://www.gnu.org/licenses/>.
+// this program.  If not, see <https://opensource.org/license/gpl-3-0>.
 ///
 /// Authors: Zheyuan Xu, Graham Williams
 

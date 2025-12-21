@@ -1,12 +1,12 @@
 /// Choose and load a file or folder as the dataset source.
 ///
-/// Time-stamp: "Monday 2025-03-10 05:33:13 +1100 Graham Williams"
+/// Time-stamp: "Monday 2025-09-29 12:20:59 +1000 Graham Williams"
 ///
 /// Copyright (C) 2025, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
-/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+/// License: https://opensource.org/license/gpl-3-0
 ///
 //
 // This program is free software: you can redistribute it and/or modify it under
@@ -20,7 +20,7 @@
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
-// this program.  If not, see <https://www.gnu.org/licenses/>.
+// this program.  If not, see <https://opensource.org/license/gpl-3-0>.
 ///
 /// Authors: Yiming Lu, Graham Williams, Zheyuan Xu
 library;

@@ -1,12 +1,12 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: "Saturday 2025-08-16 10:33:53 +1000 Graham Williams"
+/// Time-stamp: "Saturday 2025-09-27 09:53:24 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
-/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+/// License: https://opensource.org/license/gpl-3-0
 ///
 //
 // This program is free software: you can redistribute it and/or modify it under
@@ -20,7 +20,7 @@
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
-// this program.  If not, see <https://www.gnu.org/licenses/>.
+// this program.  If not, see <https://opensource.org/license/gpl-3-0>.
 ///
 /// Authors: Graham Williams, Yixiang Yin
 
@@ -388,8 +388,8 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
 Author: Graham Williams
 
-Contributions: Bob Muenchen, Tony Nolan, Zhangcheng Qiang, Mukund B Srinivas,
-Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
+Contributions: Aditya Arora, Bob Muenchen, Tony Nolan, Zhangcheng Qiang, Mukund
+B Srinivas, Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
 
   ''';
 
@@ -428,29 +428,6 @@ Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
             VersionWidget(
               version: _appVersion,
               changelogUrl: _changelogUrl,
-              showDate: true,
-              defaultDate: '20250101',
-              isLatestTooltip: '''
-
-              *Rattle* is regularly updated to bring you the best experience for
-              Data Science, AI and Machine Learning. The latest version is
-              always available from the [Rattle](https://rattle.togaware.com)
-              website where you can find installation and update information.
-
-              **Tap** on the Version text here in the title bar to visit the
-              CHANGELOG in your browser to review the changes to Rattle.
-
-              ''',
-              notLatestTooltip: '''
-
-              A **newer version** of Rattle is available! Visit the
-              [Rattle](https://rattle.togaware.com) website for instructions on
-              updating your installation.
-
-              **Tap** on the Version text here in the title bar to visit the
-              CHANGELOG in your browser to review the changes to Rattle.
-
-              ''',
             ),
 
           const SizedBox(width: 50),

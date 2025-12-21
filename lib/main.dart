@@ -1,12 +1,12 @@
 /// Shake, rattle, and roll for the data scientist.
 ///
-/// Time-stamp: "Saturday 2025-08-16 10:37:33 +1000 Graham Williams"
+/// Time-stamp: "Wednesday 2025-09-24 08:28:53 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
-/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+/// License: https://opensource.org/license/gpl-3-0
 ///
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -19,7 +19,7 @@
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
-// this program.  If not, see <https://www.gnu.org/licenses/>.
+// this program.  If not, see <https://opensource.org/license/gpl-3-0>.
 ///
 /// Authors: Graham Williams
 
@@ -35,6 +35,7 @@ import 'package:window_manager/window_manager.dart';
 
 import 'package:rattle/app.dart';
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/providers/pty.dart';
 import 'package:rattle/utils/is_desktop.dart';
 import 'package:rattle/utils/is_production.dart';
 import 'package:rattle/utils/show_error.dart';
@@ -42,13 +43,34 @@ import 'package:rattle/utils/show_error.dart';
 Future<bool> checkRInstallation() async {
   // Try to run the R command to check its availability.
 
-  // 20250113 gjw Exploring Andriod deployment. For no ignore the check for R
+  // 20250113 gjw Exploring Andriod deployment. For now ignore the check for R
   // installed.
 
   if (Platform.isAndroid) return true;
 
+  // 20250924 adiar11 On macOS Rattle fails to launch when double-clicked if we
+  // simply try to run R here. It only launches correctly when run from the
+  // command line (`open rattle.app` or by executing the binary directly).
+  //
+  // The root cause is the system's PATH environment variable. When launched
+  // from the Finder, the app gets a minimal PATH that does not include
+  // `/usr/local/bin`, where the R executable is typically located, particularly
+  // with homebrew installations. As a result, the app cannot find the R process
+  // and crashes silently before a window can appear.
+  //
+  // When launching the app from the Terminal, the app inherits the shell's
+  // PATH, which includes /usr/local/bin, so it can find R and runs perfectly.
+  //
+  // We need to make the app independent of the launch environment. By using
+  // `Process.run()` here with an absolute path to the executable the app
+  // launches perfectly with a double-click.
+  //
+  // We need to fix the absolute path for different installations of R. For now
+  // we check for macOs and assume `/usr/local/bin/R` but eventually we need to
+  // check for locations if not found in PATH.
+
   try {
-    final result = await Process.run('R', ['--version']);
+    final result = await Process.run(shell, ['--version']);
 
     // Check if "R version" is present in the output.
 

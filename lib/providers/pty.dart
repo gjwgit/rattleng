@@ -1,12 +1,12 @@
 /// A provider of the pseudo terminal running R.
 ///
-/// Time-stamp: "Sunday 2025-01-26 08:04:36 +1100 Graham Williams"
+/// Time-stamp: "Wednesday 2025-09-24 08:27:18 +1000 Graham Williams"
 ///
 /// Copyright (C) 2023, Togaware Pty Ltd.
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
-/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+/// License: https://opensource.org/license/gpl-3-0
 ///
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -19,7 +19,7 @@
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
-// this program.  If not, see <https://www.gnu.org/licenses/>.
+// this program.  If not, see <https://opensource.org/license/gpl-3-0>.
 ///
 /// Authors: Graham Williams
 library;
@@ -81,7 +81,7 @@ final ptyProvider = StateProvider<Pty>((ref) {
 /// Linux and MacOS desktops initiate R simply through the R command. Windows
 /// does an R.exe.
 
-// Rewrite code to remove nesting to pass the DCM  test.
+// Rewrite code to remove nesting to pass lint.
 
 String get shell {
   if (Platform.isWindows) {

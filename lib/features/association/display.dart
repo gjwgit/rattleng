@@ -3,9 +3,9 @@
 /// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
-/// https://www.gnu.org/licenses/gpl-3.0.en.html
+/// https://opensource.org/license/gpl-3-0
 //
-// Time-stamp: "Saturday 2025-04-19 07:25:46 +1000 Graham Williams"
+// Time-stamp: "Saturday 2025-09-27 07:37:44 +1000 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -18,7 +18,7 @@
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
-// this program.  If not, see <https://www.gnu.org/licenses/>.
+// this program.  If not, see <https://opensource.org/license/gpl-3-0>.
 ///
 /// Authors: Graham Williams, Zheyuan Xu
 
@@ -181,7 +181,7 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
           # Association Rules &#8212; Graph of Associations
 
           Generated using
-          [arulesViz::plot()](https://www.rdocumentation.org/packages/arulesViz/topics/plot).
+          [arulesViz::plot()](https://www.rdocumentation.org/packages/arulesViz/topics/plot_arulesViz).
 
           ''',
           path: imageSVG,
@@ -235,7 +235,7 @@ class _AssociationDisplayState extends ConsumerState<AssociationDisplay> {
           # Association Rules  &#8212; Matrix of Lift and Support
 
           Generated using
-          [arulesViz::plot()](https://www.rdocumentation.org/packages/arulesViz/topics/plot).
+          [arulesViz::plot()](https://www.rdocumentation.org/packages/arulesViz/topics/plot_arulesViz).
 
           To view this associations plot please tap the **Open** button to the
           right. Our current SVG viewer does not support all SVG features.

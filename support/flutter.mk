@@ -76,6 +76,15 @@ help::
 TICK=\033[0;32m✔\033[0m
 CROSS=\033[31m❌\033[0m
 
+DART_CODE=lib \
+	$(if $(wildcard test/),test) \
+	$(if $(wildcard integration_test/),integration_test)
+
+# Cater for the case where the support folder is one directory up.
+
+LOC := $(shell if [ -f support/loc.sh ]; then echo support/loc.sh; \
+       elif [ -f ../support/loc.sh ]; then echo ../support/loc.sh; fi)
+
 .PHONY: chrome
 chrome:
 	flutter run -d chrome --release
@@ -129,7 +138,7 @@ linux_config:
 	flutter config --enable-linux-desktop
 
 .PHONY: prep
-prep: analyze fix import_order_fix format dcm ignore license locmax todo markdown depend bakfind test
+prep: analyze fix import_order_fix format dcm ignore license todo locmax markdown lychee depend bakfind
 	@echo "ADVISORY: make tests docs"
 	@echo $(SEPARATOR)
 
@@ -162,7 +171,7 @@ fix:
 .PHONY: format
 format:
 	@echo "Dart: FORMAT"
-	dart format lib/
+	dart format lib/ $(if $(shell test -d example && echo yes),example/)
 	@echo $(SEPARATOR)
 
 # My emacs IDE is starting to add imports of backups automagically!
@@ -202,18 +211,28 @@ LINES ?= 300
 .PHONY: locmax
 locmax:
 	@echo "Files with EXCESS LINES OF CODE:\n"
-	@-output=$$(find lib -name "*.dart" -exec sh -c ' \
-		lines=$$(bash support/loc.sh "$$1"); \
+	@-loc=$$(cat $(shell find lib -name '*.dart') \
+		| egrep -v '^ */' \
+		| egrep -v '^ *$$' \
+		| egrep -v '^ *[)},]+, *$$' \
+		| wc -l \
+		| numfmt --grouping); \
+	numf=$$(find lib -name "*.dart" -type f | wc -l); \
+	output=$$(find lib -name "*.dart" -exec sh -c ' \
+		lines=$$(bash $(LOC) "$$1"); \
 		if [ $$lines -gt $(LINES) ]; then \
 			printf "%4d %s\n" $$lines "$$1"; \
 		fi \
 	' _ {} \; | sort -nr); \
+	locm=$$(echo $$output | wc -w | awk '{print $$1/2}'); \
 	if [ -n "$$output" ]; then \
 		echo "$$output"; \
-		echo "\n$(CROSS) Error: Files with more than $(LINES) lines found"; \
+		echo "\nTotal $$loc lines of code across $$numf files."; \
+		echo "\n$(CROSS) Error: Found $$locm files with more than $(LINES) lines of code."; \
 		exit 1; \
 	else \
-		echo "$(TICK) All files are under $(LINES) lines"; \
+		echo "Total $$loc lines of code across $$numf files."; \
+		echo "\n$(TICK) All files are under $(LINES) lines."; \
 	fi
 	@echo $(SEPARATOR)
 
@@ -221,17 +240,27 @@ locmax:
 
 PHONY: locmax-enforce
 locmax-enforce:
-	@output=$$(find lib -name "*.dart" -exec sh -c ' \
-		lines=$$(bash support/loc.sh "$$1"); \
+	@loc=$$(cat $(shell find lib -name '*.dart') \
+		| egrep -v '^ */' \
+		| egrep -v '^ *$$' \
+		| egrep -v '^ *[)},]+, *$$' \
+		| wc -l \
+		| numfmt --grouping); \
+	numf=$$(find lib -name "*.dart" -type f | wc -l); \
+	output=$$(find lib -name "*.dart" -exec sh -c ' \
+		lines=$$(bash $(LOC) "$$1"); \
 		if [ $$lines -gt $(LINES) ]; then \
 			printf "%4d %s\n" $$lines "$$1"; \
 		fi \
 	' _ {} \; | sort -nr); \
+	locm=$$(echo $$output | wc -w | awk '{print $$1/2}'); \
 	if [ -n "$$output" ]; then \
 		echo "$$output"; \
-		echo "$(CROSS) Error: Files with more than $(LINES) lines found"; \
+		echo "Total $$loc lines of code across $$numf files."; \
+		echo "$(CROSS) Error: Found $$locm files with more than $(LINES) lines of code."; \
 		exit 1; \
 	else \
+		echo "Total $$loc lines of code across $$numf files."; \
 		echo "$(TICK) All files are under $(LINES) lines"; \
 	fi
 
@@ -261,7 +290,7 @@ todo:
 license:
 	@echo "Files without a LICENSE:\n"
 	@-output=$$(find lib -type f -not -name '*~' -not -name 'README*' -not -name '*.g.dart' \
-	! -exec grep -qE '^(/// Copyright|/// Licensed)' {} \; -print | xargs printf "\t%s\n"); \
+	! -exec grep -qE '^(///? Copyright|///? Licensed)' {} \; -print | xargs printf "\t%s\n"); \
 	if [ $$(echo "$$output" | wc -w) -ne 0 ]; then \
 		echo "$$output"; \
 		echo "\n$(CROSS) Error: Files with no license found."; \
@@ -447,25 +476,22 @@ publish:
 .PHONY: import_order
 import_order:
 	@echo "Dart: CHECK IMPORT ORDER"
-	import_order --check
+	@which import_order > /dev/null 2>&1 \
+	|| { echo "Error: Install with 'dart pub global activate import_order_lint'."; exit 1; }
+	import_order --check $(DART_CODE)
 	@echo $(SEPARATOR)
 
 .PHONY: import_order_fix
 import_order_fix:
 	@echo "Dart: FIX IMPORT ORDER"
-	import_order
+	@import_order --check $(DART_CODE) \
+	|| import_order lib $(DART_CODE)
 	@echo $(SEPARATOR)
 
 # dart pub global activate dart_code_metrics
 
 .PHONY: dcm
-dcm: nullable unused_code unused_files metrics
-
-.PHONY: nullable
-nullable:
-	@echo "Dart Code Metrics: NULLABLE"
-	-metrics check-unnecessary-nullable --disable-sunset-warning lib
-	@echo $(SEPARATOR)
+dcm: unused_code unused_files
 
 .PHONY: unused_code
 unused_code:
@@ -479,10 +505,10 @@ unused_files:
 	-metrics check-unused-files --disable-sunset-warning lib
 	@echo $(SEPARATOR)
 
-.PHONY: metrics
-metrics:
-	@echo "Dart Code Metrics: METRICS"
-	-metrics analyze --disable-sunset-warning lib --reporter=console
+.PHONY: lychee
+lychee:
+	@echo "Lychee: CHECK LINKS."
+	-lychee --no-progress --format compact 'assets/**/*.md' 'assets/**/*.html' 'lib/**/*.dart'
 	@echo $(SEPARATOR)
 
 ### TODO THESE SHOULD BE CHECKED AND CLEANED UP

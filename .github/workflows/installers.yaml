@@ -1,10 +1,10 @@
 name: Build Installers
 
 # 20241024 gjw Construct bundles for various distributions. The
-# bundles (as .zip and .exe files) are created as artefacts that can
-# be downloaded locally using the github command line `gh`. I am not
-# utilising github SECRETS yet but could do so to push the packages
-# directly to togaware.com.
+# bundles (.zip or .exe or .dmg files) are created as artefacts that
+# can be downloaded locally using the github command line `gh`. I am
+# not utilising github SECRETS yet but will do so to push the packages
+# directly to togaware.com and to build signed packages.
 
 on:
   push:
@@ -13,12 +13,14 @@ on:
 
 env:
   APP: rattle
-
-  FLUTTER_VERSION: '3.35.3'
+  LINUX_PKGS:
+  FLUTTER_VERSION: '3.35.4'
 
 jobs:
 
   ########################################################################
+  # LINUX
+  #
   # 20250110 gjw Originally I was building on Ubuntu 22.04 since my
   # 24.04 version would not run on Mint 21.3. Then moved even older to
   # Ubuntu 20.04 to get it more widely available. Seems to work on
@@ -31,18 +33,32 @@ jobs:
   # https://github.com/gjwgit/rattleng/actions/runs/13753262146.
   # Move to 22.04 to get broadest deployment.
 
-  build-linux-zip:
+  package-linux-zip:
     if: |
       contains(github.event.head_commit.message, 'bump version') ||
-      contains(github.event.head_commit.message, 'build installers')
+      contains(github.event.head_commit.message, 'build installers') ||
+      contains(github.event.head_commit.message, 'build linux')
     runs-on: ubuntu-latest
 
     steps:
       - name: Clone Repository
         uses: actions/checkout@v4
 
-      - name: Confirm Branch
-        run: git status
+      - name: Install OS Dependencies
+        run: |
+          sudo apt-get update -y
+          printf '#%.0s' {1..72}; printf '\nninja-build\n'
+          sudo apt-get install -y ninja-build
+          printf '#%.0s' {1..72}; printf '\nlibgtk-3-dev\n'
+          sudo apt-get install -y libgtk-3-dev
+          printf '#%.0s' {1..72}; printf '\nclang cmake\n'
+          sudo apt-get install -y clang cmake
+
+      - name: Install extra Linux packages
+        if: env.LINUX_PKGS != ''
+        run: |
+          printf '#%.0s' {1..72}; printf '\n${{env.LINUX_PKGS}}\n'
+          sudo apt-get install -y ${{env.LINUX_PKGS}}
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -54,21 +70,16 @@ jobs:
       - name: Confirm Flutter Version
         run: flutter --version
 
-      - name: Install OS Dependencies
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y ninja-build libgtk-3-dev
-          sudo apt-get install -y clang cmake
-          sudo apt-get install -y libunwind-dev libsecret-1-dev
-          sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
       - name: Install Flutter Project Dependencies
         run: flutter pub get
 
       - name: Enable Linux Build
         run: flutter config --enable-linux-desktop
 
-      - name: Build Artifact
+      - name: Build Flutter Linux app
         run: flutter build linux --release
+
+      # Package as ZIP
 
       - name: Zip Bundle
         uses: thedoctor0/zip-release@master
@@ -77,120 +88,66 @@ jobs:
           filename: ${{ env.APP }}-${{ github.ref_name }}-linux.zip
           directory: build/linux/x64/release/bundle
 
-      - name: Upload Artifact
+      - name: Upload Artefact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.APP }}-linux-zip
           path: build/linux/x64/release/bundle/${{ env.APP }}-${{ github.ref_name }}-linux.zip
 
-  ########################################################################
 
-  build-windows-inno:
+  package-linux-snap:
     if: |
       contains(github.event.head_commit.message, 'bump version') ||
-      contains(github.event.head_commit.message, 'build inno') ||
-      contains(github.event.head_commit.message, 'build installers')
-    runs-on: windows-latest
+      contains(github.event.head_commit.message, 'build installers') ||
+      contains(github.event.head_commit.message, 'build linux') ||
+      contains(github.event.head_commit.message, 'build snap')
+
+    runs-on: ubuntu-latest
 
     steps:
+
       - name: Clone Repository
         uses: actions/checkout@v4
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          architecture: x64
-          flutter-version: ${{env.FLUTTER_VERSION}}
+      - name: Build snap
+        if: hashFiles('snap/**') != ''
+        uses: snapcore/action-build@v1
+        id: build
 
-      - name: Install Project Dependencies
-        run: flutter pub get
-
-      - name: Enable Windows Build
-        run: flutter config --enable-windows-desktop
-
-      - name: Build Artifact
-        run: flutter build windows
-
-      - name: Check the DLLs for Inclusion in the .iss script
-        run: dir D:\a\${{ env.APP }}\${{ env.APP }}\build\windows\x64\runner\Release\
-
-      - name: Get Version from pubspec.yaml
-        run: |
-          $version = (Get-Content pubspec.yaml | Select-String '^version:[^^]*' | ForEach-Object { $_.ToString().Split(":")[1].Trim().Split("+")[0].Trim() })
-          echo "APP_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
-
-      - name: Compile .ISS to .EXE Installer
-
-        # The github repo for the github action Minionguyjpro/Inno-Setup-Action@v1.2.5
-        # disappeared completely (user and repo). I found a recent fork from the
-        # Wayback machine and forked it myself and that seems to
-        # work as above. (gjw 20250403)
-        #
-        # Seems like it is now back. (gjw 20250423)
-        #
-        # uses: gjwgit/Inno-Setup-Action@v1.2.5
-        uses: Minionguyjpro/Inno-Setup-Action@v1.2.5
-        with:
-          path: installers/app-windows.iss
-          options: /O+
-
-      - name: Upload Artifact
+      - name: Upload snap artifact
+        if: hashFiles('snap/**') != ''
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.APP }}-windows-inno
-          path: D:\a\${{ env.APP }}\${{ env.APP }}\installers\installers\${{ env.APP }}-dev-windows-inno.exe
+          name: ${{ env.APP }}-linux-snap
+          path: ${{ steps.build.outputs.snap }}
+
+  # publish:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   # Only publish on tag pushes
+  #   if: startsWith(github.ref, 'refs/tags/v')
+  #   steps:
+  #     - name: Download snap artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: snap-package
+
+  #     - name: Publish to Snap Store
+  #       uses: snapcore/action-publish@v1
+  #       env:
+  #         SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
+  #       with:
+  #         snap: '*.snap'
+  #         release: stable
 
   ########################################################################
+  # MACOS
 
-  build-windows-zip:
+  package-macos-dmg-zip:
     if: |
       contains(github.event.head_commit.message, 'bump version') ||
-      contains(github.event.head_commit.message, 'build installers')
-    runs-on: windows-latest
-
-    steps:
-      - name: Clone Repository
-        uses: actions/checkout@v4
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          architecture: x64
-          flutter-version: ${{env.FLUTTER_VERSION}}
-
-      - name: Install project dependencies
-        run: flutter pub get
-
-      - name: Generate intermediates
-        run: flutter pub run build_runner build --delete-conflicting-outputs
-
-      - name: Enable windows build
-        run: flutter config --enable-windows-desktop
-
-      - name: Build artifacts
-        run: flutter build windows --release
-
-      - name: Archive Release
-        uses: thedoctor0/zip-release@master
-        with:
-          type: 'zip'
-          filename: ${{ env.APP }}-${{github.ref_name}}-windows.zip
-          directory: build/windows/x64/runner/Release
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.APP }}-windows-zip
-          path: build/windows/x64/runner/Release/${{ env.APP }}-${{github.ref_name}}-windows.zip
-
-  ########################################################################
-
-  build-macos-zip:
-    if: |
-      contains(github.event.head_commit.message, 'bump version') ||
-      contains(github.event.head_commit.message, 'build installers')
+      contains(github.event.head_commit.message, 'build installers') ||
+      contains(github.event.head_commit.message, 'build macos')
     runs-on: macos-latest
 
     steps:
@@ -201,22 +158,51 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          architecture: x64
           flutter-version: ${{env.FLUTTER_VERSION}}
 
-      - name: Install Project Dependencies
+      - name: Confirm Flutter Version
+        run: flutter --version
+
+      - name: Install Flutter Project Dependencies
         run: flutter pub get
 
-      - name: Generate intermediates
-        run: flutter pub run build_runner build --delete-conflicting-outputs
-
-      - name: Enable macOS build
+      - name: Enable macOS desktop
         run: flutter config --enable-macos-desktop
 
-      - name: Build artifacts
+      - name: Build Flutter macOS app
         run: flutter build macos --release
 
-      - name: Archive Release
+      - name: Note the build location
+        run: |
+          pwd
+          ls -lh build/macos/Build/Products/Release
+
+
+      # Package as DMG
+
+      - name: Create DMG (Unsigned)
+        run: |
+          mkdir -p dmg_temp
+          cp -R "build/macos/Build/Products/Release/${{ env.APP }}.app" dmg_temp/
+          ln -s /Applications dmg_temp/Applications
+          hdiutil create -volname "${{ env.APP }}" \
+            -srcfolder dmg_temp \
+            -ov -format UDZO \
+            "${{ env.APP }}-${{github.ref_name}}-macos-unsigned.dmg"
+
+      - name: Note the DMG created
+        run: |
+          ls -lh
+
+      - name: Upload Artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.APP }}-macos-dmg
+          path: ${{ env.APP }}-${{github.ref_name}}-macos-unsigned.dmg
+
+      # Package as ZIP
+
+      - name: Create ZIP
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
@@ -224,188 +210,81 @@ jobs:
           path: ${{ env.APP }}.app
           filename: ${{ env.APP }}-${{github.ref_name}}-macos.zip
 
-      - name: Review Bundle Contents
+      - name: Review ZIP exists
         run: ls -lh build/macos/Build/Products/Release
 
-      - name: Upload Artifact
+      - name: Upload Artefact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.APP }}-macos-zip
           path: build/macos/Build/Products/Release/${{ env.APP }}-${{github.ref_name}}-macos.zip
 
-########################################################################
-#
-# 20241023 gjw Currently failing due to various things, including the
-# password having special characters. Abort the attempt to build apk
-# for now.
-
-  # build-android-apk:
-  #   if: contains(github.event.head_commit.message, 'bump android')
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     - name: Clone Repository
-  #       uses: actions/checkout@v4
-
-  #     - name: Confirm Branch
-  #       run: git status
-
-  #     - name: Install OS Dependencies
-  #       run: |
-  #         sudo apt-get update -y
-  #         sudo apt-get install -y ninja-build libgtk-3-dev
-  #         sudo apt-get install -y clang cmake adb
-
-  #     - name: Set up JDK
-  #       uses: actions/setup-java@v4
-  #       with:
-  #         distribution: 'zulu'
-  #         java-version: '17'
-
-  #     - name: Set up Flutter
-  #       uses: subosito/flutter-action@v2
-  #       with:
-  #         channel: stable
-  #         architecture: x64
-  #         flutter-version: 3.24.3
-
-  #     - name: Confirm Flutter Version
-  #       run: flutter --version
-
-  #     # Decode and store keystore file.
-
-  #     - name: Decode Keystore
-  #       run: echo $ANDROID_KEYSTORE | base64 -d > android/app/keystore.jks
-  #       env:
-  #         ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
-
-  #     # Set up environment variables for signing. If the password
-  #     # contains special shell characters we need to handle them
-  #     # specifically. We handle some cases below for illustration.
-
-  #     - name: Set up environment for signing
-  #       run: |
-  #         export KEYSTORE_FILE=$GITHUB_WORKSPACE/android/app/keystore.jks
-  #         export KEYSTORE_PASSWORD="${{ secrets.KEYSTORE_PASSWORD }}"
-  #         export KEY_ALIAS=${{ secrets.KEY_ALIAS }}
-  #         export KEY_PASSWORD="${{ secrets.KEY_PASSWORD }}"
-
-  #     # - name: Set up environment for signing
-  #     #   run: |
-  #     #     echo "KEYSTORE_FILE=$GITHUB_WORKSPACE/android/app/keystore.jks" >> $GITHUB_ENV
-  #     #     echo "KEYSTORE_PASSWORD=\"${{ secrets.KEYSTORE_PASSWORD }}\"" >> $GITHUB_ENV
-  #     #     echo "KEY_ALIAS=${{ secrets.KEY_ALIAS }}" >> $GITHUB_ENV
-  #     #     echo "KEY_PASSWORD=\"${{ secrets.KEY_PASSWORD }}\"" >> $GITHUB_ENV
-
-  #     - name: Confirm Flutter Installation
-  #       run: flutter doctor
-
-  #     - name: Install flutter project dependencies
-  #       run: flutter pub get
-
-  #     - name: Build APK Artifact
-  #       run: flutter build apk --release
-
-  #     - name: Upload APK Artifact
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: innerpod-android-apk
-  #         path: build/app/outputs/apk/release/app-release.apk
-
-########################################################################
-
   ########################################################################
+  # WINDOWS
 
-  # build-macos-dmg:
-  #   if: |
-  #     contains(github.event.head_commit.message, 'bump version') ||
-  #     contains(github.event.head_commit.message, 'build installers')
-  #   runs-on: macos-latest
+  package-windows-zip-exe:
+    if: |
+      contains(github.event.head_commit.message, 'bump version') ||
+      contains(github.event.head_commit.message, 'build installers') ||
+      contains(github.event.head_commit.message, 'build windows')
+    runs-on: windows-latest # randomly not working (choco fails) with inno 1.2.7
 
-  #   steps:
-  #     - name: Clone Repository
-  #       uses: actions/checkout@v4
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v4
 
-  #     - name: Set up Flutter
-  #       uses: subosito/flutter-action@v2
-  #       with:
-  #         channel: 'stable'
-  #         architecture: x64
-  #         flutter-version: ${{env.FLUTTER_VERSION}}
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          architecture: x64
+          flutter-version: ${{env.FLUTTER_VERSION}}
 
-  #     - name: Install Project Dependencies
-  #       run: flutter pub get
+      - name: Confirm Flutter Version
+        run: flutter --version
 
-  #     - name: Generate intermediates
-  #       run: flutter pub run build_runner build --delete-conflicting-outputs
+      - name: Install Flutter Project Dependencies
+        run: flutter pub get
 
-  #     - name: Enable macOS build
-  #       run: flutter config --enable-macos-desktop
+      - name: Enable Windows Desktop
+        run: flutter config --enable-windows-desktop
 
-  #     - name: Build artifacts
-  #       run: flutter build macos --release
+      - name: Build Flutter Windows app
+        run: flutter build windows --release
 
-  #     - name: Archive Release
-  #       uses: thedoctor0/zip-release@master
-  #       with:
-  #         type: 'zip'
-  #         directory: build/macos/Build/Products/Release
-  #         path: ${{ env.APP }}.app
-  #         filename: ${{ env.APP }}-${{github.ref_name}}-macos.zip
+      # Package as ZIP
 
-  #     - name: Review Bundle Contents
-  #       run: ls -lh build/macos/Build/Products/Release
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          filename: ${{ env.APP }}-${{github.ref_name}}-windows.zip
+          directory: build/windows/x64/runner/Release
 
-  #     - name: Upload Artifact
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: ${{ env.APP }}-macos-zip
-  #         path: build/macos/Build/Products/Release/${{ env.APP }}-${{github.ref_name}}-macos.zip
+      - name: Upload Artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.APP }}-windows-zip
+          path: build/windows/x64/runner/Release/${{ env.APP }}-${{github.ref_name}}-windows.zip
 
-  # ########################################################################
+      # Package as EXE
 
-  # build-ios-zip:
-  #   if: |
-  #     contains(github.event.head_commit.message, 'bump version') ||
-  #     contains(github.event.head_commit.message, 'build installers')
-  #   runs-on: macos-latest
+      - name: Check the DLLs for Inclusion in the .iss script
+        run: dir D:\a\${{ env.APP }}\${{ env.APP }}\build\windows\x64\runner\Release\
 
-  #   steps:
-  #     - name: Clone Repository
-  #       uses: actions/checkout@v4
+      - name: Get Version from pubspec.yaml
+        run: |
+          $version = (Get-Content pubspec.yaml | Select-String '^version:[^^]*' | ForEach-Object { $_.ToString().Split(":")[1].Trim().Split("+")[0].Trim() })
+          echo "APP_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
 
-  #     - name: Set up Flutter
-  #       uses: subosito/flutter-action@v2
-  #       with:
-  #         channel: 'stable'
-  #         architecture: x64
-  #         flutter-version: ${{env.FLUTTER_VERSION}}
+      - name: Compile .ISS to .EXE Installer
+        uses: Minionguyjpro/Inno-Setup-Action@v1.2.7
+        with:
+          path: installers/app-windows.iss
+          options: /O+
 
-  #     - name: Install Project Dependencies
-  #       run: flutter pub get
-
-  #     - name: Generate intermediates
-  #       run: flutter pub run build_runner build --delete-conflicting-outputs
-
-  #     - name: Enable macOS build
-  #       run: flutter config --enable-macos-desktop
-
-  #     - name: Build artifacts
-  #       run: flutter build ios --release --nocodesign
-
-  #     - name: Archive Release
-  #       uses: thedoctor0/zip-release@master
-  #       with:
-  #         type: 'zip'
-  #         directory: build/macos/Build/Products/Release
-  #         path: ${{ env.APP }}.app
-  #         filename: ${{ env.APP }}-${{github.ref_name}}-ios.zip
-
-  #     - name: Review Bundle Contents
-  #       run: ls -lh build/macos/Build/Products/Release
-
-  #     - name: Upload Artifact
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: ${{ env.APP }}-macos-zip
-  #         path: build/macos/Build/Products/Release/${{ env.APP }}-${{github.ref_name}}-macos.zip
+      - name: Upload Artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.APP }}-windows-inno
+          path: D:\a\${{ env.APP }}\${{ env.APP }}\installers\installers\${{ env.APP }}-dev-windows-inno.exe

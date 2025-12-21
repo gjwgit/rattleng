@@ -4,14 +4,19 @@
 #define MyAppName "Rattle"
 #define MyAppVersion "dev-windows-inno"
 #define MyAppPublisher "Togaware"
-#define MyAppURL "https://rattle.togaware.com/"
+#define MyAppURL "https://github.com/gjwgit/rattle
 #define MyAppExeName "rattle.exe"
 
 [Setup]
+;
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 ; (On Ubuntu run `uuidgen` to generate a unique AppId.)
+;
+; Also notice the consecutive "{" characters required, it seems. Looks
+; like it is for embedding a single "{" and not a constant.
+;
 AppId={{2C2A7757-EE3A-456D-ABCA-045C3C411AF2}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
@@ -19,7 +24,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={autopf}\RattleNG
+DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
 LicenseFile=..\LICENSE
 ;

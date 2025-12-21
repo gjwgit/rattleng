@@ -14,12 +14,13 @@ assignees: ''
 ## To Reproduce
 
 Steps to reproduce the behavior:
+
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
 4. See error
 
-```
+```bash
 $ commands
 ...
 ```
@@ -36,20 +37,20 @@ $ commands
 
 Where has the issue been observed:
 
- - [ ] Android
- - [ ] Chrome
- - [ ] iOS
- - [ ] Linux
- - [ ] macOS
- - [ ] Web
- - [ ] Windows
+- [ ] Android
+- [ ] Chrome
+- [ ] iOS
+- [ ] Linux
+- [ ] macOS
+- [ ] Web
+- [ ] Windows
 
 [Add any other context about the problem here.]
 
 App Version:
 Flutter Version:
 
-## Closing Crieria
+## Closing Criteria
 
 Checklist for closing the issue:
 

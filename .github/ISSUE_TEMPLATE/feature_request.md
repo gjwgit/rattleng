@@ -14,7 +14,7 @@ assignees: ''
 
 So that as a user I can [clear and concise benefit].
 
-## Closing Crieria
+## Closing Criteria
 
 Checklist for closing the issue:
 

@@ -11,6 +11,8 @@ HOST=togaware.com
 FLDR=apps/access/
 DEST=${HOST}:${FLDR}
 
+ssh ${HOST} 'if [ ! -d ${FLDR} ]; then mkdir ${FLDR}; chown gjw:gjw ${FLDR}; fi'
+
 # From the recent 'Build Installers' workflows, identify the 'Bump
 # version' pushes to the repository and get the latest one as the one
 # we want to download the artefacts.
@@ -19,15 +21,7 @@ bumpId=$(gh run list --limit 100 --json databaseId,displayTitle,workflowName \
 	     | jq -r '.[] | select(.workflowName | startswith("Build Installers")) | select(.displayTitle | startswith("Bump version")) | .databaseId' \
 	     | head -n 1)
 
-# A temporary patch. Comment the above and uncomment below to do the
-# 'Build inno' path for a quick build of the windows inno exe for
-# debugging (gjw 20250314).
-
-# bumpId=$(gh run list --limit 100 --json databaseId,displayTitle,workflowName \
-# 	     | jq -r '.[] | select(.workflowName | startswith("Build Installers")) | select(.displayTitle | startswith("Build inno")) | .databaseId' \
-# 	     | head -n 1)
-
-echo "github action id: $bumpId"
+echo "Found github action id: $bumpId"
 
 if [[ -z "${bumpId}" ]]; then
     echo "No workflow found."
@@ -36,6 +30,11 @@ fi
 
 status=$(gh run view ${bumpId} --json status --jq '.status')
 conclusion=$(gh run view ${bumpId} --json conclusion --jq '.conclusion')
+
+# Determine the latest version from pubspec.yaml. Assumes the
+# latest Bump Version push is the same version.
+
+version=$(grep version ../pubspec.yaml | head -1 | cut -d ':' -f 2 | sed 's/ //g')
 
 # Only proceed if the latest action hase been completed successfully
 
@@ -55,15 +54,11 @@ conclusion=$(gh run view ${bumpId} --json conclusion --jq '.conclusion')
 
 if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
 
+    echo "Uploading ${APP} version ${version}"
     echo "Uploads are going to ${DEST}."
     echo
 
-    # Determine the latest version from pubspec.yaml. Assumes the
-    # latest Bump Version push is the same version.
-
-    version=$(grep version ../pubspec.yaml | head -1 | cut -d ':' -f 2 | sed 's/ //g')
-
-    echo '***** UPLOAD LINUX ZIP.'
+    echo '***** UPLOAD LINUX ZIP'
 
     ## gh run download ${bumpId} --name ${APP}-linux-zip
 
@@ -76,6 +71,57 @@ if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
 
     rsync -avzh ${APP}-dev-linux.zip ${DEST}
     mv -f ${APP}-dev-linux.zip ARCHIVE/${APP}_${version}_linux.zip
+
+    echo ""
+
+    echo '***** UPLOAD LINUX SNAP'
+
+    ## gh run download ${bumpId} --name ${APP}-linux-snap
+
+    artifactId=$(gh api -H "Accept: application/vnd.github+json" /repos/${REP}/${APP}/actions/artifacts \
+		    --jq '.artifacts[] | select(.name | endswith("-linux-snap")) | .id' | head -n 1)
+    # TODO 20251003 gjw Only continue if a snap artefact was found
+    echo "artifact id: $artifactId"
+    gh api -H "Accept: application/vnd.github+json" repos/${REP}/${APP}/actions/artifacts/${artifactId}/zip > artifact.zip
+    unzip -oq artifact.zip
+    rm -f artifact.zip
+
+    scp ${APP}_${version%%+*}_amd64.snap ${DEST}/${APP}_amd64.snap
+    mv -f ${APP}_${version%%+*}_amd64.snap ARCHIVE/${APP}_${version%%+*}_amd64.snap
+
+    echo ""
+
+    echo '***** UPLOAD MACOS DMG'
+
+    ## gh run download ${bumpId} --name ${APP}-macos-zip
+
+    artifactId=$(gh api -H "Accept: application/vnd.github+json" /repos/${REP}/${APP}/actions/artifacts \
+		    --jq '.artifacts[] | select(.name | endswith("-macos-dmg")) | .id' | head -n 1)
+    echo "artifact id: $artifactId"
+    gh api -H "Accept: application/vnd.github+json" repos/${REP}/${APP}/actions/artifacts/${artifactId}/zip > artifact.zip
+    unzip artifact.zip
+    rm -f artifact.zip
+
+    rsync -avzh ${APP}-dev-macos-unsigned.dmg ${DEST}
+    mv ${APP}-dev-macos-unsigned.dmg ARCHIVE/${APP}_${version}_macos_unsigned.dmg
+    ssh ${HOST} "cd ${FLDR}; chmod a+r ${APP}-dev-macos-unsigned.dmg"
+
+    echo ""
+
+    echo '***** UPLOAD MACOS ZIP'
+
+    ## gh run download ${bumpId} --name ${APP}-macos-zip
+
+    artifactId=$(gh api -H "Accept: application/vnd.github+json" /repos/${REP}/${APP}/actions/artifacts \
+		    --jq '.artifacts[] | select(.name | endswith("-macos-zip")) | .id' | head -n 1)
+    echo "artifact id: $artifactId"
+    gh api -H "Accept: application/vnd.github+json" repos/${REP}/${APP}/actions/artifacts/${artifactId}/zip > artifact.zip
+    unzip artifact.zip
+    rm -f artifact.zip
+
+    rsync -avzh ${APP}-dev-macos.zip ${DEST}
+    mv ${APP}-dev-macos.zip ARCHIVE/${APP}_${version}_macos.zip
+    ssh ${HOST} "cd ${FLDR}; chmod a+r ${APP}-dev-*.zip ${APP}-dev-*.exe"
 
     echo ""
 
@@ -108,24 +154,6 @@ if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
 
     rsync -avzh ${APP}-dev-windows.zip ${DEST}
     mv -f ${APP}-dev-windows.zip ARCHIVE/${APP}_${version}_windows.zip
-    ssh ${HOST} "cd ${FLDR}; chmod a+r ${APP}-dev-*.zip ${APP}-dev-*.exe"
-
-
-    echo ""
-
-    echo '***** UPLOAD MACOS'
-
-    ## gh run download ${bumpId} --name ${APP}-macos-zip
-
-    artifactId=$(gh api -H "Accept: application/vnd.github+json" /repos/${REP}/${APP}/actions/artifacts \
-		    --jq '.artifacts[] | select(.name | endswith("-macos-zip")) | .id' | head -n 1)
-    echo "artifact id: $artifactId"
-    gh api -H "Accept: application/vnd.github+json" repos/${REP}/${APP}/actions/artifacts/${artifactId}/zip > artifact.zip
-    unzip artifact.zip
-    rm -f artifact.zip
-
-    rsync -avzh ${APP}-dev-macos.zip ${DEST}
-    mv ${APP}-dev-macos.zip ARCHIVE/${APP}_${version}_macos.zip
     ssh ${HOST} "cd ${FLDR}; chmod a+r ${APP}-dev-*.zip ${APP}-dev-*.exe"
 
 else

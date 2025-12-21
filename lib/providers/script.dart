@@ -6,7 +6,7 @@
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
-/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+/// License: https://opensource.org/license/gpl-3-0
 ///
 //
 // This program is free software: you can redistribute it and/or modify it under
@@ -20,7 +20,7 @@
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
-// this program.  If not, see <https://www.gnu.org/licenses/>.
+// this program.  If not, see <https://opensource.org/license/gpl-3-0>.
 ///
 /// Authors: Graham Williams
 
@@ -38,7 +38,7 @@ final scriptProvider = StateProvider<String>(
 # TIMESTAMP.
 #
 # License: GNU General Public License, Version 3 (the "License")
-# https://www.gnu.org/licenses/gpl-3.0.en.html
+# https://opensource.org/license/gpl-3-0
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -51,7 +51,7 @@ final scriptProvider = StateProvider<String>(
 # details.
 #
 # You should have received a copy of the GNU General Public License along with
-# this program.  If not, see <https://www.gnu.org/licenses/>.
+# this program.  If not, see <https://opensource.org/license/gpl-3-0>.
 #
 # Rattle Author: Graham.Williams@togaware.com
 ''',

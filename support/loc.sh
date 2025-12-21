@@ -23,7 +23,8 @@ fi
 
 # Check if the file has .dart extension (case-insensitive).
 
-if [[ "${FILE,,}" != *.dart ]]; then
+FILE_LOWER=$(echo "$FILE" | tr '[:upper:]' '[:lower:]')
+if [[ "$FILE_LOWER" != *.dart ]]; then
     echo "Error: File '$FILE' is not a dart file."
     exit 1
 fi
@@ -35,5 +36,4 @@ cat "${FILE}" |
     sed "/'''/,/'''/d" |
     sed '/^[[:space:]]*[})]*[,;]*$/d' |
     grep -v '^ *], *$' |
-    grep -v '^import ' |
     wc -l

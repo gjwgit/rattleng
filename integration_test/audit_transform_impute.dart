@@ -7,7 +7,7 @@
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 
 ///
-/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+/// License: https://opensource.org/license/gpl-3-0
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -20,7 +20,7 @@
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
-// this program.  If not, see <https://www.gnu.org/licenses/>.
+// this program.  If not, see <https://opensource.org/license/gpl-3-0>.
 ///
 /// Authors:  Kevin Wang
 
@@ -38,9 +38,7 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/set_selected_variable.dart';
 import 'utils/tap_button.dart';
-
 import 'utils/unify_on.dart';
-
 import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
 

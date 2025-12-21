@@ -3,9 +3,9 @@
 /// Copyright (C) 2024, Togaware Pty Ltd.
 ///
 /// License: GNU General Public License, Version 3 (the "License")
-/// https://www.gnu.org/licenses/gpl-3.0.en.html
+/// https://opensource.org/license/gpl-3-0
 //
-// Time-stamp: "Monday 2024-12-23 15:30:47 +1100 Graham Williams"
+// Time-stamp: "Saturday 2025-09-27 07:38:48 +1000 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -18,7 +18,7 @@
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
-// this program.  If not, see <https://www.gnu.org/licenses/>.
+// this program.  If not, see <https://opensource.org/license/gpl-3-0>.
 //
 // Note: The "Dataset" button is not present in this file. It might be located
 // in another file responsible for the app's navigation or main layout.
@@ -87,7 +87,7 @@ class _BoostDisplayState extends ConsumerState<BoostDisplay> {
           # XGBoost - Summary
 
           Visit the
-          [Guide](https://xgboost.readthedocs.io/en/stable/R-package/xgboostPresentation.html). Built
+          [Guide](https://xgboost.readthedocs.io/en/stable/R-package). Built
           using
           [xgb::xgboost()](https://www.rdocumentation.org/packages/xgboost/topics/xgb.train).
 
