@@ -13,8 +13,7 @@
 Download the latest version:
 **GNU/Linux**
 [zip](https://access.togaware.com/rattle-dev-linux.zip) or
-[deb](https://access.togaware.com/rattle_amd64.deb) or
-[snap](https://access.togaware.com/rattle_amd64.snap);
+[deb](https://access.togaware.com/rattle_amd64.deb);
 **macOS**
 [zip](https://access.togaware.com/rattle-dev-macos.zip);
 **Windows**
