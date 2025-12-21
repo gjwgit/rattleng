@@ -171,8 +171,8 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                   ),
                 ],
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Column(

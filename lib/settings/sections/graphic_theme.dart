@@ -69,7 +69,7 @@ class _GraphicThemeState extends ConsumerState<GraphicTheme> {
       children: [
         Row(
           children: [
-            MarkdownTooltip(
+            const MarkdownTooltip(
               message: '''
 
               **Graphic Theme Setting:** The graphic theme is used
@@ -131,7 +131,7 @@ class _GraphicThemeState extends ConsumerState<GraphicTheme> {
           }).toList(),
         ),
         settingsGroupGap,
-        Divider(),
+        const Divider(),
       ],
     );
   }

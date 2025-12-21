@@ -266,7 +266,7 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                   ],
                 ),
               ),
-              SaveDatasetButton(),
+              const SaveDatasetButton(),
               configChooserGap,
               MarkdownTooltip(
                 message: '''
@@ -348,42 +348,42 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               dataRowHeight: 60.0,
               checkboxAlignment: Alignment.centerLeft,
               columns: [
-                DataColumn2(
+                const DataColumn2(
                   label: Text(
                     'Variable',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   size: ColumnSize.M,
                 ),
-                DataColumn2(
+                const DataColumn2(
                   label: Text(
                     'Role',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   fixedWidth: 450.0,
                 ),
-                DataColumn2(
+                const DataColumn2(
                   label: Text(
                     'Type',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   size: ColumnSize.S,
                 ),
-                DataColumn2(
+                const DataColumn2(
                   label: Text(
                     'Unique',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   size: ColumnSize.S,
                 ),
-                DataColumn2(
+                const DataColumn2(
                   label: Text(
                     'Missing',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   size: ColumnSize.S,
                 ),
-                DataColumn2(
+                const DataColumn2(
                   label: Text(
                     'Sample',
                     style: TextStyle(fontWeight: FontWeight.bold),

@@ -61,7 +61,7 @@ class ScriptSaveButton extends ConsumerWidget {
         onPressed: () {
           _showFileNameDialog(context, ref);
         },
-        icon: Icon(Icons.save_alt, color: Colors.blue),
+        icon: const Icon(Icons.save_alt, color: Colors.blue),
       ),
     );
   }

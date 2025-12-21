@@ -133,7 +133,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
     return Column(
       children: [
-        Row(
+        const Row(
           children: [
             MarkdownTooltip(
               message: '''
@@ -146,7 +146,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
               on the next time Rattle is run.
 
               ''',
-              child: const Text(
+              child: Text(
                 'Dataset',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
@@ -240,7 +240,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
                 ''',
               ),
             ),
-            MarkdownTooltip(
+            const MarkdownTooltip(
               message: '''
 
               **Keep in Sync Toggle:**
@@ -250,7 +250,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
               - **Off:** Changes are only recovered on restart.
 
               ''',
-              child: const Text('Keep in Sync', style: TextStyle(fontSize: 16)),
+              child: Text('Keep in Sync', style: TextStyle(fontSize: 16)),
             ),
             MarkdownTooltip(
               message: '''
@@ -294,7 +294,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
         settingsGroupGap,
 
-        Partition(),
+        const Partition(),
         settingsGroupGap,
 
         // Ignore Missing Target row.
@@ -334,7 +334,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         ),
         settingsGroupGap,
 
-        Divider(),
+        const Divider(),
       ],
     );
   }

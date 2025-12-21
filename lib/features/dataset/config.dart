@@ -55,7 +55,7 @@ class _DatasetConfigState extends State<DatasetConfig> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       children: [
         // Some fixed space so the widgets aren't crowded.
         configWidgetGap,
