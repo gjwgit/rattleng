@@ -1,11 +1,11 @@
-# Rattle Scripts: Visual Displays
+# Rattle Scripts: For dataset `ds` generate useful plots of numeric variable.
 #
-# Copyright (C) 2024, Togaware Pty Ltd.
+# Copyright (C) 2024-2025, Togaware Pty Ltd.
 #
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-01-24 12:26:55 +1100 Graham Williams>
+# Time-stamp: <Sunday 2025-12-21 11:01:58 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -24,8 +24,6 @@
 #
 # Author: Graham Williams
 
-# Visual presentation of variables.
-#
 # <TIMESTAMP>
 #
 # References:
@@ -34,25 +32,27 @@
 #
 # https://survivor.togaware.com/datascience/ for further details.
 
+# Load required packages from the local library into the R session.
+
 library(dplyr)
-
-########################################################################
-# BOX PLOT
-########################################################################
-
-# TODO 20241120 gjw ADD ALL TO <LEGEND> - <ACTUALLY> <REMOVE> <LEGEND> AS ADDS NO <VALUE>
 
 # Take a copy of ds to be able to manipulate it.
 
 tds <- ds
 
-# When the confidence interval for the notch of the boxplot extends
-# beyond the hinges (upper or lower limits of the boxplot) the notches
-# go outside the hinges. To avoid this precompute the values for the
-# notches and compare them to the hinges. The following does it for
-# one variable. Need for all. For now 20241121 add an option to turn
-# the notch on and off.
+########################################################################
+# BOX PLOT
+########################################################################
 
+# TODO 20241120 gjw REMOVE LEGEND AS ADDS NO VALUE?
+
+## # 20241210 gjw When the confidence interval for the notch of the
+## # boxplot extends beyond the hinges (upper or lower limits of the
+## # boxplot) the notches go outside the hinges. To avoid this we can
+## # precompute the values for the notches and compare them to the
+## # hinges. The following does it for one variable. For now we will set
+## # notch to TUE or FALSE but eventually we want to use is_notch_safe.
+##
 ## is_notch_safe <- function(data, x, y) {
 ##   summary_data <- data %>%
 ##     group_by({{ x }}) %>%
@@ -64,16 +64,14 @@ tds <- ds
 ##     )
 ##   any(summary_data$notch_lower < summary_data$ymin | summary_data$notch_upper > summary_data$ymax)
 ## }
-
+##
 ## # Check if the notch is safe.
-
+##
 ## notch_safe <- is_notch_safe(tds, , hwy)
-
 
 # Display box plot for the selected variable.
 
 svg("<TEMPDIR>/explore_visual_boxplot.svg", width=10)
-
 tds %>%
   ggplot2::ggplot(ggplot2::aes(y=<SELECTED_VAR>)) +
   ggplot2::geom_boxplot(ggplot2::aes(x="All"), notch=<BOXPLOT_NOTCH>, fill="grey") +
@@ -83,11 +81,25 @@ tds %>%
   ggplot2::xlab(paste("<TIMESTAMP>", username)) +
   ggplot2::ggtitle("Distribution of <SELECTED_VAR>") +
   <SETTINGS_GRAPHIC_THEME>()
-
 dev.off()
 
 ########################################################################
-# <DENSITY>
+# HISTOGRAM
+########################################################################
+
+svg("<TEMPDIR>/explore_visual_histogram.svg", width=10)
+tds %>%
+  dplyr::select(<SELECTED_VAR>) %>%
+  ggplot2::ggplot(ggplot2::aes(x=<SELECTED_VAR>)) +
+  ggplot2::geom_histogram(alpha=0.55, position="identity", bins=30) +
+  ggplot2::xlab(paste("<SELECTED_VAR>\n\n", paste("<TIMESTAMP>", username), sep="")) +
+  ggplot2::ggtitle("Histogram of <SELECTED_VAR>") +
+  ggplot2::labs(y="Count") +
+  <SETTINGS_GRAPHIC_THEME>()
+dev.off()
+
+########################################################################
+# DENSITY
 ########################################################################
 
 # TODO 20241120 gjw ADD ALL TO <LEGEND>
@@ -106,7 +118,7 @@ ds %>%
 dev.off()
 
 ########################################################################
-# <EMPIRICAL> <CUMULATIVE> <DISTRIBUTION> <FUNCTION>
+# EMPIRICAL CUMULATIVE DISTRIBUTION FUNCTION
 ########################################################################
 
 svg("<TEMPDIR>/explore_visual_ecdf.svg", width=10)
@@ -115,7 +127,7 @@ ds %>%
   dplyr::select(<SELECTED_VAR>) %>%
   ggplot2::ggplot() +
   # Overall ECDF
-  ggplot2::stat_ecdf(aes(x = <SELECTED_VAR>), geom = "step", color = "black", size = 1) +
+  ggplot2::stat_ecdf(aes(x = <SELECTED_VAR>), geom = "step", color = "black", linewidth = 1) +
   ggplot2::xlab(paste("<SELECTED_VAR>\n\n", paste("<TIMESTAMP>", username), sep="")) +
   ggplot2::ggtitle("Empirical Cumulative Distribution of <SELECTED_VAR>") +
   ggplot2::labs(y=expression("ECDF - Proportion <= x")) +
@@ -124,7 +136,7 @@ ds %>%
 dev.off()
 
 ########################################################################
-# <BENFORD>'S LAW
+# BENFORD'S LAW
 ########################################################################
 
 # Initialies the parameters.
@@ -139,17 +151,16 @@ tds <- merge(rattle::benfordDistr(digit, len),
 
 # 20241120 gjw Replicate the rattle function here to ensure we are in
 # harmony with the theme/colours of the other plots.
-#
-# TODO 20241120 gjw <STILL> NOT <THERE> YET WITH <COLOURS>
+# TODO 20241120 gjw STILL NOT THERE YET WITH COLOURS.
 
-# Remove the NA column if it exists. A bug in the rattle
-# function.
+# Remove the NA column if it exists. This can arise due to a bug in
+# the rattle functions.
 
 tds <- tds[,which(colnames(tds) != "NA")]
 
 # Reorder the columns to have the colours correspdong the other plots.
 
-tds %<>% relocate(c(All, Benford), .after=last_col())
+tds %<>% relocate(Benford, .after=last_col())
 
 dsm <- reshape::melt(tds, id.vars = "digit")
 len <- nchar(as.character(tds[1, 1]))
@@ -159,10 +170,10 @@ len <- nchar(as.character(tds[1, 1]))
 svg("<TEMPDIR>/explore_visual_benford.svg", width=10)
 
 p <- ggplot2::ggplot(dsm,
-                     ggplot2::aes_string(x      = "digit",
-                                         y      = "value",
-                                         colour = "variable",
-                                         shape  = "variable")) +
+                     ggplot2::aes(x      = digit,
+                                  y      = value,
+                                  colour = variable,
+                                  shape  = variable)) +
   ggplot2::geom_line()
 
 if (len < 3)
@@ -184,7 +195,7 @@ p +
 dev.off()
 
 ########################################################################
-# <PAIRS> - <REQUIRES> TWO <VARIABLES>
+# PAIRS - REQUIRES TWO VARIABLES
 ########################################################################
 
 # Display a pairs plot for the selected variables.
