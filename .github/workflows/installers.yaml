@@ -48,6 +48,7 @@ env:
   MACOS_APP_RELEASE_DEV_PATH: build/macos/Build/Products/Release-dev
 
 jobs:
+
   ########################################################################
   # LINUX
   #
@@ -69,6 +70,7 @@ jobs:
       contains(github.event.head_commit.message, 'build installers') ||
       contains(github.event.head_commit.message, 'build linux')
     runs-on: ubuntu-latest
+
     steps:
       - name: Clone Repository
         uses: actions/checkout@v4
@@ -133,6 +135,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Clone Repository
         uses: actions/checkout@v4
 
@@ -173,6 +176,85 @@ jobs:
   #         release: stable
 
   ########################################################################
+  # MACOS - ORIGINAL
+
+  package-macos-dmg-zip-original:
+    if: |
+      contains(github.event.head_commit.message, 'bump version') ||
+      contains(github.event.head_commit.message, 'build installers') ||
+      contains(github.event.head_commit.message, 'build macos')
+    runs-on: macos-latest
+
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: ${{env.FLUTTER_VERSION}}
+
+      - name: Confirm Flutter Version
+        run: flutter --version
+
+      - name: Install Flutter Project Dependencies
+        run: flutter pub get
+
+      - name: Enable macOS desktop
+        run: flutter config --enable-macos-desktop
+
+      - name: Build Flutter macOS app
+        run: flutter build macos --release
+
+      - name: Note the build location
+        run: |
+          pwd
+          ls -lh build/macos/Build/Products/Release
+
+
+      # Package as DMG
+
+      - name: Create DMG (Unsigned)
+        run: |
+          mkdir -p dmg_temp
+          cp -R "build/macos/Build/Products/Release/${{ env.APP }}.app" dmg_temp/
+          ln -s /Applications dmg_temp/Applications
+          hdiutil create -volname "${{ env.APP }}" \
+            -srcfolder dmg_temp \
+            -ov -format UDZO \
+            "${{ env.APP }}-${{github.ref_name}}-macos-unsigned.dmg"
+
+      - name: Note the DMG created
+        run: |
+          ls -lh
+
+      - name: Upload Artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.APP }}-macos-dmg
+          path: ${{ env.APP }}-${{github.ref_name}}-macos-unsigned.dmg
+
+      # Package as ZIP
+
+      - name: Create ZIP
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          directory: build/macos/Build/Products/Release
+          path: ${{ env.APP }}.app
+          filename: ${{ env.APP }}-${{github.ref_name}}-macos.zip
+
+      - name: Review ZIP exists
+        run: ls -lh build/macos/Build/Products/Release
+
+      - name: Upload Artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.APP }}-macos-zip
+          path: build/macos/Build/Products/Release/${{ env.APP }}-${{github.ref_name}}-macos.zip
+
+  ########################################################################
   # MACOS - UNSIGNED
 
   # Build without signing certificate
@@ -186,9 +268,9 @@ jobs:
 
   package-macos-dmg-zip-unsigned:
     if: |
-      contains(github.event.head_commit.message, 'bump version') ||
-      contains(github.event.head_commit.message, 'build installers') ||
-      contains(github.event.head_commit.message, 'build macos unsigned')
+      contains(github.event.head_commit.message, 'X bump version') ||
+      contains(github.event.head_commit.message, 'X build installers') ||
+      contains(github.event.head_commit.message, 'X build macos unsigned')
     runs-on: macos-latest
     steps:
       - name: Clone Repository
@@ -298,9 +380,9 @@ jobs:
 
   package-macos-dmg-zip-appstore:
     if: |
-      contains(github.event.head_commit.message, 'bump version') ||
-      contains(github.event.head_commit.message, 'build installers') ||
-      contains(github.event.head_commit.message, 'build macos appstore')
+      contains(github.event.head_commit.message, 'X bump version') ||
+      contains(github.event.head_commit.message, 'X build installers') ||
+      contains(github.event.head_commit.message, 'X build macos appstore')
     runs-on: macos-latest
     steps:
       - name: Clone Repository
@@ -449,9 +531,9 @@ jobs:
 
   package-macos-dmg-zip-dev:
     if: |
-      contains(github.event.head_commit.message, 'bump version') ||
-      contains(github.event.head_commit.message, 'build installers') ||
-      contains(github.event.head_commit.message, 'build macos dev')
+      contains(github.event.head_commit.message, 'X bump version') ||
+      contains(github.event.head_commit.message, 'X build installers') ||
+      contains(github.event.head_commit.message, 'X build macos dev')
     runs-on: macos-latest
     steps:
       - name: Clone Repository
@@ -596,9 +678,9 @@ jobs:
 
   package-ios-ipa:
     if: |
-      contains(github.event.head_commit.message, 'bump version') ||
-      contains(github.event.head_commit.message, 'build installers') ||
-      contains(github.event.head_commit.message, 'build ios')
+      contains(github.event.head_commit.message, 'X bump version') ||
+      contains(github.event.head_commit.message, 'X build installers') ||
+      contains(github.event.head_commit.message, 'X build ios')
     runs-on: macos-latest
     env:
       IOS_APP_RELEASE_PATH: build/ios/ipa
@@ -760,6 +842,7 @@ jobs:
       contains(github.event.head_commit.message, 'build installers') ||
       contains(github.event.head_commit.message, 'build windows')
     runs-on: windows-latest # randomly not working (choco fails) with inno 1.2.7
+
     steps:
       - name: Clone Repository
         uses: actions/checkout@v4
@@ -767,7 +850,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: "stable"
+          channel: 'stable'
           architecture: x64
           flutter-version: ${{env.FLUTTER_VERSION}}
 
@@ -788,7 +871,7 @@ jobs:
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
-          type: "zip"
+          type: 'zip'
           filename: ${{ env.APP }}-${{env.RELEASE}}-windows.zip
           directory: build/windows/x64/runner/Release
 
