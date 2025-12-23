@@ -90,7 +90,7 @@ Future<void> executeEvaluation({
     // for me on my kadesh Ubuntu laptop. It may be less of a problem on
     // slower machines. (gjw 20250316)
 
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
   }
 }
 

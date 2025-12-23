@@ -2,7 +2,7 @@
 #
 # Makefile template for Installations
 #
-# Time-stamp: <Sunday 2025-08-31 12:39:16 +1000 Graham Williams>
+# Time-stamp: <Friday 2025-10-24 13:39:19 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -60,11 +60,24 @@ endif
 # 4. For production install be sure to be on the main or dev branch as above;
 # 5. `make -n prod` to check what will be done and confirm it looks okay
 # 6. `make prod`
+#
+# 20251024
+#
+#   The `--wasm` build results in Chrome not being able to get a popup
+#   on LOGIN. The error message includes:
+#
+#   Unsupported operation: Cannot create a keyfinder without the
+#   packages dart:html or package:shared_preferences
+#
+#   Works just fine on FireFox.
+#
+#   Revert to JacaScript for now until we resolve the Google Chrome
+#   issue.
 
 %.install:
 	cp web/index.html web/index.html.bak
 	perl -pi -e 's|^  <base href=.*$$|  <base href="/$*/">|' web/index.html
-	flutter build web --wasm
+	flutter build web --release --no-wasm-dry-run
 	mv web/index.html.bak web/index.html
 	ssh solidcommunity.au 'if [ ! -e $(DEST:$(APP)=$*) ]; then echo mkdir /$(DEST:$(APP)=$*); fi'
 	rsync -azvh build/web/ solidcommunity.au:$(DEST:$(APP)=$*) --exclude '*~' --exclude '*.bak'

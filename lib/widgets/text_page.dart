@@ -95,12 +95,12 @@ class TextPage extends StatelessWidget {
                         ''',
                     child: IconButton(
                       onPressed: () => _generateAndOpenPdf(context),
-                      icon: Icon(Icons.open_in_new, color: Colors.blue),
+                      icon: const Icon(Icons.open_in_new, color: Colors.blue),
                     ),
                   ),
 
                   // Add a small space between the buttons.
-                  Gap(8),
+                  const Gap(8),
 
                   // Button to save as PDF.
                   MarkdownTooltip(
@@ -112,7 +112,7 @@ class TextPage extends StatelessWidget {
                         ''',
                     child: IconButton(
                       onPressed: () => _saveAsPdf(context),
-                      icon: Icon(Icons.save, color: Colors.blue),
+                      icon: const Icon(Icons.save, color: Colors.blue),
                     ),
                   ),
                 ],
@@ -131,7 +131,7 @@ class TextPage extends StatelessWidget {
               controller: horizontalScrollController,
               child: SingleChildScrollView(
                 // Attach a vertical controller for independent scrolling.
-                key: PageStorageKey('text_page'),
+                key: const PageStorageKey('text_page'),
 
                 controller: ScrollController(),
                 scrollDirection: Axis.vertical,

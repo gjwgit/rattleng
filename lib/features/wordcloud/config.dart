@@ -174,7 +174,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
               label: 'Random Order',
               provider: checkboxProvider,
             ),
-            Spacer(),
+            const Spacer(),
 
             MarkdownTooltip(
               message: '''
@@ -225,7 +225,7 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
                   ref.read(wordCloudBuildProvider.notifier).state = timestamp();
                 },
-                icon: Icon(Icons.save_alt, color: Colors.blue),
+                icon: const Icon(Icons.save_alt, color: Colors.blue),
               ),
             ),
           ],

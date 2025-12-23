@@ -123,7 +123,7 @@ Future<void> main() async {
                 ),
               );
 
-              return Scaffold();
+              return const Scaffold();
             },
           ),
         ),

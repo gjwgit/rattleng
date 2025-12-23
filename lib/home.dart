@@ -415,8 +415,8 @@ B Srinivas, Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
                 launchUrl(url);
               },
               styleSheet: MarkdownStyleSheet(
-                p: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                a: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                p: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                a: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
           ],

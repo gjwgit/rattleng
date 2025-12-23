@@ -25,6 +25,7 @@ flutter:
   emu	    Run with the android emulator;
   linux     Run with the linux device;
   qlinux    Run with the linux device and debugPrint() turned off;
+  macos     Run with the macos device;
 
   prep      Prep for PR by running tests, checks, docs.
   push      Do a git push and bump the build number if there is one.
@@ -45,11 +46,12 @@ flutter:
   ignore          Look for usage of ignore directives.
   license	  Look for missing top license in source code.
 
-  test	    Run `flutter test` for testing.
-  itest	    Run `flutter test integration_test` for interation testing.
-  qtest	    Run above test with PAUSE=0.
-  coverage  Run with `--coverage`.
-    coview  View the generated html coverage in browser.
+  test	    	  Run flutter testing.
+  itest	    	  Run flutter interation testing.
+  qtest	   	  Run above test with PAUSE=0.
+    qtest.all	  Run qtest with output redirected - good running all tests.
+  coverage  	  Run with `--coverage`.
+    coview  	  View the generated html coverage in browser.
 
   riverpod  Setup `pubspec.yaml` to support riverpod.
   runner    Build the auto generated code as *.g.dart files.
@@ -57,8 +59,12 @@ flutter:
   desktops  Set up for all desktop platforms (linux, windows, macos)
 
   distributions
-    apk	    Builds installers/$(APP).apk
-    tgz     Builds installers/$(APP).tar.gz
+    apk	          Builds installers/$(APP).apk.
+    tgz           Builds installers/$(APP).tar.gz.
+    dmg-unsigned  Builds unsigned macos app.
+    dmg-dev       Builds macos app with development certificate.
+    dmg-staging   Builds macos app with distribution certificate.
+                  (TODO convert to dmg).
 
   publish   Publish a package to pub.dev
 
@@ -106,22 +112,26 @@ chrome:
 pubspec.lock:
 	flutter pub get
 
+.PHONY: upgrade
+upgrade:
+	flutter pub upgrade
+
 .PHONY: linux
-linux: pubspec.lock $(BUILD_RUNNER)
+linux: pubspec.lock $(BUILD_RUNNER) upgrade
 	flutter run --device-id linux
 
 # Turn off debugPrint() output.
 
 .PHONY: qlinux
-qlinux: pubspec.lock $(BUILD_RUNNER)
+qlinux: pubspec.lock $(BUILD_RUNNER) upgrade
 	flutter run --dart-define DEBUG_PRINT="FALSE" --device-id linux
 
 .PHONY: macos
-macos: $(BUILD_RUNNER)
+macos: $(BUILD_RUNNER) upgrade
 	flutter run --device-id macos
 
 .PHONY: android
-android: $(BUILD_RUNNER)
+android: $(BUILD_RUNNER) upgrade
 	flutter run --device-id $(shell flutter devices | grep android | tr '•' '|' | tr -s '|' | tr -s ' ' | cut -d'|' -f2 | tr -d ' ')
 
 .PHONY: emu
@@ -138,7 +148,7 @@ linux_config:
 	flutter config --enable-linux-desktop
 
 .PHONY: prep
-prep: analyze fix import_order_fix format dcm ignore license todo locmax markdown lychee depend bakfind
+prep: analyze fix import_order_fix format dcm ignore license todo locmax markdown lychee depend bakfind test
 	@echo "ADVISORY: make tests docs"
 	@echo $(SEPARATOR)
 
@@ -165,7 +175,7 @@ pubspec.actual:
 .PHONY: fix
 fix:
 	@echo "Dart: FIX"
-	dart fix --apply lib
+	dart fix --apply
 	@echo $(SEPARATOR)
 
 .PHONY: format
@@ -216,7 +226,7 @@ locmax:
 		| egrep -v '^ *$$' \
 		| egrep -v '^ *[)},]+, *$$' \
 		| wc -l \
-		| numfmt --grouping); \
+		| numfmt --format "%'f"); \
 	numf=$$(find lib -name "*.dart" -type f | wc -l); \
 	output=$$(find lib -name "*.dart" -exec sh -c ' \
 		lines=$$(bash $(LOC) "$$1"); \
@@ -270,7 +280,7 @@ locmax-enforce:
 .PHONY: markdown
 markdown:
 	@echo "Markdown: MARKDOWN FORMAT CHECK."
-	-markdownlint --disable MD036 -- *.md lib assets installers
+	-markdownlint *.md lib assets installers
 	@echo
 	@echo $(SEPARATOR)
 
@@ -333,7 +343,7 @@ desktops:
 .PHONY: test
 test:
 	@echo "Unit TEST:"
-	@-if [ -d test ]; then flutter test test; else echo "\nNo test folder found."; fi
+	@-if [ -d test ]; then flutter test; else echo "\nNo test folder found."; fi
 	@echo $(SEPARATOR)
 
 # For a specific interactive test we think of it as providing a
@@ -341,11 +351,12 @@ test:
 # create a narrated video. A INTERACT of 5 or more is then useful.
 
 %.itest:
-	@device_id=$(shell flutter devices | grep -E 'linux|macos|windows' | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|'); \
-	if [ -z "$$device_id" ]; then \
-		echo "No desktop device found. Please ensure you have the correct desktop platform enabled."; \
-		exit 1; \
-	fi; \
+	@case "$$(uname -s)" in \
+		Linux*) device_id="linux" ;; \
+		Darwin*) device_id="macos" ;; \
+		MINGW*|MSYS*|CYGWIN*) device_id="windows" ;; \
+		*) echo "Unsupported platform: $$(uname -s)"; exit 1 ;; \
+	esac; \
 	flutter test --dart-define=INTERACT=5 --device-id $$device_id integration_test/$*.dart
 
 # For a run over all tests interactively we INTERACT a little but not as
@@ -353,11 +364,12 @@ test:
 
 .PHONY: itest
 itest:
-	@device_id=$(shell flutter devices | grep -E 'linux|macos|windows' | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|'); \
-	if [ -z "$$device_id" ]; then \
-		echo "No desktop device found. Please ensure you have the correct desktop platform enabled."; \
-		exit 1; \
-	fi; \
+	@case "$$(uname -s)" in \
+		Linux*) device_id="linux" ;; \
+		Darwin*) device_id="macos" ;; \
+		MINGW*|MSYS*|CYGWIN*) device_id="windows" ;; \
+		*) echo "Unsupported platform: $$(uname -s)"; exit 1 ;; \
+	esac; \
 	for t in integration_test/*.dart; do flutter test --dart-define=INTERACT=2 --device-id $$device_id $$t; done
 	@echo $(SEPARATOR)
 
@@ -366,12 +378,13 @@ itest:
 
 .PHONY: qtest
 qtest:
-	@device_id=$(shell flutter devices | grep -E 'linux|macos|windows' | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|'); \
-	if [ -z "$$device_id" ]; then \
-		echo "No desktop device found. Please ensure you have the correct desktop platform enabled."; \
-		exit 1; \
-	fi; \
-	for t in integration_test/*.dart; do \
+	@case "$$(uname -s)" in \
+		Linux*) device_id="linux" ;; \
+		Darwin*) device_id="macos" ;; \
+		MINGW*|MSYS*|CYGWIN*) device_id="windows" ;; \
+		*) echo "Unsupported platform: $$(uname -s)"; exit 1 ;; \
+	esac; \
+	for t in $$(find integration_test -name "*_test.dart" | sort); do \
 		echo "========================================"; \
 		echo $$t; /bin/echo -n $$t >&2; \
 		echo "========================================"; \
@@ -384,11 +397,12 @@ qtest:
 	@echo $(SEPARATOR)
 
 %.qtest:
-	@device_id=$(shell flutter devices | grep -E 'linux|macos|windows' | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|'); \
-	if [ -z "$$device_id" ]; then \
-		echo "No desktop device found. Please ensure you have the correct desktop platform enabled."; \
-		exit 1; \
-	fi; \
+	@case "$$(uname -s)" in \
+		Linux*) device_id="linux" ;; \
+		Darwin*) device_id="macos" ;; \
+		MINGW*|MSYS*|CYGWIN*) device_id="windows" ;; \
+		*) echo "Unsupported platform: $$(uname -s)"; exit 1 ;; \
+	esac; \
 	flutter test --dart-define=INTERACT=0 --device-id $$device_id --reporter failures-only integration_test/$*.dart 2>/dev/null
 
 .PHONY: qtest.all
@@ -441,12 +455,34 @@ apk::
 	cp build/app/outputs/flutter-apk/app-release.apk installers/$(APP).apk
 	cp build/app/outputs/flutter-apk/app-release.apk installers/$(APP)-$(VER).apk
 
-appbundle:
+appbundle::
+	flutter clean
 	flutter build appbundle --release
+	cp build/app/outputs/bundle/release/app-release.aab installers/$(APP).aab
+	cp build/app/outputs/bundle/release/app-release.aab installers/$(APP)-$(VER).aab
 
 realclean::
 	flutter clean
 	flutter pub get
+
+# Create a macos app
+# [20251029 jesscmoore] TODO: add converting to dmg
+# Build unsigned macos app
+dmg-unsigned::
+	flutter clean
+	flutter build macos --release --flavor unsigned
+
+# Build macos app signed with development certificate for testing
+# by App Developer Program togaware registered devices
+dmg-dev::
+	flutter clean
+	flutter build macos --release --flavor dev
+
+# Build macos app signed with app store distribution for testing
+# on Testflight or publishing
+dmg-staging:
+	flutter clean
+	flutter build macos --release --flavor staging
 
 # For the `dev` branch only, update the version sequence number prior
 # to a push (relies on the git.mk being loaded after this
@@ -508,7 +544,7 @@ unused_files:
 .PHONY: lychee
 lychee:
 	@echo "Lychee: CHECK LINKS."
-	-lychee --no-progress --format compact 'assets/**/*.md' 'assets/**/*.html' 'lib/**/*.dart'
+	-lychee --no-progress --format compact *.md ./**/*.dart $(if $(wildcard ./**/*.md),./**/*.md) $(if $(wildcard ./**/*.html),./**/*.html)
 	@echo $(SEPARATOR)
 
 ### TODO THESE SHOULD BE CHECKED AND CLEANED UP
@@ -519,8 +555,7 @@ docs::
 
 .PHONY: versions
 versions:
-	perl -pi -e 's|applicationVersion = ".*";|applicationVersion = "$(VER)";|' \
-	lib/constants/app.dart
+	if [ -d snap ]; then perl -pi -e 's|^version:.*|version: $(VER)|' snap/snapcraft.yaml; fi
 
 .PHONY: loc
 loc: lib/*.dart

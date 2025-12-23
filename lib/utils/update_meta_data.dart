@@ -56,7 +56,7 @@ void updateMetaData(WidgetRef ref) {
     try {
       jsonObject = jsonDecode(content);
     } on FormatException {
-      sleep(Duration(seconds: 1));
+      sleep(const Duration(seconds: 1));
       stdout = ref.read(stdoutProvider);
       content = rExtract(stdout, '> meta_data(ds)');
     }

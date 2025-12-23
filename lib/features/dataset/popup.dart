@@ -132,7 +132,7 @@ class DatasetPopup extends ConsumerWidget {
                         curve: Curves.easeInOut,
                       );
                 },
-                child: MarkdownTooltip(
+                child: const MarkdownTooltip(
                   message: '''
 
                   **Local File:** Tap here to popup a window so that you can
@@ -265,7 +265,7 @@ class DatasetPopup extends ConsumerWidget {
 
           configRowGap,
 
-          MarkdownTooltip(
+          const MarkdownTooltip(
             message: '''
 
                   **Demo Datasets** Rattle provides a number of small datasets
@@ -569,7 +569,7 @@ class DatasetPopup extends ConsumerWidget {
                 onPressed: () {
                   Navigator.pop(context, 'Cancel');
                 },
-                child: MarkdownTooltip(
+                child: const MarkdownTooltip(
                   message: '''
 
                   **Cancel:** Tap here to **not** proceed with loading a new

@@ -76,7 +76,7 @@ class _RConsoleState extends ConsumerState<RConsole> {
     // Check `R Version` is found in the Console (stdout) and only check it once
     // rather than every build by keeping track with a provider.
 
-    Future.delayed(Duration(milliseconds: 3000), () {
+    Future.delayed(const Duration(milliseconds: 3000), () {
       // Only proceed if `checkedRProvider` is false. We only want to check it
       // once, rather than every time we re-build the Console.
 

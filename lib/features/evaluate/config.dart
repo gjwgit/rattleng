@@ -277,7 +277,7 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
           spacing: configWidgetSpace,
           children: [
             configLeftGap,
-            Text('Evaluation Dataset: '),
+            const Text('Evaluation Dataset: '),
 
             // Widget to display dataset type selection as choice chips with tooltips.
             ChoiceChipTip<String>(

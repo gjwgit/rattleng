@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Tuesday 2025-09-23 07:15:08 +1000 Graham Williams>
+# Time-stamp: <Friday 2025-10-17 10:13:43 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -113,15 +113,31 @@ apk::
 	mv -f installers/$(APP)-*.apk installers/ARCHIVE/
 	rm -f installers/$(APP).apk
 
+appbundle::
+	rsync -avzh installers/$(APP).aab $(REPO):$(RLOC)
+	ssh $(REPO) chmod a+r $(RLOC)$(APP).aab
+	mv -f installers/$(APP)-*.aab installers/ARCHIVE/
+	rm -f installers/$(APP).aab
+
 deb:
 	@echo "Build $(APP) version $(VER)"
 	(cd installers; make $@)
 	rsync -avzh installers/$(APP)_$(VER)_amd64.deb $(REPO):$(RLOC)$(APP)_amd64.deb
 	ssh $(REPO) chmod a+r $(RLOC)$(APP)_amd64.deb
-	wget $(DWLD)$(APP)_amd64.deb -O $(APP)_amd64.deb
+	wget $(DWLD)/$(APP)_amd64.deb -O $(APP)_amd64.deb
 	wajig install $(APP)_amd64.deb
 	rm -f $(APP)_amd64.deb
 	mv -f installers/$(APP)_*.deb installers/ARCHIVE/
+
+dinstall:
+	wget $(DWLD)$(APP)_amd64.deb -O $(APP)_amd64.deb
+	wajig install $(APP)_amd64.deb
+	rm -f $(APP)_amd64.deb
+
+sinstall:
+	wget $(DWLD)$(APP)_amd64.snap -O $(APP)_amd64.snap
+	sudo snap install --dangerous $(APP)_amd64.snap
+	rm -f $(APP)_amd64.snap
 
 # 20250110 gjw A ginstall of the github built bundles, and the locally
 # built apk installed to the repository and moved into ARCHIVE.

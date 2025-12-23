@@ -7,6 +7,13 @@
 #
 # If this script exits with a non-zero status nothing will be pushed.
 
+PVER=$(egrep '^version:' pubspec.yaml | cut -d' ' -f2 | cut -d'+' -f1)
+
+if [ -d snap ]; then
+    printf "\e[33;1m%s\e[0m\n" 'Update snap version.'
+    perl -pi -e "s|^version:.*|version: ${PVER}|" snap/snapcraft.yaml;
+fi
+
 # Flutter Analyze
 
 printf "\e[33;1m%s\e[0m\n" 'Running flutter analyze.'
@@ -20,4 +27,19 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "$result"
-printf "\e[32;1m%s\e[0m\n" 'Finished running Flutter analyze with 0 issues.'
+
+# Check the version is updated before we can push!
+
+PVER=$(egrep '^version:' pubspec.yaml | cut -d' ' -f2 | cut -d'+' -f1)
+
+if [ -d snap ]; then
+    SVER=$(egrep '^version:' snap/snapcraft.yaml | cut -d' ' -f2 | cut -d'+' -f1)
+
+    if [ "${PVER}" != "${SVER}" ]; then
+	printf "\e[31;1m%s\e[0m\n" "Version mismatch pubspec.yaml (${PVER}) and snap/snapcraft.yaml (${SVER})."
+	echo 'Run `make versions` and then commit.'
+	exit 2
+    fi
+fi
+
+printf "\e[32;1m%s\e[0m\n" "Finished running Flutter analyze with 0 issues and found Version ${PVER}."

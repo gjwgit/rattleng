@@ -11,6 +11,8 @@ ARCHIVE
 ignore
 pubspec.yaml.*
 
+qtest_*.txt
+
 installers/*.apk
 installers/*.exe
 installers/*.snap
@@ -20,6 +22,39 @@ installers/*-macos.zip
 installers/*-windows.zip
 
 .Rhistory
+
+# Puppeteer browser cache used in testing solidui apps
+
+.local-chrome/
+
+# Note: test_credentials.json and auth_tokens.json can be committed
+# for CI/CD as baseline/templates that are "stale" tokens that get
+# auto-regenerated when tests are run.  These are test-only
+# credentials for a dev POD server, not production.
+#
+# Because the files are already in the repo we need to tell our
+# particular clone of the repository (i.e., for each developer) to
+# assume the files are unchanged, even though they will be updated for
+# each test run.
+#
+# git update-index --assume-unchanged integration_test/fixtures/auth_tokens.json integration_test/fixtures/complete_auth_data.json
+#
+# To undo this:
+#
+# git update-index --no-assume-unchanged integration_test/fixtures/auth_tokens.json integration_test/fixtures/complete_auth_data.json
+#
+# To see which files are marked this way:
+#
+# git ls-files -v | grep '^h'
+
+# Integration test auth data (contains sensitive tokens)
+
+#integration/fixtures/auth_tokens.json
+#integration/fixtures/complete_auth_data.json
+#integration/fixtures/test_credentials.json
+
+# Integration test TMDB API key (contains sensitive API key)
+integration_test/fixtures/tmdb_api_key.json
 
 ########################################################################
 # From https://github.com/flutter/flutter/blob/master/.gitignore
@@ -62,16 +97,6 @@ migrate_working_dir/
 # is commented out by default.
 
 .vscode/
-
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-.pub-cache/
-.pub/
-/build/
 
 # Symbolication related
 app.*.symbols
@@ -123,6 +148,7 @@ analysis_benchmark.json
 .flutter-plugins-dependencies
 **/generated_plugin_registrant.dart
 .packages
+.pub-cache/
 .pub-preload-cache/
 .pub/
 build/
@@ -202,11 +228,16 @@ android/app/.cxx/
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
 
+# ios/macos generated project files
 ios/Flutter/
 ios/Runner.xcodeproj/
 ios/Runner.xcworkspace/
 ios/Runner/
 ios/RunnerTests/
+
+# Backups of ios/macos project config yml and Podfile
+ios/Podfile-*
+ios/project-*.yml
 
 #-----------------------------------------------------------------------
 # macOS
@@ -217,6 +248,14 @@ ios/RunnerTests/
 **/macos/Flutter/GeneratedPluginRegistrant.swift
 **/macos/Flutter/ephemeral
 **/xcuserdata/
+
+# ios/macos generated project files
+macos/Runner.xcodeproj/
+macos/Runner.xcworkspace/
+
+# Backups of ios/macos project config yml and Podfile
+macos/Podfile-*
+macos/project-*.yml
 
 #-----------------------------------------------------------------------
 # Windows

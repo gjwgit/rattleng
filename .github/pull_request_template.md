@@ -40,8 +40,8 @@ Complete the check-list below to ensure your branch is ready for PR.
   - [ ] MacOS
   - [ ] Windows
   - [ ] Web
-- [ ] I have identified two reviewers
-- [ ] The PR has been approved by two reviewers
+- [ ] I have identified reviewers
+- [ ] The PR has been approved by reviewers
 
 ## Finalising
 

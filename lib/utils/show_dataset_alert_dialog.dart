@@ -45,8 +45,8 @@ void showDatasetAlertDialog(
       return AlertDialog(
         title: Row(
           children: [
-            Icon(Icons.warning, color: Colors.red),
-            SizedBox(width: 20),
+            const Icon(Icons.warning, color: Colors.red),
+            const SizedBox(width: 20),
             Text(title),
           ],
         ),
