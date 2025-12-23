@@ -118,7 +118,7 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     // PATTERN OF MISSING VALUES - TEXTUAL
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, 'md.pattern(');
+    content = rExtract(stdout, 'md.pattern(tds');
 
     // Add a blank line between each sub-table.
 
