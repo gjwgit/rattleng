@@ -202,7 +202,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
                       DatasetToggles(),
                       GraphicTheme(),
                       Session(),
-                      const WindowSize(),
+                      WindowSize(),
                       Script(),
                     ],
                   ),

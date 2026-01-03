@@ -145,7 +145,8 @@ class _WindowSizeState extends ConsumerState<WindowSize> with WindowListener {
     _widthController.text = defaultWindowWidth.toStringAsFixed(0);
     _heightController.text = defaultWindowHeight.toStringAsFixed(0);
 
-    await windowManager.setSize(Size(defaultWindowWidth, defaultWindowHeight));
+    await windowManager
+        .setSize(const Size(defaultWindowWidth, defaultWindowHeight));
 
     _saveWindowSizeSettings();
   }

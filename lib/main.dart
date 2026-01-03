@@ -31,6 +31,7 @@ import 'package:flutter/material.dart';
 
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:rattle/app.dart';
@@ -40,7 +41,6 @@ import 'package:rattle/providers/settings.dart';
 import 'package:rattle/utils/is_desktop.dart';
 import 'package:rattle/utils/is_production.dart';
 import 'package:rattle/utils/show_error.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 Future<bool> checkRInstallation() async {
   // Try to run the R command to check its availability.
