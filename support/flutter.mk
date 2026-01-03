@@ -451,11 +451,13 @@ $(APP)-$(VER)-linux-x86_64.tar.gz: clean
 	mv $@ installers/$(APP).tar.gz
 
 apk::
+	@echo '******************** BUILD ANDROID APK'
 	flutter build apk --release
 	cp build/app/outputs/flutter-apk/app-release.apk installers/$(APP).apk
 	cp build/app/outputs/flutter-apk/app-release.apk installers/$(APP)-$(VER).apk
 
 appbundle::
+	@echo '******************** BUILD ANDROID AAB'
 	flutter clean
 	flutter build appbundle --release
 	cp build/app/outputs/bundle/release/app-release.aab installers/$(APP).aab
