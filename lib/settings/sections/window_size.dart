@@ -115,7 +115,6 @@ class _WindowSizeState extends ConsumerState<WindowSize> with WindowListener {
 
   /// Apply the window size from the text fields to the actual window
   Future<void> _applyWindowSize() async {
-
     final width = double.tryParse(_widthController.text);
     final height = double.tryParse(_heightController.text);
 
@@ -124,7 +123,6 @@ class _WindowSizeState extends ConsumerState<WindowSize> with WindowListener {
         await windowManager.setSize(Size(width, height));
         await _loadCurrentWindowSize();
         await _saveWindowSizeSettings();
-
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -168,7 +166,6 @@ class _WindowSizeState extends ConsumerState<WindowSize> with WindowListener {
 
   @override
   Widget build(BuildContext context) {
-
     final rememberSize = ref.watch(rememberWindowSizeProvider);
     final savedWidth = ref.watch(windowWidthProvider);
     final savedHeight = ref.watch(windowHeightProvider);
@@ -210,7 +207,9 @@ class _WindowSizeState extends ConsumerState<WindowSize> with WindowListener {
         if (_currentWidth != null && _currentHeight != null)
           Text(
             'Current window size: ${_currentWidth!.toInt()} × ${_currentHeight!.toInt()}',
-            style: const TextStyle(fontSize: 16,),
+            style: const TextStyle(
+              fontSize: 16,
+            ),
           ),
         configRowGap,
         Row(
@@ -286,7 +285,8 @@ class _WindowSizeState extends ConsumerState<WindowSize> with WindowListener {
                   Switch(
                     value: rememberSize,
                     onChanged: (value) {
-                      ref.read(rememberWindowSizeProvider.notifier).state = value;
+                      ref.read(rememberWindowSizeProvider.notifier).state =
+                          value;
                       _saveWindowSizeSettings();
                     },
                   ),
@@ -301,4 +301,3 @@ class _WindowSizeState extends ConsumerState<WindowSize> with WindowListener {
     );
   }
 }
-

@@ -109,6 +109,7 @@ const double defaultWindowHeight = 720.0;
 
 final windowWidthProvider = StateProvider<double>((ref) => defaultWindowWidth);
 
-final windowHeightProvider = StateProvider<double>((ref) => defaultWindowHeight);
+final windowHeightProvider =
+    StateProvider<double>((ref) => defaultWindowHeight);
 
 final rememberWindowSizeProvider = StateProvider<bool>((ref) => true);
