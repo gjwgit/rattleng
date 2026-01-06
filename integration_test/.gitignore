@@ -1,0 +1,31 @@
+# The credentials files are committed for CI/CD as baseline/templates
+# that are "stale" tokens that get auto-regenerated when tests are
+# run.  These are test-only credentials for a dev POD server, not
+# production.
+
+# Because the files are already in the repo we need to tell our
+# particular clone of the repository (i.e., for each developer) to
+# assume the files are unchanged, since they will be updated for each
+# test run.
+
+# git update-index --assume-unchanged integration_test/fixtures/auth_tokens.json
+# git update-index --assume-unchanged integration_test/fixtures/complete_auth_data.json
+
+# To undo this:
+
+# git update-index --no-assume-unchanged integration_test/fixtures/auth_tokens.json
+# git update-index --no-assume-unchanged integration_test/fixtures/complete_auth_data.json
+
+# To see which files are marked this way:
+
+# git ls-files -v | grep '^h'
+
+# Integration test auth data (contains sensitive tokens)
+
+# fixtures/auth_tokens.json
+# fixtures/complete_auth_data.json
+# fixtures/test_credentials.json
+
+# Integration test TMDB API key (contains sensitive API key)
+
+fixtures/tmdb_api_key.json
