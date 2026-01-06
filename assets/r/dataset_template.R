@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Thursday 2025-05-01 09:05:55 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2026-01-06 12:26:51 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -104,7 +104,7 @@ inputs <- setdiff(vars, target)  %>%
   setdiff(identifiers) %T>%
   print()
 
-# Identify the numeric variables by name, after rmoving ignored
+# Identify the numeric variables by name, after removing ignored
 # variables.
 
 ds %>%
@@ -116,7 +116,7 @@ ds %>%
   print() ->
 numc
 
-# Identify the categoric variables by name, after rmoving ignored
+# Identify the categoric variables by name, after removing ignored
 # variables.
 
 ds %>%
