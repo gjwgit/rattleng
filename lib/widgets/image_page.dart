@@ -1,6 +1,6 @@
 /// A widget to build the common single image based pages.
 //
-// Time-stamp: "Tuesday 2026-01-06 10:40:14 +1100 Graham Williams"
+// Time-stamp: "Tuesday 2026-01-06 14:16:05 +1100 Graham Williams"
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -58,8 +58,8 @@ import 'package:rattle/utils/show_ok.dart';
 /// the app and to open/save externally. If [display] is also provided then this
 /// will be a PNG that is displayed in the app, while the [path] is an SVG to
 /// open/save externally. This functionality was added to support the case where
-/// an SVG includes unsupported features (e.g., <filter/>) that result in a
-/// black rectangle displayed. The PNG will be displayed in the app but external
+/// an SVG includes unsupported features (e.g., filter) that result in a black
+/// rectangle displayed. The PNG will be displayed in the app but external
 /// viewers get the SVG.
 
 class ImagePage extends ConsumerWidget {
