@@ -1,6 +1,6 @@
 /// Test WEATHER dataset EXPLORE tab CORRELATION feature.
 //
-// Time-stamp: <Tuesday 2026-01-06 14:48:04 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2026-01-06 15:21:48 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,7 +31,6 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
-import 'utils/goto_next_page.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
