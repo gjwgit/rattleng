@@ -1,6 +1,6 @@
 /// Rattle - Data Science Next Generation
 ///
-// Time-stamp: "Tuesday 2025-08-05 16:44:19 +1000 Graham Williams"
+// Time-stamp: "Tuesday 2026-01-06 14:05:53 +1100 Graham Williams"
 ///
 /// Copyright (C) 2024-2025, Togaware Pty Ltd.
 ///
@@ -64,6 +64,87 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
     List<String> lines = [];
 
     ////////////////////////////////////////////////////////////////////////
+    // GGDENDRO
+    ////////////////////////////////////////////////////////////////////////
+
+    image = '$tempDir/explore_correlation_ggdendro.svg';
+
+    if (imageExists(image)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+        # Dendrogram Showing Correlations
+
+        The length of the lines in the dendrogram provide a visual indication of
+        the degree of correlation.
+
+        Shorter lines indicate more tighly correlated variables.
+
+        Generated using
+        [ggdendro::ggdenrogram()](https://www.rdocumentation.org/packages/ggdendro/topics/ggdendrogram).
+
+        ''',
+          path: image,
+        ),
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+    // CORRPLOT
+    ////////////////////////////////////////////////////////////////////////
+
+    image = '$tempDir/explore_correlation.svg';
+
+    if (imageExists(image)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+        # Variable Correlation Plot
+
+        Visit the [Survival
+        Guide](https://survivor.togaware.com/datascience/correlated-numeric-variables.html)
+        and
+        [corrplot::corrplot(ds)](https://www.rdocumentation.org/packages/corrplot/topics/corrplot)
+
+        ''',
+          path: image,
+        ),
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+    // GGCORRPLOT
+    ////////////////////////////////////////////////////////////////////////
+    //
+    // 20250419 gjw. An SVG image displays a black box in the app. The display
+    // of it using the external viewer is just fine. The problem is the
+    // unhandled element <filter/> for the SVG loader. So we pass both the SVG
+    // and the PNG until in R we identify a SVG generation that does not use the
+    // filter element.
+
+    String imageSVG = '$tempDir/explore_correlation_ggcorrplot.svg';
+    String imagePNG = '$tempDir/explore_correlation_ggcorrplot.png';
+
+    if (imageExists(imagePNG)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+          # GGPlot Correlation
+
+          Generated using
+          [ggcorrplot::ggcorrplot(ds)](https://www.rdocumentation.org/packages/ggcorrplot/topics/ggcorrplot).
+
+          ''',
+          path: imageSVG,
+          display: imagePNG,
+        ),
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////
     // COR
     ////////////////////////////////////////////////////////////////////////
 
@@ -72,7 +153,7 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
     // resolved the issue.
 
     // content = rExtract(stdout, 'print(round(cor,2))');
-    content = rExtract(stdout, 'print(format(round(corm, 2)');
+    content = rExtract(stdout, 'print(format(round(corm');
     // content = rExtract(stdout, 'knitr::kable(round(cor, 2))');
 
     // Add a blank line between each sub-table.
@@ -94,6 +175,9 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
 
           # Correlation - Numeric Data
 
+          Here are the actual calculated correlations that the visualisations
+          are based on.
+
           Visit the [Survival
           Guide](https://survivor.togaware.com/datascience/correlated-numeric-variables.html)
           and
@@ -101,84 +185,6 @@ class _CorrelationDisplayState extends ConsumerState<CorrelationDisplay> {
 
           ''',
           content: content,
-        ),
-      );
-    }
-
-    ////////////////////////////////////////////////////////////////////////
-    // CORRPLOT
-    ////////////////////////////////////////////////////////////////////////
-
-    image = '$tempDir/explore_correlation.svg';
-
-    if (imageExists(image)) {
-      pages.add(
-        ImagePage(
-          title: '''
-
-        # Variable Correlation Plot
-
-          Visit the [Survival
-          Guide](https://survivor.togaware.com/datascience/correlated-numeric-variables.html)
-          and
-          [corrplot::corrplot(ds)](https://www.rdocumentation.org/packages/corrplot/topics/corrplot)
-
-        ''',
-          path: image,
-        ),
-      );
-    }
-
-    ////////////////////////////////////////////////////////////////////////
-    // GGCORRPLOT
-    ////////////////////////////////////////////////////////////////////////
-    //
-    // The **svg** only displays a black box in the app. The display of it using
-    // the external viewer is just fine. The problem is the unhandled element
-    // <filter/> for the Svg loader. So we pass both the **svg** and the
-    // **png**.  20250419 gjw.
-
-    String imageSVG = '$tempDir/explore_correlation_ggcorrplot.svg';
-    String imagePNG = '$tempDir/explore_correlation_ggcorrplot.png';
-
-    if (imageExists(imagePNG)) {
-      pages.add(
-        ImagePage(
-          title: '''
-
-        # GGPlot Correlation
-
-        Generated using
-        [ggcorrplot::ggcorrplot(ds)](https://www.rdocumentation.org/packages/ggcorrplot/topics/ggcorrplot).
-
-        To view this correlation plot please tap the **Open** button to the
-        right. Our current SVG viewer does not support all SVG features.
-
-        ''',
-          path: imageSVG,
-          display: imagePNG,
-        ),
-      );
-    }
-
-    ////////////////////////////////////////////////////////////////////////
-    // GGDENDRO
-    ////////////////////////////////////////////////////////////////////////
-
-    image = '$tempDir/explore_correlation_ggdendro.svg';
-
-    if (imageExists(image)) {
-      pages.add(
-        ImagePage(
-          title: '''
-
-        # GGPlot Dendrogram
-
-        Generated using
-        [ggdendro::ggdenrogram()](https://www.rdocumentation.org/packages/ggdendro/topics/ggdendrogram).
-
-        ''',
-          path: image,
         ),
       );
     }
