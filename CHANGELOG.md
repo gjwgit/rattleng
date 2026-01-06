@@ -19,6 +19,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ Include numeric target in correlation plots [6.2.24 20260106 gjw]
 + Refine the visual missing data plot [6.5.23 20251224 gjw]
 + BUG: Missing histogram when group by is none [6.5.22 20251221 gjw]
 + MISSING: Bug fix for VIM::aggr() warning [6.5.21 20251001 gjw]
