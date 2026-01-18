@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-05-07 08:48:30 +1000 Graham Williams>
+# Time-stamp: <Sunday 2026-01-18 11:12:22 +1100 Graham Williams>
 #
 # Rattle version <VERSION>.
 #
@@ -147,23 +147,6 @@ if (username == "") username <- Sys.getenv("USERNAME")  # On Windows
 ## command to the user's R script. (20250106 gjw)
 ##
 rat <- cat
-
-# Check if values in a column are unique.
-
-check_unique <- function(x) {
-  !any(duplicated(x))
-}
-
-# Check if the numbers in the column are real numbers and if so return
-# FALSe so they are not included in the potentiasl <IDENT>.
-
-check_not_real <- function(x) {
-  if (! is.numeric(x)) {
-    return(TRUE)
-  } else {
-    return(! any(x != round(x)))
-  }
-}
 
 # Identify columns (except real numbers) with unique values to treat
 # as identifiers. (20250311 gjw)
