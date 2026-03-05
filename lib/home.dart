@@ -401,26 +401,37 @@ B Srinivas, Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
       appBar: AppBar(
         backgroundColor: flavor.mantle,
 
-        // The title aligned to the left.
-
+       // The title aligned to the left.
         //title: const Text(appTitle),
         title: Row(
-          children: [
-            Image.asset('assets/icons/icon.png', width: 40, height: 40),
-            configWidgetGap,
-            MarkdownBody(
-              data: appTitle,
-              onTapLink: (text, href, title) {
-                final Uri url = Uri.parse(href ?? '');
-                launchUrl(url);
-              },
-              styleSheet: MarkdownStyleSheet(
-                p: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                a: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
+  children: [
+    Image.asset('assets/icons/icon.png', width: 40, height: 40),
+    configWidgetGap,
+    // Wrap markdownbody in expanded, so that it doesn't push outwards
+    Expanded( 
+      child: MarkdownBody(
+        data: appTitle,
+        softLineBreak: false, //Prevent the text from jumping to a second line
+        onTapLink: (text, href, title) {
+          final Uri url = Uri.parse(href ?? '');
+          launchUrl(url);
+        },
+        styleSheet: MarkdownStyleSheet(
+          p: const TextStyle(
+            fontSize: 24, 
+            fontWeight: FontWeight.bold,
+            overflow: TextOverflow.ellipsis, // Add "..." if there's not enough space
+          ),
+          a: const TextStyle(
+            fontSize: 24, 
+            fontWeight: FontWeight.bold,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
+      ),
+    ),
+  ],
+),
 
         // Deploy the buttons aligned to the top right for actions.
         actions: [
