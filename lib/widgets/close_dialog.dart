@@ -121,6 +121,10 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
   }
 
   void _closeApp() async {
+    // capture navigator before async gaps to avoid BuildContext across async gaps
+
+    final navigator = Navigator.of(context);
+
     // save window size before closing if the setting is enabled
     final rememberSize = ref.read(rememberWindowSizeProvider);
     if (rememberSize) {
@@ -138,7 +142,7 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
       }
     }
 
-    Navigator.of(context).pop();
+    navigator.pop();
     cleanUpTempDirs();
     WindowManager.instance.setPreventClose(false);
     WindowManager.instance.close();
