@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Friday 2025-10-17 10:13:43 +1100 Graham Williams>
+# Time-stamp: <Saturday 2026-01-03 16:58:59 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -112,12 +112,18 @@ apk::
 	ssh $(REPO) chmod a+r $(RLOC)$(APP).apk
 	mv -f installers/$(APP)-*.apk installers/ARCHIVE/
 	rm -f installers/$(APP).apk
+	@echo ''
 
 appbundle::
 	rsync -avzh installers/$(APP).aab $(REPO):$(RLOC)
 	ssh $(REPO) chmod a+r $(RLOC)$(APP).aab
 	mv -f installers/$(APP)-*.aab installers/ARCHIVE/
 	rm -f installers/$(APP).aab
+	@echo ''
+
+# 20251226 gjw This has been moved into the installers github workflow
+# but is retained here for convenience to build a deb locally and
+# install it, often for a quick testing cycle.
 
 deb:
 	@echo "Build $(APP) version $(VER)"
@@ -151,5 +157,34 @@ sinstall:
 # /usr/bin/rattle. This is working so add deb into the install and now
 # utilise that for the default install on my machine.
 
-ginstall: deb
-	(cd installers; make $@)
+.PHONY: upload
+upload:
+	(cd installers; make ginstall)
+	@echo ''
+
+.PHONY: debin
+debin:
+	@echo '******************** LOCAL INSTALL DEB'
+	wajig install installers/ARCHIVE/$(APP)_$(VER)_amd64.deb
+	@echo ''
+
+# 20260103 gjw Note that `debin` depends on the deb file being upladed
+# to the ARCHIVE and so the `upload` target is a prerequisite. Put it
+# at the end as it requires interaction (sudo password) and if earlier
+# it will hold up the oher non-interactive builds.
+
+.PHONY: ginstall
+ginstall: upload prod apk appbundle debin
+
+.PHONY: ginfo
+ginfo:
+	@bumpId=$$(gh run list --limit 100 --json databaseId,displayTitle,workflowName \
+		| jq -r '.[] | select(.workflowName | startswith("Build Installers")) | select(.displayTitle | startswith("Bump version")) | .databaseId' \
+		| head -n 1); \
+	if [ -n "$$bumpId" ]; then \
+		echo "Bump ID: $$bumpId"; \
+		gh run view "$$bumpId"; \
+		gh run view "$$bumpId" --json status,conclusion; \
+	else \
+		echo "No bump ID found."; \
+	fi
