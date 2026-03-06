@@ -348,7 +348,7 @@ jobs:
   #         release: stable
 
   ########################################################################
-  # MACOS - ORIGINAL - DEPRECATED
+  # MACOS - ORIGINAL
 
   # 20251223 gjw This is the original script for building the macOS
   # dmg and zip files for Rattle. While the macOS and iOS installer
@@ -363,19 +363,14 @@ jobs:
   # and bookoflife, which needs to be done. Once that is done and the
   # steps have a template, this ORIGINAL build can be removed.
 
-  package-macos-dmg-zip-original:
+  package-macos-dmg-zip-basic:
     if: |
       contains(github.event.head_commit.message, 'bump version') ||
       contains(github.event.head_commit.message, 'build installers') ||
       contains(github.event.head_commit.message, 'build macos basic')
-
     runs-on: macos-latest
 
     steps:
-      - name: Display OS Information
-        run: |
-          system_profiler SPSoftwareDataType
-
       - name: Clone Repository
         uses: actions/checkout@v4
 
@@ -392,13 +387,7 @@ jobs:
         run: flutter pub get
 
       - name: Enable macOS desktop
-        run: flutter create --platforms=macos --org=com.togaware .
-
-      - name: Remove Podfile and project.yaml
-        # 20260102 gjw These cause the default basic build to fail as
-        # for some reason an older macOS version is targeted.
-        run: |
-          rm -f macos/Podfile macos/project.yml
+        run: flutter config --enable-macos-desktop
 
       - name: Build Flutter macOS app
         run: flutter build macos --release
