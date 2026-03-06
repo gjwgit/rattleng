@@ -2,7 +2,7 @@
 #
 # Makefile template for Version Control - git
 #
-# Time-stamp: <Thursday 2025-07-17 08:59:25 +1000 Graham Williams>
+# Time-stamp: <Friday 2026-02-20 10:54:17 +1100 Graham Williams>
 #
 # Copyright 2018-2024 (c) Graham.Williams@togaware.com
 #
@@ -32,6 +32,7 @@ git:
   main      Checkout the main branch;
   dev       Checkout the dev branch;
   log
+  blog	    Show a brief log;
   flog	    Show the full log;
   gdiff
   vdiff	    Show a visual diff using meld.
@@ -112,6 +113,11 @@ dev:
 log:
 	@echo "-------------------------------------------------------"
 	git --no-pager log --stat --max-count=10
+	@echo "-------------------------------------------------------"
+
+blog:
+	@echo "-------------------------------------------------------"
+	git --no-pager log --pretty=format:"%h %ad %s" --date=short --max-count=40
 	@echo "-------------------------------------------------------"
 
 flog:

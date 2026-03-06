@@ -1,27 +1,24 @@
-# Pull Request Details
+## Pull Request Details
 
-## What issue does this PR address
+### Description
+<!--- Describe your changes in detail -->
+<!--- Why is this change required? What problem does it solve? -->
 
-- [Description]
+### Related Issues
+<!--- If it fixes an open issue, please link to the issue here. -->
 
-## Associated Issue
-
-- This PR relates to issue #
-
-## Type of Change
+### Type of Change
 
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
 - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
 - [ ] This change requires a documentation update
 
-## How Has This Been Tested?
+### How To Test?
+<!--- Describe the tests that a reviewer can undertake to verify your changes. -->
 
-Please describe the tests that you ran to verify your changes.
-
-## Checklist
-
-Complete the check-list below to ensure your branch is ready for PR.
+### Checklist
+<!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
 
 - [ ] Screenshots included in linked issue #
 - [ ] Changes adhere to the [style and coding guidelines](https://survivor.togaware.com/gnulinux/flutter-style.html)
@@ -43,9 +40,8 @@ Complete the check-list below to ensure your branch is ready for PR.
 - [ ] I have identified reviewers
 - [ ] The PR has been approved by reviewers
 
-## Finalising
-
-Once PR discussion is complete and reviewers have approved:
+### Finalising
+<!--- Once PR discussion is complete and reviewers have approved. -->
 
 - [ ] Merge dev into the this branch
 - [ ] Resolve any conflicts
