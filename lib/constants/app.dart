@@ -1,6 +1,6 @@
 /// Rattle - Data Science Next Generation
 ///
-// Time-stamp: "Wednesday 2025-09-10 12:48:08 +1000 Graham Williams"
+// Time-stamp: "Friday 2026-03-06 20:12:59 +1100 Graham Williams"
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -33,7 +33,7 @@ library;
 /// The Rattle app's title.
 
 const String appTitle = '[Rattle](https://rattle.togaware.com) '
-    'Next Generation Data Science';
+    'AI and Data Science';
 
 /// Project assets folder path used in the APP.
 
