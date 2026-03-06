@@ -1,6 +1,6 @@
-# RattleNG Changelog
+# Rattle Changelog
 
-Recorded here are the high level changes for the RattleNG app.
+Recorded here are the high level changes for the Rattle app.
 
 Guide: Each version update is recorded here with a short user-oriented
 description of the update. Updates in the 6.5.n series are heading
@@ -9,10 +9,10 @@ utilised by the flutter version_widget package.
 
 To download the latest version of the app: GNU/Linux
 [**deb**](https://access.togaware.com/rattle_amd64.deb) or
-[**zip**](https://access.togaware.com/rattle-dev-linux.zip) - MacOS
-[**zip**](https://access.togaware.com/rattle-dev-macos.zip) - Windows
-[**zip**](https://access.togaware.com/rattle-dev-windows.zip) or
-[**exe**](https://access.togaware.com/rattle-dev-windows-inno.exe)
+[**zip**](https://access.togaware.com/rattle-linux.zip) - MacOS
+[**zip**](https://access.togaware.com/rattle-macos.zip) - Windows
+[**zip**](https://access.togaware.com/rattle-windows.zip) or
+[**exe**](https://access.togaware.com/rattle-windows-inno.exe)
 (self installing).
 
 Visit [togaware](https://rattle.togaware.com) for details.

@@ -4,20 +4,20 @@
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 [![R](https://img.shields.io/badge/r-%23276DC3.svg?style=for-the-badge&logo=r&logoColor=white)](https://www.r-project.org/)
 
-[![GitHub License](https://img.shields.io/github/license/gjwgit/rattleng)](https://raw.githubusercontent.com/gjwgit/rattleng/main/LICENSE)
-[![GitHub Version](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/gjwgit/rattleng/master/pubspec.yaml&query=$.version&label=version&logo=github)](https://github.com/gjwgit/rattleng/blob/dev/CHANGELOG.md)
-[![GitHub Last Updated](https://img.shields.io/github/last-commit/gjwgit/rattleng?label=last%20updated)](https://github.com/gjwgit/rattleng/commits/dev/)
-[![GitHub Commit Activity (dev)](https://img.shields.io/github/commit-activity/w/gjwgit/rattleng/dev)](https://github.com/gjwgit/rattle/commits/dev/)
-[![GitHub Issues](https://img.shields.io/github/issues/gjwgit/rattleng)](https://github.com/gjwgit/rattleng/issues)
+[![GitHub License](https://img.shields.io/github/license/gjwgit/rattle)](https://raw.githubusercontent.com/gjwgit/rattle/main/LICENSE)
+[![GitHub Version](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/gjwgit/rattle/master/pubspec.yaml&query=$.version&label=version&logo=github)](https://github.com/gjwgit/rattle/blob/dev/CHANGELOG.md)
+[![GitHub Last Updated](https://img.shields.io/github/last-commit/gjwgit/rattle?label=last%20updated)](https://github.com/gjwgit/rattle/commits/dev/)
+[![GitHub Commit Activity (dev)](https://img.shields.io/github/commit-activity/w/gjwgit/rattle/dev)](https://github.com/gjwgit/rattle/commits/dev/)
+[![GitHub Issues](https://img.shields.io/github/issues/gjwgit/rattle)](https://github.com/gjwgit/rattle/issues)
 
 Download the latest version:
 **GNU/Linux**
-[zip](https://access.togaware.com/rattle-dev-linux.zip) or
+[zip](https://access.togaware.com/rattle-linux.zip) or
 [deb](https://access.togaware.com/rattle_amd64.deb);
 **macOS**
-[zip](https://access.togaware.com/rattle-dev-macos.zip);
+[zip](https://access.togaware.com/rattle-macos.zip);
 **Windows**
-[inno](https://access.togaware.com/rattle-dev-windows-inno.exe).
+[inno](https://access.togaware.com/rattle-windows-inno.exe).
 
 Visit [togaware](https://rattle.togaware.com) for details.
 
@@ -31,9 +31,9 @@ practitioners across industry and government, to turn data into
 knowledge, through machine learning and artificial intelligence.
 
 But now, it is time for a refresh. To install the new Rattle visit the
-[Installers](https://github.com/gjwgit/rattleng/tree/dev/installers/README.md).
+[Installers](https://github.com/gjwgit/rattle/tree/dev/installers/README.md).
 
-RattleNG, available from [github](https://github.com/gjwgit/rattleng),
+Rattle, available from [github](https://github.com/gjwgit/rattle),
 remains sympathetic to the original Rattle user interface,
 functionality, and goals, as presented in the
 [Rattle](https://bit.ly/rattle_data_mining) book. However, it brings
@@ -43,21 +43,21 @@ and encapsulated within a more readily extensible framework. A new
 edition of the Rattle book will soon be available.
 
 Over the past 15 years we have also matured in how we deliver data
-science and analytics. RattleNG delivers a new perspective on
+science and analytics. Rattle delivers a new perspective on
 scripting data science in R through templates as introduced in my more
 recent book, [The Essentials of Data
 Science](https://bit.ly/essentials_data_science). The concept of
 templates for data science now provides the foundations for a flexible
-and extensible application in RattleNG.
+and extensible application in Rattle.
 
 You can also review my [Desktop Data Mining Survival
 Guide](https://datamining.togaware.com) published online by Togaware.
 
 The detailed coding documentation for our new Flutter/Dart based
-RattleNG is available online from the [Solid Community
-AU](https://solidcommunity.au/docs/rattleng/).
+Rattle is available online from the [Solid Community
+AU](https://solidcommunity.au/docs/rattle/).
 
-The RattleNG rewrite is being lead by Professor Graham Williams (the
+The Rattle rewrite is being lead by Professor Graham Williams (the
 original Rattle author), Chief Scientist of the Software Innovation
 Institute of the Australian National University.  Significant
 contributions have also been made by Yixiang Yin.
@@ -67,13 +67,13 @@ contributions have also been made by Yixiang Yin.
 You will need to install R, separate to the app itself. Visit the [R
 Project](https://www.r-project.org/) for details.
 
-Then install RattleNG for your operating system as detailed in the
+Then install Rattle for your operating system as detailed in the
 installers
-[README](https://github.com/gjwgit/rattleng/blob/dev/installers/README.md).
+[README](https://github.com/gjwgit/rattle/blob/dev/installers/README.md).
 
 Then:
 
-+ Start RattleNG.
++ Start Rattle.
 + From the **Dataset** tap the **Dataset** button and then choose
   **Weather** to load the Canberra weather dataset for 1 year. You can
   also load your own CSV or TXT file by tapping the **Filename**
@@ -147,10 +147,10 @@ Currently implemented features as of version 6.3.48 (2025-01-06):
 + Script
   + Export
 
-## Building RattleNG from Source
+## Building Rattle from Source
 
 Ensure you have R installed, as described in the installer
-[README](https://github.com/gjwgit/rattleng/blob/dev/installers/README.md).
+[README](https://github.com/gjwgit/rattle/blob/dev/installers/README.md).
 
 Install Flutter as describe in the [Flutter Install
 Guide](https://docs.flutter.dev/get-started/install). In short, to
@@ -161,18 +161,18 @@ variable, and in a CMD console run `flutter help`.
 *Currently (20230918), on Azure Windows VM, `flutter doctor` just sits
 there!*
 
-Then clone the [rattleng](https://github.com/gjwgit/rattleng)
+Then clone the [rattle](https://github.com/gjwgit/rattle)
 repository:
 
 ```bash
-git clone https://github.com/gjwgit/rattleng
-cd rattleng
+git clone https://github.com/gjwgit/rattle
+cd rattle
 flutter run
 ```
 
 Choose your target platform when prompted.
 
-After firing up the rattleng app, check in the **Console** tab to make
+After firing up the rattle app, check in the **Console** tab to make
 sure R is running. You should see some R code and the console is
 waiting at the R prompt:
 
@@ -181,12 +181,12 @@ waiting at the R prompt:
 >
 ```
 
-RattleNG will itself eventually check for these and prompt if they are
+Rattle will itself eventually check for these and prompt if they are
 not available.
 
 ### Latest Code
 
-RattleNG is currently under active development. To get the current app
+Rattle is currently under active development. To get the current app
 you can install flutter on your local computer, then clone the github
 repository, to your local disk, and from a command line change to the
 directory where you cloned the rattle repository (it should contain a
@@ -199,7 +199,7 @@ flutter run -d <os>
 
 ## How you can Help
 
-RattleNG will remain an open source application, free for anyone to
+Rattle will remain an open source application, free for anyone to
 use in any way they like. Contributions are welcome and the simplest
 is to make them through pull requests on github. You can fork my
 repository, make your changes, and push them back as a pull request to
@@ -220,7 +220,7 @@ Suggested tasks can be found as github issues.
 + Bob Meunchen's [Review of
   Rattle](https://r4stats.com/articles/software-reviews/rattle/)
 
-## Some RattleNG teasers
+## Some Rattle teasers
 
 ### Rattle's 5 Clicks to Your First AI Model
 
