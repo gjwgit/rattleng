@@ -1,6 +1,6 @@
 /// The WordCloud configuration panel.
 //
-// Time-stamp: "Saturday 2025-08-16 20:59:19 +1000 Graham Williams"
+// Time-stamp: "Friday 2026-03-06 13:49:56 +1100 Graham Williams"
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -37,6 +37,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/constants/wordcloud.dart';
+import 'package:rattle/features/wordcloud/tooltips.dart';
 import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/wordcloud.dart';
@@ -150,40 +151,21 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
                 ref.read(wordCloudBuildProvider.notifier).state = timestamp();
               },
-              tooltip: '''
-
-              **Text Mine:** Tap here to build the analysis of the text
-                document(s).
-
-              ''',
+              tooltip: textMineToolTip,
               child: const Text('Text Mine'),
             ),
 
             // Checkbox for random order of words in the cloud.
             LabelledCheckbox(
               key: const Key('random_order'),
-              tooltip: '''
-
-               **Random Order:** Tick the checkbox to have the word cloud
-               generated with a random ordering of the words.  Otherwise (the
-               default) the most frequent words are centered and then other
-               words are drawn in decreasing frequency as we progress to the edg
-               of the picture.
-
-              ''',
+              tooltip: randomOrderToolTip,
               label: 'Random Order',
               provider: checkboxProvider,
             ),
             const Spacer(),
 
             MarkdownTooltip(
-              message: '''
-
-              **Save to CSV:** Tap here to save the generated document term matrix to a CSV
-              file, one row for each document and a column for each term.
-
-
-              ''',
+              message: saveCsvToolTip,
               child: IconButton(
                 onPressed: () async {
                   // Define allowed file type (optional: restrict to .csv files).
@@ -252,55 +234,25 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                       configBotGap,
                       LabelledCheckbox(
                         key: const Key('text_stem'),
-                        tooltip: '''
-
-                        **Stem:**. Enable this to reduces words to their base or
-                        root form.  Two different words, when stemmed, can
-                        become the same and so can reduce unnecessary clutter in
-                        the wordcloud.
-
-                        ''',
+                        tooltip: stemToolTip,
                         label: 'Stem',
                         provider: stemProvider,
                       ),
                       LabelledCheckbox(
                         key: const Key('text_remove_punctuation'),
-                        tooltip: '''
-
-                        **Punctuation:** Extraneous data can be removed
-                          including various punctuation.
-
-                        ''',
+                        tooltip: punctuationToolTip,
                         label: 'Punctuation',
                         provider: punctuationProvider,
                       ),
                       LabelledCheckbox(
                         key: const Key('text_remove_stopwords'),
-                        tooltip: '''
-
-                        **Stopwords:** Remove common language words. The words
-                        removed depend on the chosen language.
-
-                        ''',
+                        tooltip: stopwordsToolTip,
                         label: 'Stopwords',
                         provider: stopwordProvider,
                       ),
                       Expanded(
                         child: MarkdownTooltip(
-                          message: '''
-
-                          **Language:** The stopwords removed will depend on the
-                          language. Select the language of choice here to filter
-                          out common stopwords.
-
-                          The stopwords come from
-                          [tm::stopwords()](https://rdrr.io/rforge/tm/man/stopwords.html).
-
-                          For English, 'SMART' will remove some 570 stopwords,
-                          more than the `english` option which removes only 170
-                          stopwords.
-
-                          ''',
+                          message: languageToolTip,
                           child: DropdownMenu<String>(
                             label: const Text('Language'),
                             leadingIcon: const Icon(Icons.language),
