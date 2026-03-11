@@ -26,7 +26,7 @@
 
 library;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 final degreeSVMProvider = StateProvider<int>((ref) => 1);
 final kernelSVMProvider = StateProvider<String>(

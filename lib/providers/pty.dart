@@ -27,7 +27,7 @@ library;
 import 'dart:convert';
 
 import 'package:flutter_pty/flutter_pty.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:universal_io/io.dart' show Platform;
 import 'package:xterm/xterm.dart';
 

@@ -28,7 +28,7 @@ library;
 
 // TODO 20241029 gjw EVENTUALLY RENAME THESE TO START WITH `neural`.
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 final activationFctNeuralProvider = StateProvider<String>((ref) => 'logistic');
 
