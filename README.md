@@ -53,9 +53,9 @@ and extensible application in Rattle.
 You can also review my [Desktop Data Mining Survival
 Guide](https://datamining.togaware.com) published online by Togaware.
 
-The detailed coding documentation for our new Flutter/Dart based
-Rattle is available online from the [Solid Community
-AU](https://solidcommunity.au/docs/rattle/).
+[//]: # (The detailed coding documentation for our new Flutter/Dart based)
+[//]: # (Rattle is available online from the [Solid Community)
+[//]: # (AU]&#40;https://solidcommunity.au/docs/rattle/&#41;.)
 
 The Rattle rewrite is being lead by Professor Graham Williams (the
 original Rattle author), Chief Scientist of the Software Innovation
