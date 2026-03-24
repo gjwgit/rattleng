@@ -86,7 +86,7 @@ jobs:
     steps:
 
       - name: Clone Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install OS Dependencies
         run: |
@@ -205,7 +205,7 @@ jobs:
     steps:
 
       - name: Clone Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install OS Dependencies
         run: |
@@ -270,7 +270,7 @@ jobs:
     steps:
 
       - name: Clone Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install OS Dependencies
         run: |
@@ -377,7 +377,7 @@ jobs:
           system_profiler SPSoftwareDataType
 
       - name: Clone Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -477,7 +477,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -599,7 +599,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -785,7 +785,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -929,7 +929,7 @@ jobs:
 
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -1086,7 +1086,7 @@ jobs:
 
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
