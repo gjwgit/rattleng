@@ -19,7 +19,9 @@ Download the latest version:
 **Windows**
 [inno](https://access.togaware.com/rattle-windows-inno.exe).
 
-Visit [togaware](https://rattle.togaware.com) for details.
+Visit [togaware](https://rattle.togaware.com) for details and
+[reddit](https://www.reddit.com/r/SAI_Rattle/) for community
+discussion.
 
 # Rattle the Next Generation Data Scientist
 
@@ -216,6 +218,8 @@ Flutter interface. See the growing number of scripts in
 Suggested tasks can be found as github issues.
 
 ## Rattle Resources
+
++ Visit the [reddit](https://www.reddit.com/r/SAI_Rattle/) discussion group.
 
 + Bob Meunchen's [Review of
   Rattle](https://r4stats.com/articles/software-reviews/rattle/)
