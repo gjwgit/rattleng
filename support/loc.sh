@@ -90,6 +90,36 @@ while [[ "$1" != "" ]]; do
     esac
 done
 
+# 20260324 gjw Ignore files listed in .locignore
+
+# Read .locignore patterns into an array
+
+if [ -e .locignore ]; then
+
+declare -a IGNORE_PATTERNS
+while IFS= read -r pattern; do
+    [[ -z "$pattern" || "$pattern" =~ ^# ]] && continue
+    IGNORE_PATTERNS+=("$pattern")
+done < .locignore
+
+fi
+
+# Filter FILES array
+
+declare -a FILTERED_FILES
+for file in "${FILES[@]}"; do
+    should_ignore=0
+    for pattern in "${IGNORE_PATTERNS[@]}"; do
+        if [[ "$file" == *"$pattern"* ]]; then
+            should_ignore=1
+            break
+        fi
+    done
+    [[ $should_ignore -eq 0 ]] && FILTERED_FILES+=("$file")
+done
+
+FILES=("${FILTERED_FILES[@]}")
+
 if [ "$CLEAN" = true ]; then
     for file in "${FILES[@]}"; do
         cleanse_lines "$file"

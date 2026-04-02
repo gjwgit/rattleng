@@ -252,6 +252,7 @@ ios/project-*.yml
 # ios/macos generated project files
 macos/Runner.xcodeproj/
 macos/Runner.xcworkspace/
+macos/Runner/Info.plist
 
 # Backups of ios/macos project config yml and Podfile
 macos/Podfile-*

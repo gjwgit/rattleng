@@ -2,7 +2,9 @@
 
 # set -x
 
-# 20241024 gjw After a github action has built the bundles and stored
+# 20260216 gjw Compare files.
+#
+# After a github action has built the bundles and stored
 # them as artefacts on github, we can upload them to the ${HOST} for
 # distribution.
 
@@ -162,9 +164,6 @@ if [[ "${status}" == "completed" ]]; then
     artifactId=$(gh api -H "Accept: application/vnd.github+json" /repos/${REP}/${APP}/actions/artifacts \
 		    --jq '.artifacts[] | select(.name | endswith("-macos-zip")) | .id' | head -n 1)
     echo "artifact id: $artifactId"
-    gh api -H "Accept: application/vnd.github+json" repos/${REP}/${APP}/actions/artifacts/${artifactId}/zip > artifact.zip
-    unzip artifact.zip
-    rm -f artifact.zip
 
     if [[ -z "${artifactId}" ]]; then
 	echo "No artifact found."

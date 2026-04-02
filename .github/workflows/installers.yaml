@@ -45,7 +45,7 @@ env:
   APP: rattle
   RELEASE: dev
   LINUX_PKGS:
-  FLUTTER_VERSION: "3.41.4"
+  FLUTTER_VERSION: "3.41.5"
   MACOS_APP_RELEASE_UNSIGNED_PATH: build/macos/Build/Products/Release-unsigned
   MACOS_APP_RELEASE_STAGING_PATH: build/macos/Build/Products/Release-staging
   MACOS_APP_RELEASE_DEV_PATH: build/macos/Build/Products/Release-dev
@@ -189,7 +189,7 @@ jobs:
           dpkg-deb --build build/${{env.APP}}_${VERSION}_amd64
 
       - name: Upload deb artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{env.APP}}-linux-deb
           path: build/${{env.APP}}_${{env.VERSION}}_amd64.deb
@@ -253,7 +253,7 @@ jobs:
           directory: build/linux/x64/release/bundle
 
       - name: Upload Artefact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{env.APP}}-linux-zip
           path: build/linux/x64/release/bundle/${{env.APP}}-linux.zip
@@ -276,39 +276,10 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo apt-get upgrade -y
-          #
-          # 20260121 gjw These don't seem to be required?
-          #
-          #printf '#%.0s' {1..72}; printf '\nninja-build\n'
-          #sudo apt-get install -y ninja-build
-          #printf '#%.0s' {1..72}; printf '\nlibgtk-3-dev\n'
-          #sudo apt-get install -y libgtk-3-dev
-          #printf '#%.0s' {1..72}; printf '\nclang cmake\n'
-          #sudo apt-get install -y clang cmake
-          #
-          # 20260121 gjw Seems like a flutter 3.38.7 bug. I've tried
-          # setting FLUTTER_VERSION above to 3.38.5 but it does not
-          # take in the snap build. Tried adding flutter-version to
-          # the snapcraft file but failed. Give up for now until
-          # flutter fix the bug!
-          #
-          # https://github.com/simolus3/sqlite3.dart/issues/332
-          # https://github.com/flutter/flutter/issues/178659
-          # https://github.com/flutter/flutter/commit/4589b0528f4572828f94ae7f37c2c0f32ae09732
-          #
-          # I've tried the following and variations without success.
-          #
-          # The error seems to be:
-          #
-          # Target dart_build failed: Error: Failed to find any of
-          # [ld.lld, ld] in LocalDirectory: '/usr/lib/llvm-14/bin'
-          #
-          printf '#%.0s' {1..72}; printf '\nllvm lld FLUTTER 3.38.7 BUG\n'
-          sudo apt-get install -y llvm lld
-          #sudo cp /usr/lib/llvm-14/bin/lld /usr/lib/llvm-14/bin/ld
-          #sudo rm /usr/lib/llvm-14/bin/ld.lld
-          #sudo cp /usr/lib/llvm-14/bin/lld /usr/lib/llvm-14/bin/ld.lld
-          #ls -lr /usr/lib/llvm-14/bin
+
+      # 20260311 gjw be sure to add dependencies into the snapcraft
+      # file rather than here, including llvm, lld, libsecret-1-dev,
+      # libjsoncpp-dev, for flutter_secure_storage
 
       - name: Install extra Linux packages
         if: env.LINUX_PKGS != ''
@@ -323,7 +294,7 @@ jobs:
 
       - name: Upload snap artifact
         if: hashFiles('snap/**') != ''
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ env.APP }}-linux-snap
           path: ${{ steps.build.outputs.snap }}
@@ -335,7 +306,7 @@ jobs:
   #   if: startsWith(github.ref, 'refs/tags/v')
   #   steps:
   #     - name: Download snap artifact
-  #       uses: actions/download-artifact@v4
+  #       uses: actions/download-artifact@v6
   #       with:
   #         name: snap-package
 
@@ -394,12 +365,12 @@ jobs:
       - name: Enable macOS desktop
         run: flutter create --platforms=macos --org=com.togaware .
 
+      #   # 20260306 gjw For rattle this causes build to fail with
+      #   # missing RunnerTest. So comment this out for now.
+      #
       # - name: Remove Podfile and project.yaml
       #   # 20260102 gjw These cause the default basic build to fail as
       #   # for some reason an older macOS version is targeted.
-      #   #
-      #   # 20260306 gjw For rattle this causes build to fail with
-      #   # missing RunnerTest. So comment this out for now.
       #   run: |
       #     rm -f macos/Podfile macos/project.yml
 
@@ -429,7 +400,7 @@ jobs:
           ls -lh
 
       - name: Upload Artefact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{env.APP}}-macos-dmg
           path: ${{env.APP}}-macos.dmg
@@ -448,7 +419,7 @@ jobs:
         run: ls -lh build/macos/Build/Products/Release
 
       - name: Upload Artefact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{env.APP}}-macos-zip
           path: build/macos/Build/Products/Release/${{env.APP}}-macos.zip
@@ -539,7 +510,7 @@ jobs:
           ls -lh ${{env.APP}}-macos-unsigned.dmg
 
       - name: Upload Artefact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ env.APP }}-macos-unsigned-dmg
           path: ${{ env.APP }}-macos-unsigned.dmg
@@ -558,7 +529,7 @@ jobs:
         run: ls -lh ${{env.MACOS_APP_RELEASE_UNSIGNED_PATH}}/${{env.APP}}-macos-unsigned.zip
 
       - name: Upload Artefact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ env.APP }}-macos-unsigned-zip
           path: ${{ env.MACOS_APP_RELEASE_UNSIGNED_PATH }}/${{env.APP}}-macos-unsigned.zip
@@ -709,7 +680,7 @@ jobs:
       #     ls -lh ${{ env.APP }}-macos-staging.dmg
 
       # - name: Upload Artefact
-      #   uses: actions/upload-artifact@v4
+      #   uses: actions/upload-artifact@v6
       #   with:
       #     name: ${{ env.APP }}-macos-staging-dmg
       #     path: ${{ env.APP }}-macos-staging.dmg
@@ -728,7 +699,7 @@ jobs:
       #   run: ls -lh ${{ env.MACOS_APP_RELEASE_STAGING_PATH }}/${{ env.APP }}-macos-staging.zip
 
       # - name: Upload Artefact
-      #   uses: actions/upload-artifact@v4
+      #   uses: actions/upload-artifact@v6
       #   with:
       #     name: ${{ env.APP }}-macos-staging-zip
       #     path: ${{ env.MACOS_APP_RELEASE_STAGING_PATH }}/${{ env.APP }}-macos-staging.zip
@@ -752,7 +723,7 @@ jobs:
           ls -lh ${{ env.MACOS_APP_RELEASE_STAGING_PATH }}/${{ env.APP }}.pkg
 
       - name: Upload pkg artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ env.APP }}-macos-pkg
           path: ${{ env.MACOS_APP_RELEASE_STAGING_PATH }}/${{ env.APP }}.pkg
@@ -888,7 +859,7 @@ jobs:
           ls -lh ${{ env.APP }}-macos-dev.dmg
 
       - name: Upload DMG Artefact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ env.APP }}-macos-dev-dmg
           path: ${{ env.APP }}-macos-dev.dmg
@@ -907,7 +878,7 @@ jobs:
         run: ls -lh ${{ env.MACOS_APP_RELEASE_DEV_PATH }}/${{ env.APP }}-macos-dev.zip
 
       - name: Upload ZIP Artefact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ env.APP }}-macos-dev-zip
           path: ${{ env.MACOS_APP_RELEASE_DEV_PATH }}/${{ env.APP }}-macos-dev.zip
@@ -1041,7 +1012,7 @@ jobs:
           codesign --display --verbose=2 "${{ env.IOS_APP_RELEASE_PATH }}/extracted_ipa/Payload/Runner.app"
 
       - name: Upload Artefact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ env.APP }}-ipa
           path: ${{ env.IOS_APP_RELEASE_PATH }}/${{ env.APP }}.ipa
@@ -1117,7 +1088,7 @@ jobs:
           directory: build/windows/x64/runner/Release
 
       - name: Upload Artefact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{env.APP}}-windows-zip
           path: build/windows/x64/runner/Release/${{env.APP}}-windows.zip
@@ -1139,7 +1110,7 @@ jobs:
           options: /O+
 
       - name: Upload Artefact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{env.APP}}-windows-inno
           path: D:\a\${{env.APP}}\${{env.APP}}\installers\installers\${{env.APP}}-windows-inno.exe

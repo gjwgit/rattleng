@@ -70,6 +70,8 @@ flutter:
 
   scripts   Synchronise scripts
 
+  icons
+
 Also supported:
 
   *.itest
@@ -559,3 +561,8 @@ solidcommunity:
 	--exclude .dart_tool --exclude build --exclude ios --exclude macos \
 	--exclude linux --exclude windows --exclude android
 	ssh solidcommunity.au '(cd projects/$(APP); flutter upgrade; make prod)'
+
+.PHONY: icons
+icons:
+	cp assets/images/app_icon.png snap/gui/icon.png
+	dart run flutter_launcher_icons

@@ -12,10 +12,13 @@ FILES=(
     .github/workflows/installers.yaml ${SCRIPTS}/github/workflows/installers.yaml
     .github/pull_request_template.md ${SCRIPTS}/github/pull_request_template.md
     Makefile ${SCRIPTS}/Makefile.tmpl
+    installers/deb.sh ${SCRIPTS}/installers/deb.sh
     installers/update.sh ${SCRIPTS}/installers/update.sh
+    support/modules.mk  ${SCRIPTS}/../support/modules.mk
     support/flutter.mk  ${SCRIPTS}/../support/flutter.mk
     support/git.mk  ${SCRIPTS}/../support/git.mk
     support/loc.sh  ${SCRIPTS}/../support/loc.sh
+    support/meld_zip_from_claude.sh  ${SCRIPTS}/../support/meld_zip_from_claude.sh
     support/update.sh  ${SCRIPTS}/../support/update.sh
 )
 
@@ -69,6 +72,17 @@ for ((i=0; i < length; i+=2)); do
 		meld "$f1" "$f2" 2> /dev/null
 	    fi
 
+	# 20260324 gjw For the deb installers script we expect the
+	# Name= and Comment= to differ so ignore those lines.
+
+	elif [[ "$f1" == "installers/deb.sh" ]]; then
+	    if diff <(grep -v '^Name=' "$f1" | grep -v '^Comment=') <(grep -v '^Name=' "$f2" | grep -v '^Comment=') >/dev/null; then
+		echo "IDENTICAL $f1 $f2"
+	    else
+		echo "MELD      $f1 $f2"
+		meld "$f1" "$f2" 2> /dev/null
+	    fi
+
 	# 20260306 gjw For the installers uploader we expect the HOST
 	# and FLDR to differ so ignore those lines.
 
@@ -95,7 +109,7 @@ for ((i=0; i < length; i+=2)); do
 	    echo "MISSING   $f1 <- $f2"
 	    cp "$f2" "$f1"
 	else
-	    echo "MISSING $f1"
+	    echo "MISSING $f2"
 	fi
     fi
 done
