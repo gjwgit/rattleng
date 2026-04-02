@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Saturday 2026-01-03 16:58:59 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2026-03-24 13:17:44 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -174,7 +174,7 @@ debin:
 # it will hold up the oher non-interactive builds.
 
 .PHONY: ginstall
-ginstall: upload prod apk appbundle debin
+ginstall: upload debin
 
 .PHONY: ginfo
 ginfo:
