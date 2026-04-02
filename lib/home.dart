@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: "Saturday 2025-09-27 09:53:24 +1000 Graham Williams"
+/// Time-stamp: "Friday 2026-04-03 09:22:13 +1100 Graham Williams"
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -378,20 +378,21 @@ class RattleHomeState extends ConsumerState<RattleHome>
     super.dispose();
   }
 
-  String about = '''${wordWrap('''
+  String about = wordWrap('''
 
   Rattle V6 is a modern rewrite of the very popular Rattle Data Mining and Data
   Science tool. Visit the [Rattle Home Page](https://rattle.togaware.com) for
-  details.
+  details and the [reddit](https://www.reddit.com/r/SAI_Rattle/) discussion
+  group for asking questions.
 
-  ''')}
+  Author: Graham Williams
 
-Author: Graham Williams
+  Contributions: Aditya Arora, Bob Muenchen, Tony Nolan, Zhangcheng Qiang,
+  Mukund B Srinivas, Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
 
-Contributions: Aditya Arora, Bob Muenchen, Tony Nolan, Zhangcheng Qiang, Mukund
-B Srinivas, Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
+  Discussion: Visit [reddit](https://www.reddit.com/r/SAI_Rattle/).
 
-  ''';
+  ''');
 
   @override
   Widget build(BuildContext context) {
@@ -640,16 +641,19 @@ B Srinivas, Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
                   applicationName:
                       '${_appName[0].toUpperCase()}${_appName.substring(1)}',
                   applicationVersion: 'Version $_appVersion',
-                  applicationLegalese: '© 2006-2025 Togaware Pty Ltd\n',
+                  applicationLegalese: '© 2006-2026 Togaware Pty Ltd\n',
                   children: [
-                    MarkdownBody(
-                      data: about,
-                      selectable: true,
-                      softLineBreak: true,
-                      onTapLink: (text, href, about) {
-                        final Uri url = Uri.parse(href ?? '');
-                        launchUrl(url);
-                      },
+                    SizedBox(
+                      width: 400,
+                      child: MarkdownBody(
+                        data: about,
+                        selectable: true,
+                        softLineBreak: false,
+                        onTapLink: (text, href, about) {
+                          final Uri url = Uri.parse(href ?? '');
+                          launchUrl(url);
+                        },
+                      ),
                     ),
                   ],
                 );
