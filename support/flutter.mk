@@ -30,6 +30,10 @@ flutter:
   prep      Prep for PR by running tests, checks, docs.
   push      Do a git push and bump the build number if there is one.
 
+  minor_versions   Increment pubspec.yaml minor version
+  major_versions   Increment pubspec.yaml major version
+  versions         Copy pubspec.yaml version to snapcraft.yaml
+
   docs	    Run `dart doc` to create documentation.
 
   import_order      Run import order checking.
@@ -48,8 +52,8 @@ flutter:
 
   test	    	  Run flutter testing.
   itest	    	  Run flutter interation testing.
-  qtest	   	  Run above test with PAUSE=0.
-    qtest.all	  Run qtest with output redirected - good running all tests.
+  qtest_detail    Run above test with PAUSE=0
+    qtest	  Run qtest with output redirected - good running all tests.
   coverage  	  Run with `--coverage`.
     coview  	  View the generated html coverage in browser.
 
@@ -153,7 +157,7 @@ linux_config:
 
 .PHONY: prep
 prep: versions analyze fix import_order_fix format dcm ignore license todo locgo markdown lychee depend bakfind
-	@echo "ADVISORY: make test tests docs"
+	@echo "ADVISORY: make test qtest docs"
 	@echo $(SEPARATOR)
 
 .PHONY: docs
@@ -185,7 +189,7 @@ fix:
 .PHONY: format
 format:
 	@echo "Dart: FORMAT"
-	dart format lib/ $(if $(shell test -d example && echo yes),example/)
+	dart format lib/ $(if $(shell test -d example && echo yes),example/) $(if $(shell test -d test && echo yes),test/) $(if $(shell test -d integration_test && echo yes),integration_test/)
 	@echo $(SEPARATOR)
 
 # My emacs IDE is starting to add imports of backups automagically!
@@ -363,8 +367,8 @@ itest:
 # For the quick tests we do not INTERACT at all. The aim is to quickly
 # test all functionality.
 
-.PHONY: qtest
-qtest:
+.PHONY: qtest_detail
+qtest_detail:
 	@case "$$(uname -s)" in \
 		Linux*) device_id="linux" ;; \
 		Darwin*) device_id="macos" ;; \
@@ -393,14 +397,14 @@ qtest:
 	esac; \
 	flutter test --dart-define=INTERACT=0 --device-id $$device_id --reporter failures-only integration_test/$*.dart 2>/dev/null
 
-.PHONY: qtest.all
-qtest.all:
+.PHONY: qtest
+qtest:
 	@echo $(APP) `egrep '^version: ' pubspec.yaml`
 	@echo "flutter version:" `flutter --version | head -1 | cut -d ' ' -f 2`
-	make qtest > qtest_$(shell date +%Y%m%d%H%M%S).txt
+	make qtest_detail > ignore/qtest_$(shell date +%Y%m%d%H%M%S).txt
 
 clean::
-	rm -f qtest_*.txt
+	rm -f ignore/qtest_*.txt
 
 .PHONY: atest
 atest:
@@ -546,6 +550,25 @@ docs::
 .PHONY: versions
 versions:
 	if [ -d snap ]; then perl -pi -e 's|^version:.*|version: $(VER)|' snap/snapcraft.yaml; fi
+
+
+BUILD_VER=$(shell grep '^version: ' pubspec.yaml | cut -d'+' -f2)
+MAJ_VER=$(shell grep '^version: ' pubspec.yaml | cut -d'+' -f1 | cut -d':' -f2 | cut -d'.' -f1,2)
+MIN_VER=$(shell grep '^version: ' pubspec.yaml | cut -d'+' -f1 | cut -d':' -f2 | cut -d'.' -f3)
+
+# Increment minor version in pubspec.yaml
+.PHONY: minor_versions
+minor_versions:
+	$(eval MIN_VER = $(shell echo $$(($(MIN_VER) + 1))))
+	@echo "Bumping version: $(VER)+$(BUILD_VER) to $(MAJ_VER).$(MIN_VER)+$(BUILD_VER)"
+	perl -pi -e 's|^version:.*|version:$(MAJ_VER).$(MIN_VER)+$(BUILD_VER)|' pubspec.yaml
+
+# Increment major version in pubspec.yaml
+.PHONY: major_versions
+major_versions:
+	$(eval MAJ_VER = $(shell echo "$(MAJ_VER) + 1.0"  | bc))
+	@echo "Bumping version: $(VER)+$(BUILD_VER) to $(MAJ_VER).$(MIN_VER)+$(BUILD_VER)"
+	perl -pi -e 's|^version:.*|version: $(MAJ_VER).$(MIN_VER)+$(BUILD_VER)|' pubspec.yaml
 
 .PHONY: loc
 loc: lib/*.dart

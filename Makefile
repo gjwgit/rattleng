@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Wednesday 2026-03-18 12:22:03 +1100 Graham Williams>
+# Time-stamp: <Monday 2026-04-20 07:47:54 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -191,9 +191,22 @@ ginfo:
 
 .PHONY: zip
 zip:
-	rm -f ignore/my_lib.zip
-	zip -r ignore/my_lib.zip lib
+	rm -f ignore/$(APP)_lib.zip
+	zip -r ignore/$(APP)_lib.zip lib test integration_test pubspec.yaml
+	open ignore/
 
 .PHONY: claude
 claude:
 	bash support/meld_zip_from_claude.sh
+
+.PHONY: bump
+bump:
+	@make prep
+	@MESSAGE=$$(grep '^+.*\[' CHANGELOG.md | head -n 1 | sed 's/^+ //; s/ \[.*//'); \
+	VERSION=$$(grep '^+.*\[' CHANGELOG.md | head -n 1 | sed 's/.*\[//; s/ .*//'); \
+	if [ -z "$$MESSAGE" ]; then \
+		echo "Error: Could not extract message from CHANGELOG.md"; \
+		exit 1; \
+	fi; \
+	git commit -am "Bump version $$VERSION $$MESSAGE"; \
+	git push

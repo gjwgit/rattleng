@@ -4,6 +4,8 @@
 
 # set -x
 
+APP=$(basename "$(pwd)")
+
 SCRIPTS=${HOME}/projects/scripts/flutter
 FILES=(
     .gitignore ${SCRIPTS}/gitignore
@@ -21,6 +23,11 @@ FILES=(
     support/meld_zip_from_claude.sh  ${SCRIPTS}/../support/meld_zip_from_claude.sh
     support/update.sh  ${SCRIPTS}/../support/update.sh
 )
+
+# 20260415 gjw Identify packages rather than apps and so they should
+# not have installers.
+
+PKGS="solid_auth solidpod solidui"
 
 # 20260217 gjw Handle different licenses for applications (GPL) and
 # packages (MIT).
@@ -50,17 +57,6 @@ for ((i=0; i < length; i+=2)); do
 		meld "$f1" "$f2" 2> /dev/null
 	    fi
 
-	# 20260220 gjw For the installers workflow we expect the APP
-	# and LINUX_PKGS to differ so ignore those lines.
-
-	elif [[ "$f1" == ".github/workflows/installers.yaml" ]]; then
-	    if diff <(grep -v '^  APP:' "$f1" | grep -v '^  LINUX_PKGS:') <(grep -v '^  APP:' "$f2" | grep -v '^  LINUX_PKGS:') >/dev/null; then
-		echo "IDENTICAL $f1 $f2"
-	    else
-		echo "MELD      $f1 $f2"
-		meld "$f1" "$f2" 2> /dev/null
-	    fi
-
 	# 20260306 gjw For the Makefile we expect the REPO, RLOC, and
 	# DWLD to differ so ignore those lines.
 
@@ -72,22 +68,36 @@ for ((i=0; i < length; i+=2)); do
 		meld "$f1" "$f2" 2> /dev/null
 	    fi
 
+	# 20260415 gjw Now deal with the APPs that require installers
+	# rather than the PKGS which don't.
+
 	# 20260324 gjw For the deb installers script we expect the
 	# Name= and Comment= to differ so ignore those lines.
 
-	elif [[ "$f1" == "installers/deb.sh" ]]; then
-	    if diff <(grep -v '^Name=' "$f1" | grep -v '^Comment=') <(grep -v '^Name=' "$f2" | grep -v '^Comment=') >/dev/null; then
+	elif [[ "$f1" == "installers/deb.sh" ]] && ! echo "${PKGS}" | grep -qw "${APP}"; then
+	    if diff <(grep -v '^Name=' "$f1" | grep -v '^Comment=' | sed '/^Description: /,/^EOL$/d') <(grep -v '^Name=' "$f2" | grep -v '^Comment=' | sed '/^Description: /,/^EOL$/d') >/dev/null; then
 		echo "IDENTICAL $f1 $f2"
 	    else
 		echo "MELD      $f1 $f2"
 		meld "$f1" "$f2" 2> /dev/null
 	    fi
 
-	# 20260306 gjw For the installers uploader we expect the HOST
+        # 20260306 gjw For the installers uploader we expect the HOST
 	# and FLDR to differ so ignore those lines.
 
-	elif [[ "$f1" == "installers/update.sh" ]]; then
+	elif [[ "$f1" == "installers/update.sh" ]] && ! echo "${PKGS}" | grep -qw "${APP}"; then
 	    if diff <(grep -v '^HOST=' "$f1" | grep -v '^FLDR=') <(grep -v '^HOST=' "$f2" | grep -v '^FLDR=') >/dev/null; then
+		echo "IDENTICAL $f1 $f2"
+	    else
+		echo "MELD      $f1 $f2"
+		meld "$f1" "$f2" 2> /dev/null
+	    fi
+
+	# 20260220 gjw For the installers workflow we expect the APP
+	# and LINUX_PKGS to differ so ignore those lines.
+
+	elif [[ "$f1" == ".github/workflows/installers.yaml" ]] && ! echo "${PKGS}" | grep -qw "${APP}"; then
+	    if diff <(grep -v '^  APP:' "$f1" | grep -v '^  LINUX_PKGS:') <(grep -v '^  APP:' "$f2" | grep -v '^  LINUX_PKGS:') >/dev/null; then
 		echo "IDENTICAL $f1 $f2"
 	    else
 		echo "MELD      $f1 $f2"
@@ -97,19 +107,27 @@ for ((i=0; i < length; i+=2)); do
 	# 20260306 gjw Otherwise do a straightforward comparison.
 
         else
-	   if cmp -s "$f1" "$f2"; then
-		echo "IDENTICAL $f1 $f2"
+	    if [[ "$f1" == *install* ]] && echo "${PKGS}" | grep -qw "${APP}"; then
+		echo "SKIP      $f1 $f2"
 	    else
-		echo "MELD      $f1 $f2"
-		meld "$f1" "$f2" 2> /dev/null
+		if cmp -s "$f1" "$f2"; then
+		    echo "IDENTICAL $f1 $f2"
+		else
+		    echo "MELD      $f1 $f2"
+		    meld "$f1" "$f2" 2> /dev/null
+		fi
 	    fi
 	fi
     else
-	if [ ! -f "$f1" ] && [ -f "$f2" ]; then
-	    echo "MISSING   $f1 <- $f2"
-	    cp "$f2" "$f1"
+	if [[ "$f1" == *install* ]] && echo "${PKGS}" | grep -qw "${APP}"; then
+	    echo "SKIP      $f1 $f2"
 	else
-	    echo "MISSING $f2"
+	    if [ ! -f "$f1" ] && [ -f "$f2" ]; then
+		echo "MISSING   $f1 <- $f2"
+		cp "$f2" "$f1"
+	    else
+		echo "MISSING $f2"
+	    fi
 	fi
     fi
 done

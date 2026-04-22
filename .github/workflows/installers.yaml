@@ -45,10 +45,10 @@ env:
   APP: rattle
   RELEASE: dev
   LINUX_PKGS:
-  FLUTTER_VERSION: "3.41.5"
   MACOS_APP_RELEASE_UNSIGNED_PATH: build/macos/Build/Products/Release-unsigned
   MACOS_APP_RELEASE_STAGING_PATH: build/macos/Build/Products/Release-staging
   MACOS_APP_RELEASE_DEV_PATH: build/macos/Build/Products/Release-dev
+  FLUTTER_VERSION: "3.41.7"
 
 jobs:
 
