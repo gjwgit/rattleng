@@ -93,30 +93,32 @@ data.frame(actual = actual_num, predicted = predicted_num) %>%
 dev.off()
 
 # ── Residuals vs Fitted plot ─────────────────────────────────────────────────
-
-resid_title <- glue(
-  "Residuals vs Fitted &#8212; {mdesc} &#8212; ",
-  "{mtype} {basename('<FILENAME>')} ",
-  "**{dtype}** ", <TARGET_VAR>
-)
-
-svg(
-  glue("<TEMPDIR>/evaluate_{mtype}_regression_residuals_{dtype}.svg"),
-  width = 11
-)
-
-data.frame(fitted = predicted_num, residuals = residuals) %>%
-  ggplot(aes(x = fitted, y = residuals)) +
-  geom_point(alpha = 0.4, colour = "steelblue") +
-  geom_hline(yintercept = 0, colour = "red", linetype = "dashed") +
-  geom_smooth(method = "loess", se = FALSE, colour = "orange", linewidth = 0.8) +
-  xlab("Fitted Values") +
-  ylab("Residuals") +
-  ggtitle(resid_title) +
-  <SETTINGS_GRAPHIC_THEME>() +
-  theme(
-    plot.title = element_markdown(),
-    plot.title.position = "plot"
-  )
-
-dev.off()
+#
+# 20250504 gjw Commented out for now; re-enable when ready.
+#
+# resid_title <- glue(
+#   "Residuals vs Fitted &#8212; {mdesc} &#8212; ",
+#   "{mtype} {basename('<FILENAME>')} ",
+#   "**{dtype}** ", <TARGET_VAR>
+# )
+#
+# svg(
+#   glue("<TEMPDIR>/evaluate_{mtype}_regression_residuals_{dtype}.svg"),
+#   width = 11
+# )
+#
+# data.frame(fitted = predicted_num, residuals = residuals) %>%
+#   ggplot(aes(x = fitted, y = residuals)) +
+#   geom_point(alpha = 0.4, colour = "steelblue") +
+#   geom_hline(yintercept = 0, colour = "red", linetype = "dashed") +
+#   geom_smooth(method = "loess", se = FALSE, colour = "orange", linewidth = 0.8) +
+#   xlab("Fitted Values") +
+#   ylab("Residuals") +
+#   ggtitle(resid_title) +
+#   <SETTINGS_GRAPHIC_THEME>() +
+#   theme(
+#     plot.title = element_markdown(),
+#     plot.title.position = "plot"
+#   )
+#
+# dev.off()

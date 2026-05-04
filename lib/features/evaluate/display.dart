@@ -124,7 +124,10 @@ class _EvaluateDisplayState extends ConsumerState<EvaluateDisplay> {
         'xgboost': ref.watch(boostEvaluateProvider),
       };
 
-      for (var plotType in ['scatter', 'residuals']) {
+      for (var plotType in [
+        'scatter',
+        // 'residuals', // 20250504 gjw Commented out for now; re-enable when ready.
+      ]) {
         List<String> images = [];
         List<String> titles = [];
         for (var model in modelDisplayNames.keys) {
