@@ -19,6 +19,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ Hard load caret for nueralnet buld [6.5.28 20260504 gjw]
 + Add x labels to dendrogram [6.5.27 20260422 gjw]
 + Remove R's biclust package - archived [6.5.26 20260324 gjw]
 + Fix title overflow on narrow window [6.5.25 20260306 castropy]

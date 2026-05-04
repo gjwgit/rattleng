@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Friday 2025-03-21 08:19:56 +1100 Graham Williams>
+# Time-stamp: <Thursday 2026-04-30 15:23:34 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -30,6 +30,15 @@
 #
 # @williams:2017:essentials.
 # https://survivor.togaware.com/datascience/ for further details.
+##
+## 20260430 gjw Need to include caret as in these two lines:
+##
+## dmy_predictors <- caret::dummyVars(~ ., data = tds[catc])
+## predictors_categoric <- as.data.frame(predict(dmy_predictors, newdata = tds[catc]))
+##
+## The second uses some internal caret function, possibly through the predict.
+
+library(caret)
 
 # Define the model type and description for file paths and titles.
 
