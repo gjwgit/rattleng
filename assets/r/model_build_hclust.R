@@ -120,9 +120,18 @@ cat("\n")
 
 svg("<TEMPDIR>/model_cluster_hierarchical.svg", width=12, height=10)
 dd <- ggdendro::dendro_data(model_hclust)
-id <- ds[tr,identifier] %>% data.frame() %>% '[['(1)
 labels <- dd$labels
-labels$identifier <- id[match(labels$label, rownames(ds[tr,]))]
+
+# Use the identifier variable if available, otherwise fall back to
+# row numbers so the dendrogram is still displayed without an id column.
+
+if (exists("identifier") && length(identifier) > 0 &&
+    identifier %in% colnames(ds)) {
+  id <- ds[tr, identifier] %>% data.frame() %>% "[["(1)
+  labels$identifier <- id[match(labels$label, rownames(ds[tr,]))]
+} else {
+  labels$identifier <- labels$label
+}
 ggplot() +
   geom_segment(data = dd$segments,
                aes(x = x, y = y, xend = xend, yend = yend)) +

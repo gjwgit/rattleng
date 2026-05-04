@@ -19,6 +19,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ CLUSTER HIERACHICAL with no IDENT use row numbers [6.5.30 20260505 gjw]
 + Add support for evaluation of regression models [6.5.29 20260504 gjw]
 + Hard load caret for nueralnet buld [6.5.28 20260504 gjw]
 + Add x labels to dendrogram [6.5.27 20260422 gjw]
