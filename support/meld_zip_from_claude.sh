@@ -43,6 +43,10 @@ if [[ -d tmp/lib ]] && ! diff -rqw "lib" "tmp/lib" > /dev/null ; then
     meld tmp/lib lib
 fi
 
+if [[ -d tmp/assets ]] && ! diff -rqw "assets" "tmp/assets" > /dev/null ; then
+    meld tmp/assets assets
+fi
+
 if [[ -d tmp/test ]]  && ! diff -rqw "test" "tmp/test" > /dev/null ; then
     meld tmp/test test
 fi

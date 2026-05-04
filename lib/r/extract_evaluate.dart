@@ -292,3 +292,60 @@ String rExtractEvaluate(String log, String evaluateDataset, WidgetRef ref) {
 
   return extract;
 }
+
+/// Extract regression performance summaries (RMSE / MAE / R²) from the R log.
+///
+/// The R script [evaluate_measure_regression.R] writes lines of the form:
+///   `> <mtype>_<DATASET_TYPE>_REGRESSION_SUMMARY:`
+/// followed by the metric values.  We collect all such blocks that are present
+/// in [log] for the chosen [evaluateDataset] partition.
+
+String rExtractRegressionEvaluate(
+  String log,
+  String evaluateDataset,
+  WidgetRef ref,
+) {
+  bool treeExecuted = ref.watch(treeEvaluateProvider);
+  bool forestExecuted = ref.watch(forestEvaluateProvider);
+  bool boostExecuted = ref.watch(boostEvaluateProvider);
+  bool svmExecuted = ref.watch(svmEvaluateProvider);
+  bool linearExecuted = ref.watch(linearEvaluateProvider);
+  bool neuralExecuted = ref.watch(neuralEvaluateProvider);
+
+  final ds = evaluateDataset.toUpperCase();
+  final ts = timestamp();
+
+  final modelKeys = {
+    'rpart': ('RPART Decision Tree', treeExecuted),
+    'ctree': ('CTREE Decision Tree', treeExecuted),
+    'randomForest': ('Random Forest', forestExecuted),
+    'cforest': ('Conditional Forest', forestExecuted),
+    'xgboost': ('XGBoost', boostExecuted),
+    'svm': ('SVM', svmExecuted),
+    'linear': ('Linear Model', linearExecuted),
+    'nnet': ('Neural NNET', neuralExecuted),
+    'neuralnet': ('Neural Network', neuralExecuted),
+  };
+
+  String result = '';
+
+  for (final entry in modelKeys.entries) {
+    final mtype = entry.key;
+    final (label, executed) = entry.value;
+    if (!executed) continue;
+
+    final summary = rExtract(log, '> ${mtype}_${ds}_REGRESSION_SUMMARY:');
+    if (summary.isNotEmpty) {
+      final header = 'Regression metrics for the $label model [$ds]';
+      result = result.isEmpty
+          ? '$header\n\n$summary'
+          : '$result\n\n$header\n\n$summary';
+    }
+  }
+
+  if (result.isNotEmpty) {
+    result = '$result\n\nRattle timestamp: $ts';
+  }
+
+  return result;
+}

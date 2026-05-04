@@ -218,10 +218,11 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
   Widget build(BuildContext context) {
     String datasetType = ref.watch(datasetTypeProvider.notifier).state;
 
-    // Current evaluations are focused on classification rather than regression.
-    // Evaluate is disabled when target variable is numeric.
+    // For regression (numeric target) adaboost is classification-only so
+    // keep it disabled; all other models support regression and should remain
+    // enabled when a model has been built.
 
-    bool numericDisabled = isNumericTarget(ref);
+    bool numericTarget = isNumericTarget(ref);
 
     return Column(
       spacing: configRowSpace,
@@ -240,15 +241,21 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
             const Text('Model:', style: normalTextStyle),
             ...modelConfigs.map((config) {
-              // Target variable is numeric then disable the evaluation.
+              // AdaBoost is a classification-only algorithm; disable it when
+              // the target is numeric.  All other models support regression.
 
-              bool enabled = _isEvaluationEnabled(config) && !numericDisabled;
+              bool adaboostOnly =
+                  numericTarget && config.key == 'boostEvaluate';
+              bool enabled = _isEvaluationEnabled(config) && !adaboostOnly;
 
               String buildMsg = enabled
                   ? ''
-                  : ' You will need to build a ${config.label} model '
-                      'before you can evaluate it. '
-                      'Visit the **Model** tab to do so.';
+                  : adaboostOnly
+                      ? ' AdaBoost is a classification-only algorithm and '
+                          'cannot be used when the target variable is numeric.'
+                      : ' You will need to build a ${config.label} model '
+                          'before you can evaluate it. '
+                          'Visit the **Model** tab to do so.';
 
               return Row(
                 children: [

@@ -32,7 +32,6 @@ import 'package:rattle/providers/tree.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_risk.dart';
 import 'package:rattle/utils/is_numeric_target.dart';
-import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
 /// Executes model evaluation based on the given parameters and conditions.
@@ -95,30 +94,133 @@ Future<void> executeEvaluation({
 }
 
 Widget evaluateActivityButton(BuildContext context, dynamic ref) {
-  // Current evaluations are focused on classification rather than regression.
-  // Evaluate is disabled when target variable is numeric.
-
-  bool numericDisabled = isNumericTarget(ref);
+  bool numericTarget = isNumericTarget(ref);
 
   return ActivityButton(
     pageControllerProvider: evaluatePageControllerProvider,
     onPressed: () async {
-      if (numericDisabled) {
-        showOk(
+      if (numericTarget) {
+        // ── Regression evaluation path ──────────────────────────────────────
+        // Regression-specific model scripts define pred_ra/prob_ra to return
+        // numeric values, then evaluate_measure_regression computes RMSE, MAE,
+        // R² and generates scatter + residual plots.
+
+        bool rpartExecuted = ref.watch(rpartTreeEvaluateProvider);
+        bool ctreeExecuted = ref.watch(cTreeEvaluateProvider);
+        bool treeExecuted = ref.watch(treeEvaluateProvider);
+        bool randomForestExecuted = ref.watch(randomForestEvaluateProvider);
+        bool conditionalForestExecuted =
+            ref.watch(conditionalForestEvaluateProvider);
+        bool forestExecuted = ref.watch(forestEvaluateProvider);
+        bool xgBoostExecuted = ref.watch(xgBoostEvaluateProvider);
+        bool boostExecuted = ref.watch(boostEvaluateProvider);
+        bool svmExecuted = ref.watch(svmEvaluateProvider);
+        bool linearExecuted = ref.watch(linearEvaluateProvider);
+        bool nnetExecuted = ref.watch(nnetEvaluateProvider);
+        bool neuralNetExecuted = ref.watch(neuralNetEvaluateProvider);
+        bool neuralTicked = ref.watch(neuralEvaluateProvider);
+        String datasetSplitType = ref.watch(datasetTypeProvider);
+
+        // Regression-specific model initialisation scripts.
+
+        const String erReg = 'evaluate_model_rpart_regression';
+        const String ecReg = 'evaluate_model_ctree_regression';
+        const String erfReg = 'evaluate_model_rforest_regression';
+        const String ecfReg = 'evaluate_model_cforest_regression';
+        const String esReg = 'evaluate_model_svm_regression';
+        const String elReg =
+            'evaluate_model_linear'; // linear already returns numeric
+        const String enReg = 'evaluate_model_nnet_regression';
+        const String entReg = 'evaluate_model_neuralnet_regression';
+        const String exReg = 'evaluate_model_xgboost_regression';
+        const String reg = 'evaluate_measure_regression';
+
+        await executeEvaluation(
+          executed: rpartExecuted && treeExecuted,
+          parameters: [erReg, reg],
+          datasetSplitType: datasetSplitType,
           context: context,
-          title: 'Numeric Target Variable',
-          content: '''
-
-          Rattle's current evaluations are focused on classification
-          models rather than regression models.  Model evaluation is
-          presently disabled when the target variable is numeric as it
-          is currently.
-
-          To explore the evaluations please select a categoric target
-          variable.
-
-          ''',
+          ref: ref,
         );
+        if (!context.mounted) return;
+
+        await executeEvaluation(
+          executed: ctreeExecuted && treeExecuted,
+          parameters: [ecReg, reg],
+          datasetSplitType: datasetSplitType,
+          context: context,
+          ref: ref,
+        );
+        if (!context.mounted) return;
+
+        await executeEvaluation(
+          executed: randomForestExecuted && forestExecuted,
+          parameters: [erfReg, reg],
+          datasetSplitType: datasetSplitType,
+          context: context,
+          ref: ref,
+        );
+        if (!context.mounted) return;
+
+        await executeEvaluation(
+          executed: conditionalForestExecuted && forestExecuted,
+          parameters: [ecfReg, reg],
+          datasetSplitType: datasetSplitType,
+          context: context,
+          ref: ref,
+        );
+        if (!context.mounted) return;
+
+        await executeEvaluation(
+          executed: xgBoostExecuted && boostExecuted,
+          parameters: [exReg, reg],
+          datasetSplitType: datasetSplitType,
+          context: context,
+          ref: ref,
+        );
+        if (!context.mounted) return;
+
+        await executeEvaluation(
+          executed: svmExecuted,
+          parameters: [esReg, reg],
+          datasetSplitType: datasetSplitType,
+          context: context,
+          ref: ref,
+        );
+        if (!context.mounted) return;
+
+        await executeEvaluation(
+          executed: linearExecuted,
+          parameters: [elReg, reg],
+          datasetSplitType: datasetSplitType,
+          context: context,
+          ref: ref,
+        );
+        if (!context.mounted) return;
+
+        await executeEvaluation(
+          executed: neuralTicked && nnetExecuted,
+          parameters: [enReg, reg],
+          datasetSplitType: datasetSplitType,
+          context: context,
+          ref: ref,
+        );
+        if (!context.mounted) return;
+
+        await executeEvaluation(
+          executed: neuralTicked && neuralNetExecuted,
+          parameters: [entReg, reg],
+          datasetSplitType: datasetSplitType,
+          context: context,
+          ref: ref,
+        );
+        if (!context.mounted) return;
+
+        await ref.read(evaluatePageControllerProvider).animateToPage(
+              1,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+            );
       } else {
         // Retrieve the boolean state indicating if the evaluation was executed.
 

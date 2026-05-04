@@ -8,7 +8,7 @@
 
 name: rattle
 base: core22
-version: 6.5.28
+version: 6.5.29
 summary: Rattle Next Generation Data Science
 description: |
   Rattle is the data scientists toolkit.
