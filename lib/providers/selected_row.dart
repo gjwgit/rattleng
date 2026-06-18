@@ -27,7 +27,7 @@
 
 library;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 // Define a provider to store selected row indices
 final selectedRowIndicesProvider = StateProvider<Set<int>>((ref) => {});

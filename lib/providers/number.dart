@@ -26,7 +26,7 @@
 
 library;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 const initNumber = 4;
 final numberProvider = StateProvider<int>((ref) => initNumber);

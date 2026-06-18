@@ -27,6 +27,6 @@ library;
 
 // Group imports by dart, flutter, packages, local. Then alphabetically.
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 final wordCloudBuildProvider = StateProvider<String>((ref) => '');
