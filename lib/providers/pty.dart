@@ -79,10 +79,16 @@ final ptyProvider = StateProvider<Pty>((ref) {
       final String? missing = detectMissingPackage(accumulated);
       if (missing != null) {
         missingPackageNotified = true;
-        final BuildContext? ctx = navigatorKey.currentContext;
-        if (ctx != null) {
+
+        // Show the advice via the global navigator. We use `currentState` and
+        // its `mounted` check (rather than a captured `BuildContext`) so the
+        // lookup is fresh at the moment of use, satisfying
+        // `use_build_context_synchronously`. (gjw 20260630)
+
+        final NavigatorState? nav = navigatorKey.currentState;
+        if (nav != null && nav.mounted) {
           showOk(
-            context: ctx,
+            context: nav.context,
             title: 'R Package Not Installed',
             content: '''
 
