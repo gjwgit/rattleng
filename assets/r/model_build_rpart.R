@@ -79,3 +79,15 @@ rattle::fancyRpartPlot(model_rpart,
                        main = glue("Decision Tree {basename('<FILENAME>')} $ ", <TARGET_VAR>),
                        sub  = paste("<TIMESTAMP>", username))
 dev.off()
+
+# 20260630 gjw Also generate a PNG. The cairo `svg()` device renders the
+# `fancyRpartPlot()` node-box drop shadows using SVG `<filter>` elements which
+# flutter_svg does not support (see issue #53), so the SVG renders blank in the
+# app even though external viewers display it fine. The display prefers the PNG
+# when it exists. Same workaround as used for the association plots.
+
+png(glue("<TEMPDIR>/model_tree_{mtype}.png"), width = 1000, height = 800)
+rattle::fancyRpartPlot(model_rpart,
+                       main = glue("Decision Tree {basename('<FILENAME>')} $ ", <TARGET_VAR>),
+                       sub  = paste("<TIMESTAMP>", username))
+dev.off()
