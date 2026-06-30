@@ -4,8 +4,17 @@
 # Localhost OAuth callbacks used in integration tests
 
 http://localhost:44007/
-
 http://localhost:8000/
+http://localhost/
+
+# Used by oidc through solid_auth
+
+http://localhost:4400/redirect
+https://your-domain/redirect.html
+
+# Localhost used in comments
+
+http://localhost:3000/
 
 # POD OAuth endpoints that require authentication parameters
 
@@ -15,6 +24,9 @@ https://pods.dev.solidcommunity.au/.oidc/token
 # Example POD URLs that are protected resources
 
 https://pods.solidcommunity.au/my-moviestar/profile/card#me
+https://alice.solidcommunity.net/private/notes.ttl
+https://solidcommunity.net/token
+https://solidproject.org/TR/solid-oidc
 
 # POD server base URL - has temporary availability issues.
 
@@ -36,9 +48,17 @@ https://server\.arcgisonline\.com/.*
 https://.*\.basemaps\.cartocdn\.com/.*
 https://.*\.tile-cyclosm\.openstreetmap\.fr/.*
 
+# Geopod
+
+https://raw.githubusercontent.com/gjwgit/geopod/dev/
+
 # Ignore the template index file.
 
 web/**
+
+# Placeholder URLs in documentation
+
+https://github.com/gjwgit/innerpod/.*
 
 # Licenses. Note that gnu.org is throttled so do not check it.
 
@@ -50,7 +70,43 @@ https://opensource.org/license/gpl-3-0
 http://xmlns.com/foaf/0.1/
 http://purl.org/dc/terms/
 https://solidcommunity.au/predicates/*
+https://solidproject.au/sii/
 
-# Reddit
+# 20260107 gjw From openid in solid_auth.
 
-https://www.reddit.com/r/SAI_Rattle/
+https://api.login.yahoo.com/
+https://graph.facebook.com/
+https://login.microsoftonline.com/
+https://securetoken.google.com/
+
+# URL used in comments
+
+file:///home/runner/work/solidui/solidui/lib/src/utils/scheme
+https://pods.example.au/john-doe/profile/card#me
+https://github.com/gjwgit/myapp/blob/main/README.md
+https://server/POD_NAME/APP_NAME/data/FILE_PATH
+https://host/
+https://pods.au/me/app/data
+https://github.com/anusii/mypod/blob/dev/CHANGELOG.md
+https://anusii.github.io/mypod/
+https://anusii.github.io/mypod/client-profile.jsonld
+https://anusii.github.io/mypod/redirect.html
+https://your-solid-server/
+
+# 20260605 gjw Failing solid servers
+
+https://trinpod.eu/>
+
+# 20260620 gjw geopod failures
+
+https://raw.githubusercontent.com/gjwgit/geopod/dev/
+https://api.open-meteo.com/v1/forecast
+
+# 20260619 gjw konapod failures
+
+https://blog.kumo.dev/2024/05/22/reverse_engineering_hkg_apps.html
+
+# 20260625 gjw papertrail
+
+https://papertrail.anu.edu.au/
+https://papertrail.anu.edu.au/

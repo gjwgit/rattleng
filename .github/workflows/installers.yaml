@@ -48,7 +48,7 @@ env:
   MACOS_APP_RELEASE_UNSIGNED_PATH: build/macos/Build/Products/Release-unsigned
   MACOS_APP_RELEASE_STAGING_PATH: build/macos/Build/Products/Release-staging
   MACOS_APP_RELEASE_DEV_PATH: build/macos/Build/Products/Release-dev
-  FLUTTER_VERSION: "3.41.7"
+  FLUTTER_VERSION: "3.44.4"
 
 jobs:
 
@@ -260,9 +260,9 @@ jobs:
 
   package-linux-snap:
     if: |
-      contains(github.event.head_commit.message, 'bump version x') ||
-      contains(github.event.head_commit.message, 'build installers x') ||
-      contains(github.event.head_commit.message, 'build linux x') ||
+      contains(github.event.head_commit.message, 'bump version') ||
+      contains(github.event.head_commit.message, 'build installers') ||
+      contains(github.event.head_commit.message, 'build linux') ||
       contains(github.event.head_commit.message, 'build snap')
 
     runs-on: ubuntu-latest
@@ -340,7 +340,10 @@ jobs:
       contains(github.event.head_commit.message, 'build installers') ||
       contains(github.event.head_commit.message, 'build macos basic')
 
-    runs-on: macos-latest
+    # Later versions of macos (macos-15 and macos-latest) complain:
+    # Error: Xcode failed to resolve Swift Package Manager dependencies
+
+    runs-on: macos-14
 
     steps:
       - name: Display OS Information
@@ -365,14 +368,11 @@ jobs:
       - name: Enable macOS desktop
         run: flutter create --platforms=macos --org=com.togaware .
 
-      #   # 20260306 gjw For rattle this causes build to fail with
-      #   # missing RunnerTest. So comment this out for now.
-      #
-      # - name: Remove Podfile and project.yaml
-      #   # 20260102 gjw These cause the default basic build to fail as
-      #   # for some reason an older macOS version is targeted.
-      #   run: |
-      #     rm -f macos/Podfile macos/project.yml
+      - name: Remove Podfile and project.yaml
+        # 20260102 gjw These cause the default basic build to fail as
+        # for some reason an older macOS version is targeted.
+        run: |
+          rm -f macos/Podfile macos/project.yml
 
       - name: Build Flutter macOS app
         run: flutter build macos --release
@@ -1053,7 +1053,11 @@ jobs:
       contains(github.event.head_commit.message, 'bump version') ||
       contains(github.event.head_commit.message, 'build installers') ||
       contains(github.event.head_commit.message, 'build windows')
-    runs-on: windows-latest # randomly not working (choco fails) with inno 1.2.7
+
+    # The windows-latest was not working for some instances so resort
+    # to windows-2022
+
+    runs-on: windows-2022
 
     steps:
       - name: Clone Repository

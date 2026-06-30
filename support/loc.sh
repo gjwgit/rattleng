@@ -8,8 +8,8 @@
 
 IGNORE=false # Return an error if any files have more than N loc.
 MAX=300 # Value of N loc.
+FUZZ=310 # Return error if >FUZZ.
 CONCATE=false # Whether to simply count all lines across all files.
-THRESHOLD=0
 CLEAN=false
 
 # Function to display help
@@ -22,6 +22,7 @@ show_help() {
     echo "  -i, --ignore           Ignore errors related to the line count threshold."
     echo "  -t, --total            Concatenate all supplied files and count total lines after cleansing."
     echo "  -n, --max-lines <n>    Set the maximum number of allowed lines (default: ${MAX})."
+    echo "  -f, --fuzz-lines <n>   Set the maximum number of allowed lines before error (default: ${FUZZ})."
     echo "  -h, --help             Show this help message."
     exit 0
 }
@@ -74,10 +75,15 @@ while [[ "$1" != "" ]]; do
         -n | --max-lines)
             shift
             if [[ "$1" =~ ^[0-9]+$ ]]; then
-                THRESHOLD=$1
+                MAX=$1
                 shift
-            else
-                THRESHOLD=${MAX}
+            fi
+            ;;
+        -f | --fuzz-lines)
+            shift
+            if [[ "$1" =~ ^[0-9]+$ ]]; then
+                FUZZ=$1
+                shift
             fi
             ;;
         -h | --help)
@@ -95,12 +101,17 @@ done
 # Read .locignore patterns into an array
 
 if [ -e .locignore ]; then
+    declare -a IGNORE_PATTERNS
+    while IFS= read -r pattern; do
+	[[ -z "$pattern" || "$pattern" =~ ^# ]] && continue
+	IGNORE_PATTERNS+=("$pattern")
+    done < .locignore
 
-declare -a IGNORE_PATTERNS
-while IFS= read -r pattern; do
-    [[ -z "$pattern" || "$pattern" =~ ^# ]] && continue
-    IGNORE_PATTERNS+=("$pattern")
-done < .locignore
+    # Handle last line if it doesn't end with a newline
+
+    if [[ -n "$pattern" && "$pattern" != \#* ]]; then
+	IGNORE_PATTERNS+=("$pattern")
+    fi
 
 fi
 
@@ -142,12 +153,14 @@ fi
 
 ERROR=false
 
-if [ "$THRESHOLD" -gt 0 ]; then
+if (( MAX > 0 )); then
     for file in "${FILES[@]}"; do
         LINES=$(wc_cleanse_lines "$file")
-        if [ "$LINES" -gt "$THRESHOLD" ]; then
+        if (( LINES > MAX )); then
             printf "%4d %s\n" "$LINES" "$file"
-            ERROR=true
+            if (( LINES > FUZZ )); then
+		ERROR=true
+	    fi
         fi
     done
 else

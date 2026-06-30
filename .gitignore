@@ -10,8 +10,10 @@
 ARCHIVE
 ignore
 pubspec.yaml.*
+!templates/solidpod/pubspec.yaml.tmpl
 
 qtest_*.txt
+/test/widget_test.dart
 
 installers/*.apk
 installers/*.exe
@@ -79,6 +81,7 @@ integration_test/fixtures/tmdb_api_key.json
 .svn/
 .swiftpm/
 migrate_working_dir/
+/.metadata
 
 #-----------------------------------------------------------------------
 # IntelliJ related
@@ -151,7 +154,8 @@ analysis_benchmark.json
 .pub-cache/
 .pub-preload-cache/
 .pub/
-build/
+/build/
+/coverage/
 flutter_*.png
 linked_*.ds
 unlinked.ds
@@ -258,6 +262,19 @@ macos/Runner/Info.plist
 macos/Podfile-*
 macos/project-*.yml
 
+/macos/Podfile.lock
+/macos/.gitignore
+/macos/Podfile
+/macos/Flutter/
+/macos/Runner.xcworkspace/
+/macos/RunnerTests/
+/macos/Runner/AppDelegate.swift
+/macos/Runner/Info.plist
+/macos/Runner/MainFlutterWindow.swift
+/macos/Runner/Assets.xcassets/
+/macos/Runner/Base.lproj/
+/macos/Runner/Configs/
+
 #-----------------------------------------------------------------------
 # Windows
 #-----------------------------------------------------------------------
@@ -289,10 +306,14 @@ macos/project-*.yml
 coverage/
 
 #-----------------------------------------------------------------------
-# Symbols
+# Symbolication related
 #-----------------------------------------------------------------------
 
 app.*.symbols
+
+# Obfuscation related
+
+app.*.map.json
 
 #-----------------------------------------------------------------------
 # Exceptions to above rules.
@@ -304,3 +325,11 @@ app.*.symbols
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
+
+#-----------------------------------------------------------------------
+# Claude related files
+#-----------------------------------------------------------------------
+
+CLAUDE.md
+Claude.md
+.claude/*

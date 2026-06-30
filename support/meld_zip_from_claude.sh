@@ -55,10 +55,17 @@ if [[ -d tmp/integration_test ]]  && ! diff -rqw "integration_test" "tmp/integra
     meld tmp/integration_test integration_test
 fi
 
-# Check if pubspec included and if so compare.
+if [[ -f tmp/README.md ]]  && ! diff -qw "README.md" "tmp/README.md" > /dev/null ; then
+    meld tmp/README.md README.md
+fi
+
+# Check if pubspec included and if so compare if the difference is
+# other than the version line.
 
 if [[ -f tmp/pubspec.yaml ]] && ! diff -qw "tmp/pubspec.yaml" "pubspec.yaml" > /dev/null; then
-  meld tmp/pubspec.yaml pubspec.yaml
+    if ! diff -u <(grep -v -E '^version:' pubspec.yaml) <(grep -v -E '^version:' tmp/pubspec.yaml) >/dev/null; then
+	meld tmp/pubspec.yaml pubspec.yaml
+    fi
 fi
 
 # Remove the file after meld closes

@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Monday 2026-05-04 16:28:31 +1000 Graham Williams>
+# Time-stamp: <Monday 2026-06-15 20:31:20 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -28,9 +28,9 @@ DEST=/var/www/html/$(APP)
 # The host for the repository of packages, the path on the server to
 # the download folder, and the URL to the downloads.
 
-REPO=togaware.com
-RLOC=apps/access/
-DWLD=https://access.togaware.com/
+REPO=solidcommunity.au
+RLOC=/var/www/html/web/installers/
+DWLD=https://$(REPO)/installers/
 
 ########################################################################
 # Supported Makefile modules.
@@ -130,7 +130,7 @@ deb:
 	(cd installers; make $@)
 	rsync -avzh installers/$(APP)_$(VER)_amd64.deb $(REPO):$(RLOC)$(APP)_amd64.deb
 	ssh $(REPO) chmod a+r $(RLOC)$(APP)_amd64.deb
-	wget $(DWLD)/$(APP)_amd64.deb -O $(APP)_amd64.deb
+	wget $(DWLD)$(APP)_amd64.deb -O $(APP)_amd64.deb
 	wajig install $(APP)_amd64.deb
 	rm -f $(APP)_amd64.deb
 	mv -f installers/$(APP)_*.deb installers/ARCHIVE/
@@ -174,7 +174,7 @@ debin:
 # it will hold up the oher non-interactive builds.
 
 .PHONY: ginstall
-ginstall: upload debin
+ginstall: upload prod apk appbundle
 
 .PHONY: ginfo
 ginfo:
@@ -189,10 +189,19 @@ ginfo:
 		echo "No bump ID found."; \
 	fi
 
+ZFILES := lib test integration_test pubspec.yaml README.md CLAUDE.md
+
 .PHONY: zip
 zip:
-	rm -f ignore/$(APP)_lib.zip
-	zip -r ignore/$(APP)_lib.zip lib assets test integration_test pubspec.yaml
+	@mkdir -p ignore
+	@rm -f ignore/$(APP)_lib.zip
+	@to_zip=""
+	@for f in $(ZFILES); do \
+		if [ -e "$$f" ]; then \
+			to_zip="$$to_zip $$f"; \
+		fi; \
+	done; \
+	zip -r ignore/$(APP)_lib.zip $$to_zip
 	open ignore/
 
 .PHONY: claude
