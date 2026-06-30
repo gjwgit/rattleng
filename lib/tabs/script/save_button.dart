@@ -49,7 +49,9 @@ class ScriptSaveButton extends ConsumerWidget {
     return MarkdownTooltip(
       message: '''
 
-      **Save:** Tap here to save the information in this text page to an **R
+      **Save**
+
+      Tap here to save the information in this text page to an **R
       script** document.
 
       By default, comments and blank lines are included in the saved script.

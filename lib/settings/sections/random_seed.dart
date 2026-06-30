@@ -69,7 +69,9 @@ class RandomSeed extends ConsumerWidget {
               key: const Key('random_seed_settings'),
               tooltip: '''
 
-              **Random Seed:** The random seed is used to control the randomness
+              **Random Seed**
+
+              The random seed is used to control the randomness
               of partitioning the dataset and building models.  Setting a
               specific seed ensures that results are reproducible. The random
               seed will be reset to this value each time the dataset is
@@ -91,7 +93,9 @@ class RandomSeed extends ConsumerWidget {
             MarkdownTooltip(
               message: '''
 
-              **Random Partition each Model Build:** When enabled, the dataset
+              **Random Partition each Model Build**
+
+              When enabled, the dataset
               partition (if any) will be reset and randomised each time a model
               is built.  This is useful if you want to ensure that the model is
               not biased towards a specific partition. If this is disabled then
@@ -112,7 +116,9 @@ class RandomSeed extends ConsumerWidget {
             MarkdownTooltip(
               message: '''
 
-              **Reset Random Seed:** Tap here to factory reset the random seed
+              **Reset Random Seed**
+
+              Tap here to factory reset the random seed
               settings to their default values, being 42 for the seed itself and
               to retain the same partitioning for building a model.
 

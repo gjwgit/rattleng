@@ -135,7 +135,9 @@ class DatasetPopup extends ConsumerWidget {
                 child: const MarkdownTooltip(
                   message: '''
 
-                  **Local File:** Tap here to popup a window so that you can
+                  **Local File**
+
+                  Tap here to popup a window so that you can
                   browse to a local **csv**, **xlsx**, or **txt** file that you
                   would like to load into Rattle.
 
@@ -199,7 +201,9 @@ class DatasetPopup extends ConsumerWidget {
                 child: const MarkdownTooltip(
                   message: '''
 
-                  **Local Corpus:** Tap here to popup a window so that you can
+                  **Local Corpus**
+
+                  Tap here to popup a window so that you can
                   browse to a local folder containing text documents (**txt**)
                   that you would like to **Text Mine**. At present only text
                   files ending in **.txt** are supported by Rattle.
@@ -252,7 +256,9 @@ class DatasetPopup extends ConsumerWidget {
                 child: const MarkdownTooltip(
                   message: '''
 
-                  **Under Development** Eventually you will be able to tap here
+                  **Under Development**
+
+                  Eventually you will be able to tap here
                   to popup a window to browse the list of available R datasets
                   to choose one of them to load into Rattle.
 
@@ -268,7 +274,9 @@ class DatasetPopup extends ConsumerWidget {
           const MarkdownTooltip(
             message: '''
 
-                  **Demo Datasets** Rattle provides a number of small datasets
+                  **Demo Datasets**
+
+                  Rattle provides a number of small datasets
                   so you can very quickly explore the Rattle functionality.  The
                   *buttons* below will load one of the demo datasets. Hover over
                   any of them to see a description of that dataset.
@@ -292,7 +300,9 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                      **Weather:** Tap here to load a dataset that captures one
+                      **Weather**
+
+                      Tap here to load a dataset that captures one
                       year of daily observations from a weather station in
                       Canberra, Australia. It is useful to demonstrate all steps
                       of the Data Science process, to **Explore**,
@@ -338,7 +348,9 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                      **Weather 2007:** Tap here to load a dataset that captures
+                      **Weather 2007**
+
+                      Tap here to load a dataset that captures
                       one year of daily observations from a weather station in
                       Canberra, Australia in 2007 (as used in Rattle V5). It is
                       useful to compare Rattle V6 with rattle V5 using the same
@@ -373,7 +385,9 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                     **Audit:** Tap here to load a dataset for predicting
+                     **Audit**
+
+                     Tap here to load a dataset for predicting
                       whether a govenrment revenue authority might need to audit
                       a taxpayer. The dataset consists of 2,000 fictional tax
                       payers who have previously been audited. It includes their
@@ -418,7 +432,9 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                      **Protein:** Tap here to load this dataset from the
+                      **Protein**
+
+                      Tap here to load this dataset from the
                       [Tippie College of Business, The University of
                       Iowa](http://www.biz.uiowa.edu/faculty/jledolter/DataMining/protein.csv). It
                       is useful for demonstrating **Cluster** analysis.
@@ -452,7 +468,9 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                      **Movies:** Tap here to load this dataset of some
+                      **Movies**
+
+                      Tap here to load this dataset of some
                       favourite movies. The dataset is useful for demonstrating
                       basket analysis available through the **Associations**
                       feature of the **Model** tab. The dataset has just two
@@ -490,7 +508,9 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                      **Sherlock:** Tap here to load this text file for
+                      **Sherlock**
+
+                      Tap here to load this text file for
                       demonstrating the **Word Cloud** feature of the **Model**
                       tab. It is a snippet from a Sherlock Holmes novel.
 
@@ -523,7 +543,9 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                      **US Population:** Tap here to load a rather large dataset
+                      **US Population**
+
+                      Tap here to load a rather large dataset
                       from the U.S. Census Bureau, Population Division. The
                       variables are described
                       [there](https://www2.census.gov/programs-surveys/popest/datasets/2010-2016/counties/totals/co-est2016-alldata.pdf).
@@ -572,7 +594,9 @@ class DatasetPopup extends ConsumerWidget {
                 child: const MarkdownTooltip(
                   message: '''
 
-                  **Cancel:** Tap here to **not** proceed with loading a new
+                  **Cancel**
+
+                  Tap here to **not** proceed with loading a new
                     dataset.
 
                   ''',

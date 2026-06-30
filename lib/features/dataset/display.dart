@@ -273,7 +273,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               MarkdownTooltip(
                 message: '''
 
-                **Viewer.** Tap here to open a separate window to view the
+                **Viewer**
+
+                Tap here to open a separate window to view the
                 current dataset. The default and quite simple data viewer in R
                 will be used. It is invoked as `View(ds)`.
 

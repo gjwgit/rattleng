@@ -228,7 +228,9 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
               key: const Key('re_scale'),
               tooltip: '''
 
-              **Re-Scale:** Distance based cluster analysis is heavily affected
+              **Re-Scale**
+
+              Distance based cluster analysis is heavily affected
               by variables with larger magnitudes (like salary, e.g., 45,000 and
               50,000 has a distance of 5,000) compared to those with smaller
               magnitudes (like age, e.g., 45 and 50 has a distance of 5). We
@@ -244,7 +246,9 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
               key: const Key('cluster_pair_size'),
               tooltip: '''
 
-              **Pair Size:** Set the number of pairs to display in the pairwise
+              **Pair Size**
+
+              Set the number of pairs to display in the pairwise
               plot.
 
               ''',

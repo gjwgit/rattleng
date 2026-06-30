@@ -17,6 +17,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ Update tooltips to current style TITLE\n\nTEXT [6.5.34 20260630 gjw]
 + Improve parsing of `print(form)` [6.5.33 20260630 gjw]
 + rpart tree print SVG not supported, use PNG [6.5.32 20260630 gjw]
 + Identify when a package is missing and popup [6.5.31 20260630 gjw]

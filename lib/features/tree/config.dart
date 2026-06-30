@@ -280,7 +280,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 key: const Key('include_missing'),
                 tooltip: '''
 
-                **Include Missing:** If selected then the split algorithm will
+                **Include Missing**
+
+                If selected then the split algorithm will
                 distribute observations with missing values across multiple
                 datasets when calculating how to split the dataset for the
                 decision tree. This then allows incomplete data to be utilised
@@ -305,7 +307,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 controller: _minSplitController,
                 tooltip: '''
 
-                **Min Split:** Set the minimum number of observations that must
+                **Min Split**
+
+                Set the minimum number of observations that must
                 exist in the dataset at a node in the tree before any further
                 splitting will be attempted.  The default is 20.
 
@@ -322,7 +326,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 controller: _minBucketController,
                 tooltip: '''
 
-                **Min Bucket:** Set the minimum number of observations allowed
+                **Min Bucket**
+
+                Set the minimum number of observations allowed
                 in any leaf node of the decision tree.  The default value is one
                 third of Min Split.
 
@@ -338,7 +344,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 controller: _maxDepthController,
                 tooltip: '''
 
-                **Max Depth:** Set the maximum depth of any node of the final
+                **Max Depth**
+
+                Set the maximum depth of any node of the final
                 tree. The root node is considered to be depth 0 so a non-trivial
                 tree starts with depth 1.  The maximum allowable depth for
                 rpart() is ${maxDepthLimit.toString()} which we retain as the
@@ -358,7 +366,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                 controller: _complexityController,
                 tooltip: '''
 
-                **Complexity:** The complexity parameter is used to control the
+                **Complexity**
+
+                The complexity parameter is used to control the
                 size of the decision tree and to select the optimal tree
                 size.See the
                 [RPart](https://www.rdocumentation.org/packages/rpart/topics/rpart.control)
@@ -383,7 +393,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     : normalTextStyle,
                 tooltip: '''
 
-                **Priors:** Set the prior probabilities for each class to boost
+                **Priors**
+
+                Set the prior probabilities for each class to boost
                 a particularly important class, by giving it a higher prior
                 probability. Expects a list of numbers that sum up to 1, and of
                 the same length as the number of classes in the training
@@ -409,7 +421,9 @@ class TreeModelConfigState extends ConsumerState<TreeModelConfig> {
                     : normalTextStyle,
                 tooltip: '''
 
-                **Loss Matrix:** Set the weights for the outcome classes
+                **Loss Matrix**
+
+                Set the weights for the outcome classes
                 differently to the observed outcomes from the dataset. For
                 example, for binary classification this might be 0,10,1,0 (TN,
                 FP, FN, TP).

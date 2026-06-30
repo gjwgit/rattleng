@@ -232,7 +232,9 @@ class ImagePage extends ConsumerWidget {
                       MarkdownTooltip(
                         message: '''
 
-                        **Enlarge.** Tap here to view the plot enlarged to the
+                        **Enlarge**
+
+                        Tap here to view the plot enlarged to the
                         maximimum size within the app.
 
                         ''',
@@ -256,7 +258,9 @@ class ImagePage extends ConsumerWidget {
                       MarkdownTooltip(
                         message: '''
 
-                        **Open.** Tap here to open the plot in a separate window
+                        **Open**
+
+                        Tap here to open the plot in a separate window
                         to the Rattle app itself. This allows you to retain a
                         view of the plot while you navigate through other plots
                         and analyses. If you choose the external app to be
@@ -325,7 +329,9 @@ class ImagePage extends ConsumerWidget {
                       MarkdownTooltip(
                         message: '''
 
-                        **Save.** Tap here to save the plot in your preferred
+                        **Save**
+
+                        Tap here to save the plot in your preferred
                         format (**svg**, **pdf**, or **png**). You can directly
                         choose your desired format by replacing the default
                         *svg* filename extension with either *pdf* or *png*. The

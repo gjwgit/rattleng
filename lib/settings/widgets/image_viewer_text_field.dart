@@ -52,7 +52,9 @@ class ImageViewerTextField extends ConsumerWidget {
     return MarkdownTooltip(
       message: '''
 
-      **Image Viewer Application Setting:** This setting determines the default
+      **Image Viewer Application Setting**
+
+      This setting determines the default
       command to open image files. The default is "open" on Linux/MacOS and
       "start" on Windows. You can customise it to match your preferred image
       viewer. A good choice is **inkscape** which will allow editting the plot

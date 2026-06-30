@@ -87,7 +87,9 @@ class TextPage extends StatelessWidget {
                   MarkdownTooltip(
                     message: '''
 
-                        **Open.** Tap here to open the data of this page in a
+                        **Open**
+
+                        Tap here to open the data of this page in a
                           separate window to the Rattle app itself. This allows
                           you to retain a view of the information while you
                           navigate through other data and analyses.
@@ -106,7 +108,9 @@ class TextPage extends StatelessWidget {
                   MarkdownTooltip(
                     message: '''
 
-                        **Save.** Tap here to save the information in this text
+                        **Save**
+
+                        Tap here to save the information in this text
                           page to a **pdf** document.
 
                         ''',

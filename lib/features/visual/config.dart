@@ -187,7 +187,9 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
             MarkdownTooltip(
               message: '''
 
-              **Variable:** Choose from amongst the available **Input**
+              **Variable**
+
+              Choose from amongst the available **Input**
               variables one that is to be visualised.
 
               ''',
@@ -211,7 +213,9 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
             MarkdownTooltip(
               message: '''
 
-              **Group By:** Choose from amongst the available **Categoric**
+              **Group By**
+
+              Choose from amongst the available **Categoric**
               variables one variable by which you wish to group the data. The
               dataset will then be grouped by the values of that chosen variable
               and the distribution of the chosen Variable by these groups will
@@ -240,7 +244,9 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
               label: 'Ignore Missing Group by',
               tooltip: '''
 
-              **Ignore Missing Group by:** When selected (the default) then if
+              **Ignore Missing Group by**
+
+              When selected (the default) then if
               the **Group By** variable has any missing (*NA*) values we will
               ignore them in the plot. If you unslected this option then if the
               variable has missing values, that will be treated as another group
@@ -253,7 +259,9 @@ class VisualConfigState extends ConsumerState<VisualConfig> {
               label: 'Box Plot Notch',
               tooltip: '''
 
-              **Box Plot Notch:** When selected (the default) this option adds
+              **Box Plot Notch**
+
+              When selected (the default) this option adds
               notches to the box plots.  The notches represent the confidence
               interval around the median.  This helps in visually assessing if
               two medians are significantly different.

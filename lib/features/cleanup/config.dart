@@ -64,7 +64,9 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
   Map<String, String> multiMethods = {
     'Vars with Missing': '''
 
-      **Vars with Missong:** Choose this chip to remove from the dataset all
+      **Vars with Missing**
+
+      Choose this chip to remove from the dataset all
       columns (variables) that have any missing values. The variables with
       missing values are indicated in the data summary and they will be
       identified before removal through a popup, so you have a chance to review
@@ -73,13 +75,17 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
       ''',
     'Obs with Missing': '''
 
-      **Obs with Missing:** Choose this chip to remove from the dataset all rows
+      **Obs with Missing**
+
+      Choose this chip to remove from the dataset all rows
       (observations) that have any missing values.
 
       ''',
     'Obs with Missing Target': '''
 
-      **Obs with Missing Target:** Choose this chip to remove from the dataset
+      **Obs with Missing Target**
+
+      Choose this chip to remove from the dataset
       all rows that have a missing value for the target vairiable. Some
       algorithms do not handle missing targets and so this option can be useful
       if that's the case. Or an algorithm may treat a missing target value as an
@@ -91,7 +97,9 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
       ''',
     'Ignored': '''
 
-      **Ignored:** Choose this chip to remove from the dataset all columns
+      **Ignored**
+
+      Choose this chip to remove from the dataset all columns
       (variables) that are marked as *Ignore* in the **Dataset** tab's **Role**
       page. Don't worry, the variables to be removed will be identified through
       a popup so that you will have a chance to review them before comitting to
@@ -103,7 +111,9 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
   Map<String, String> specificMethods = {
     'Variable': '''
 
-      **Variable:** Choose this chip to remove the selected variable from the
+      **Variable**
+
+      Choose this chip to remove the selected variable from the
       dataset. Be sure to select a variable from the **Variable** drop down
       menu. You can only remove one variable at a time. To remove multiple
       variables, select to **Ignore** them in the **Dataset** tab's **Role**
@@ -332,7 +342,9 @@ class CleanupConfigState extends ConsumerState<CleanupConfig> {
                 },
                 tooltip: '''
 
-                **Delete:** Tap here after you have chosen one of the available
+                **Delete**
+
+                Tap here after you have chosen one of the available
                 options for what you want to delete from the dataset. You will
                 be asked to confirm the selection for deletion from the dataset
                 before it is actually done, so you can still back out at that

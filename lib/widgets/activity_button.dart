@@ -54,7 +54,9 @@ class ActivityButton extends ConsumerWidget {
       message: tooltip ??
           '''
 
-      **Build** Tap here to have the activity undertaken to build the Pages that
+      **Build**
+
+      Tap here to have the activity undertaken to build the Pages that
         will be displayed here for this Feature. Often the activity is to run
         the required R scripts which may produce output that is captured and
         displayed by Rattle, or the R script will generate plots and graphics

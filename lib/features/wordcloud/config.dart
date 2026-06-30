@@ -281,7 +281,9 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                         key: const Key('lower_case'),
                         tooltip: '''
 
-                        **Lower Case:** Convert all words to lower case.
+                        **Lower Case**
+
+                        Convert all words to lower case.
 
                         ''',
                         label: 'Lower Case',
@@ -291,7 +293,9 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                         key: const Key('remove_numbers'),
                         tooltip: '''
 
-                        **Numbers:** Remove numbers from the text.
+                        **Numbers**
+
+                        Remove numbers from the text.
 
                         ''',
                         label: 'Numbers',
@@ -301,7 +305,9 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                         key: const Key('strip_whitespace'),
                         tooltip: '''
 
-                        **Whitespace:** Remove whitespace from the text.
+                        **Whitespace**
+
+                        Remove whitespace from the text.
 
                         ''',
                         label: 'Whitespace',
@@ -311,7 +317,9 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                         key: const Key('remove_sparse'),
                         tooltip: '''
 
-                        **Sparse:** Remove sparse terms from the text. The maximum level
+                        **Sparse**
+
+                        Remove sparse terms from the text. The maximum level
                           of sparseness can be set.
 
                         ''',
@@ -323,7 +331,9 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                         key: const Key('sparse'),
                         tooltip: '''
 
-                        **Sparse:** The maximum allowed sparsity. Terms are
+                        **Sparse**
+
+                        The maximum allowed sparsity. Terms are
                         removed if they have a sparsity factor greater than
                         specified here. 0 suggests no sparsity and 1 is complete
                         sparsity.
@@ -363,7 +373,9 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 key: const Key('maxWords'),
                 tooltip: '''
 
-                **Max Words:** Specify here the maximum number of words to
+                **Max Words**
+
+                Specify here the maximum number of words to
                   consider for various analyses. For example, this will be the
                   maximum number of words in the word cloud.
 
@@ -381,7 +393,9 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
 
                 tooltip: '''
 
-                **Min Freq:** Specify here the mininum frequency of words that
+                **Min Freq**
+
+                Specify here the mininum frequency of words that
                 should be considered for analysis.
 
                 ''',
@@ -396,7 +410,9 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 key: const Key('textCorFreq'),
                 tooltip: '''
 
-                **Cor Freq:** This is the lower bound on the term frequency for
+                **Cor Freq**
+
+                This is the lower bound on the term frequency for
                 the term to be included in the **Term Correlation Plot**.
 
                 ''',
@@ -413,7 +429,9 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 key: const Key('textCorLimit'),
                 tooltip: '''
 
-                **Correlation Limit:** This is used for the **Term Association**
+                **Correlation Limit**
+
+                This is used for the **Term Association**
                 and **Term Correlation Plot** as the minimum correlation
                 threshold (0-1) for associations between the **Cor Term**
                 specified and other terms in the document term matrix.
@@ -448,7 +466,9 @@ class _ConfigState extends ConsumerState<WordCloudConfig> {
                 textStyle: normalTextStyle,
                 tooltip: '''
 
-                **Cor Term:** The term here will be used to perform an
+                **Cor Term**
+
+                The term here will be used to perform an
                 association analysis to find other terms that are highly
                 correlated with this term (at least with a correlation as
                 specified as the **Cor Limit**) .

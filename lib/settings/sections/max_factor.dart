@@ -42,7 +42,9 @@ class MaxFactor extends ConsumerWidget {
     return MarkdownTooltip(
       message: '''
 
-            **Max Factor:** Specify here the maximum number of unique values for
+            **Max Factor**
+
+            Specify here the maximum number of unique values for
             a character column in the dataset for which when the **Cleanse**
             toggle, when enabled, will automatically convert to a **factor**.
 

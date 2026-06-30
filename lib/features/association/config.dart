@@ -119,7 +119,9 @@ class AssociationConfigState extends ConsumerState<AssociationConfig> {
               key: const Key('association_config_baskets'),
               tooltip: '''
 
-              **Baskets:** When checked the grouping of items or baskets are
+              **Baskets**
+
+              When checked the grouping of items or baskets are
               identified by the **Ident** variable and the items in the basket
               by the **Target** variable. Otherwise we treat
               **Input** variables as being the 'basket'.

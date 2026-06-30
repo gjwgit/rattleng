@@ -77,7 +77,9 @@ final List<Map<String, dynamic>> homeTabs = [
     'icon': Icons.input,
     'tooltip': '''
 
-    **Dataset:** Tap here to access the Dataset function. Through this function
+    **Dataset**
+
+    Tap here to access the Dataset function. Through this function
       you can load a dataset into Rattle, including any one of a number of
       demonstration datasets.
 
@@ -88,7 +90,9 @@ final List<Map<String, dynamic>> homeTabs = [
     'icon': Icons.insights,
     'tooltip': '''
 
-    **Explore:** Tap here to access the Explore function. Through this function
+    **Explore**
+
+    Tap here to access the Explore function. Through this function
       you can 'live and breathe' your data. That is, explore the distribution of
       variables, correlations, mising data, and so on.
 
@@ -99,7 +103,9 @@ final List<Map<String, dynamic>> homeTabs = [
     'icon': Icons.transform,
     'tooltip': '''
 
-    **Transform:** Tap here to access the Transform function. Through this
+    **Transform**
+
+    Tap here to access the Transform function. Through this
       function you can clean up and transform your data set in various way.
 
     ''',
@@ -109,7 +115,9 @@ final List<Map<String, dynamic>> homeTabs = [
     'icon': Icons.model_training,
     'tooltip': '''
 
-    **Model:** Tap here to acces the Model function. Through this function you
+    **Model**
+
+    Tap here to acces the Model function. Through this function you
       can build predictive and descriptive models from your data.
 
     ''',
@@ -119,7 +127,9 @@ final List<Map<String, dynamic>> homeTabs = [
     'icon': Icons.leaderboard,
     'tooltip': '''
 
-    **Evaluate:** Tap here to acces the Evaluate function. Through this function
+    **Evaluate**
+
+    Tap here to acces the Evaluate function. Through this function
       you can evaluate the performance of your predictive models.
 
     ''',
@@ -129,7 +139,9 @@ final List<Map<String, dynamic>> homeTabs = [
     'icon': Icons.terminal,
     'tooltip': '''
 
-    **Console:** Tap here to acces the Console function. Through this function
+    **Console**
+
+    Tap here to acces the Console function. Through this function
       you can access the R console where all of the R commands and their output
       is captured.
 
@@ -140,7 +152,9 @@ final List<Map<String, dynamic>> homeTabs = [
     'icon': Icons.code,
     'tooltip': '''
 
-    **Script:** Tap here to acces the Script function. Through this function you
+    **Script**
+
+    Tap here to acces the Script function. Through this function you
       can review all of the R commands that are being run and save the script to
       an R script file for running in R directly.
 
@@ -151,7 +165,9 @@ final List<Map<String, dynamic>> homeTabs = [
     'icon': Icons.work,
     'tooltip': '''
 
-    **Debug:** Tap here to acces the Debug function. Through this function you
+    **Debug**
+
+    Tap here to acces the Debug function. Through this function you
       can see some debugging information. This is primarily of use to our
       developers.
 
@@ -450,7 +466,9 @@ class RattleHomeState extends ConsumerState<RattleHome>
           MarkdownTooltip(
             message: '''
 
-            **Reset:** Tap here to clear the current project and so start a new
+            **Reset**
+
+            Tap here to clear the current project and so start a new
             project with a new dataset. You will be prompted to confirm since
             you will lose all of the current pages and analyses.
 
@@ -480,7 +498,9 @@ class RattleHomeState extends ConsumerState<RattleHome>
           MarkdownTooltip(
             message: '''
 
-            **Change Seed:** Tap here to quickly change the seed for the random
+            **Change Seed**
+
+            Tap here to quickly change the seed for the random
             number generator.  A new seed will be automatically generated. It
             will also be saved as your new seed within **Settings** and so the
             latest seed set here will be used in your next session. Go to
@@ -555,7 +575,9 @@ class RattleHomeState extends ConsumerState<RattleHome>
           MarkdownTooltip(
             message: '''
 
-            **R Packages Installation:** Tap here to load all required R
+            **R Packages Installation**
+
+            Tap here to load all required R
             pacakges now rather than when they are needed. It can be useful to
             do this before you load a dataset so as to ensure everything is
             ready. This can avoid some issues on startup. Rattle will check for
@@ -593,7 +615,9 @@ class RattleHomeState extends ConsumerState<RattleHome>
             key: const Key('settings_button'),
             message: '''
 
-            **Settings:** Tap here to update your default settings. Settings
+            **Settings**
+
+            Tap here to update your default settings. Settings
             include a default theme for he charts, the random seed, partition
             options, and much more. Your settings will be saved for this session
             and future sessions and you have the option to reset to the Rattle
@@ -622,7 +646,9 @@ class RattleHomeState extends ConsumerState<RattleHome>
           MarkdownTooltip(
             message: '''
 
-            **About:** Tap here to view information about the Rattle
+            **About**
+
+            Tap here to view information about the Rattle
             project. This include a list of those who have contributed to the
             latest version of the software, *Verison 6.* It also includes the
             extensive list of open-source packages that Rattle is built on and

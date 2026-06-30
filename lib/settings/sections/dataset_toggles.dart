@@ -138,7 +138,9 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
             MarkdownTooltip(
               message: '''
 
-              **Dataset Toggles Setting:** The default setting of
+              **Dataset Toggles Setting**
+
+              The default setting of
               the dataset toggles, on starting up Rattle, is set
               here. During a session with Rattle the toggles may be
               changed by the user. If the *Sync* option is set, then
@@ -179,7 +181,8 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
                 },
                 tooltipMessage: '''
 
-                **Cleanse Toggle:**
+                **Cleanse Toggle**
+
 
                 Cleansing prepares the dataset by:
 
@@ -202,7 +205,8 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
                 },
                 tooltipMessage: '''
 
-                **Unify Toggle:**
+                **Unify Toggle**
+
 
                 Unifies dataset column names by:
 
@@ -225,7 +229,8 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
                 },
                 tooltipMessage: '''
 
-                **Partition Toggle:**
+                **Partition Toggle**
+
 
                 Splits the dataset into subsets for predictive modeling:
 
@@ -243,7 +248,8 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
             const MarkdownTooltip(
               message: '''
 
-              **Keep in Sync Toggle:**
+              **Keep in Sync Toggle**
+
 
               - **On:** Saves toggle changes for current sessions.
 
@@ -255,7 +261,8 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
             MarkdownTooltip(
               message: '''
 
-              **Keep in Sync Toggle:**
+              **Keep in Sync Toggle**
+
 
               - **On:** Saves toggle changes for current sessions.
 
@@ -277,7 +284,9 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
             MarkdownTooltip(
               message: '''
 
-              **Reset Toggles:** Tap here to reset the Dataset Toggles
+              **Reset Toggles**
+
+              Tap here to reset the Dataset Toggles
                 setting to the default for Rattle.
 
               ''',
@@ -319,7 +328,9 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
                   MarkdownTooltip(
                     message: '''
 
-                    **Reset Toggles:** Tap here to reset the Max Factor to the default value
+                    **Reset Toggles**
+
+                    Tap here to reset the Max Factor to the default value
 
                     ''',
                     child: ElevatedButton(
