@@ -17,6 +17,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ Improve parsing of `print(form)` [6.5.33 20260630 gjw]
 + rpart tree print SVG not supported, use PNG [6.5.32 20260630 gjw]
 + Identify when a package is missing and popup [6.5.31 20260630 gjw]
 + CLUSTER HIERACHICAL with no IDENT use row numbers [6.5.30 20260505 gjw]
