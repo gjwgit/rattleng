@@ -2,10 +2,8 @@
 
 Recorded here are the high level changes for the Rattle app.
 
-Guide: Each version update is recorded here with a short user-oriented
-description of the update. Updates in the 6.5.n series are heading
-toward a 6.6 release.  The `[version timestamp user]` string is
-utilised by the flutter version_widget package.
+Each version update is recorded here with a short user-oriented
+description of the update.
 
 To download the latest version of the app: GNU/Linux
 [**deb**](https://access.togaware.com/rattle_amd64.deb) or
@@ -19,6 +17,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ Identify when a package is missing and popup [6.5.31 20260630 gjw]
 + CLUSTER HIERACHICAL with no IDENT use row numbers [6.5.30 20260505 gjw]
 + Add support for evaluation of regression models [6.5.29 20260504 gjw]
 + Hard load caret for nueralnet buld [6.5.28 20260504 gjw]

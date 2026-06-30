@@ -232,6 +232,7 @@ Future<void> main() async {
       // parentage which MaterialApp ensures, and it makes sense for it to be
       // the root.
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         theme: ThemeData(
           // Material 3 is the current (2024) flutter default theme for colours
           // and Google fonts. We can stay with this as the default for now

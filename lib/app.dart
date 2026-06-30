@@ -42,6 +42,12 @@ import 'package:rattle/widgets/close_dialog.dart';
 
 final GlobalKey<RattleHomeState> rattleHomeKey = GlobalKey<RattleHomeState>();
 
+// A global navigator key so that code without a [BuildContext] (such as the
+// pty output listener in `providers/pty.dart`) can show dialogs. Wired into
+// the root [MaterialApp] in `main.dart`. (gjw 20260630)
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 /// A widget for the root of the Rattle app encompassing the Rattle home widget.
 ///
 /// This widget manages the application's lifecycle and handles cleanup
