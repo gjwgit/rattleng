@@ -91,7 +91,6 @@ jobs:
       - name: Install OS Dependencies
         run: |
           sudo apt-get update -y
-          sudo apt-get upgrade -y
           printf '#%.0s' {1..72}; printf '\nninja-build\n'
           sudo apt-get install -y ninja-build
           printf '#%.0s' {1..72}; printf '\nlibgtk-3-dev\n'
@@ -210,7 +209,6 @@ jobs:
       - name: Install OS Dependencies
         run: |
           sudo apt-get update -y
-          sudo apt-get upgrade -y
           printf '#%.0s' {1..72}; printf '\nninja-build\n'
           sudo apt-get install -y ninja-build
           printf '#%.0s' {1..72}; printf '\nlibgtk-3-dev\n'
@@ -275,7 +273,6 @@ jobs:
       - name: Install OS Dependencies
         run: |
           sudo apt-get update -y
-          sudo apt-get upgrade -y
 
       # 20260311 gjw be sure to add dependencies into the snapcraft
       # file rather than here, including llvm, lld, libsecret-1-dev,
