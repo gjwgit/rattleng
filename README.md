@@ -64,7 +64,7 @@ original Rattle author), Chief Scientist of the Software Innovation
 Institute of the Australian National University.  Significant
 contributions have also been made by Yixiang Yin.
 
-## Quick Start and Current Status 2025-01-06
+## Quick Start and Current Status
 
 You will need to install R, separate to the app itself. Visit the [R
 Project](https://www.r-project.org/) for details.
@@ -108,15 +108,16 @@ Then:
   of the saved script file).
 + From your own command line run `Rscript script.R`
 
-Currently implemented features as of version 6.3.48 (2025-01-06):
+Currently implemented features include:
 
 + Dataset
   + Demo
-    + Weather
+    + Weather (and 2007 dataset)
     + Audit
     + Protein
     + Movies
     + Sherlock
+    + US Population
   + CSV
   + TXT
   + Roles
@@ -146,22 +147,23 @@ Currently implemented features as of version 6.3.48 (2025-01-06):
   + Error Matrix
   + ROC Chart
 + Console
+  + The live R session
 + Script
-  + Export
+  + Export R code ready to run
 
 ## Building Rattle from Source
 
-Ensure you have R installed, as described in the installer
+If you would like to build Rattle from source you certainly can do
+so. It is all open source and we do welcome contributions.
+
+First, ensure you have R installed, as described in the installer
 [README](https://github.com/gjwgit/rattle/blob/dev/installers/README.md).
 
-Install Flutter as describe in the [Flutter Install
+Then install Flutter as describe in the [Flutter Install
 Guide](https://docs.flutter.dev/get-started/install). In short, to
 install on Windows, download the flutter sdk, unzip it to your home
 folder, add `C:\Users\<user>\flutter\bin` to the PATH environment
 variable, and in a CMD console run `flutter help`.
-
-*Currently (20230918), on Azure Windows VM, `flutter doctor` just sits
-there!*
 
 Then clone the [rattle](https://github.com/gjwgit/rattle)
 repository:
@@ -183,13 +185,13 @@ waiting at the R prompt:
 >
 ```
 
-Rattle will itself eventually check for these and prompt if they are
-not available.
+Rattle will itself check for these and prompt if they are not
+available.
 
 ### Latest Code
 
-Rattle is currently under active development. To get the current app
-you can install flutter on your local computer, then clone the github
+Rattle continues active development. To get the current app you can
+install flutter on your local computer, then clone the github
 repository, to your local disk, and from a command line change to the
 directory where you cloned the rattle repository (it should contain a
 `lib` sub-directory) and type the following command, changing `<os>`
