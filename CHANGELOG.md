@@ -17,6 +17,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ Fix blurry plots and enlarge the plot display [6.5.37 20260815 gjw]
 + BUG: Fix startup exception loading max factor [6.5.36 20260815 gjw]
 + Load a dataset named on the command line [6.5.35 20260815 gjw]
 + Update tooltips to current style TITLE\n\nTEXT [6.5.34 20260630 gjw]
