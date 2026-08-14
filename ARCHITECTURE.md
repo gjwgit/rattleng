@@ -85,14 +85,29 @@ are compiled out of release builds. This is a stopgap. Skia is on its
 way out of the engine, so revisit it when Impeller's text and line
 rendering improves, or if a future Flutter drops Skia entirely.
 
-**The plot fills the available width.** The viewing area used to be a
-square with sides of the smaller of the available width and height.
-Since the plots are 10 by 7 inches, squaring the viewing area fitted
-them by their width and left the plot some 30% smaller than the space
-allowed, the text that much less readable, and a wide empty margin
-either side. `ImagePage` now takes the full width and leaves
-`BoxFit.contain` to scale the plot to its own aspect ratio. A square
-plot still fits, scaled to the height, and is centred within the width.
+**The plot fills the space the title leaves.** The viewing area used to
+be a square with sides of the smaller of the available width and 60% of
+the window height. Since the plots are 10 by 7 inches, squaring the
+viewing area fitted them by their width and left the plot some 30%
+smaller than the space allowed, the text that much less readable, and a
+wide empty margin either side. `ImagePage` now fills the space and
+leaves `BoxFit.contain` to scale the plot to its own aspect ratio. A
+square plot still fits, scaled to the height, and is centred within the
+width.
+
+The height has to come from the layout, through an `Expanded`, and not
+from the window height as the square viewing area used. The window is
+always taller than the space left below the title, so a plot sized to
+the window runs off the bottom of the page, losing the x axis label and
+the Rattle timestamp footer. That goes unnoticed while the plot is
+square, since fitting a 10 by 7 plot by its width leaves it well short
+of filling a too tall viewing area, which is how the square version hid
+the same mistake.
+
+`Expanded` needs the page to have a bounded height, which it does:
+`widgets/page_viewer.dart` puts the `PageView` in an `Expanded` of its
+own. The plot can therefore never overflow, and the
+`SingleChildScrollView` that used to absorb the overflow has gone.
 
 ## Architecture for RattleNG
 

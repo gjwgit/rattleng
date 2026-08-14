@@ -201,36 +201,39 @@ class ImagePage extends ConsumerWidget {
             ),
           );
         } else {
+          // Determine which image to display based on file extension.
+
+          final bool isSvg = (display ?? path).toLowerCase().endsWith('.svg');
+
           return Container(
             decoration: sunkenBoxDecoration,
             width: double.infinity,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    // 20240726 gjw Ensure the Save button is aligned at the top.
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // 20240726 gjw Remove the Flexible for now. Perhaps avoid
-                      // long text in the Image Page for now. Save button was
-                      // not getting pushed all the way to the right after
-                      // adding Flexible.
-                      //
-                      // 20240725 gjw Introduce the Flexible wrapper to avoid the markdown
-                      // text overflowing to the elevarted Export
-                      // button.
-                      MarkdownBody(
-                        data: wordWrap(title),
-                        selectable: true,
-                        onTapLink: (text, href, title) {
-                          final Uri url = Uri.parse(href ?? '');
-                          launchUrl(url);
-                        },
-                      ),
-                      const Spacer(),
-                      MarkdownTooltip(
-                        message: '''
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  // 20240726 gjw Ensure the Save button is aligned at the top.
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // 20240726 gjw Remove the Flexible for now. Perhaps avoid
+                    // long text in the Image Page for now. Save button was
+                    // not getting pushed all the way to the right after
+                    // adding Flexible.
+                    //
+                    // 20240725 gjw Introduce the Flexible wrapper to avoid the markdown
+                    // text overflowing to the elevarted Export
+                    // button.
+                    MarkdownBody(
+                      data: wordWrap(title),
+                      selectable: true,
+                      onTapLink: (text, href, title) {
+                        final Uri url = Uri.parse(href ?? '');
+                        launchUrl(url);
+                      },
+                    ),
+                    const Spacer(),
+                    MarkdownTooltip(
+                      message: '''
 
                         **Enlarge**
 
@@ -238,25 +241,24 @@ class ImagePage extends ConsumerWidget {
                         maximimum size within the app.
 
                         ''',
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.zoom_out_map,
-                            color: Colors.blue,
-                          ),
-                          onPressed: () {
-                            // Determine which image to display. If a [display]
-                            // is provided then that overrides [path]. (gjw
-                            // 20250419)
-
-                            final bool isSvg = (display ?? path)
-                                .toLowerCase()
-                                .endsWith('.svg');
-                            showImageDialog(context, bytes, isSvg: isSvg);
-                          },
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.zoom_out_map,
+                          color: Colors.blue,
                         ),
+                        onPressed: () {
+                          // Determine which image to display. If a [display]
+                          // is provided then that overrides [path]. (gjw
+                          // 20250419)
+
+                          final bool isSvg =
+                              (display ?? path).toLowerCase().endsWith('.svg');
+                          showImageDialog(context, bytes, isSvg: isSvg);
+                        },
                       ),
-                      MarkdownTooltip(
-                        message: '''
+                    ),
+                    MarkdownTooltip(
+                      message: '''
 
                         **Open**
 
@@ -271,63 +273,63 @@ class ImagePage extends ConsumerWidget {
                         in the Rattle **Settings**.
 
                         ''',
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.open_in_new,
-                            color: Colors.blue,
-                          ),
-                          onPressed: () async {
-                            // We always display the [path] externally,
-                            // irrespective of whether we have a [display],
-                            // which is intended for in-app use only.
-
-                            final bool isSvg = path.toLowerCase().endsWith(
-                                  '.svg',
-                                );
-
-                            // Generate a unique file name for the new file in
-                            // the temporary directory with the correct
-                            // extension. We do this since the original filename
-                            // will be overwritten by a new plot within Rattle, thus
-                            // losing the displayed file. 20250807 gjw
-
-                            String extension = isSvg ? 'svg' : 'png';
-                            String fileName =
-                                'plot_${math.Random().nextInt(10000)}.$extension';
-                            File tempFile = File('$tempDir/$fileName');
-
-                            // Copy the original file to the temporary file.
-
-                            await File(path).copy(tempFile.path);
-
-                            // Get the image viewer app from SharedPreferences
-                            // or use the provider default if not set.
-
-                            final prefs = await SharedPreferences.getInstance();
-                            final savedImageViewer = prefs.getString(
-                              'imageViewerApp',
-                            );
-
-                            // If the shared preferences image viewer app is
-                            // null(not set), use the provider default.
-
-                            final imageViewerApp = savedImageViewer ??
-                                ref.read(imageViewerSettingProvider);
-
-                            Platform.isWindows
-                                ? Process.run(
-                                    imageViewerApp!,
-                                    [
-                                      path,
-                                    ],
-                                    runInShell: true,
-                                  )
-                                : Process.run(imageViewerApp!, [tempFile.path]);
-                          },
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.open_in_new,
+                          color: Colors.blue,
                         ),
+                        onPressed: () async {
+                          // We always display the [path] externally,
+                          // irrespective of whether we have a [display],
+                          // which is intended for in-app use only.
+
+                          final bool isSvg = path.toLowerCase().endsWith(
+                                '.svg',
+                              );
+
+                          // Generate a unique file name for the new file in
+                          // the temporary directory with the correct
+                          // extension. We do this since the original filename
+                          // will be overwritten by a new plot within Rattle, thus
+                          // losing the displayed file. 20250807 gjw
+
+                          String extension = isSvg ? 'svg' : 'png';
+                          String fileName =
+                              'plot_${math.Random().nextInt(10000)}.$extension';
+                          File tempFile = File('$tempDir/$fileName');
+
+                          // Copy the original file to the temporary file.
+
+                          await File(path).copy(tempFile.path);
+
+                          // Get the image viewer app from SharedPreferences
+                          // or use the provider default if not set.
+
+                          final prefs = await SharedPreferences.getInstance();
+                          final savedImageViewer = prefs.getString(
+                            'imageViewerApp',
+                          );
+
+                          // If the shared preferences image viewer app is
+                          // null(not set), use the provider default.
+
+                          final imageViewerApp = savedImageViewer ??
+                              ref.read(imageViewerSettingProvider);
+
+                          Platform.isWindows
+                              ? Process.run(
+                                  imageViewerApp!,
+                                  [
+                                    path,
+                                  ],
+                                  runInShell: true,
+                                )
+                              : Process.run(imageViewerApp!, [tempFile.path]);
+                        },
                       ),
-                      MarkdownTooltip(
-                        message: '''
+                    ),
+                    MarkdownTooltip(
+                      message: '''
 
                         **Save**
 
@@ -342,38 +344,38 @@ class ImagePage extends ConsumerWidget {
                         like **Inkscape**.
 
                         ''',
-                        child: IconButton(
-                          icon: const Icon(Icons.save, color: Colors.blue),
-                          onPressed: () async {
-                            String fileName = path.split('/').last;
-                            String? pathToSave = await selectFile(
-                              defaultFileName: fileName,
-                              allowedExtensions: ['svg', 'pdf', 'png'],
-                            );
-                            if (pathToSave != null) {
-                              String extension =
-                                  pathToSave.split('.').last.toLowerCase();
-                              if (extension == 'svg') {
+                      child: IconButton(
+                        icon: const Icon(Icons.save, color: Colors.blue),
+                        onPressed: () async {
+                          String fileName = path.split('/').last;
+                          String? pathToSave = await selectFile(
+                            defaultFileName: fileName,
+                            allowedExtensions: ['svg', 'pdf', 'png'],
+                          );
+                          if (pathToSave != null) {
+                            String extension =
+                                pathToSave.split('.').last.toLowerCase();
+                            if (extension == 'svg') {
+                              await File(path).copy(pathToSave);
+                            } else if (extension == 'pdf') {
+                              await _exportToPdf(path, pathToSave);
+                            } else if (extension == 'png') {
+                              if (path.toLowerCase().endsWith('.svg')) {
+                                await _exportToPng(path, pathToSave);
+                              } else {
+                                // If source is already PNG, just copy it.
+
                                 await File(path).copy(pathToSave);
-                              } else if (extension == 'pdf') {
-                                await _exportToPdf(path, pathToSave);
-                              } else if (extension == 'png') {
-                                if (path.toLowerCase().endsWith('.svg')) {
-                                  await _exportToPng(path, pathToSave);
-                                } else {
-                                  // If source is already PNG, just copy it.
+                              }
+                            } else if (context.mounted) {
+                              // If the user selected an unsupported file
+                              // extension show an error dialog.
 
-                                  await File(path).copy(pathToSave);
-                                }
-                              } else if (context.mounted) {
-                                // If the user selected an unsupported file
-                                // extension show an error dialog.
-
-                                showOk(
-                                  title: 'Error',
-                                  context: context,
-                                  content: //const Text(
-                                      '''
+                              showOk(
+                                title: 'Error',
+                                context: context,
+                                content: //const Text(
+                                    '''
 
                                       An unsupported filename extension was
                                       provided: .$extension.  Please try again
@@ -381,67 +383,72 @@ class ImagePage extends ConsumerWidget {
                                       supported extensions: .svg, .pdf, or .png.
 
                                       ''',
-                                );
-                              } else {
-                                return;
-                              }
+                              );
+                            } else {
+                              return;
                             }
-                          },
-                        ),
+                          }
+                        },
                       ),
-                      const Gap(5),
-                    ],
+                    ),
+                    const Gap(5),
+                  ],
+                ),
+                const Gap(5),
+
+                // Display the plot as the main body of the widget, taking
+                // all of the space that the title above it leaves.
+                //
+                // 20260815 gjw The viewing area was previously a square with
+                // sides of the smaller of the available width and 60% of the
+                // window height. Our plots are generated by R as 10 by 7
+                // inches (the `svg()` calls in `assets/r/`), so squaring the
+                // viewing area fitted them by their width and left the plot
+                // some 30% smaller than the space allowed, with the text
+                // that much less readable and a wide empty margin either
+                // side.
+                //
+                // Filling the space instead, and leaving [BoxFit.contain] to
+                // scale the plot to its own aspect ratio, makes the plot as
+                // large as it can be. A square plot still fits, scaled to
+                // the height, and is centred within the width.
+                //
+                // The height has to come from [Expanded] rather than from
+                // the window height, which is what the square viewing area
+                // used. The window is always taller than the space left here
+                // below the title, so a plot sized to the window ran off the
+                // bottom of the page, losing the x axis label and the Rattle
+                // timestamp footer. That went unnoticed while the plot was
+                // square, since fitting a 10 by 7 plot by its width left it
+                // well short of filling the too tall viewing area.
+                //
+                // [Expanded] needs the page to have a bounded height, which
+                // it does: `widgets/page_viewer.dart` puts the [PageView] in
+                // an [Expanded] of its own. The plot can therefore never
+                // overflow, and the enclosing [SingleChildScrollView] that
+                // used to absorb the overflow is no longer needed.
+
+                // The [SizedBox] takes the full width so that the plot is
+                // centred horizontally by [BoxFit.contain]. Without it the
+                // plot is left aligned: the [CrossAxisAlignment.start] of the
+                // enclosing [Column] passes loose width constraints to its
+                // children, so the plot sizes to its own width, having been
+                // fitted to the height, rather than to the width of the page.
+                // (gjw 20260815)
+
+                Expanded(
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: InteractiveViewer(
+                      maxScale: 5,
+                      alignment: Alignment.center,
+                      child: isSvg
+                          ? SvgPicture.memory(bytes, fit: BoxFit.contain)
+                          : Image.memory(bytes, fit: BoxFit.contain),
+                    ),
                   ),
-                  const Gap(5),
-
-                  // Display the plot as the main body of the widget.
-
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      // The max available width from LayoutBuilder.
-
-                      final availableWidth = constraints.maxWidth;
-
-                      // Apply a bounded height to avoid infinite height error.
-
-                      final calculatedMaxHeight =
-                          MediaQuery.of(context).size.height * 0.6;
-
-                      // Determine which image to display based on file extension.
-
-                      final bool isSvg =
-                          (display ?? path).toLowerCase().endsWith('.svg');
-
-                      // 20260815 gjw The viewing area was previously a square
-                      // with sides of the smaller of the available width and
-                      // height. Our plots are generated by R as 10 by 7 inches
-                      // (the `svg()` calls in `assets/r/`), so squaring the
-                      // viewing area fitted them by their width and left the
-                      // plot some 30% smaller than the space allowed, with the
-                      // text that much less readable and a wide empty margin
-                      // either side. Filling the available width instead, and
-                      // leaving [BoxFit.contain] to scale the plot to its own
-                      // aspect ratio, makes the plot as large as it can be. A
-                      // square plot still fits, scaled to the height, and is
-                      // centred within the width.
-
-                      return Center(
-                        child: SizedBox(
-                          width: availableWidth,
-                          height: calculatedMaxHeight,
-                          child: InteractiveViewer(
-                            maxScale: 5,
-                            alignment: Alignment.center,
-                            child: isSvg
-                                ? SvgPicture.memory(bytes, fit: BoxFit.contain)
-                                : Image.memory(bytes, fit: BoxFit.contain),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         }
