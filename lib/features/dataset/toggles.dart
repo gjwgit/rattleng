@@ -66,6 +66,17 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
     final keepInSync = prefs.getBool('keepInSync') ?? true;
 
+    // Set the "Max Factor" setting from shared preferences, defaulting to
+    // [defaultMaxFactor] if no value is found.
+    //
+    // 20260815 gjw This is loaded here unconditionally, rather than within the
+    // "First Start" and "Keep in Sync" branches below, to retain the previous
+    // behaviour where the provider itself loaded the saved value whenever it
+    // was first read.
+
+    ref.read(maxFactorProvider.notifier).state =
+        prefs.getInt('maxFactor') ?? defaultMaxFactor;
+
     // Retrieve the "First Start" state from the provider to determine
     // if this is the first time the app is being initialized.
 

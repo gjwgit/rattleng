@@ -123,7 +123,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
   ///
   /// Loads:
   /// - Random seed (defaults to 42)
-  /// - Maximum factor (defaults to 15)
+  /// - Maximum factor (defaults to [defaultMaxFactor])
   /// - Partition ratios (defaults to 70/15/15)
 
   Future<void> _loadNumericSettings() async {
@@ -137,7 +137,7 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     // Max factor.
 
     ref.read(maxFactorProvider.notifier).state =
-        prefs.getInt('maxFactor') ?? 20;
+        prefs.getInt('maxFactor') ?? defaultMaxFactor;
 
     // Partition ratios.
 
