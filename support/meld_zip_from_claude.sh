@@ -35,29 +35,17 @@ mkdir tmp
 
 # Extract the zip file.
 
+echo "Unzip ${claude} into ./tmp"
+
 (cd tmp; unzip "${claude}")
 
 # Run meld with the file and find result
 
-if [[ -d tmp/lib ]] && ! diff -rqw "lib" "tmp/lib" > /dev/null ; then
-    meld tmp/lib lib
-fi
-
-if [[ -d tmp/assets ]] && ! diff -rqw "assets" "tmp/assets" > /dev/null ; then
-    meld tmp/assets assets
-fi
-
-if [[ -d tmp/test ]]  && ! diff -rqw "test" "tmp/test" > /dev/null ; then
-    meld tmp/test test
-fi
-
-if [[ -d tmp/integration_test ]]  && ! diff -rqw "integration_test" "tmp/integration_test" > /dev/null ; then
-    meld tmp/integration_test integration_test
-fi
-
-if [[ -f tmp/README.md ]]  && ! diff -qw "README.md" "tmp/README.md" > /dev/null ; then
-    meld tmp/README.md README.md
-fi
+for f in lib assets test integration_test README.md CLAUDE.md; do
+    if [[ -e tmp/$f ]] && ! diff -rqw "$f" "tmp/$f" > /dev/null ; then
+	meld tmp/$f $f
+    fi
+done
 
 # Check if pubspec included and if so compare if the difference is
 # other than the version line.

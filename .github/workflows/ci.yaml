@@ -13,7 +13,7 @@ on:
     types: [opened, reopened, synchronize]
 
 env:
-  FLUTTER_VERSION: '3.44.4'
+  FLUTTER_VERSION: '3.47.0'
 
 jobs:
 
@@ -104,7 +104,6 @@ jobs:
         uses: lycheeverse/lychee-action@v2
         with: # Don't fail for now but then create an issue - useful?
           args:
-            --exclude-file .lycheeignore
             --no-progress
             '*.md'
             './**/*.dart'

@@ -3,18 +3,16 @@
 
 # Localhost OAuth callbacks used in integration tests
 
-http://localhost:44007/
-http://localhost:8000/
 http://localhost/
+http://localhost:3000/
+http://localhost:4400/
+http://localhost:8000/
+http://localhost:11434/
 
 # Used by oidc through solid_auth
 
 http://localhost:4400/redirect
 https://your-domain/redirect.html
-
-# Localhost used in comments
-
-http://localhost:3000/
 
 # POD OAuth endpoints that require authentication parameters
 
@@ -72,7 +70,7 @@ http://purl.org/dc/terms/
 https://solidcommunity.au/predicates/*
 https://solidproject.au/sii/
 
-# 20260107 gjw From openid in solid_auth.
+# 20260107 gjw From openid in solid_auth and solidui.
 
 https://api.login.yahoo.com/
 https://graph.facebook.com/
@@ -81,17 +79,19 @@ https://securetoken.google.com/
 
 # URL used in comments
 
-file:///home/runner/work/solidui/solidui/lib/src/utils/scheme
+file:///home/runner/work/
 https://pods.example.au/john-doe/profile/card#me
 https://github.com/gjwgit/myapp/blob/main/README.md
 https://server/POD_NAME/APP_NAME/data/FILE_PATH
 https://host/
 https://pods.au/me/app/data
-https://github.com/anusii/mypod/blob/dev/CHANGELOG.md
-https://anusii.github.io/mypod/
-https://anusii.github.io/mypod/client-profile.jsonld
-https://anusii.github.io/mypod/redirect.html
+https://pub.dev/documentation/solidui/latest/solidui/SolidScaffold-class.html
+https://anusii.github.io/soliduieg/client-profile.jsonld
 https://your-solid-server/
+https://gjwgit.github.io/rolopod/client-profile.jsonld
+https://github.com/anusii/
+https://anusii.github.io/
+https://server/alice/
 
 # 20260605 gjw Failing solid servers
 
@@ -111,8 +111,13 @@ https://blog.kumo.dev/2024/05/22/reverse_engineering_hkg_apps.html
 
 https://papertrail.anu.edu.au/
 https://papertrail.anu.edu.au/
+https://api.anthropic.com/v1/messages
 
 # 20260630 gjw rattle
 
 https://www.reddit.com/r/SAI_Rattle/
 https://rdrr.io/rforge/tm/man/stopwords.html
+
+# 20260809 gjw foliopod
+
+https://query1.finance.yahoo.com/

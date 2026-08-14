@@ -11,6 +11,7 @@ ARCHIVE
 ignore
 pubspec.yaml.*
 !templates/solidpod/pubspec.yaml.tmpl
+!templates/solidui/pubspec.yaml.tmpl
 
 qtest_*.txt
 /test/widget_test.dart

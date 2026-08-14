@@ -102,7 +102,7 @@ LOC := $(shell if [ -f support/loc.sh ]; then echo support/loc.sh; \
 
 .PHONY: chrome
 chrome:
-	flutter run -d chrome --release
+	flutter run -d chrome --release --web-port=4400
 
 # 20220503 gjw The following fails if the target files already exist -
 # just needs to be run once.
