@@ -35,18 +35,14 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/file_folder_picker.dart';
+import 'package:rattle/features/dataset/load_path.dart';
 import 'package:rattle/providers/dataset.dart';
-import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/copy_asset_to_tempdir.dart';
 import 'package:rattle/utils/set_status.dart';
-
-void datasetLoadedUpdate(WidgetRef ref) {
-  ref.read(datasetLoaded.notifier).state = true;
-}
 
 class DatasetPopup extends ConsumerWidget {
   const DatasetPopup({super.key});
@@ -93,30 +89,11 @@ class DatasetPopup extends ConsumerWidget {
               ElevatedButton(
                 onPressed: () async {
                   String path = await datasetSelectFile();
-                  if (path.isNotEmpty) {
-                    ref.read(pathProvider.notifier).state = path;
-                    if (context.mounted) await rLoadDataset(context, ref);
-                    setStatus(ref, statusChooseVariableRoles);
-                    datasetLoadedUpdate(ref);
 
-                    // Save the dataset name in lowercase to the dsnameProvider
-                    // from the path.
-
-                    ref.read(dsnameProvider.notifier).state = path
-                        .split(RegExp(r'[/\\]'))
-                        .last
-                        .split('.')
-                        .first
-                        .toLowerCase();
-                  }
-
-                  // Avoid the "Do not use BuildContexts across async gaps."
-                  // warning.
-
-                  if (!context.mounted) return;
-                  Navigator.pop(context, 'Local File');
-
-                  // Access the PageController via Riverpod and move to the second page.
+                  // 20260815 gjw The dataset load, the status and provider
+                  // updates, and the move to the ROLES page are all done by
+                  // [loadDatasetPath] so that loading a dataset named on the
+                  // command line behaves the same as loading one from here.
                   //
                   // 20250226 gjw For now we try not moving to the dataset page
                   // just yet. On a Mac there are reports of a grey ROLES
@@ -125,12 +102,15 @@ class DatasetPopup extends ConsumerWidget {
                   // problem. By staying on the OVERVIEW we mightreduce the
                   // liklihood?
 
-                  await ref.read(pageControllerProvider).animateToPage(
-                        // Index of the second page.
-                        1,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
+                  if (path.isNotEmpty && context.mounted) {
+                    await loadDatasetPath(context, ref, path);
+                  }
+
+                  // Avoid the "Do not use BuildContexts across async gaps."
+                  // warning.
+
+                  if (!context.mounted) return;
+                  Navigator.pop(context, 'Local File');
                 },
                 child: const MarkdownTooltip(
                   message: '''

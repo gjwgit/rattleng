@@ -42,3 +42,9 @@ const String assetsPath = 'assets';
 /// Location of the markdown file containing instructions for the SCRIPT tab.
 
 const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
+
+/// The file extensions of the datasets that Rattle can load, as dispatched on
+/// by `r/load_dataset.dart`. Used by the DATASET file picker and to recognise a
+/// dataset named on the command line. (gjw 20260815)
+
+const List<String> datasetExtensions = ['csv', 'xlsx', 'txt'];

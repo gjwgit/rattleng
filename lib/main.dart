@@ -34,7 +34,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:rattle/app.dart';
+import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/temp_dir.dart';
+import 'package:rattle/features/dataset/load_path.dart';
 import 'package:rattle/providers/pty.dart';
 import 'package:rattle/utils/is_desktop.dart';
 import 'package:rattle/utils/is_production.dart';
@@ -82,10 +84,17 @@ Future<bool> checkRInstallation() async {
   }
 }
 
-Future<void> main() async {
+Future<void> main([List<String> args = const []]) async {
   // The `main` entry point into any dart app.
   //
   // This is required to be [async] since we use [await] below to initalise the window manager.
+  //
+  // The [args] are the command line arguments, as forwarded to the Dart entry
+  // point by the platform runners, and support naming a dataset to load on
+  // startup, as in `rattle myData.csv`, rather than always having to load the
+  // dataset through the DATASET button. The parameter is optional so that the
+  // integration tests, which call `app.main()` directly, keep working.
+  // (gjw 20260815)
 
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -216,6 +225,22 @@ Future<void> main() async {
   // Set up the app's color scheme.
   Flavor flavor = catppuccin.latte;
 
+  // Identify any dataset named on the command line. We require a recognised
+  // dataset file extension so that other arguments are not mistaken for a
+  // filename. The launch environment can add arguments of its own, particularly
+  // on macOS where Finder passes `-psn_0_...` and Xcode passes
+  // `-NSDocumentRevisionsDebugMode YES`, and there that trailing `YES` would
+  // otherwise look like a filename and pop up a File Not Found on startup.
+
+  String datasetArg = args.firstWhere(
+    (arg) => datasetExtensions.any(
+      (ext) => arg.toLowerCase().endsWith('.$ext'),
+    ),
+    orElse: () => '',
+  );
+
+  if (datasetArg.isNotEmpty) datasetArg = resolveDatasetPath(datasetArg);
+
   // The runApp() function takes the given Widget and makes it the root of the
   // widget tree.
   //
@@ -251,7 +276,7 @@ Future<void> main() async {
           //       fontSizeDelta: 2.0,
           //     ),
         ),
-        home: const RattleApp(),
+        home: RattleApp(datasetPath: datasetArg),
       ),
     ),
   );

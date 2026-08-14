@@ -28,3 +28,10 @@ analyzer:
   exclude:
     - ignore/**
     - ignore/
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**

@@ -17,6 +17,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ Load a dataset named on the command line [6.5.35 20260815 gjw]
 + Update tooltips to current style TITLE\n\nTEXT [6.5.34 20260630 gjw]
 + Improve parsing of `print(form)` [6.5.33 20260630 gjw]
 + rpart tree print SVG not supported, use PNG [6.5.32 20260630 gjw]

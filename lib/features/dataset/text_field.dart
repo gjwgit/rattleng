@@ -30,7 +30,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/constants/status.dart';
-import 'package:rattle/features/dataset/popup.dart';
+import 'package:rattle/features/dataset/load_path.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';

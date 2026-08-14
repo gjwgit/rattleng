@@ -108,6 +108,29 @@ Then:
   of the saved script file).
 + From your own command line run `Rscript script.R`
 
+A dataset can also be named on the command line, so that it is loaded on
+startup rather than through the **Dataset** button:
+
+```bash
+rattle myData.csv
+```
+
+The filename can be relative to the current directory and can be a
+**csv**, **xlsx**, or **txt** file. Rattle starts on the **Roles** page
+of the **Dataset** tab, ready to review the variable roles.
+
+On macOS, where the app is a bundle, either run the binary within the
+bundle or use `open`, noting that `open` does not pass on the current
+directory and so the filename needs its full path:
+
+```bash
+/Applications/rattle.app/Contents/MacOS/rattle myData.csv
+open -a rattle --args ~/myData.csv
+```
+
+When developing from source, pass the filename through to the app with
+`flutter run --dart-entrypoint-args myData.csv`.
+
 Currently implemented features include:
 
 + Dataset

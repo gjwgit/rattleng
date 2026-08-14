@@ -32,8 +32,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:window_manager/window_manager.dart';
 
+import 'package:rattle/features/dataset/load_path.dart';
 import 'package:rattle/home.dart';
 import 'package:rattle/providers/script.dart';
+import 'package:rattle/utils/check_file_exists.dart';
 import 'package:rattle/utils/is_desktop.dart';
 import 'package:rattle/utils/timestamp.dart';
 import 'package:rattle/widgets/close_dialog.dart';
@@ -56,7 +58,13 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 /// window-related events, particularly for desktop platforms.
 
 class RattleApp extends ConsumerStatefulWidget {
-  const RattleApp({super.key});
+  const RattleApp({super.key, this.datasetPath = ''});
+
+  /// The dataset named on the command line to load on startup, or the empty
+  /// string when no dataset was named and so the user will load one through the
+  /// DATASET button. (gjw 20260815)
+
+  final String datasetPath;
 
   @override
   ConsumerState<RattleApp> createState() => _RattleAppState();
@@ -99,6 +107,25 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
               .replaceAll('VERSION', info.version)
               .replaceAll('TIMESTAMP', 'Timestamp ${timestamp()}'),
         );
+
+    // 20260815 gjw Load the dataset named on the command line, if any. This is
+    // done here, after the script template variables are initialised above,
+    // since loading a dataset appends to that script. The load itself is the
+    // same code path as the DATASET popup's Local File button.
+
+    if (widget.datasetPath.isEmpty) return;
+
+    // Wait for the first frame so that the DATASET tab, and in particular the
+    // R Console of `providers/pty.dart` which starts the R process, has been
+    // built before we ask R to load the dataset.
+
+    await WidgetsBinding.instance.endOfFrame;
+
+    if (!mounted) return;
+
+    if (!checkFileExists(context, widget.datasetPath)) return;
+
+    await loadDatasetPath(context, ref, widget.datasetPath);
   }
 
   /// Handle the window close event.
