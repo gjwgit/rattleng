@@ -61,6 +61,22 @@ final svmEvaluateProvider = StateProvider<bool>((ref) => false);
 final randomForestEvaluateProvider = StateProvider<bool>((ref) => false);
 final xgBoostEvaluateProvider = StateProvider<bool>((ref) => false);
 
+// The two TEMPLATE variables of the INTERACTIVE prediction popup, being the R
+// code that `r/source.dart` substitutes into the interactive scripts. They are
+// providers rather than parameters because that is how every other TEMPLATE
+// variable reaches the R scripts. (gjw 20260815)
+
+/// The model input variables, as the R vector `c("min_temp", ...)`, that
+/// `evaluate_interactive_variables.R` describes for the popup.
+
+final interactiveInputsProvider = StateProvider<String>((ref) => 'c()');
+
+/// The observation to predict, as an R `data.frame(...)` of a single row, that
+/// `evaluate_interactive_predict.R` predicts from.
+
+final interactiveNewdataProvider =
+    StateProvider<String>((ref) => 'data.frame()');
+
 // List of all the providers of model to be evaluated.
 
 final List<StateProvider> evaluateProviders = [

@@ -33,6 +33,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/features/evaluate/activity_button.dart';
+import 'package:rattle/features/evaluate/interactive_button.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/settings.dart';
@@ -343,6 +344,12 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 });
               },
             ),
+
+            // 20260815 gjw Predicting a single observation the user enters is
+            // not an evaluation over one of the dataset partitions, so the
+            // button sits after the partition choices rather than among them.
+
+            const InteractiveButton(),
           ],
         ),
       ],

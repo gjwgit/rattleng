@@ -17,6 +17,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ EVALUATE: Interactive prediction of an observation [6.5.39 20260816 gjw]
 + Centre the plot and restore its footer [6.5.38 20260815 gjw]
 + Fix blurry plots and enlarge the plot display [6.5.37 20260815 gjw]
 + BUG: Fix startup exception loading max factor [6.5.36 20260815 gjw]

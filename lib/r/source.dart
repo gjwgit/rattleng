@@ -528,6 +528,19 @@ Future<void> rSource(
 
   code = code.replaceAll('<DATASET_TYPE>', datasetType.toUpperCase());
 
+  // The INTERACTIVE prediction popup builds both of these as R code, the
+  // variables to describe and the single row observation to predict.
+
+  code = code.replaceAll(
+    '<INTERACTIVE_INPUTS>',
+    ref.read(interactiveInputsProvider),
+  );
+
+  code = code.replaceAll(
+    '<INTERACTIVE_NEWDATA>',
+    ref.read(interactiveNewdataProvider),
+  );
+
   ////////////////////////////////////////////////////////////////////////
   // FOREST
 
