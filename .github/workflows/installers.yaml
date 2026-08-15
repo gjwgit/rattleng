@@ -378,11 +378,20 @@ jobs:
       - name: Enable macOS desktop
         run: flutter create --platforms=macos --org=com.togaware .
 
-      - name: Remove Podfile and project.yaml
-        # 20260102 gjw These cause the default basic build to fail as
-        # for some reason an older macOS version is targeted.
+      - name: Remove project.yaml
+        # 20260102 gjw The Podfile and project.yml caused the default
+        # basic build to fail as for some reason an older macOS version
+        # is targeted.
+        #
+        # 20260815 gjw The Podfile is now kept. The older macOS version
+        # was its `platform :osx, '10.15'`, which is now 12.0 to match
+        # Flutter's own template and the MACOSX_DEPLOYMENT_TARGET of
+        # Runner.xcodeproj. Deleting it had Flutter generate a Podfile
+        # declaring a `RunnerTests` target that Runner.xcodeproj does
+        # not have, so `pod install` failed with "Unable to find a
+        # target named `RunnerTests`" and the macOS job died.
         run: |
-          rm -f macos/Podfile macos/project.yml
+          rm -f macos/project.yml
 
       # 20260712 gjw keychain-access-groups is a restricted
       # entitlement that requires a provisioning profile. With ad-hoc
