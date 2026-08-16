@@ -96,3 +96,11 @@ if (exists("risk") && !is.null(risk) && risk %in% names(evalds))
 } else {
   risk_ld <- NULL
 }
+
+## Report whether there is anything to measure the predictions against,
+## so that the app knows not to offer an evaluation that could only
+## fail. Reported on a short and fixed line that `rExtract()` can find.
+
+evalds_has_target <- ! is.null(actual_ld)
+
+rat(evalds_has_target, "\n")

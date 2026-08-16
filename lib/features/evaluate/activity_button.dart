@@ -31,7 +31,9 @@ import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/tree.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/get_risk.dart';
+import 'package:rattle/utils/get_target.dart';
 import 'package:rattle/utils/is_numeric_target.dart';
+import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/widgets/activity_button.dart';
 
 /// Executes model evaluation based on the given parameters and conditions.
@@ -105,6 +107,37 @@ Widget evaluateActivityButton(BuildContext context, dynamic ref) {
   return ActivityButton(
     pageControllerProvider: evaluatePageControllerProvider,
     onPressed: () async {
+      // 20260817 gjw An evaluation measures the predictions against the actual
+      // outcome, so a loaded dataset without the target variable has nothing to
+      // measure against. Say so rather than run measures that can only fail and
+      // leave broken pages and a red light behind them. The model can still be
+      // applied to such a dataset, which is what EXPORT does.
+
+      if (ref.read(datasetTypeProvider) == 'Loaded' &&
+          !ref.read(evaluateDatasetHasTargetProvider)) {
+        showOk(
+          context: context,
+          title: 'No Target Variable',
+          content: '''
+
+          The dataset you loaded does not have the target variable
+          **${getTarget(ref)}**, and so there is nothing for the predictions to
+          be measured against. No error matrix, ROC curve or other measure can
+          be produced for it.
+
+          The model can still be applied to the dataset. Tap **Export** to save
+          the observations together with what each model predicts for them.
+
+          To evaluate instead, load a dataset that includes the
+          **${getTarget(ref)}** column, or choose one of the other evaluation
+          datasets.
+
+          ''',
+        );
+
+        return;
+      }
+
       if (numericTarget) {
         // ── Regression evaluation path ──────────────────────────────────────
         // Regression-specific model scripts define pred_ra/prob_ra to return

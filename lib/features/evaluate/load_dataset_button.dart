@@ -33,7 +33,9 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/features/dataset/file_folder_picker.dart';
 import 'package:rattle/providers/evaluate.dart';
+import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/r/source.dart';
+import 'package:rattle/utils/wait_for_r_output.dart';
 
 /// Load a dataset from file to evaluate the model against.
 ///
@@ -72,7 +74,21 @@ class LoadDatasetButton extends ConsumerWidget {
 
           ref.read(evaluateDatasetPathProvider.notifier).state = path;
 
+          final int from = ref.read(stdoutProvider).length;
+
           await rSource(context, ref, ['evaluate_load_dataset']);
+
+          // Note whether the dataset has the target variable, which decides
+          // whether it can be evaluated or only scored.
+
+          final String reported = await waitForROutput(
+            ref,
+            '> rat(evalds_has_target, "\\n")',
+            from: from,
+          );
+
+          ref.read(evaluateDatasetHasTargetProvider.notifier).state =
+              reported.trim().contains('TRUE');
 
           // Choose it as the evaluation dataset, which is why the user loaded
           // it, rather than leaving them to also tap the chip.

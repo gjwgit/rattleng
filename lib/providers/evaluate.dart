@@ -70,6 +70,15 @@ final xgBoostEvaluateProvider = StateProvider<bool>((ref) => false);
 
 final evaluateDatasetPathProvider = StateProvider<String>((ref) => '');
 
+/// Whether the loaded evaluation dataset carries the target variable.
+///
+/// Without it the model can be applied to the dataset but there is nothing to
+/// measure the predictions against, so the evaluation measures and their plots
+/// would only fail. True for every other evaluation dataset, which are all
+/// partitions of the dataset the model was built from. (gjw 20260817)
+
+final evaluateDatasetHasTargetProvider = StateProvider<bool>((ref) => true);
+
 /// The CSV file that the evaluation results are exported to.
 
 final evaluateExportPathProvider = StateProvider<String>((ref) => '');
