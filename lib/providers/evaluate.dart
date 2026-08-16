@@ -70,6 +70,10 @@ final xgBoostEvaluateProvider = StateProvider<bool>((ref) => false);
 
 final evaluateDatasetPathProvider = StateProvider<String>((ref) => '');
 
+/// The CSV file that the evaluation results are exported to.
+
+final evaluateExportPathProvider = StateProvider<String>((ref) => '');
+
 // The two TEMPLATE variables of the INTERACTIVE prediction popup, being the R
 // code that `r/source.dart` substitutes into the interactive scripts. They are
 // providers rather than parameters because that is how every other TEMPLATE

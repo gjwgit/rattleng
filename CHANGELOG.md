@@ -17,6 +17,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ EVALUATE: Export the results to CSV, a column per model [6.5.43 20260817 gjw]
 + Traffic light label to its left so the light stays put [6.5.42 20260816 gjw]
 + EVALUATE: Load a dataset to evaluate the model against [6.5.41 20260816 gjw]
 + Traffic light in the app bar showing what R is doing [6.5.40 20260816 gjw]

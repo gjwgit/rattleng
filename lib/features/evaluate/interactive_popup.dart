@@ -35,8 +35,8 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/features/evaluate/interactive_field.dart';
-import 'package:rattle/features/evaluate/interactive_models.dart';
 import 'package:rattle/features/evaluate/interactive_variable.dart';
+import 'package:rattle/features/evaluate/model_scripts.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/vars/roles.dart';
@@ -161,7 +161,7 @@ class _InteractivePopupState extends ConsumerState<InteractivePopup> {
   /// Predict the entered observation with each of the ticked models.
 
   Future<void> _predict() async {
-    final List<String> scripts = interactiveModelScripts(ref);
+    final List<String> scripts = evaluateModelScripts(ref);
 
     if (scripts.isEmpty) {
       setState(() {

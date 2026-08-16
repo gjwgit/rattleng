@@ -31,8 +31,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 
-import 'package:rattle/features/evaluate/interactive_models.dart';
 import 'package:rattle/features/evaluate/interactive_popup.dart';
+import 'package:rattle/features/evaluate/model_scripts.dart';
 
 /// Popup the INTERACTIVE prediction window for a single observation.
 ///
@@ -46,7 +46,7 @@ class InteractiveButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bool enabled = interactiveModelScripts(ref).isNotEmpty;
+    final bool enabled = evaluateModelScripts(ref).isNotEmpty;
 
     return MarkdownTooltip(
       message: '''

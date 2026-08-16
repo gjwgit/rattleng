@@ -536,6 +536,13 @@ Future<void> rSource(
     ref.read(evaluateDatasetPathProvider),
   );
 
+  // The CSV file that the evaluation results are exported to.
+
+  code = code.replaceAll(
+    '<EXPORT_FILENAME>',
+    ref.read(evaluateExportPathProvider),
+  );
+
   // The INTERACTIVE prediction popup builds both of these as R code, the
   // variables to describe and the single row observation to predict.
 

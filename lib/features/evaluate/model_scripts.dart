@@ -1,4 +1,4 @@
-/// Identify the models that the INTERACTIVE prediction popup will predict with.
+/// Identify the models that the EVALUATE tab is currently working with.
 ///
 /// Time-stamp: "Saturday 2026-08-15 10:12:00 +1000 Graham Williams"
 ///
@@ -35,10 +35,10 @@ import 'package:rattle/utils/is_numeric_target.dart';
 /// The `evaluate_model_*` scripts of the models ticked on the EVALUATE tab.
 ///
 /// Each of those scripts sets the TEMPLATE variable `model` to the model it
-/// describes and defines `pred_ra()` and `prob_ra()` for it, which is exactly
-/// what `evaluate_interactive_predict.R` needs, so a script name is all the
-/// popup has to know. The script also describes itself through `mdesc`, so the
-/// labels come back from R with the predictions rather than being repeated
+/// describes and defines `pred_ra()` and `prob_ra()` for it, which is all that
+/// the INTERACTIVE prediction popup and the CSV export of the results need, so
+/// a script name is all either has to know. The script also describes itself
+/// through `mdesc`, so the labels come back from R rather than being repeated
 /// here.
 ///
 /// A model appears only when its family is ticked AND that particular model has
@@ -46,7 +46,7 @@ import 'package:rattle/utils/is_numeric_target.dart';
 /// decide what to evaluate. The regression scripts are used for a numeric
 /// target, where AdaBoost has no place as a classification-only algorithm.
 
-List<String> interactiveModelScripts(WidgetRef ref) {
+List<String> evaluateModelScripts(WidgetRef ref) {
   final bool numeric = isNumericTarget(ref);
 
   // The family ticks, being the Model checkboxes along the top of the tab.

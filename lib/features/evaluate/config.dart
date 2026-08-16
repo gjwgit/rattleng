@@ -33,6 +33,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/features/evaluate/activity_button.dart';
+import 'package:rattle/features/evaluate/export_button.dart';
 import 'package:rattle/features/evaluate/interactive_button.dart';
 import 'package:rattle/features/evaluate/load_dataset_button.dart';
 import 'package:rattle/providers/evaluate.dart';
@@ -373,6 +374,10 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
             // to. It sits with the chips because that is what it feeds.
 
             const LoadDatasetButton(),
+
+            // 20260816 gjw Save what the models made of each observation.
+
+            const ExportButton(),
 
             // 20260815 gjw Predicting a single observation the user enters is
             // not an evaluation over one of the dataset partitions, so the
