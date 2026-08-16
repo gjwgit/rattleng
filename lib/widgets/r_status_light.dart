@@ -62,7 +62,7 @@ class RStatusLight extends ConsumerWidget {
         ),
       RStatus.failed => (
           Colors.red,
-          'Stopped',
+          'Error',
           'R reported an error, or the R session has stopped. Whatever you '
               'last asked for may be missing or incomplete. See the '
               '**Console** tab for what R reported. The light turns green '
@@ -83,6 +83,19 @@ class RStatusLight extends ConsumerWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // 20260816 gjw The label goes to the LEFT of the light so that the
+            // light itself stays put. The app bar lays its actions out from the
+            // right, and this is the leftmost of them, so everything between
+            // the light and the right hand edge is of a fixed width. Were the
+            // label on the right of the light, the light would shift each time
+            // the label changed between Ready, Running and Error.
+
+            Text(
+              label,
+              style: const TextStyle(fontSize: 14),
+            ),
+            const SizedBox(width: 8),
+
             // A ring around the light so that it reads as a light rather than
             // as a coloured dot, and so it stays visible on any app bar colour.
 
@@ -94,11 +107,6 @@ class RStatusLight extends ConsumerWidget {
                 shape: BoxShape.circle,
                 border: Border.all(color: Colors.black26),
               ),
-            ),
-            const SizedBox(width: 8),
-            Text(
-              label,
-              style: const TextStyle(fontSize: 14),
             ),
           ],
         ),
