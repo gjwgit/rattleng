@@ -67,6 +67,7 @@ import 'package:rattle/utils/reset.dart';
 import 'package:rattle/utils/show_dataset_alert_dialog.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/show_settings_dialog.dart';
+import 'package:rattle/widgets/r_status_light.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
 // Define the [NavigationRail] tabs for the home page.
@@ -454,6 +455,12 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
         // Deploy the buttons aligned to the top right for actions.
         actions: [
+          // 20260816 gjw Issue #1173. Show what R is doing, since the app
+          // itself cannot show it: the panels simply have nothing new until R
+          // has finished, which looks the same as an app that has stopped.
+
+          const RStatusLight(),
+
           if (_isVersionLoaded)
             VersionWidget(
               version: _appVersion,

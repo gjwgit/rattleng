@@ -17,6 +17,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ Traffic light in the app bar showing what R is doing [6.5.40 20260816 gjw]
 + EVALUATE: Interactive prediction of an observation [6.5.39 20260816 gjw]
 + Centre the plot and restore its footer [6.5.38 20260815 gjw]
 + Fix blurry plots and enlarge the plot display [6.5.37 20260815 gjw]

@@ -24,6 +24,7 @@
 /// Authors: Graham Williams
 library;
 
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ import 'package:universal_io/io.dart' show Platform;
 import 'package:xterm/xterm.dart';
 
 import 'package:rattle/app.dart';
+import 'package:rattle/providers/r_status.dart';
 import 'package:rattle/providers/stdout.dart';
 import 'package:rattle/providers/terminal.dart';
 import 'package:rattle/utils/clean_string.dart';
@@ -61,11 +63,47 @@ final ptyProvider = StateProvider<Pty>((ref) {
 
   bool missingPackageNotified = false;
 
+  // Drive the traffic light of the app bar from what R actually reports, which
+  // is the only honest account of what R is doing: `rSource()` hands the code
+  // to the pty and returns, so the app itself does not know when R is
+  // finished. (gjw 20260816)
+  //
+  // R prints its `> ` prompt before echoing each statement it reads, so the
+  // console ending with a prompt does not on its own mean R is finished, and
+  // watching for it alone would flicker green all the way through a script.
+  // Instead we wait for R to go quiet: each chunk of output restarts the timer
+  // below, and only when nothing more has arrived for [rIdleDelay], with the
+  // console sitting at a prompt, is R actually waiting for us again.
+  //
+  // The alternative, submitting a marker command after each script and
+  // watching for it to be echoed back, would be exact but would write Rattle's
+  // own bookkeeping into the user's CONSOLE.
+
+  Timer? idleTimer;
+
   pty.output.cast<List<int>>().transform(const Utf8Decoder()).listen((data) {
     terminal.write(data);
     // debugPrint('update stdoutProvider');
-    final String accumulated = ref.read(stdoutProvider) + cleanString(data);
+    final String cleaned = cleanString(data);
+    final String accumulated = ref.read(stdoutProvider) + cleaned;
     ref.read(stdoutProvider.notifier).state = accumulated;
+
+    // An R error leaves the light red until the next script is run. R carries
+    // on with the rest of the submitted code after an error at the top level,
+    // so the prompt returning does not mean all was well.
+
+    if (rErrorReported.hasMatch(cleaned)) {
+      ref.read(rStatusProvider.notifier).state = RStatus.failed;
+    }
+
+    idleTimer?.cancel();
+    idleTimer = Timer(rIdleDelay, () {
+      final bool atPrompt = ref.read(stdoutProvider).endsWith('> ');
+
+      if (atPrompt && ref.read(rStatusProvider) == RStatus.running) {
+        ref.read(rStatusProvider.notifier).state = RStatus.ready;
+      }
+    });
 
     // If R reports a package that is not installed (or fails to load), the
     // downstream objects are never created and the display panel renders blank
@@ -112,6 +150,11 @@ final ptyProvider = StateProvider<Pty>((ref) {
 
   pty.exitCode.then((code) {
     terminal.write('the process exited with exit code $code');
+
+    // R is gone, so nothing can run until the app is restarted or reset.
+
+    idleTimer?.cancel();
+    ref.read(rStatusProvider.notifier).state = RStatus.failed;
   });
 
   terminal.onOutput = (data) {
