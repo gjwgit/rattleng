@@ -26,6 +26,8 @@
 
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,6 +40,7 @@ import 'package:rattle/providers/script.dart';
 import 'package:rattle/utils/check_file_exists.dart';
 import 'package:rattle/utils/is_desktop.dart';
 import 'package:rattle/utils/timestamp.dart';
+import 'package:rattle/utils/window_size.dart';
 import 'package:rattle/widgets/close_dialog.dart';
 
 // Add a key to reference [RattleHome] to access its method.
@@ -84,8 +87,21 @@ class _RattleAppState extends ConsumerState<RattleApp> with WindowListener {
 
   @override
   void dispose() {
+    _resizeTimer?.cancel();
     windowManager.removeListener(this);
     super.dispose();
+  }
+
+  // 20260817 gjw Remember the size the user leaves the window at. A resize
+  // arrives for every frame of the drag, so wait for the dragging to stop
+  // rather than write to the preferences hundreds of times.
+
+  Timer? _resizeTimer;
+
+  @override
+  void onWindowResize() {
+    _resizeTimer?.cancel();
+    _resizeTimer = Timer(const Duration(seconds: 1), saveWindowSize);
   }
 
   /// Initializes window management settings.

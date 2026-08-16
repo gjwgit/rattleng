@@ -31,6 +31,7 @@ import 'package:flutter/material.dart';
 
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:rattle/app.dart';
@@ -41,6 +42,7 @@ import 'package:rattle/providers/pty.dart';
 import 'package:rattle/utils/is_desktop.dart';
 import 'package:rattle/utils/is_production.dart';
 import 'package:rattle/utils/show_error.dart';
+import 'package:rattle/utils/window_size.dart';
 
 Future<bool> checkRInstallation() async {
   // Try to run the R command to check its availability.
@@ -179,23 +181,29 @@ Future<void> main([List<String> args = const []]) async {
 
     await windowManager.ensureInitialized();
 
-    WindowOptions windowOptions = const WindowOptions(
+    // The size the window was left at when the app was last used, if we have
+    // been remembering it.
+
+    final prefs = await SharedPreferences.getInstance();
+    final double? savedWidth = prefs.getDouble(windowWidthPref);
+    final double? savedHeight = prefs.getDouble(windowHeightPref);
+
+    WindowOptions windowOptions = WindowOptions(
       // Setting [alwaysOnTop] here will ensure the desktop app starts on top of
       // other apps on the desktop so that it is visible.
       //
       // We later turn it off as we don't want to force it always on top.
       alwaysOnTop: true,
 
-      // We can override the size in the first instance by, for example in
-      // Linux, editing linux/my_application.cc.
-      //
-      // Setting it here has effect when Restarting the app while debugging.
+      // 20260817 gjw Open at the size the app was last left at. Until there is
+      // one to restore we deliberately pass no size at all, so that each
+      // platform keeps the default it sets for itself in its own runner: 1300
+      // by 850 in `linux/my_application.cc`, and 1280 by 720 in
+      // `windows/runner/main.cpp`, where 950 by 600 was found to be too small.
 
-      // However, since Windows has 1280x720 by default in the windows-specific
-      // windows/runner/main.cpp, line 29, it is best not to override it here
-      // since under Windows 950x600 is too small.
-
-      // size: Size(950, 600),
+      size: (savedWidth != null && savedHeight != null)
+          ? Size(savedWidth, savedHeight)
+          : null,
 
       // The [title] is used for the window manager's window title.
       title: 'Rattle - Data Science with R',

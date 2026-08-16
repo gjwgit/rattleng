@@ -41,6 +41,7 @@ import 'package:rattle/providers/dataset.dart';
 import 'package:rattle/providers/script.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/utils/debug_text.dart';
+import 'package:rattle/utils/window_size.dart';
 
 const double widthSpace = 10;
 
@@ -120,8 +121,22 @@ class _CloseDialogState extends ConsumerState<CloseDialog> {
     );
   }
 
-  void _closeApp() {
-    Navigator.of(context).pop();
+  void _closeApp() async {
+    // capture navigator before async gaps to avoid BuildContext across async gaps
+
+    final navigator = Navigator.of(context);
+
+    // A final flush of the window size, for a resize made in the second or so
+    // before quitting that the debounced save has not caught up with. The save
+    // itself honours the remember-the-size setting.
+
+    try {
+      await saveWindowSize();
+    } catch (e) {
+      debugPrint('Error saving window size: $e');
+    }
+
+    navigator.pop();
     cleanUpTempDirs();
     WindowManager.instance.setPreventClose(false);
     WindowManager.instance.close();

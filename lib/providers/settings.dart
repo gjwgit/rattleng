@@ -100,3 +100,12 @@ final stripCommentsProvider = StateProvider<bool>((ref) => false);
 final askOnExitProvider = StateProvider<bool>((ref) => true);
 
 final ignoreMissingTargetProvider = StateProvider<bool>((ref) => true);
+
+// The window size that RESET returns to. Until a size has been remembered each
+// platform uses the default from its own runner, so this is only ever reached
+// by way of the RESET button. (gjw 20260817)
+
+const double defaultWindowWidth = 1280.0;
+const double defaultWindowHeight = 720.0;
+
+final rememberWindowSizeProvider = StateProvider<bool>((ref) => true);
