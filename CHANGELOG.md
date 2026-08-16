@@ -17,6 +17,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ EVALUATE: Load a dataset to evaluate the model against [6.5.41 20260816 gjw]
 + Traffic light in the app bar showing what R is doing [6.5.40 20260816 gjw]
 + EVALUATE: Interactive prediction of an observation [6.5.39 20260816 gjw]
 + Centre the plot and restore its footer [6.5.38 20260815 gjw]

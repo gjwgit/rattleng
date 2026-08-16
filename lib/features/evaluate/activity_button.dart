@@ -68,6 +68,12 @@ Future<void> executeEvaluation({
     'Validation': 'evaluate_template_tu',
     'Testing': 'evaluate_template_te',
     'Complete': 'evaluate_template_tc',
+
+    // 20260816 gjw A dataset loaded from its own file, prepared as `evalds` by
+    // `evaluate_load_dataset.R`, rather than a partition of the dataset the
+    // model was built from.
+
+    'Loaded': 'evaluate_template_ld',
   };
 
   if (executed) {

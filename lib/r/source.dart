@@ -529,6 +529,13 @@ Future<void> rSource(
 
   code = code.replaceAll('<DATASET_TYPE>', datasetType.toUpperCase());
 
+  // The dataset loaded to evaluate the model against, if any.
+
+  code = code.replaceAll(
+    '<EVAL_FILENAME>',
+    ref.read(evaluateDatasetPathProvider),
+  );
+
   // The INTERACTIVE prediction popup builds both of these as R code, the
   // variables to describe and the single row observation to predict.
 

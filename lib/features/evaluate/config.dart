@@ -34,6 +34,7 @@ import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/features/evaluate/activity_button.dart';
 import 'package:rattle/features/evaluate/interactive_button.dart';
+import 'package:rattle/features/evaluate/load_dataset_button.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/settings.dart';
@@ -184,6 +185,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
     Evaluate the performance on the **complete** dataset.
 
     ''',
+    'Loaded': '''
+
+    Evaluate the performance over a dataset **loaded from its own file**, of
+    observations the model has never seen, which gives the most honest estimate
+    of how the model will perform in use. Tap **Load Dataset** to choose the
+    file. This option is only available once a dataset has been loaded.
+
+    ''',
   };
 
   bool _isEvaluationEnabled(ModelConfig config) {
@@ -293,7 +302,10 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
               // Generate list of dataset type options, filtering based on partition toggles.
               options: datasetTypes.keys
                   .where(
-                    (key) => ref.read(partitionProvider) || key == 'Complete',
+                    (key) =>
+                        ref.read(partitionProvider) ||
+                        key == 'Complete' ||
+                        key == 'Loaded',
                   )
                   .map(
                     (key) => key == 'Tuning' &&
@@ -306,12 +318,23 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
               // Set selected option, handling Tuning/Validation text swap and
               // defaulting to Complete when partitions disabled.
 
-              selectedOption: !ref.read(partitionProvider)
-                  ? 'Complete'
-                  : (datasetType == 'Tuning' &&
-                          ref.watch(useValidationSettingProvider)
-                      ? 'Validation'
-                      : datasetType),
+              // 20260816 gjw Without partitioning the only partition on offer
+              // is Complete, but the Loaded dataset is not a partition and so
+              // stays selectable either way.
+
+              selectedOption:
+                  (!ref.read(partitionProvider) && datasetType != 'Loaded')
+                      ? 'Complete'
+                      : (datasetType == 'Tuning' &&
+                              ref.watch(useValidationSettingProvider)
+                          ? 'Validation'
+                          : datasetType),
+
+              // Loaded is offered but cannot be chosen until there is one.
+
+              isOptionDisabled: (option) =>
+                  option == 'Loaded' &&
+                  ref.watch(evaluateDatasetPathProvider).isEmpty,
 
               // Create tooltips map, replacing 'Tuning' key with 'Validation'
               // when validation is enabled and filtering based on partition setting.
@@ -320,7 +343,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                     .where(
                       (entry) =>
                           ref.read(partitionProvider) ||
-                          entry.key == 'Complete',
+                          entry.key == 'Complete' ||
+                          entry.key == 'Loaded',
                     )
                     .map(
                       (entry) => MapEntry(
@@ -344,6 +368,11 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 });
               },
             ),
+
+            // 20260816 gjw Choose the file that the Loaded chip above refers
+            // to. It sits with the chips because that is what it feeds.
+
+            const LoadDatasetButton(),
 
             // 20260815 gjw Predicting a single observation the user enters is
             // not an evaluation over one of the dataset partitions, so the

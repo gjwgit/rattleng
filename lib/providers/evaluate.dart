@@ -61,6 +61,15 @@ final svmEvaluateProvider = StateProvider<bool>((ref) => false);
 final randomForestEvaluateProvider = StateProvider<bool>((ref) => false);
 final xgBoostEvaluateProvider = StateProvider<bool>((ref) => false);
 
+/// The file holding a dataset loaded to evaluate the model against, or the
+/// empty string when none has been loaded.
+///
+/// A dataset of observations the model has never seen gives the most honest
+/// estimate of how it will perform in use, which a partition of the dataset the
+/// model was built from can only approximate. (gjw 20260816)
+
+final evaluateDatasetPathProvider = StateProvider<String>((ref) => '');
+
 // The two TEMPLATE variables of the INTERACTIVE prediction popup, being the R
 // code that `r/source.dart` substitutes into the interactive scripts. They are
 // providers rather than parameters because that is how every other TEMPLATE
