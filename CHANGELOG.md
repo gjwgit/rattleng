@@ -17,6 +17,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ Remember the window size between sessions [6.5.45 20260817 adiar11]
 + EVALUATE: No measures for a loaded dataset with no target [6.5.44 20260817 gjw]
 + EVALUATE: Export the results to CSV, a column per model [6.5.43 20260817 gjw]
 + Traffic light label to its left so the light stays put [6.5.42 20260816 gjw]
