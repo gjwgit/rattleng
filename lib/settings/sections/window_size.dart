@@ -35,6 +35,7 @@ import 'package:window_manager/window_manager.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/utils/is_desktop.dart';
+import 'package:rattle/utils/window_size.dart';
 
 class WindowSize extends ConsumerStatefulWidget {
   const WindowSize({super.key});
@@ -82,13 +83,22 @@ class _WindowSizeState extends ConsumerState<WindowSize> with WindowListener {
     }
   }
 
-  /// Load settings from providers and update text controllers
-  void _loadSettings() {
-    final savedWidth = ref.read(windowWidthProvider);
-    final savedHeight = ref.read(windowHeightProvider);
+  /// Fill the text fields from the saved window size.
+  ///
+  /// Read from the preferences rather than from the providers, which the
+  /// enclosing SETTINGS dialog loads asynchronously and so may not have
+  /// populated by the time this section is built. (gjw 20260817)
 
-    _widthController.text = savedWidth.toStringAsFixed(0);
-    _heightController.text = savedHeight.toStringAsFixed(0);
+  Future<void> _loadSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    final Size size = await windowManager.getSize();
+
+    if (!mounted) return;
+
+    _widthController.text =
+        (prefs.getDouble(windowWidthPref) ?? size.width).toStringAsFixed(0);
+    _heightController.text =
+        (prefs.getDouble(windowHeightPref) ?? size.height).toStringAsFixed(0);
   }
 
   /// Save window size settings to shared preferences
@@ -99,18 +109,17 @@ class _WindowSizeState extends ConsumerState<WindowSize> with WindowListener {
     final height = double.tryParse(_heightController.text);
 
     if (width != null && width > 0) {
-      ref.read(windowWidthProvider.notifier).state = width;
-      await prefs.setDouble('windowWidth', width);
+      await prefs.setDouble(windowWidthPref, width);
     }
 
     if (height != null && height > 0) {
-      ref.read(windowHeightProvider.notifier).state = height;
-      await prefs.setDouble('windowHeight', height);
+      await prefs.setDouble(windowHeightPref, height);
     }
 
-    // Save remember window size setting
-    final rememberSize = ref.read(rememberWindowSizeProvider);
-    await prefs.setBool('rememberWindowSize', rememberSize);
+    await prefs.setBool(
+      rememberWindowSizePref,
+      ref.read(rememberWindowSizeProvider),
+    );
   }
 
   /// Apply the window size from the text fields to the actual window
@@ -138,8 +147,6 @@ class _WindowSizeState extends ConsumerState<WindowSize> with WindowListener {
 
   /// Reset window size settings to defaults
   Future<void> _resetWindowSize() async {
-    ref.read(windowWidthProvider.notifier).state = defaultWindowWidth;
-    ref.read(windowHeightProvider.notifier).state = defaultWindowHeight;
     ref.read(rememberWindowSizeProvider.notifier).state = true;
 
     _widthController.text = defaultWindowWidth.toStringAsFixed(0);
@@ -148,7 +155,7 @@ class _WindowSizeState extends ConsumerState<WindowSize> with WindowListener {
     await windowManager
         .setSize(const Size(defaultWindowWidth, defaultWindowHeight));
 
-    _saveWindowSizeSettings();
+    await _saveWindowSizeSettings();
   }
 
   @override
@@ -168,16 +175,13 @@ class _WindowSizeState extends ConsumerState<WindowSize> with WindowListener {
   @override
   Widget build(BuildContext context) {
     final rememberSize = ref.watch(rememberWindowSizeProvider);
-    final savedWidth = ref.watch(windowWidthProvider);
-    final savedHeight = ref.watch(windowHeightProvider);
 
-    // Keep controllers in sync with providers
-    if (_widthController.text != savedWidth.toStringAsFixed(0)) {
-      _widthController.text = savedWidth.toStringAsFixed(0);
-    }
-    if (_heightController.text != savedHeight.toStringAsFixed(0)) {
-      _heightController.text = savedHeight.toStringAsFixed(0);
-    }
+    // 20260817 gjw The text fields are NOT written to from here. They used to
+    // be kept in step with the providers on every build, which meant that a
+    // rebuild part way through typing a width, and resizing the window rebuilds
+    // this on every frame of the drag, replaced what was being typed with the
+    // value that was there before. The fields are the user's to fill in, and
+    // are written to only by Reset and when the section is first built.
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

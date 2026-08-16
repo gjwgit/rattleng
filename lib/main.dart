@@ -39,10 +39,10 @@ import 'package:rattle/constants/app.dart';
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/features/dataset/load_path.dart';
 import 'package:rattle/providers/pty.dart';
-import 'package:rattle/providers/settings.dart';
 import 'package:rattle/utils/is_desktop.dart';
 import 'package:rattle/utils/is_production.dart';
 import 'package:rattle/utils/show_error.dart';
+import 'package:rattle/utils/window_size.dart';
 
 Future<bool> checkRInstallation() async {
   // Try to run the R command to check its availability.
@@ -181,10 +181,12 @@ Future<void> main([List<String> args = const []]) async {
 
     await windowManager.ensureInitialized();
 
-    // Load saved window size from SharedPreferences.
+    // The size the window was left at when the app was last used, if we have
+    // been remembering it.
+
     final prefs = await SharedPreferences.getInstance();
-    final savedWidth = prefs.getDouble('windowWidth') ?? defaultWindowWidth;
-    final savedHeight = prefs.getDouble('windowHeight') ?? defaultWindowHeight;
+    final double? savedWidth = prefs.getDouble(windowWidthPref);
+    final double? savedHeight = prefs.getDouble(windowHeightPref);
 
     WindowOptions windowOptions = WindowOptions(
       // Setting [alwaysOnTop] here will ensure the desktop app starts on top of
@@ -193,9 +195,15 @@ Future<void> main([List<String> args = const []]) async {
       // We later turn it off as we don't want to force it always on top.
       alwaysOnTop: true,
 
-      // Use saved window size if available, otherwise use platform defaults
-      // The saved size is loaded from SharedPreferences
-      size: Size(savedWidth, savedHeight),
+      // 20260817 gjw Open at the size the app was last left at. Until there is
+      // one to restore we deliberately pass no size at all, so that each
+      // platform keeps the default it sets for itself in its own runner: 1300
+      // by 850 in `linux/my_application.cc`, and 1280 by 720 in
+      // `windows/runner/main.cpp`, where 950 by 600 was found to be too small.
+
+      size: (savedWidth != null && savedHeight != null)
+          ? Size(savedWidth, savedHeight)
+          : null,
 
       // The [title] is used for the window manager's window title.
       title: 'Rattle - Data Science with R',

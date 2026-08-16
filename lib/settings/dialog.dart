@@ -44,6 +44,7 @@ import 'package:rattle/settings/sections/script.dart';
 import 'package:rattle/settings/sections/session.dart';
 import 'package:rattle/settings/sections/window_size.dart';
 import 'package:rattle/settings/utils/handle_cancel_button.dart';
+import 'package:rattle/utils/window_size.dart';
 
 class SettingsDialog extends ConsumerStatefulWidget {
   const SettingsDialog({super.key});
@@ -119,16 +120,11 @@ class SettingsDialogState extends ConsumerState<SettingsDialog> {
     ref.read(ignoreMissingTargetProvider.notifier).state =
         prefs.getBool('ignoreMissingTarget') ?? true;
 
-    // Load window size settings from shared preferences
-
-    ref.read(windowWidthProvider.notifier).state =
-        prefs.getDouble('windowWidth') ?? defaultWindowWidth;
-
-    ref.read(windowHeightProvider.notifier).state =
-        prefs.getDouble('windowHeight') ?? defaultWindowHeight;
+    // Load the window size setting from shared preferences. The size itself is
+    // read by the WindowSize section from the preferences directly.
 
     ref.read(rememberWindowSizeProvider.notifier).state =
-        prefs.getBool('rememberWindowSize') ?? true;
+        prefs.getBool(rememberWindowSizePref) ?? true;
   }
 
   /// Load all numeric settings from shared preferences.

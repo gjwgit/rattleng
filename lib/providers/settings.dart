@@ -101,15 +101,11 @@ final askOnExitProvider = StateProvider<bool>((ref) => true);
 
 final ignoreMissingTargetProvider = StateProvider<bool>((ref) => true);
 
-// Window size settings providers
-// Default window size values (can be overridden by platform-specific defaults if needed)
+// The window size that RESET returns to. Until a size has been remembered each
+// platform uses the default from its own runner, so this is only ever reached
+// by way of the RESET button. (gjw 20260817)
 
 const double defaultWindowWidth = 1280.0;
 const double defaultWindowHeight = 720.0;
-
-final windowWidthProvider = StateProvider<double>((ref) => defaultWindowWidth);
-
-final windowHeightProvider =
-    StateProvider<double>((ref) => defaultWindowHeight);
 
 final rememberWindowSizeProvider = StateProvider<bool>((ref) => true);
