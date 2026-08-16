@@ -32,6 +32,19 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/providers/r_status.dart';
 
+/// The width set aside for the label beside the light.
+///
+/// The light sits between the version and the buttons of the app bar, which
+/// lays its actions out from the right. Anything here that changed width would
+/// therefore shift the version along, so the label is given a width that does
+/// not depend on which label it is showing.
+///
+/// Measured at the 14 point size used below, `Running` is the longest of the
+/// labels at 52 points, `Ready` 39 and `Error` 32, so this leaves a little room
+/// for the different fonts of the other desktops. (gjw 20260817)
+
+const double rStatusLabelWidth = 62;
+
 /// Show whether R is idle, busy, or has stopped.
 ///
 /// Rattle hands our R code to an R session running alongside the app, and until
@@ -83,16 +96,25 @@ class RStatusLight extends ConsumerWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // 20260816 gjw The label goes to the LEFT of the light so that the
-            // light itself stays put. The app bar lays its actions out from the
-            // right, and this is the leftmost of them, so everything between
-            // the light and the right hand edge is of a fixed width. Were the
-            // label on the right of the light, the light would shift each time
-            // the label changed between Ready, Running and Error.
+            // 20260816 gjw The label goes to the LEFT of the light, and is
+            // given a fixed width, so that nothing moves as the label changes
+            // between Ready, Running and Error. The app bar lays its actions
+            // out from the right, so a widget that changes width shifts the
+            // light itself and everything to its left, the version among them.
+            //
+            // The width has to fit the longest of the labels. Any that does not
+            // fit is ellipsed rather than overflowing, which is what would
+            // happen if a large system text scale were in play.
 
-            Text(
-              label,
-              style: const TextStyle(fontSize: 14),
+            SizedBox(
+              width: rStatusLabelWidth,
+              child: Text(
+                label,
+                textAlign: TextAlign.right,
+                softWrap: false,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontSize: 14),
+              ),
             ),
             const SizedBox(width: 8),
 

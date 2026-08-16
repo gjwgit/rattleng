@@ -455,17 +455,23 @@ class RattleHomeState extends ConsumerState<RattleHome>
 
         // Deploy the buttons aligned to the top right for actions.
         actions: [
-          // 20260816 gjw Issue #1173. Show what R is doing, since the app
-          // itself cannot show it: the panels simply have nothing new until R
-          // has finished, which looks the same as an app that has stopped.
-
-          const RStatusLight(),
-
           if (_isVersionLoaded)
             VersionWidget(
               version: _appVersion,
               changelogUrl: _changelogUrl,
             ),
+
+          // 20260816 gjw Issue #1173. Show what R is doing, since the app
+          // itself cannot show it: the panels simply have nothing new until R
+          // has finished, which looks the same as an app that has stopped.
+          //
+          // 20260817 gjw The light sits between the version and the buttons.
+          // Everything to its right is of a fixed width, which together with
+          // the label being to the left of the light itself is what keeps the
+          // light from moving as the label changes between Ready, Running and
+          // Error.
+
+          const RStatusLight(),
 
           const SizedBox(width: 50),
 
