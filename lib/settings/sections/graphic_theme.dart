@@ -69,10 +69,12 @@ class _GraphicThemeState extends ConsumerState<GraphicTheme> {
       children: [
         Row(
           children: [
-            MarkdownTooltip(
+            const MarkdownTooltip(
               message: '''
 
-              **Graphic Theme Setting:** The graphic theme is used
+              **Graphic Theme Setting**
+
+              The graphic theme is used
               by many (but not all) of the plots in Rattle, and
               specifically by those plots using the ggplot2
               package. Hover over each theme for more details. The
@@ -88,7 +90,9 @@ class _GraphicThemeState extends ConsumerState<GraphicTheme> {
             MarkdownTooltip(
               message: '''
 
-              **Reset Theme:** Tap here to reset the Graphic Theme
+              **Reset Theme**
+
+              Tap here to reset the Graphic Theme
                 setting to the default theme for Rattle.
                 
               ''',
@@ -131,7 +135,7 @@ class _GraphicThemeState extends ConsumerState<GraphicTheme> {
           }).toList(),
         ),
         settingsGroupGap,
-        Divider(),
+        const Divider(),
       ],
     );
   }

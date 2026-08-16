@@ -1,6 +1,6 @@
 /// Dataset display with pages.
 //
-// Time-stamp: "Friday 2025-09-12 21:08:52 +1000 Graham Williams"
+// Time-stamp: "Tuesday 2026-01-06 15:56:19 +1100 Graham Williams"
 //
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -161,8 +161,9 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       For the selected variables in the data table below set their role to
       **Ignore**.
 
-      To select or deselect **all variables** shift-click the checkbox in the
-      header row.
+      To select or deselect **all variables** SHIFT-click the checkbox in the
+      header row. SHIFT click will also add/remove variables, and CTRL will
+      add/remove all variables to the last click.
 
       Ignored variables will not be used in any analysis and can be removed from
       the dataset using the **Cleanup** feature under the **Transform** tab.
@@ -174,7 +175,8 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
       **Input**.
 
       To select or deselect **all variables** shift-click the checkbox in the
-      header row.
+      header row. SHIFT click will also add/remove variables, and CTRL will
+      add/remove all variables to the last click.
 
       Input variables are used for predictive modelling in the **Model** tab,
       for example, to predict a **Target** variable.
@@ -266,12 +268,14 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
                   ],
                 ),
               ),
-              SaveDatasetButton(),
+              const SaveDatasetButton(),
               configChooserGap,
               MarkdownTooltip(
                 message: '''
 
-                **Viewer.** Tap here to open a separate window to view the
+                **Viewer**
+
+                Tap here to open a separate window to view the
                 current dataset. The default and quite simple data viewer in R
                 will be used. It is invoked as `View(ds)`.
 
@@ -348,42 +352,42 @@ class _DatasetDisplayState extends ConsumerState<DatasetDisplay> {
               dataRowHeight: 60.0,
               checkboxAlignment: Alignment.centerLeft,
               columns: [
-                DataColumn2(
+                const DataColumn2(
                   label: Text(
                     'Variable',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   size: ColumnSize.M,
                 ),
-                DataColumn2(
+                const DataColumn2(
                   label: Text(
                     'Role',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   fixedWidth: 450.0,
                 ),
-                DataColumn2(
+                const DataColumn2(
                   label: Text(
                     'Type',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   size: ColumnSize.S,
                 ),
-                DataColumn2(
+                const DataColumn2(
                   label: Text(
                     'Unique',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   size: ColumnSize.S,
                 ),
-                DataColumn2(
+                const DataColumn2(
                   label: Text(
                     'Missing',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   size: ColumnSize.S,
                 ),
-                DataColumn2(
+                const DataColumn2(
                   label: Text(
                     'Sample',
                     style: TextStyle(fontWeight: FontWeight.bold),

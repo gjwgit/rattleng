@@ -1,6 +1,6 @@
 /// The main tabs-based interface for the Rattle app.
 ///
-/// Time-stamp: "Saturday 2025-09-27 09:53:24 +1000 Graham Williams"
+/// Time-stamp: "Friday 2026-04-03 09:22:13 +1100 Graham Williams"
 ///
 /// Copyright (C) 2023-2024, Togaware Pty Ltd.
 ///
@@ -67,6 +67,7 @@ import 'package:rattle/utils/reset.dart';
 import 'package:rattle/utils/show_dataset_alert_dialog.dart';
 import 'package:rattle/utils/show_ok.dart';
 import 'package:rattle/utils/show_settings_dialog.dart';
+import 'package:rattle/widgets/r_status_light.dart';
 import 'package:rattle/widgets/status_bar.dart';
 
 // Define the [NavigationRail] tabs for the home page.
@@ -77,7 +78,9 @@ final List<Map<String, dynamic>> homeTabs = [
     'icon': Icons.input,
     'tooltip': '''
 
-    **Dataset:** Tap here to access the Dataset function. Through this function
+    **Dataset**
+
+    Tap here to access the Dataset function. Through this function
       you can load a dataset into Rattle, including any one of a number of
       demonstration datasets.
 
@@ -88,7 +91,9 @@ final List<Map<String, dynamic>> homeTabs = [
     'icon': Icons.insights,
     'tooltip': '''
 
-    **Explore:** Tap here to access the Explore function. Through this function
+    **Explore**
+
+    Tap here to access the Explore function. Through this function
       you can 'live and breathe' your data. That is, explore the distribution of
       variables, correlations, mising data, and so on.
 
@@ -99,7 +104,9 @@ final List<Map<String, dynamic>> homeTabs = [
     'icon': Icons.transform,
     'tooltip': '''
 
-    **Transform:** Tap here to access the Transform function. Through this
+    **Transform**
+
+    Tap here to access the Transform function. Through this
       function you can clean up and transform your data set in various way.
 
     ''',
@@ -109,7 +116,9 @@ final List<Map<String, dynamic>> homeTabs = [
     'icon': Icons.model_training,
     'tooltip': '''
 
-    **Model:** Tap here to acces the Model function. Through this function you
+    **Model**
+
+    Tap here to acces the Model function. Through this function you
       can build predictive and descriptive models from your data.
 
     ''',
@@ -119,7 +128,9 @@ final List<Map<String, dynamic>> homeTabs = [
     'icon': Icons.leaderboard,
     'tooltip': '''
 
-    **Evaluate:** Tap here to acces the Evaluate function. Through this function
+    **Evaluate**
+
+    Tap here to acces the Evaluate function. Through this function
       you can evaluate the performance of your predictive models.
 
     ''',
@@ -129,7 +140,9 @@ final List<Map<String, dynamic>> homeTabs = [
     'icon': Icons.terminal,
     'tooltip': '''
 
-    **Console:** Tap here to acces the Console function. Through this function
+    **Console**
+
+    Tap here to acces the Console function. Through this function
       you can access the R console where all of the R commands and their output
       is captured.
 
@@ -140,7 +153,9 @@ final List<Map<String, dynamic>> homeTabs = [
     'icon': Icons.code,
     'tooltip': '''
 
-    **Script:** Tap here to acces the Script function. Through this function you
+    **Script**
+
+    Tap here to acces the Script function. Through this function you
       can review all of the R commands that are being run and save the script to
       an R script file for running in R directly.
 
@@ -151,7 +166,9 @@ final List<Map<String, dynamic>> homeTabs = [
     'icon': Icons.work,
     'tooltip': '''
 
-    **Debug:** Tap here to acces the Debug function. Through this function you
+    **Debug**
+
+    Tap here to acces the Debug function. Through this function you
       can see some debugging information. This is primarily of use to our
       developers.
 
@@ -378,20 +395,21 @@ class RattleHomeState extends ConsumerState<RattleHome>
     super.dispose();
   }
 
-  String about = '''${wordWrap('''
+  String about = wordWrap('''
 
   Rattle V6 is a modern rewrite of the very popular Rattle Data Mining and Data
   Science tool. Visit the [Rattle Home Page](https://rattle.togaware.com) for
-  details.
+  details and the [reddit](https://www.reddit.com/r/SAI_Rattle/) discussion
+  group for asking questions.
 
-  ''')}
+  Author: Graham Williams
 
-Author: Graham Williams
+  Contributions: Aditya Arora, Bob Muenchen, Tony Nolan, Zhangcheng Qiang,
+  Mukund B Srinivas, Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
 
-Contributions: Aditya Arora, Bob Muenchen, Tony Nolan, Zhangcheng Qiang, Mukund
-B Srinivas, Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
+  Discussion: Visit [reddit](https://www.reddit.com/r/SAI_Rattle/).
 
-  ''';
+  ''');
 
   @override
   Widget build(BuildContext context) {
@@ -402,21 +420,34 @@ B Srinivas, Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
         backgroundColor: flavor.mantle,
 
         // The title aligned to the left.
-
         //title: const Text(appTitle),
         title: Row(
           children: [
             Image.asset('assets/icons/icon.png', width: 40, height: 40),
             configWidgetGap,
-            MarkdownBody(
-              data: appTitle,
-              onTapLink: (text, href, title) {
-                final Uri url = Uri.parse(href ?? '');
-                launchUrl(url);
-              },
-              styleSheet: MarkdownStyleSheet(
-                p: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                a: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            // Wrap markdownbody in expanded, so that it doesn't push outwards
+            Expanded(
+              child: MarkdownBody(
+                data: appTitle,
+                softLineBreak:
+                    false, //Prevent the text from jumping to a second line
+                onTapLink: (text, href, title) {
+                  final Uri url = Uri.parse(href ?? '');
+                  launchUrl(url);
+                },
+                styleSheet: MarkdownStyleSheet(
+                  p: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    overflow: TextOverflow
+                        .ellipsis, // Add "..." if there's not enough space
+                  ),
+                  a: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ),
             ),
           ],
@@ -424,6 +455,12 @@ B Srinivas, Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
 
         // Deploy the buttons aligned to the top right for actions.
         actions: [
+          // 20260816 gjw Issue #1173. Show what R is doing, since the app
+          // itself cannot show it: the panels simply have nothing new until R
+          // has finished, which looks the same as an app that has stopped.
+
+          const RStatusLight(),
+
           if (_isVersionLoaded)
             VersionWidget(
               version: _appVersion,
@@ -436,7 +473,9 @@ B Srinivas, Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
           MarkdownTooltip(
             message: '''
 
-            **Reset:** Tap here to clear the current project and so start a new
+            **Reset**
+
+            Tap here to clear the current project and so start a new
             project with a new dataset. You will be prompted to confirm since
             you will lose all of the current pages and analyses.
 
@@ -466,7 +505,9 @@ B Srinivas, Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
           MarkdownTooltip(
             message: '''
 
-            **Change Seed:** Tap here to quickly change the seed for the random
+            **Change Seed**
+
+            Tap here to quickly change the seed for the random
             number generator.  A new seed will be automatically generated. It
             will also be saved as your new seed within **Settings** and so the
             latest seed set here will be used in your next session. Go to
@@ -541,7 +582,9 @@ B Srinivas, Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
           MarkdownTooltip(
             message: '''
 
-            **R Packages Installation:** Tap here to load all required R
+            **R Packages Installation**
+
+            Tap here to load all required R
             pacakges now rather than when they are needed. It can be useful to
             do this before you load a dataset so as to ensure everything is
             ready. This can avoid some issues on startup. Rattle will check for
@@ -579,7 +622,9 @@ B Srinivas, Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
             key: const Key('settings_button'),
             message: '''
 
-            **Settings:** Tap here to update your default settings. Settings
+            **Settings**
+
+            Tap here to update your default settings. Settings
             include a default theme for he charts, the random seed, partition
             options, and much more. Your settings will be saved for this session
             and future sessions and you have the option to reset to the Rattle
@@ -608,7 +653,9 @@ B Srinivas, Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
           MarkdownTooltip(
             message: '''
 
-            **About:** Tap here to view information about the Rattle
+            **About**
+
+            Tap here to view information about the Rattle
             project. This include a list of those who have contributed to the
             latest version of the software, *Verison 6.* It also includes the
             extensive list of open-source packages that Rattle is built on and
@@ -627,16 +674,19 @@ B Srinivas, Kevin Wang, Zheyuan Xu, Yixiang Yin, Bo Zhang.
                   applicationName:
                       '${_appName[0].toUpperCase()}${_appName.substring(1)}',
                   applicationVersion: 'Version $_appVersion',
-                  applicationLegalese: '© 2006-2025 Togaware Pty Ltd\n',
+                  applicationLegalese: '© 2006-2026 Togaware Pty Ltd\n',
                   children: [
-                    MarkdownBody(
-                      data: about,
-                      selectable: true,
-                      softLineBreak: true,
-                      onTapLink: (text, href, about) {
-                        final Uri url = Uri.parse(href ?? '');
-                        launchUrl(url);
-                      },
+                    SizedBox(
+                      width: 400,
+                      child: MarkdownBody(
+                        data: about,
+                        selectable: true,
+                        softLineBreak: false,
+                        onTapLink: (text, href, about) {
+                          final Uri url = Uri.parse(href ?? '');
+                          launchUrl(url);
+                        },
+                      ),
                     ),
                   ],
                 );

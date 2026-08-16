@@ -26,7 +26,7 @@
 
 library;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 import 'package:rattle/providers/settings.dart';
 import 'package:rattle/providers/tree.dart';
@@ -60,6 +60,44 @@ final neuralNetEvaluateProvider = StateProvider<bool>((ref) => false);
 final svmEvaluateProvider = StateProvider<bool>((ref) => false);
 final randomForestEvaluateProvider = StateProvider<bool>((ref) => false);
 final xgBoostEvaluateProvider = StateProvider<bool>((ref) => false);
+
+/// The file holding a dataset loaded to evaluate the model against, or the
+/// empty string when none has been loaded.
+///
+/// A dataset of observations the model has never seen gives the most honest
+/// estimate of how it will perform in use, which a partition of the dataset the
+/// model was built from can only approximate. (gjw 20260816)
+
+final evaluateDatasetPathProvider = StateProvider<String>((ref) => '');
+
+/// Whether the loaded evaluation dataset carries the target variable.
+///
+/// Without it the model can be applied to the dataset but there is nothing to
+/// measure the predictions against, so the evaluation measures and their plots
+/// would only fail. True for every other evaluation dataset, which are all
+/// partitions of the dataset the model was built from. (gjw 20260817)
+
+final evaluateDatasetHasTargetProvider = StateProvider<bool>((ref) => true);
+
+/// The CSV file that the evaluation results are exported to.
+
+final evaluateExportPathProvider = StateProvider<String>((ref) => '');
+
+// The two TEMPLATE variables of the INTERACTIVE prediction popup, being the R
+// code that `r/source.dart` substitutes into the interactive scripts. They are
+// providers rather than parameters because that is how every other TEMPLATE
+// variable reaches the R scripts. (gjw 20260815)
+
+/// The model input variables, as the R vector `c("min_temp", ...)`, that
+/// `evaluate_interactive_variables.R` describes for the popup.
+
+final interactiveInputsProvider = StateProvider<String>((ref) => 'c()');
+
+/// The observation to predict, as an R `data.frame(...)` of a single row, that
+/// `evaluate_interactive_predict.R` predicts from.
+
+final interactiveNewdataProvider =
+    StateProvider<String>((ref) => 'data.frame()');
 
 // List of all the providers of model to be evaluated.
 

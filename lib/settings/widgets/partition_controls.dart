@@ -77,7 +77,9 @@ class PartitionControls extends ConsumerWidget {
               },
               tooltip: '''
 
-              **Training:** This is the percentage of data allocated for
+              **Training**
+
+              This is the percentage of data allocated for
               training the model. Please ensure that the total across training,
               ${useValidation ? "validation" : "tuning"}, and testing sums to
               100%.
@@ -96,7 +98,9 @@ class PartitionControls extends ConsumerWidget {
               },
               tooltip: '''
 
-              **${useValidation ? "Validation" : "Tuning"}:** This is the
+              **${useValidation ? "Validation" : "Tuning"}**
+
+              This is the
               percentage of data allocated for ${useValidation ? "validating" : "tuning"} the model. Please ensure that the total across training,
               ${useValidation ? "validation" : "tuning"}, and testing sums to
               100%.
@@ -115,7 +119,9 @@ class PartitionControls extends ConsumerWidget {
               },
               tooltip: '''
 
-              **Testing:** This is the percentage of data allocated for testing
+              **Testing**
+
+              This is the percentage of data allocated for testing
               the model. Please ensure that the total across training,
               ${useValidation ? "validation" : "tuning"}, and testing sums to
               100%.
@@ -133,7 +139,9 @@ class PartitionControls extends ConsumerWidget {
             MarkdownTooltip(
               message: '''
 
-                **Validation or Tuning:** Some data scientists think of the
+                **Validation or Tuning**
+
+                Some data scientists think of the
                 second dataset of the partitions as a dataset to use for
                 **tuning** the model. Others see it as a dataset for
                 **validating** parameter settings. You can choose your

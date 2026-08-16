@@ -52,7 +52,9 @@ import 'package:rattle/widgets/vector_number_field.dart';
 Map forestTooltips = {
   AlgorithmType.conditional: '''
 
-    **Conditional:** The conditional forest is an extension of the traditional
+    **Conditional**
+
+    The conditional forest is an extension of the traditional
     Random Forest. It is focussed on handling situations where the response
     variable is influenced by specific conditions or covariates.  Conditional
     inference focuses on estimating the conditional distribution of the response
@@ -62,7 +64,9 @@ Map forestTooltips = {
       ''',
   AlgorithmType.traditional: '''
 
-      **Traditional:** The traditional and original random forest algorithm
+      **Traditional**
+
+      The traditional and original random forest algorithm
       (also called bagging or bootstrap aggregation) resamples the original
       dataset multiple times to build multiple decision trees. Each dataset is a
       sample of both the observations and the variables and can lead to reducing
@@ -312,7 +316,9 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               controller: _treesController,
               tooltip: '''
 
-                **Trees:** This (*ntrees*) is the number of trees to grow in the
+                **Trees**
+
+                This (*ntrees*) is the number of trees to grow in the
                 forest. Generally 500 (the default) is a good choice. The
                 rsulting model is fairly insensitive to the number of trees.
 
@@ -331,7 +337,9 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               controller: _variablesController,
               tooltip: '''
 
-                **Variables:** This (*mtry*) is the number of variables that
+                **Variables**
+
+                This (*mtry*) is the number of variables that
                 will be considered as candidates at each split when partitioning
                 the dataset. For classification the default is the square root
                 of the number of variables. The model is generally not very
@@ -352,7 +360,9 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               controller: _treeNoController,
               tooltip: '''
 
-                **Display Tree:** Set this to the tree number whose rules are to
+                **Display Tree**
+
+                Set this to the tree number whose rules are to
                   be displayed after building the model. You can change this
                   value after the forest has been built to display the rules
                   generated from a different tree without having to rebuild the
@@ -382,7 +392,9 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               controller: _maxRulesController,
               tooltip: '''
 
-                **Max Rules:** Set this to the maximum number of rules to
+                **Max Rules**
+
+                Set this to the maximum number of rules to
                   display in the output after building the model. You can change
                   this value after the forest has been built to display more or
                   fewer rules without having to rebuild the forest.
@@ -412,7 +424,9 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
                   : normalTextStyle,
               tooltip: '''
 
-                **Sample Size:** Use this to specify either a single sample size
+                **Sample Size**
+
+                Use this to specify either a single sample size
                 (e.g. 500) or a sample size for each class (e.g., 500,500 for a
                 binary model). This is the sample size for the subset of the
                 training dataset chosen for each of the different tree
@@ -433,7 +447,9 @@ class ForestConfigState extends ConsumerState<ForestConfig> {
               key: const Key('imputeForest'),
               tooltip: '''
 
-              **Impute:** The random forest algorithm will ignore observations
+              **Impute**
+
+              The random forest algorithm will ignore observations
               with missing values by default. Enable this checkbox to have
               missing values imputed as the median (numerical) or most frequent
               (categoric) value using

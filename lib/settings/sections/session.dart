@@ -80,7 +80,9 @@ class Session extends ConsumerWidget {
             MarkdownTooltip(
               message: '''
 
-              **Reset Session Control:** Tap here to reset to enable a confirmation
+              **Reset Session Control**
+
+              Tap here to reset to enable a confirmation
               popup when exiting the application.
 
 
@@ -102,7 +104,9 @@ class Session extends ConsumerWidget {
             MarkdownTooltip(
               message: '''
 
-              **Session Control:** This setting determines whether a confirmation popup
+              **Session Control**
+
+              This setting determines whether a confirmation popup
               appears when the user tries to quit the application.
 
               - **ON**: A popup will appear asking the user to confirm quitting.

@@ -48,6 +48,7 @@ import 'package:rattle/providers/normalise.dart';
 import 'package:rattle/providers/number.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/pty.dart';
+import 'package:rattle/providers/r_status.dart';
 import 'package:rattle/providers/selected.dart';
 import 'package:rattle/providers/selected2.dart';
 import 'package:rattle/providers/settings.dart';
@@ -528,6 +529,33 @@ Future<void> rSource(
 
   code = code.replaceAll('<DATASET_TYPE>', datasetType.toUpperCase());
 
+  // The dataset loaded to evaluate the model against, if any.
+
+  code = code.replaceAll(
+    '<EVAL_FILENAME>',
+    ref.read(evaluateDatasetPathProvider),
+  );
+
+  // The CSV file that the evaluation results are exported to.
+
+  code = code.replaceAll(
+    '<EXPORT_FILENAME>',
+    ref.read(evaluateExportPathProvider),
+  );
+
+  // The INTERACTIVE prediction popup builds both of these as R code, the
+  // variables to describe and the single row observation to predict.
+
+  code = code.replaceAll(
+    '<INTERACTIVE_INPUTS>',
+    ref.read(interactiveInputsProvider),
+  );
+
+  code = code.replaceAll(
+    '<INTERACTIVE_NEWDATA>',
+    ref.read(interactiveNewdataProvider),
+  );
+
   ////////////////////////////////////////////////////////////////////////
   // FOREST
 
@@ -607,6 +635,13 @@ Future<void> rSource(
   // 200 lines was chonsen because the model_template then model_build_rforest
   // was 286 lines of code. It may be char length rather than line count that is
   // important though. (gjw 20250513)
+
+  // 20260816 gjw The traffic light of the app bar goes yellow from here, being
+  // the moment the code is handed to R, and `providers/pty.dart` turns it green
+  // again when R settles back at its prompt, or red if R reports an error. This
+  // also clears a red left by a previous script.
+
+  ref.read(rStatusProvider.notifier).state = RStatus.running;
 
   if (lines.length > 200) {
     String code1 = '${lines.take(200).join('\n')}\n';

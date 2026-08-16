@@ -24,7 +24,7 @@
 /// Authors: Zheyuan Xu
 library;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 final cleanUpMethodProvider = StateProvider<String>(
   (ref) => 'Vars with Missing',

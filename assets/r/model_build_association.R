@@ -63,6 +63,15 @@ if(<ASSOCIATION_BASKETS>) {
   ## 20250204 gjw V5 only used categoric variables so replicate that
   ## here.
 
+  # 20260630 gjw Do not rely on `catc` persisting in the R session. It
+  # is defined in `dataset_template.R` which is only re-sourced on
+  # leaving the DATASET/TRANSFORM tabs, so going straight to
+  # ASSOCIATIONS can leave `catc` undefined and `apriori()` then never
+  # assigns `model_arules`, surfacing as `object 'model_arules' not
+  # found`. Recompute the categoric columns locally from `trds`.
+
+  catc <- names(trds)[sapply(trds, is.factor)]
+
   transactions <- as(trds[catc], "transactions")
 
 }

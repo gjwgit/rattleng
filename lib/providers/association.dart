@@ -25,7 +25,7 @@
 
 library;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 final basketsAssociationProvider = StateProvider<bool>((ref) => false);
 final confidenceAssociationProvider = StateProvider<double>((ref) => 0.1);

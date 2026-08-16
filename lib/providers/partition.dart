@@ -23,7 +23,7 @@
 /// Authors: Graham Williams
 library;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 // 20250128 gjw The default is to partition the dataset. For a Data Wrangling
 // course we might want the students to set the default to OFF in SETTINGS.

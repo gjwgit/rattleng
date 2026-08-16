@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://opensource.org/license/gpl-3-0
 //
-// Time-stamp: "Tuesday 2025-08-12 16:41:02 +1000 Graham Williams"
+// Time-stamp: "Wednesday 2025-10-01 16:45:08 +1000 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -69,7 +69,20 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     // COUNT OF MISSING VALUES - TEXTUAL
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, 'aggr(');
+    content = rExtract(stdout, 'VIM::aggr(');
+
+    // 20251001 gjw On occasion VIM::aggr(), which also generates a plot using
+    // VIM::plot.aggr(), emits a warning:
+    //
+    // Warning message:
+    // In plot.aggr(res, ...) :
+    //   not enough vertical space to display frequencies (too many combinations)
+    //
+    // Remove the warning from the textual summary. And then otherwise ignore it
+    // for now, though in principle it should have a message on the
+    // explore_missing_vim.svg page.
+
+    content = content.split('Warning message:')[0];
 
     // Remove the line beginning with + (a continuation)
 
@@ -105,7 +118,7 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     // PATTERN OF MISSING VALUES - TEXTUAL
     ////////////////////////////////////////////////////////////////////////
 
-    content = rExtract(stdout, 'md.pattern(');
+    content = rExtract(stdout, 'md.pattern(tds');
 
     // Add a blank line between each sub-table.
 

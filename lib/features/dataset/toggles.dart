@@ -66,6 +66,17 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
     final keepInSync = prefs.getBool('keepInSync') ?? true;
 
+    // Set the "Max Factor" setting from shared preferences, defaulting to
+    // [defaultMaxFactor] if no value is found.
+    //
+    // 20260815 gjw This is loaded here unconditionally, rather than within the
+    // "First Start" and "Keep in Sync" branches below, to retain the previous
+    // behaviour where the provider itself loaded the saved value whenever it
+    // was first read.
+
+    ref.read(maxFactorProvider.notifier).state =
+        prefs.getInt('maxFactor') ?? defaultMaxFactor;
+
     // Retrieve the "First Start" state from the provider to determine
     // if this is the first time the app is being initialized.
 
@@ -275,7 +286,9 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         MarkdownTooltip(
           message: '''
 
-          **Cleanse:** Currently **${cleanse ? "" : "not "}enabled**. When
+          **Cleanse**
+
+          Currently **${cleanse ? "" : "not "}enabled**. When
           enabled a dataset will be cleansed, when the dataset is loaded, by
           removing any columns with a single constant value and converting
           character columns with $charToFactor or fewer unique values to factors
@@ -291,7 +304,9 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         MarkdownTooltip(
           message: '''
 
-          **Unify:** Currently **${normalise ? "" : "not "}enabled**. When
+          **Unify**
+
+          Currently **${normalise ? "" : "not "}enabled**. When
           enabled the names of columns (variables) of the dataset are unified,
           when the dataset is loaded, by converting them to lowercase and
           separating words by underscore.  If you do not require this automated
@@ -306,7 +321,9 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         MarkdownTooltip(
           message: '''
 
-          **Partition:** Currently **${partition ? "" : "not "}enabled**. When
+          **Partition**
+
+          Currently **${partition ? "" : "not "}enabled**. When
           enabled, for the purposes of predictive modelling *only*, a dataset
           will be randomly split into three smaller datasets. The three-way
           split defaults to 70/15/15 percent and is currently set as

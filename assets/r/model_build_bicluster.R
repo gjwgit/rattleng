@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Saturday 2024-10-19 06:50:01 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2026-03-24 12:41:05 +1100 Graham Williams>
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -21,6 +21,17 @@
 # this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # Author: Zheyuan Xu, Graham Williams
+
+# 20260324 gjw The `biclust` package was archived from the CRAN
+# repository on 19 December 2025. The biclustermd might be a good
+# replacement but it needs to be installed from github:
+#
+# > devtools::install_github("jreisner/biclustermd")
+#
+# > rownames(tds) <- 1:nrow(tds)
+# > bc <- biclustermd(tds)
+#
+# For now we remove the bicluster function.
 
 # Cluster analysis using BiCluster
 #

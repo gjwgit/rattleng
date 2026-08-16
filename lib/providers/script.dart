@@ -26,7 +26,7 @@
 
 library;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 final scriptProvider = StateProvider<String>(
   (ref) => '''# An R script to replicate your Rattle session.

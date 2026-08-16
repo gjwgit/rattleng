@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://opensource.org/license/gpl-3-0
 //
-// Time-stamp: "Wednesday 2025-09-17 09:04:51 +1000 Graham Williams"
+// Time-stamp: "Tuesday 2026-06-30 15:39:12 +1000 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,11 +27,15 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/style.dart';
 import 'package:rattle/features/evaluate/activity_button.dart';
+import 'package:rattle/features/evaluate/export_button.dart';
+import 'package:rattle/features/evaluate/interactive_button.dart';
+import 'package:rattle/features/evaluate/load_dataset_button.dart';
 import 'package:rattle/providers/evaluate.dart';
 import 'package:rattle/providers/partition.dart';
 import 'package:rattle/providers/settings.dart';
@@ -182,6 +186,14 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
     Evaluate the performance on the **complete** dataset.
 
     ''',
+    'Loaded': '''
+
+    Evaluate the performance over a dataset **loaded from its own file**, of
+    observations the model has never seen, which gives the most honest estimate
+    of how the model will perform in use. Tap **Load Dataset** to choose the
+    file. This option is only available once a dataset has been loaded.
+
+    ''',
   };
 
   bool _isEvaluationEnabled(ModelConfig config) {
@@ -218,10 +230,11 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
   Widget build(BuildContext context) {
     String datasetType = ref.watch(datasetTypeProvider.notifier).state;
 
-    // Current evaluations are focused on classification rather than regression.
-    // Evaluate is disabled when target variable is numeric.
+    // For regression (numeric target) adaboost is classification-only so
+    // keep it disabled; all other models support regression and should remain
+    // enabled when a model has been built.
 
-    bool numericDisabled = isNumericTarget(ref);
+    bool numericTarget = isNumericTarget(ref);
 
     return Column(
       spacing: configRowSpace,
@@ -240,15 +253,21 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
 
             const Text('Model:', style: normalTextStyle),
             ...modelConfigs.map((config) {
-              // Target variable is numeric then disable the evaluation.
+              // AdaBoost is a classification-only algorithm; disable it when
+              // the target is numeric.  All other models support regression.
 
-              bool enabled = _isEvaluationEnabled(config) && !numericDisabled;
+              bool adaboostOnly =
+                  numericTarget && config.key == 'boostEvaluate';
+              bool enabled = _isEvaluationEnabled(config) && !adaboostOnly;
 
               String buildMsg = enabled
                   ? ''
-                  : ' You will need to build a ${config.label} model '
-                      'before you can evaluate it. '
-                      'Visit the **Model** tab to do so.';
+                  : adaboostOnly
+                      ? ' AdaBoost is a classification-only algorithm and '
+                          'cannot be used when the target variable is numeric.'
+                      : ' You will need to build a ${config.label} model '
+                          'before you can evaluate it. '
+                          'Visit the **Model** tab to do so.';
 
               return Row(
                 children: [
@@ -277,14 +296,17 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
           spacing: configWidgetSpace,
           children: [
             configLeftGap,
-            Text('Evaluation Dataset: '),
+            const Text('Evaluation Dataset: '),
 
             // Widget to display dataset type selection as choice chips with tooltips.
             ChoiceChipTip<String>(
               // Generate list of dataset type options, filtering based on partition toggles.
               options: datasetTypes.keys
                   .where(
-                    (key) => ref.read(partitionProvider) || key == 'Complete',
+                    (key) =>
+                        ref.read(partitionProvider) ||
+                        key == 'Complete' ||
+                        key == 'Loaded',
                   )
                   .map(
                     (key) => key == 'Tuning' &&
@@ -297,12 +319,23 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
               // Set selected option, handling Tuning/Validation text swap and
               // defaulting to Complete when partitions disabled.
 
-              selectedOption: !ref.read(partitionProvider)
-                  ? 'Complete'
-                  : (datasetType == 'Tuning' &&
-                          ref.watch(useValidationSettingProvider)
-                      ? 'Validation'
-                      : datasetType),
+              // 20260816 gjw Without partitioning the only partition on offer
+              // is Complete, but the Loaded dataset is not a partition and so
+              // stays selectable either way.
+
+              selectedOption:
+                  (!ref.read(partitionProvider) && datasetType != 'Loaded')
+                      ? 'Complete'
+                      : (datasetType == 'Tuning' &&
+                              ref.watch(useValidationSettingProvider)
+                          ? 'Validation'
+                          : datasetType),
+
+              // Loaded is offered but cannot be chosen until there is one.
+
+              isOptionDisabled: (option) =>
+                  option == 'Loaded' &&
+                  ref.watch(evaluateDatasetPathProvider).isEmpty,
 
               // Create tooltips map, replacing 'Tuning' key with 'Validation'
               // when validation is enabled and filtering based on partition setting.
@@ -311,7 +344,8 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                     .where(
                       (entry) =>
                           ref.read(partitionProvider) ||
-                          entry.key == 'Complete',
+                          entry.key == 'Complete' ||
+                          entry.key == 'Loaded',
                     )
                     .map(
                       (entry) => MapEntry(
@@ -335,6 +369,21 @@ class EvaluateConfigState extends ConsumerState<EvaluateConfig> {
                 });
               },
             ),
+
+            // 20260816 gjw Choose the file that the Loaded chip above refers
+            // to. It sits with the chips because that is what it feeds.
+
+            const LoadDatasetButton(),
+
+            // 20260816 gjw Save what the models made of each observation.
+
+            const ExportButton(),
+
+            // 20260815 gjw Predicting a single observation the user enters is
+            // not an evaluation over one of the dataset partitions, so the
+            // button sits after the partition choices rather than among them.
+
+            const InteractiveButton(),
           ],
         ),
       ],

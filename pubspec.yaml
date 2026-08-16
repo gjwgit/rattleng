@@ -1,7 +1,7 @@
 name: rattle
 description: Rattle Data Science Next Generation
 publish_to: 'none'
-version: 6.5.20+205
+version: 6.5.44+216
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
@@ -44,7 +44,7 @@ dependencies:
       # Migrate to locally managed updates
       # url: https://github.com/anusii/flutter_pty.git
       ref: main
-  flutter_riverpod: ^2.6.1
+  flutter_riverpod: ^3.2.1
   flutter_svg: ^2.1.0
   gap: ^3.0.1
   http: ^1.3.0
@@ -74,7 +74,6 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.2
   flutter_lints: ^6.0.0
   msix: ^3.16.2
-  riverpod_generator: ^2.3.5
 
 flutter:
   uses-material-design: true

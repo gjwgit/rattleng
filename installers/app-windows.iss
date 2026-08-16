@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Rattle"
-#define MyAppVersion "dev-windows-inno"
+#define MyAppVersion "windows-inno"
 #define MyAppPublisher "Togaware"
 #define MyAppURL "https://github.com/gjwgit/rattle
 #define MyAppExeName "rattle.exe"

@@ -35,18 +35,14 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:rattle/constants/spacing.dart';
 import 'package:rattle/constants/status.dart';
 import 'package:rattle/features/dataset/file_folder_picker.dart';
+import 'package:rattle/features/dataset/load_path.dart';
 import 'package:rattle/providers/dataset.dart';
-import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
 import 'package:rattle/r/load_dataset.dart';
 import 'package:rattle/r/source.dart';
 import 'package:rattle/utils/copy_asset_to_tempdir.dart';
 import 'package:rattle/utils/set_status.dart';
-
-void datasetLoadedUpdate(WidgetRef ref) {
-  ref.read(datasetLoaded.notifier).state = true;
-}
 
 class DatasetPopup extends ConsumerWidget {
   const DatasetPopup({super.key});
@@ -93,30 +89,11 @@ class DatasetPopup extends ConsumerWidget {
               ElevatedButton(
                 onPressed: () async {
                   String path = await datasetSelectFile();
-                  if (path.isNotEmpty) {
-                    ref.read(pathProvider.notifier).state = path;
-                    if (context.mounted) await rLoadDataset(context, ref);
-                    setStatus(ref, statusChooseVariableRoles);
-                    datasetLoadedUpdate(ref);
 
-                    // Save the dataset name in lowercase to the dsnameProvider
-                    // from the path.
-
-                    ref.read(dsnameProvider.notifier).state = path
-                        .split(RegExp(r'[/\\]'))
-                        .last
-                        .split('.')
-                        .first
-                        .toLowerCase();
-                  }
-
-                  // Avoid the "Do not use BuildContexts across async gaps."
-                  // warning.
-
-                  if (!context.mounted) return;
-                  Navigator.pop(context, 'Local File');
-
-                  // Access the PageController via Riverpod and move to the second page.
+                  // 20260815 gjw The dataset load, the status and provider
+                  // updates, and the move to the ROLES page are all done by
+                  // [loadDatasetPath] so that loading a dataset named on the
+                  // command line behaves the same as loading one from here.
                   //
                   // 20250226 gjw For now we try not moving to the dataset page
                   // just yet. On a Mac there are reports of a grey ROLES
@@ -125,17 +102,22 @@ class DatasetPopup extends ConsumerWidget {
                   // problem. By staying on the OVERVIEW we mightreduce the
                   // liklihood?
 
-                  await ref.read(pageControllerProvider).animateToPage(
-                        // Index of the second page.
-                        1,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
+                  if (path.isNotEmpty && context.mounted) {
+                    await loadDatasetPath(context, ref, path);
+                  }
+
+                  // Avoid the "Do not use BuildContexts across async gaps."
+                  // warning.
+
+                  if (!context.mounted) return;
+                  Navigator.pop(context, 'Local File');
                 },
-                child: MarkdownTooltip(
+                child: const MarkdownTooltip(
                   message: '''
 
-                  **Local File:** Tap here to popup a window so that you can
+                  **Local File**
+
+                  Tap here to popup a window so that you can
                   browse to a local **csv**, **xlsx**, or **txt** file that you
                   would like to load into Rattle.
 
@@ -199,7 +181,9 @@ class DatasetPopup extends ConsumerWidget {
                 child: const MarkdownTooltip(
                   message: '''
 
-                  **Local Corpus:** Tap here to popup a window so that you can
+                  **Local Corpus**
+
+                  Tap here to popup a window so that you can
                   browse to a local folder containing text documents (**txt**)
                   that you would like to **Text Mine**. At present only text
                   files ending in **.txt** are supported by Rattle.
@@ -252,7 +236,9 @@ class DatasetPopup extends ConsumerWidget {
                 child: const MarkdownTooltip(
                   message: '''
 
-                  **Under Development** Eventually you will be able to tap here
+                  **Under Development**
+
+                  Eventually you will be able to tap here
                   to popup a window to browse the list of available R datasets
                   to choose one of them to load into Rattle.
 
@@ -265,10 +251,12 @@ class DatasetPopup extends ConsumerWidget {
 
           configRowGap,
 
-          MarkdownTooltip(
+          const MarkdownTooltip(
             message: '''
 
-                  **Demo Datasets** Rattle provides a number of small datasets
+                  **Demo Datasets**
+
+                  Rattle provides a number of small datasets
                   so you can very quickly explore the Rattle functionality.  The
                   *buttons* below will load one of the demo datasets. Hover over
                   any of them to see a description of that dataset.
@@ -292,7 +280,9 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                      **Weather:** Tap here to load a dataset that captures one
+                      **Weather**
+
+                      Tap here to load a dataset that captures one
                       year of daily observations from a weather station in
                       Canberra, Australia. It is useful to demonstrate all steps
                       of the Data Science process, to **Explore**,
@@ -338,7 +328,9 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                      **Weather 2007:** Tap here to load a dataset that captures
+                      **Weather 2007**
+
+                      Tap here to load a dataset that captures
                       one year of daily observations from a weather station in
                       Canberra, Australia in 2007 (as used in Rattle V5). It is
                       useful to compare Rattle V6 with rattle V5 using the same
@@ -373,7 +365,9 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                     **Audit:** Tap here to load a dataset for predicting
+                     **Audit**
+
+                     Tap here to load a dataset for predicting
                       whether a govenrment revenue authority might need to audit
                       a taxpayer. The dataset consists of 2,000 fictional tax
                       payers who have previously been audited. It includes their
@@ -418,7 +412,9 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                      **Protein:** Tap here to load this dataset from the
+                      **Protein**
+
+                      Tap here to load this dataset from the
                       [Tippie College of Business, The University of
                       Iowa](http://www.biz.uiowa.edu/faculty/jledolter/DataMining/protein.csv). It
                       is useful for demonstrating **Cluster** analysis.
@@ -452,7 +448,9 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                      **Movies:** Tap here to load this dataset of some
+                      **Movies**
+
+                      Tap here to load this dataset of some
                       favourite movies. The dataset is useful for demonstrating
                       basket analysis available through the **Associations**
                       feature of the **Model** tab. The dataset has just two
@@ -490,7 +488,9 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                      **Sherlock:** Tap here to load this text file for
+                      **Sherlock**
+
+                      Tap here to load this text file for
                       demonstrating the **Word Cloud** feature of the **Model**
                       tab. It is a snippet from a Sherlock Holmes novel.
 
@@ -523,7 +523,9 @@ class DatasetPopup extends ConsumerWidget {
                   MarkdownTooltip(
                     message: '''
 
-                      **US Population:** Tap here to load a rather large dataset
+                      **US Population**
+
+                      Tap here to load a rather large dataset
                       from the U.S. Census Bureau, Population Division. The
                       variables are described
                       [there](https://www2.census.gov/programs-surveys/popest/datasets/2010-2016/counties/totals/co-est2016-alldata.pdf).
@@ -569,10 +571,12 @@ class DatasetPopup extends ConsumerWidget {
                 onPressed: () {
                   Navigator.pop(context, 'Cancel');
                 },
-                child: MarkdownTooltip(
+                child: const MarkdownTooltip(
                   message: '''
 
-                  **Cancel:** Tap here to **not** proceed with loading a new
+                  **Cancel**
+
+                  Tap here to **not** proceed with loading a new
                     dataset.
 
                   ''',

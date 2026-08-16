@@ -25,7 +25,7 @@
 
 library;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 enum Role { input, target, risk, ident, ignore, ignoreAfterTransformed, weight }
 

@@ -1,6 +1,6 @@
 /// Rattle - Data Science Next Generation
 ///
-// Time-stamp: "Wednesday 2025-09-10 12:48:08 +1000 Graham Williams"
+// Time-stamp: "Friday 2026-03-06 20:12:59 +1100 Graham Williams"
 ///
 /// Copyright (C) 2023-2025, Togaware Pty Ltd.
 ///
@@ -33,7 +33,7 @@ library;
 /// The Rattle app's title.
 
 const String appTitle = '[Rattle](https://rattle.togaware.com) '
-    'Next Generation Data Science';
+    'AI and Data Science';
 
 /// Project assets folder path used in the APP.
 
@@ -42,3 +42,9 @@ const String assetsPath = 'assets';
 /// Location of the markdown file containing instructions for the SCRIPT tab.
 
 const String scriptIntroFile = '$assetsPath/markdown/script_intro.md';
+
+/// The file extensions of the datasets that Rattle can load, as dispatched on
+/// by `r/load_dataset.dart`. Used by the DATASET file picker and to recognise a
+/// dataset named on the command line. (gjw 20260815)
+
+const List<String> datasetExtensions = ['csv', 'xlsx', 'txt'];

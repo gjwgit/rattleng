@@ -24,32 +24,28 @@
 
 library;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 /// Whether to cleanse the data or not. Default is true.
 
 final cleanseProvider = StateProvider<bool>((ref) => true);
 
+/// The default maximum number of unique values for a character column to be a
+/// factor.
+
+const int defaultMaxFactor = 20;
+
 /// The maximum number of unique values for a character column to be a factor.
-/// This provider is initially set to 20, and then updated asynchronously with
-/// the saved value from SharedPreferences if available.
+///
+/// 20260815 gjw The provider simply returns the default. It previously loaded
+/// the saved value from SharedPreferences in a microtask which read the
+/// provider itself, and riverpod asserts against that: "A provider cannot
+/// depend on itself". A provider genuinely can not initialise itself this way
+/// since its controller is only created after this function returns. The saved
+/// value is instead loaded on startup by `features/dataset/toggles.dart` and on
+/// opening the SETTINGS dialog, as is done for the random seed and the
+/// partition ratios. Resetting the setting is then simply an invalidate of the
+/// provider, which was previously racing with the microtask reloading the old
+/// saved value.
 
-final StateProvider<int> maxFactorProvider = StateProvider<int>((ref) {
-  const int defaultValue = 20;
-
-  // Schedule a microtask to load the saved value from SharedPreferences.
-
-  Future.microtask(() async {
-    final prefs = await SharedPreferences.getInstance();
-    final storedValue = prefs.getInt('maxFactor') ?? defaultValue;
-
-    // Update the provider only if the stored value is different.
-
-    if (ref.read(maxFactorProvider.notifier).state != storedValue) {
-      ref.read(maxFactorProvider.notifier).state = storedValue;
-    }
-  });
-
-  return defaultValue;
-});
+final maxFactorProvider = StateProvider<int>((ref) => defaultMaxFactor);

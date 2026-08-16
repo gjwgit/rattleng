@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Monday 2025-09-29 09:28:14 +1000 Graham Williams>
+# Time-stamp: <Monday 2026-08-03 05:30:27 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -28,9 +28,19 @@ DEST=/var/www/html/$(APP)
 # The host for the repository of packages, the path on the server to
 # the download folder, and the URL to the downloads.
 
-REPO=togaware.com
-RLOC=apps/access/
-DWLD=https://access.togaware.com/
+# Directory basename (e.g., rattle)
+
+DIRBASE := $(notdir $(CURDIR))
+
+ifeq ($(DIRBASE),rattle)
+  REPO=togaware.com
+  RLOC=apps/access/
+  DWLD=https://access.togaware.com/
+else
+  REPO=solidcommunity.au
+  RLOC=/var/www/html/web/installers/
+  DWLD=https://$(REPO)/installers/
+endif
 
 ########################################################################
 # Supported Makefile modules.
@@ -112,6 +122,18 @@ apk::
 	ssh $(REPO) chmod a+r $(RLOC)$(APP).apk
 	mv -f installers/$(APP)-*.apk installers/ARCHIVE/
 	rm -f installers/$(APP).apk
+	@echo ''
+
+appbundle::
+	rsync -avzh installers/$(APP).aab $(REPO):$(RLOC)
+	ssh $(REPO) chmod a+r $(RLOC)$(APP).aab
+	mv -f installers/$(APP)-*.aab installers/ARCHIVE/
+	rm -f installers/$(APP).aab
+	@echo ''
+
+# 20251226 gjw This has been moved into the installers github workflow
+# but is retained here for convenience to build a deb locally and
+# install it, often for a quick testing cycle.
 
 deb:
 	@echo "Build $(APP) version $(VER)"
@@ -122,6 +144,16 @@ deb:
 	wajig install $(APP)_amd64.deb
 	rm -f $(APP)_amd64.deb
 	mv -f installers/$(APP)_*.deb installers/ARCHIVE/
+
+dinstall:
+	wget $(DWLD)$(APP)_amd64.deb -O $(APP)_amd64.deb
+	wajig install $(APP)_amd64.deb
+	rm -f $(APP)_amd64.deb
+
+sinstall:
+	wget $(DWLD)$(APP)_amd64.snap -O $(APP)_amd64.snap
+	sudo snap install --dangerous $(APP)_amd64.snap
+	rm -f $(APP)_amd64.snap
 
 # 20250110 gjw A ginstall of the github built bundles, and the locally
 # built apk installed to the repository and moved into ARCHIVE.
@@ -135,5 +167,71 @@ deb:
 # /usr/bin/rattle. This is working so add deb into the install and now
 # utilise that for the default install on my machine.
 
-ginstall: deb
-	(cd installers; make $@)
+.PHONY: upload
+upload:
+	(cd installers; make ginstall)
+	@echo ''
+
+.PHONY: debin
+debin:
+	@echo '******************** LOCAL INSTALL DEB'
+	wajig install installers/ARCHIVE/$(APP)_$(VER)_amd64.deb
+	@echo ''
+
+# 20260103 gjw Note that `debin` depends on the deb file being upladed
+# to the ARCHIVE and so the `upload` target is a prerequisite. Put it
+# at the end as it requires interaction (sudo password) and if earlier
+# it will hold up the oher non-interactive builds.
+
+ifeq ($(DIRBASE),rattle)
+GINSTALLS := upload
+else
+GINSTALLS := upload prod apk appbundle
+endif
+
+.PHONY: ginstall
+ginstall: $(GINSTALLS)
+
+.PHONY: ginfo
+ginfo:
+	@bumpId=$$(gh run list --limit 100 --json databaseId,displayTitle,workflowName \
+		| jq -r '.[] | select(.workflowName | startswith("Build Installers")) | select(.displayTitle | startswith("Bump version")) | .databaseId' \
+		| head -n 1); \
+	if [ -n "$$bumpId" ]; then \
+		echo "Bump ID: $$bumpId"; \
+		gh run view "$$bumpId"; \
+		gh run view "$$bumpId" --json status,conclusion; \
+	else \
+		echo "No bump ID found."; \
+	fi
+
+ZFILES := lib test integration_test pubspec.yaml analysis_options.yaml README.md CLAUDE.md bluelink_fetch.py
+
+.PHONY: zip
+zip:
+	@mkdir -p ignore
+	@rm -f ignore/$(APP)_lib.zip
+	@to_zip=""
+	@for f in $(ZFILES); do \
+		if [ -e "$$f" ]; then \
+			to_zip="$$to_zip $$f"; \
+		fi; \
+	done; \
+	zip -r ignore/$(APP)_lib.zip $$to_zip
+	open ignore/
+
+.PHONY: claude
+claude:
+	bash support/meld_zip_from_claude.sh
+
+.PHONY: bump
+bump:
+	@make prep
+	@MESSAGE=$$(grep '^+.*\[' CHANGELOG.md | head -n 1 | sed 's/^+ //; s/ \[.*//'); \
+	VERSION=$$(grep '^+.*\[' CHANGELOG.md | head -n 1 | sed 's/.*\[//; s/ .*//'); \
+	if [ -z "$$MESSAGE" ]; then \
+		echo "Error: Could not extract message from CHANGELOG.md"; \
+		exit 1; \
+	fi; \
+	git commit -am "Bump version $$VERSION $$MESSAGE"; \
+	git push

@@ -25,7 +25,7 @@
 
 library;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 final maxDepthBoostProvider = StateProvider<int>((ref) => 6);
 final minSplitBoostProvider = StateProvider<int>((ref) => 20);

@@ -1,4 +1,12 @@
-platform :osx, '10.15'
+# 20260815 gjw Keep this in step with Flutter's own macOS Podfile template,
+# `packages/flutter_tools/templates/cocoapods/Podfile-macos`, and with the
+# MACOSX_DEPLOYMENT_TARGET of `Runner.xcodeproj`. It was left at 10.15 while
+# Flutter moved to 12.0, so the installers workflow deleted this Podfile to
+# have Flutter generate a current one. That generated Podfile declares a
+# `RunnerTests` target, which our `Runner.xcodeproj` does not have, and so
+# `pod install` failed with "Unable to find a target named `RunnerTests`".
+
+platform :osx, '12.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -31,6 +39,11 @@ target 'Runner' do
   use_modular_headers!
 
   flutter_install_all_macos_pods File.dirname(File.realpath(__FILE__))
+
+  # Flutter's template declares a `RunnerTests` target here. Ours stays
+  # commented out because `Runner.xcodeproj` has no such target - Rattle has no
+  # macOS unit tests - and `pod install` aborts on a target it cannot find.
+
 #  target 'RunnerTests' do
 #    inherit! :search_paths
 #  end

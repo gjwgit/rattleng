@@ -44,7 +44,7 @@ class TreePanel extends StatelessWidget {
     // A per the Rattle pattern, a Tab consists of a Config bar and the
     // results Display().
 
-    return Scaffold(
+    return const Scaffold(
       body: Column(
         children: [
           TreeModelConfig(),

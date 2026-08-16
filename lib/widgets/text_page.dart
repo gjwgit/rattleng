@@ -87,7 +87,9 @@ class TextPage extends StatelessWidget {
                   MarkdownTooltip(
                     message: '''
 
-                        **Open.** Tap here to open the data of this page in a
+                        **Open**
+
+                        Tap here to open the data of this page in a
                           separate window to the Rattle app itself. This allows
                           you to retain a view of the information while you
                           navigate through other data and analyses.
@@ -95,24 +97,26 @@ class TextPage extends StatelessWidget {
                         ''',
                     child: IconButton(
                       onPressed: () => _generateAndOpenPdf(context),
-                      icon: Icon(Icons.open_in_new, color: Colors.blue),
+                      icon: const Icon(Icons.open_in_new, color: Colors.blue),
                     ),
                   ),
 
                   // Add a small space between the buttons.
-                  Gap(8),
+                  const Gap(8),
 
                   // Button to save as PDF.
                   MarkdownTooltip(
                     message: '''
 
-                        **Save.** Tap here to save the information in this text
+                        **Save**
+
+                        Tap here to save the information in this text
                           page to a **pdf** document.
 
                         ''',
                     child: IconButton(
                       onPressed: () => _saveAsPdf(context),
-                      icon: Icon(Icons.save, color: Colors.blue),
+                      icon: const Icon(Icons.save, color: Colors.blue),
                     ),
                   ),
                 ],
@@ -131,7 +135,7 @@ class TextPage extends StatelessWidget {
               controller: horizontalScrollController,
               child: SingleChildScrollView(
                 // Attach a vertical controller for independent scrolling.
-                key: PageStorageKey('text_page'),
+                key: const PageStorageKey('text_page'),
 
                 controller: ScrollController(),
                 scrollDirection: Axis.vertical,

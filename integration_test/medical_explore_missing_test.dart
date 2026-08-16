@@ -1,8 +1,8 @@
 /// Test the EXPLORE tab MISSING feature with th LARGE dataset.
 //
-// Time-stamp: <Sunday 2025-08-10 19:20:51 +1000 >
+// Time-stamp: <Tuesday 2026-01-06 15:30:30 +1100 Graham Williams>
 //
-/// Copyright (C) 2023-2024, Togaware Pty Ltd
+/// Copyright (C) 2023-2026, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://opensource.org/license/gpl-3-0>.
 ///
-/// Authors:  Kevin Wang
+/// Authors:  Kevin Wang, Graham Williams
 
 library;
 
@@ -51,6 +51,9 @@ void main() {
     await tapButton(tester, 'Perform Missing Analysis');
     // 20250123 gjw I had to add this delay in order to ensure the R script had
     // finished generating the various analyses.
+    await tester.pump(delay);
+    // 20260106 gjw This test started failing agin, fixed by added further
+    // delay!
     await tester.pump(delay);
     await gotoNextPage(tester);
     await verifyPage('Count of Missing Values - Textual');

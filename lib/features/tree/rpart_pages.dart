@@ -77,8 +77,16 @@ List<Widget> rpartPages(WidgetRef ref) {
   ////////////////////////////////////////////////////////////////////////
   //
   // Tree visualisation.
+  //
+  // 20260630 gjw Prefer the PNG when present. The SVG produced by the cairo
+  // `svg()` device uses `<filter>` elements (drop shadows on the node boxes)
+  // that flutter_svg does not support, so the SVG renders blank in the app
+  // even though external viewers show it fine. The R template now also emits a
+  // PNG; fall back to the SVG only if the PNG is unavailable.
 
-  image = '$tempDir/model_tree_rpart.svg';
+  String pngImage = '$tempDir/model_tree_rpart.png';
+  String svgImage = '$tempDir/model_tree_rpart.svg';
+  image = imageExists(pngImage) ? pngImage : svgImage;
 
   if (imageExists(image)) {
     pages.add(

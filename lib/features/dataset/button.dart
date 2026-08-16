@@ -61,7 +61,9 @@ class DatasetButton extends ConsumerWidget {
       child: const MarkdownTooltip(
         message: '''
 
-        **Dataset:** Tap here to choose a dataset to load.  A popup provides
+        **Dataset**
+
+        Tap here to choose a dataset to load.  A popup provides
         options to load data from a **csv** or **txt** file, or from an R
         package dataset. **Demo** datasets are also available and provide a
         quick opportunity to explore Rattle. Datasets include one year of

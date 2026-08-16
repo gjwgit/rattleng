@@ -133,7 +133,9 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               key: const Key('cluster_number'),
               tooltip: '''
 
-              **Clusters:** Set the number of clusters (k) you would like to
+              **Clusters**
+
+              Set the number of clusters (k) you would like to
               create from the dataset. For the K-Means algorithm the k clusters
               will be initialised from a random selection of k observations
               (rows) from the dataset. The value must be less than the number of
@@ -154,7 +156,9 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               key: const Key('random_seed'),
               tooltip: '''
 
-              **Seed:** Set a number to initialise/reset the random number
+              **Seed**
+
+              Set a number to initialise/reset the random number
               generator. Changing the seed will result in different observations
               being chosen to initialise the K-Means clustering.  To obtain the
               same results each time use the same seed. The value of the seed is
@@ -176,7 +180,9 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               key: const Key('cluster_run'),
               tooltip: '''
 
-              **Runs:** Set the number of random starting partitions to
+              **Runs**
+
+              Set the number of random starting partitions to
               explore. The best clustering will be chosen from among those
               built.
 
@@ -192,7 +198,9 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               key: const Key('cluster_processor'),
               tooltip: '''
 
-              **Processors:** Set as an integer the number of subprocess for
+              **Processors**
+
+              Set as an integer the number of subprocess for
                 parallelization.
 
               ''',
@@ -210,7 +218,9 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               distanceClusterProvider,
               tooltip: '''
 
-              **Distance:** For the **Hierachical** algorithm choose a preferred
+              **Distance**
+
+              For the **Hierachical** algorithm choose a preferred
               alogirthm for measuring the similarity/distance between
               observations, and so determining how well they are grouped
               together in clusters.
@@ -231,7 +241,9 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
               linkClusterProvider,
               tooltip: '''
 
-              **Link:** For the **Hierachical** algorithm choose a method for
+              **Link**
+
+              For the **Hierachical** algorithm choose a method for
               determining how the distance between clusters is calculated when
               merging them, influencing the shape and structure of the resulting
               clusters.

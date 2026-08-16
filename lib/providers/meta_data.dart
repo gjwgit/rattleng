@@ -25,7 +25,7 @@
 
 library;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 /// Dataset meta data to be maintained as the dataset state.
 

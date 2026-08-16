@@ -25,9 +25,15 @@ flutter:
   emu	    Run with the android emulator;
   linux     Run with the linux device;
   qlinux    Run with the linux device and debugPrint() turned off;
+  macos     Run with the macos device;
 
   prep      Prep for PR by running tests, checks, docs.
   push      Do a git push and bump the build number if there is one.
+
+  minor_versions   Increment pubspec.yaml minor version
+  major_versions   Increment pubspec.yaml major version
+  version	   Report the current app version
+  versions         Copy pubspec.yaml version to snapcraft.yaml
 
   docs	    Run `dart doc` to create documentation.
 
@@ -45,11 +51,12 @@ flutter:
   ignore          Look for usage of ignore directives.
   license	  Look for missing top license in source code.
 
-  test	    Run `flutter test` for testing.
-  itest	    Run `flutter test integration_test` for interation testing.
-  qtest	    Run above test with PAUSE=0.
-  coverage  Run with `--coverage`.
-    coview  View the generated html coverage in browser.
+  test	    	  Run flutter testing.
+  itest	    	  Run flutter interation testing.
+  qtest_detail    Run above test with PAUSE=0
+    qtest	  Run qtest with output redirected - good running all tests.
+  coverage  	  Run with `--coverage`.
+    coview  	  View the generated html coverage in browser.
 
   riverpod  Setup `pubspec.yaml` to support riverpod.
   runner    Build the auto generated code as *.g.dart files.
@@ -57,10 +64,18 @@ flutter:
   desktops  Set up for all desktop platforms (linux, windows, macos)
 
   distributions
-    apk	    Builds installers/$(APP).apk
-    tgz     Builds installers/$(APP).tar.gz
+    apk	          Builds installers/$(APP).apk.
+    tgz           Builds installers/$(APP).tar.gz.
+    dmg-unsigned  Builds unsigned macos app.
+    dmg-dev       Builds macos app with development certificate.
+    dmg-staging   Builds macos app with distribution certificate.
+                  (TODO convert to dmg).
 
   publish   Publish a package to pub.dev
+
+  scripts   Synchronise scripts
+
+  icons
 
 Also supported:
 
@@ -87,7 +102,7 @@ LOC := $(shell if [ -f support/loc.sh ]; then echo support/loc.sh; \
 
 .PHONY: chrome
 chrome:
-	flutter run -d chrome --release
+	flutter run -d chrome --release --web-port=4400
 
 # 20220503 gjw The following fails if the target files already exist -
 # just needs to be run once.
@@ -106,23 +121,27 @@ chrome:
 pubspec.lock:
 	flutter pub get
 
+.PHONY: upgrade
+upgrade:
+	flutter pub upgrade
+
 .PHONY: linux
-linux: pubspec.lock $(BUILD_RUNNER)
+linux: pubspec.lock $(BUILD_RUNNER) upgrade
 	flutter run --device-id linux
 
 # Turn off debugPrint() output.
 
 .PHONY: qlinux
-qlinux: pubspec.lock $(BUILD_RUNNER)
+qlinux: pubspec.lock $(BUILD_RUNNER) upgrade
 	flutter run --dart-define DEBUG_PRINT="FALSE" --device-id linux
 
 .PHONY: macos
-macos: $(BUILD_RUNNER)
+macos: $(BUILD_RUNNER) upgrade
 	flutter run --device-id macos
 
 .PHONY: android
-android: $(BUILD_RUNNER)
-	flutter run --device-id $(shell flutter devices | grep android | tr '•' '|' | tr -s '|' | tr -s ' ' | cut -d'|' -f2 | tr -d ' ')
+android: $(BUILD_RUNNER) upgrade
+	flutter run --device-id $(shell flutter devices | grep android | tr '•' '|' | tr -s '|' | tr -s ' ' | cut -d'|' -f2 | tr -d ' ') --release
 
 .PHONY: emu
 emu:
@@ -138,8 +157,8 @@ linux_config:
 	flutter config --enable-linux-desktop
 
 .PHONY: prep
-prep: analyze fix import_order_fix format dcm ignore license todo locmax markdown lychee depend bakfind test
-	@echo "ADVISORY: make tests docs"
+prep: versions analyze fix import_order_fix format dcm ignore license todo locgo markdown lychee depend bakfind
+	@echo "ADVISORY: make test qtest docs"
 	@echo $(SEPARATOR)
 
 .PHONY: docs
@@ -165,13 +184,20 @@ pubspec.actual:
 .PHONY: fix
 fix:
 	@echo "Dart: FIX"
-	dart fix --apply lib
+	dart fix --apply
 	@echo $(SEPARATOR)
+
+# 20260518 gjw For the format we should make sure all folders with a
+# pubspec.yaml have updated pacakges. This resolved an issue I was
+# having with `format` complaining `Failed to resolve package URI
+# "package:flutter_lints/flutter.yaml"` This will slow down a `format`
+# but it's prbably a good thing to do.
 
 .PHONY: format
 format:
 	@echo "Dart: FORMAT"
-	dart format lib/ $(if $(shell test -d example && echo yes),example/)
+	@find . -name pubspec.yaml -not -path '*/.*' -execdir flutter pub get > /dev/null \;
+	dart format lib/ $(if $(shell test -d example && echo yes),example/) $(if $(shell test -d test && echo yes),test/) $(if $(shell test -d integration_test && echo yes),integration_test/)
 	@echo $(SEPARATOR)
 
 # My emacs IDE is starting to add imports of backups automagically!
@@ -193,6 +219,7 @@ tests:: test qtest
 
 .PHONY: analyze
 analyze:
+	@echo $(SEPARATOR)
 	@echo "Futter ANALYZE"
 	-flutter analyze
 #	dart run custom_lint
@@ -206,71 +233,48 @@ depend:
 	-dependency_validator
 	@echo $(SEPARATOR)
 
+# Check and fail if any files exceed limit.
+#
+# 20260115 gjw We utilise two targets both running locbase. The target
+# `locgo` ignores failure of the max loc check and is used in the
+# `prep` target above to ensure all tests are undertaken. It is
+# wrapped in the common echos for the `prep` workflow. The main target
+# `locmax` is used in the CI to fail on too many lines of code, and
+# thus fails the lint checking.
+
 LINES ?= 300
 
 .PHONY: locmax
 locmax:
-	@echo "Files with EXCESS LINES OF CODE:\n"
-	@-loc=$$(cat $(shell find lib -name '*.dart') \
-		| egrep -v '^ */' \
-		| egrep -v '^ *$$' \
-		| egrep -v '^ *[)},]+, *$$' \
-		| wc -l \
-		| numfmt --grouping); \
+	@$(LOC) -n $(LINES) $(shell find lib -name '*.dart') > /tmp/loc_output.txt; \
+	return_code=$$?; \
+	over=$$(cat /tmp/loc_output.txt); \
+	locm=$$(echo $$over | wc -w | awk '{print $$1/2}'); \
+	[ -z "$$over" ] || echo "$$over"; \
+	loc=$$(bash $(LOC) -t $(shell find lib -name '*.dart')); \
 	numf=$$(find lib -name "*.dart" -type f | wc -l); \
-	output=$$(find lib -name "*.dart" -exec sh -c ' \
-		lines=$$(bash $(LOC) "$$1"); \
-		if [ $$lines -gt $(LINES) ]; then \
-			printf "%4d %s\n" $$lines "$$1"; \
-		fi \
-	' _ {} \; | sort -nr); \
-	locm=$$(echo $$output | wc -w | awk '{print $$1/2}'); \
-	if [ -n "$$output" ]; then \
-		echo "$$output"; \
-		echo "\nTotal $$loc lines of code across $$numf files."; \
+	totl=$$(cat $(shell find lib -name '*.dart') | wc -l); \
+	echo "Total $$loc lines of code across $$numf files with total $$totl lines."; \
+	if [ $$return_code -ne 0 ]; then \
 		echo "\n$(CROSS) Error: Found $$locm files with more than $(LINES) lines of code."; \
-		exit 1; \
+	elif [ -s /tmp/loc_output.txt ]; then \
+		echo "\n$(TICK) All files are under $(LINES) lines (with some fuzz)."; \
 	else \
-		echo "Total $$loc lines of code across $$numf files."; \
 		echo "\n$(TICK) All files are under $(LINES) lines."; \
 	fi
+
+.PHONY: locgo
+locgo:
+	@echo "Files with EXCESS LINES OF CODE:\n"
+	@-make --no-print-directory locmax
 	@echo $(SEPARATOR)
-
-# Check and fail if any files exceed limit
-
-PHONY: locmax-enforce
-locmax-enforce:
-	@loc=$$(cat $(shell find lib -name '*.dart') \
-		| egrep -v '^ */' \
-		| egrep -v '^ *$$' \
-		| egrep -v '^ *[)},]+, *$$' \
-		| wc -l \
-		| numfmt --grouping); \
-	numf=$$(find lib -name "*.dart" -type f | wc -l); \
-	output=$$(find lib -name "*.dart" -exec sh -c ' \
-		lines=$$(bash $(LOC) "$$1"); \
-		if [ $$lines -gt $(LINES) ]; then \
-			printf "%4d %s\n" $$lines "$$1"; \
-		fi \
-	' _ {} \; | sort -nr); \
-	locm=$$(echo $$output | wc -w | awk '{print $$1/2}'); \
-	if [ -n "$$output" ]; then \
-		echo "$$output"; \
-		echo "Total $$loc lines of code across $$numf files."; \
-		echo "$(CROSS) Error: Found $$locm files with more than $(LINES) lines of code."; \
-		exit 1; \
-	else \
-		echo "Total $$loc lines of code across $$numf files."; \
-		echo "$(TICK) All files are under $(LINES) lines"; \
-	fi
-
 
 # dart pub global activate dependency_validator
 
 .PHONY: markdown
 markdown:
 	@echo "Markdown: MARKDOWN FORMAT CHECK."
-	-markdownlint --disable MD036 -- *.md lib assets installers
+	-markdownlint *.md lib assets installers
 	@echo
 	@echo $(SEPARATOR)
 
@@ -323,6 +327,13 @@ desktops:
 	flutter create --platforms=windows,macos,linux --project-name $(shell grep 'name: ' pubspec.yaml | awk '{print $$2}') .
 
 ########################################################################
+# MAINTAIN SCRIPTS
+
+.PHONY: scripts
+scripts:
+	@bash support/update.sh
+
+########################################################################
 # INTEGRATION TESTING
 #
 # Run the integration tests for the desktop device (linux, windows,
@@ -333,7 +344,7 @@ desktops:
 .PHONY: test
 test:
 	@echo "Unit TEST:"
-	@-if [ -d test ]; then flutter test test; else echo "\nNo test folder found."; fi
+	@-if [ -d test ]; then flutter test; else echo "\nNo test folder found."; fi
 	@echo $(SEPARATOR)
 
 # For a specific interactive test we think of it as providing a
@@ -341,11 +352,12 @@ test:
 # create a narrated video. A INTERACT of 5 or more is then useful.
 
 %.itest:
-	@device_id=$(shell flutter devices | grep -E 'linux|macos|windows' | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|'); \
-	if [ -z "$$device_id" ]; then \
-		echo "No desktop device found. Please ensure you have the correct desktop platform enabled."; \
-		exit 1; \
-	fi; \
+	@case "$$(uname -s)" in \
+		Linux*) device_id="linux" ;; \
+		Darwin*) device_id="macos" ;; \
+		MINGW*|MSYS*|CYGWIN*) device_id="windows" ;; \
+		*) echo "Unsupported platform: $$(uname -s)"; exit 1 ;; \
+	esac; \
 	flutter test --dart-define=INTERACT=5 --device-id $$device_id integration_test/$*.dart
 
 # For a run over all tests interactively we INTERACT a little but not as
@@ -353,25 +365,28 @@ test:
 
 .PHONY: itest
 itest:
-	@device_id=$(shell flutter devices | grep -E 'linux|macos|windows' | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|'); \
-	if [ -z "$$device_id" ]; then \
-		echo "No desktop device found. Please ensure you have the correct desktop platform enabled."; \
-		exit 1; \
-	fi; \
+	@case "$$(uname -s)" in \
+		Linux*) device_id="linux" ;; \
+		Darwin*) device_id="macos" ;; \
+		MINGW*|MSYS*|CYGWIN*) device_id="windows" ;; \
+		*) echo "Unsupported platform: $$(uname -s)"; exit 1 ;; \
+	esac; \
 	for t in integration_test/*.dart; do flutter test --dart-define=INTERACT=2 --device-id $$device_id $$t; done
 	@echo $(SEPARATOR)
 
 # For the quick tests we do not INTERACT at all. The aim is to quickly
 # test all functionality.
 
-.PHONY: qtest
-qtest:
-	@device_id=$(shell flutter devices | grep -E 'linux|macos|windows' | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|'); \
-	if [ -z "$$device_id" ]; then \
-		echo "No desktop device found. Please ensure you have the correct desktop platform enabled."; \
-		exit 1; \
-	fi; \
-	for t in integration_test/*.dart; do \
+.PHONY: qtest_detail
+qtest_detail:
+	@case "$$(uname -s)" in \
+		Linux*) device_id="linux" ;; \
+		Darwin*) device_id="macos" ;; \
+		MINGW*|MSYS*|CYGWIN*) device_id="windows" ;; \
+		*) echo "Unsupported platform: $$(uname -s)"; exit 1 ;; \
+	esac; \
+	if [ ! -d integration_test ]; then echo "No integration tests available."; exit 0; fi; \
+	for t in $$(find integration_test -name "*_test.dart" | sort); do \
 		echo "========================================"; \
 		echo $$t; /bin/echo -n $$t >&2; \
 		echo "========================================"; \
@@ -384,21 +399,22 @@ qtest:
 	@echo $(SEPARATOR)
 
 %.qtest:
-	@device_id=$(shell flutter devices | grep -E 'linux|macos|windows' | perl -pe 's|^[^•]*• ([^ ]*) .*|\1|'); \
-	if [ -z "$$device_id" ]; then \
-		echo "No desktop device found. Please ensure you have the correct desktop platform enabled."; \
-		exit 1; \
-	fi; \
+	@case "$$(uname -s)" in \
+		Linux*) device_id="linux" ;; \
+		Darwin*) device_id="macos" ;; \
+		MINGW*|MSYS*|CYGWIN*) device_id="windows" ;; \
+		*) echo "Unsupported platform: $$(uname -s)"; exit 1 ;; \
+	esac; \
 	flutter test --dart-define=INTERACT=0 --device-id $$device_id --reporter failures-only integration_test/$*.dart 2>/dev/null
 
-.PHONY: qtest.all
-qtest.all:
+.PHONY: qtest
+qtest:
 	@echo $(APP) `egrep '^version: ' pubspec.yaml`
 	@echo "flutter version:" `flutter --version | head -1 | cut -d ' ' -f 2`
-	make qtest > qtest_$(shell date +%Y%m%d%H%M%S).txt
+	make qtest_detail > ignore/qtest_$(shell date +%Y%m%d%H%M%S).txt
 
 clean::
-	rm -f qtest_*.txt
+	rm -f ignore/qtest_*.txt
 
 .PHONY: atest
 atest:
@@ -437,16 +453,40 @@ $(APP)-$(VER)-linux-x86_64.tar.gz: clean
 	mv $@ installers/$(APP).tar.gz
 
 apk::
+	@echo '******************** BUILD ANDROID APK'
 	flutter build apk --release
 	cp build/app/outputs/flutter-apk/app-release.apk installers/$(APP).apk
 	cp build/app/outputs/flutter-apk/app-release.apk installers/$(APP)-$(VER).apk
 
-appbundle:
+appbundle::
+	@echo '******************** BUILD ANDROID AAB'
+	flutter clean
 	flutter build appbundle --release
+	cp build/app/outputs/bundle/release/app-release.aab installers/$(APP).aab
+	cp build/app/outputs/bundle/release/app-release.aab installers/$(APP)-$(VER).aab
 
 realclean::
 	flutter clean
 	flutter pub get
+
+# Create a macos app
+# [20251029 jesscmoore] TODO: add converting to dmg
+# Build unsigned macos app
+dmg-unsigned::
+	flutter clean
+	flutter build macos --release --flavor unsigned
+
+# Build macos app signed with development certificate for testing
+# by App Developer Program togaware registered devices
+dmg-dev::
+	flutter clean
+	flutter build macos --release --flavor dev
+
+# Build macos app signed with app store distribution for testing
+# on Testflight or publishing
+dmg-staging:
+	flutter clean
+	flutter build macos --release --flavor staging
 
 # For the `dev` branch only, update the version sequence number prior
 # to a push (relies on the git.mk being loaded after this
@@ -508,27 +548,46 @@ unused_files:
 .PHONY: lychee
 lychee:
 	@echo "Lychee: CHECK LINKS."
-	-lychee --no-progress --format compact 'assets/**/*.md' 'assets/**/*.html' 'lib/**/*.dart'
+	-lychee --no-progress --format compact *.md ./**/*.dart $(if $(wildcard ./**/*.md),./**/*.md) $(if $(wildcard ./**/*.html),./**/*.html)
 	@echo $(SEPARATOR)
+
+.PHONY: version
+version:
+	@grep version: pubspec.yaml | sed 's/^version:/pubspec:/'
+	@echo "archive: $(shell ls installers/ARCHIVE/*deb | cut -d_ -f2 | sort -V | tail -n1)"
 
 ### TODO THESE SHOULD BE CHECKED AND CLEANED UP
 
 .PHONY: docs
 docs::
-	rsync -avzh doc/api/ root@solidcommunity.au:/var/www/html/docs/$(APP)/
+	rsync -avzh doc/api/ root@solidcommunity.au:/var/www/html/web/docs/$(APP)/
 
 .PHONY: versions
 versions:
-	perl -pi -e 's|applicationVersion = ".*";|applicationVersion = "$(VER)";|' \
-	lib/constants/app.dart
+	if [ -d snap ]; then perl -pi -e 's|^version:.*|version: $(VER)|' snap/snapcraft.yaml; fi
+
+
+BUILD_VER=$(shell grep '^version: ' pubspec.yaml | grep '+' | cut -d'+' -f2)
+MAJ_VER=$(shell grep '^version: ' pubspec.yaml | cut -d'+' -f1 | cut -d':' -f2 | cut -d'.' -f1,2)
+MIN_VER=$(shell grep '^version: ' pubspec.yaml | cut -d'+' -f1 | cut -d':' -f2 | cut -d'.' -f3)
+
+# Increment minor version in pubspec.yaml
+.PHONY: minor_versions
+minor_versions:
+	$(eval MIN_VER = $(shell echo $$(($(MIN_VER) + 1))))
+	@echo "Bumping version: $(VER) to $(MAJ_VER).$(MIN_VER)$(if $(BUILD_VER),+$(BUILD_VER),)"
+	perl -pi -e 's|^version:.*|version:$(MAJ_VER).$(MIN_VER)$(if $(BUILD_VER),+$(BUILD_VER),)|' pubspec.yaml
+
+# Increment major version in pubspec.yaml
+.PHONY: major_versions
+major_versions:
+	$(eval MAJ_VER = $(shell echo "$(MAJ_VER) + 1.0"  | bc))
+	@echo "Bumping version: $(VER) to $(MAJ_VER).$(MIN_VER)$(if $(BUILD_VER),+$(BUILD_VER),)"
+	perl -pi -e 's|^version:.*|version: $(MAJ_VER).$(MIN_VER)$(if $(BUILD_VER),+$(BUILD_VER),)|' pubspec.yaml
 
 .PHONY: loc
 loc: lib/*.dart
-	@cat $(shell find lib -name '*.dart') \
-	| egrep -v '^ */' \
-	| egrep -v '^ *$$' \
-	| egrep -v '^ *[)},]+, *$$' \
-	| wc -l
+	@bash $(LOC) $(shell find lib -name '*.dart') | sort -nr
 
 #
 # Manage the production install on the remote server.
@@ -540,3 +599,8 @@ solidcommunity:
 	--exclude .dart_tool --exclude build --exclude ios --exclude macos \
 	--exclude linux --exclude windows --exclude android
 	ssh solidcommunity.au '(cd projects/$(APP); flutter upgrade; make prod)'
+
+.PHONY: icons
+icons:
+	cp assets/images/app_icon.png snap/gui/icon.png
+	dart run flutter_launcher_icons

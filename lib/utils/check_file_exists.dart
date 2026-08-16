@@ -37,7 +37,7 @@ bool checkFileExists(BuildContext context, String path) {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('File Not Found'),
+          title: const Text('File Not Found'),
           content: Text(
             'The file you specified does not exist\n\n'
             '        $path\n\n'
@@ -48,7 +48,7 @@ bool checkFileExists(BuildContext context, String path) {
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );

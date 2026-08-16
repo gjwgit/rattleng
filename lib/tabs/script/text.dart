@@ -132,7 +132,9 @@ class ScriptTextState extends ConsumerState<ScriptText> {
                         MarkdownTooltip(
                           message: '''
 
-                          **Search:** Tap here to search the R script for any
+                          **Search**
+
+                          Tap here to search the R script for any
                           and all matching strings. The search is incremental,
                           finding matches as you type. The keyboard shortcut
                           `Ctrl-F` will also initiate a search.

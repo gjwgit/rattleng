@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2025-08-05 17:11:39 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2026-03-24 12:23:54 +1100 Graham Williams>
 #
 # Rattle version <VERSION>.
 #
@@ -95,7 +95,6 @@ pkgs <- c(
   'amap',
   'arules',
   'arulesViz',
-  'biclust',
   'corrplot',
   'descr',
   'devtools',

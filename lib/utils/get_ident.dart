@@ -38,7 +38,7 @@ String getIdent(WidgetRef ref) {
   final ident = roles.entries
       .firstWhere(
         (entry) => entry.value == Role.ident,
-        orElse: () => MapEntry('', Role.ignore),
+        orElse: () => const MapEntry('', Role.ignore),
       )
       .key;
 

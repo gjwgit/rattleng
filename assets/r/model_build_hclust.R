@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-05-14 17:06:07 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2026-04-22 11:08:25 +1000 Graham Williams>
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -120,9 +120,18 @@ cat("\n")
 
 svg("<TEMPDIR>/model_cluster_hierarchical.svg", width=12, height=10)
 dd <- ggdendro::dendro_data(model_hclust)
-id <- ds[tr,identifier] %>% data.frame() %>% '[['(1)
 labels <- dd$labels
-labels$identifier <- id[match(labels$label, rownames(ds[tr,]))]
+
+# Use the identifier variable if available, otherwise fall back to
+# row numbers so the dendrogram is still displayed without an id column.
+
+if (exists("identifier") && length(identifier) > 0 &&
+    identifier %in% colnames(ds)) {
+  id <- ds[tr, identifier] %>% data.frame() %>% "[["(1)
+  labels$identifier <- id[match(labels$label, rownames(ds[tr,]))]
+} else {
+  labels$identifier <- labels$label
+}
 ggplot() +
   geom_segment(data = dd$segments,
                aes(x = x, y = y, xend = xend, yend = yend)) +
@@ -135,7 +144,6 @@ ggplot() +
   labs(title = "Hierarchical Clustering Dendrogram", y="", x="") +
   <SETTINGS_GRAPHIC_THEME>() +
   theme(plot.margin = margin(10, 50, 10, 10),
-        axis.text.x = element_blank(),
         axis.text.y = element_blank() )
 dev.off()
 

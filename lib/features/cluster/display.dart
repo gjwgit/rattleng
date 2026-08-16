@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://opensource.org/license/gpl-3-0
 //
-// Time-stamp: "Saturday 2025-09-27 07:41:31 +1000 Graham Williams"
+// Time-stamp: "Tuesday 2026-03-24 12:46:25 +1100 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -51,7 +51,10 @@ final Map<String, Map<String, String>> clusterMethods = {
   'KMeans': {'functionName': 'kmeans', 'package': 'stats'},
   'Ewkm': {'functionName': 'ewkm', 'package': 'wskm'},
   'Hierarchical': {'functionName': 'hclust', 'package': 'stats'},
-  'BiCluster': {'functionName': 'biclust', 'package': 'biclust'},
+  // 20260324 gjw biclust has been removed from CRAN. We might try biclustermd
+  // some time.
+  //
+  // 'BiCluster': {'functionName': 'biclust', 'package': 'biclust'},
 };
 
 /// The CLUSTER panel displays the tree instructions or the tree biuld output.
@@ -153,7 +156,9 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
       'KMeans' => '$tempDir/model_cluster_pairs_kmeans.svg',
       'Ewkm' => '$tempDir/model_cluster_pairs_ewkm.svg',
       'Hierarchical' => '$tempDir/model_cluster_pairs_hierarchical.svg',
-      'BiCluster' => '$tempDir/model_cluster_pairs_bicluster.svg',
+      // 20260324 gjw biclust has been removed from CRAN. We might try biclustermd
+      // some time.
+      // 'BiCluster' => '$tempDir/model_cluster_pairs_bicluster.svg',
       _ => '',
     };
 

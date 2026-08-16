@@ -32,9 +32,11 @@ are also most welcome.
   3](https://opensource.org/license/gpl-3-0), making it free for
   you to use forever.
 + Also visit Togaware's [Data Science Portal](https://togaware.com/onepager).
++ Visit the [reddit](https://www.reddit.com/r/SAI_Rattle/) discussion
+  group to ask questions and get support.
 
 Rattle comes with **NO WARRANTY**. Rattle and the
-collection of R template scripts are Copyright © 2006-2025 Togaware
+collection of R template scripts are Copyright © 2006-2026 Togaware
 Pty Ltd. Rattle is a registered trademark of Togaware Pty Ltd. Tap the
 About (Info) button for acknowledgements.
 

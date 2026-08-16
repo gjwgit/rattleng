@@ -20,6 +20,7 @@ linter:
     prefer_single_quotes: true
     require_trailing_commas: true
     directives_ordering: false
+    prefer_const_constructors: true
 
 # Identify directories to ignore.
 
@@ -27,3 +28,10 @@ analyzer:
   exclude:
     - ignore/**
     - ignore/
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**

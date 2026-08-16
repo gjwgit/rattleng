@@ -55,7 +55,9 @@ class SaveDatasetButton extends ConsumerWidget {
     return MarkdownTooltip(
       message: '''
 
-        **Save:** Tap here to save the current dataset, which you might have
+        **Save**
+
+        Tap here to save the current dataset, which you might have
         transformed within Rattle. The dataset will be saved as a CSV (comma
         separated values) file. Within the R script the dataset is the current
         value of the variable *ds*.

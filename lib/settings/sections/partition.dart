@@ -90,9 +90,11 @@ class Partition extends ConsumerWidget {
       children: [
         Row(
           children: [
-            MarkdownTooltip(
+            const MarkdownTooltip(
               message: '''
-              **Dataset Partition Setting:** Configure the dataset
+              **Dataset Partition Setting**
+
+              Configure the dataset
               partitioning ratios for the training, validation, and
               testing datasets.
 
@@ -101,7 +103,7 @@ class Partition extends ConsumerWidget {
               - The values must sum up to 100%.
 
               ''',
-              child: const Text(
+              child: Text(
                 'Partition',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
@@ -118,7 +120,8 @@ class Partition extends ConsumerWidget {
             MarkdownTooltip(
               message: '''
 
-              **Reset Partition Ratios:**
+              **Reset Partition Ratios**
+
               Reset the dataset partition ratios to the default values of 70/15/15.
 
               ''',

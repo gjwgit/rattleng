@@ -1,6 +1,6 @@
 /// EXPLORE tab: Correlation Large Dataset Test.
 //
-// Time-stamp: <Thursday 2025-04-03 17:19:49 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2026-01-06 14:42:30 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -54,33 +54,31 @@ void main() {
       await navigateToTab(tester, 'Explore');
       await navigateToFeature(tester, 'Correlation');
       await tapButton(tester, 'Perform Correlation Analysis');
+
+      // 20260106 gjw Page 4 contains the numeric data. It used to be page 1.
+
       await navigateToPage(
         tester,
-        1,
+        4,
         back: 1,
         title: 'Correlation - Numeric Data',
       );
       await verifySelectableText(tester, [
-        'smoking_status        0.00              0.01           1.00           0.04   0.05',
-        'bmi                  -0.01              0.03           0.05           0.39   1.00',
-        'age_at_consultation   0.00              0.06           0.08           0.20   0.24',
+        'bmi                   0.24                0.12   1.00   0.39   0.05           0.03          -0.01',
+        'weight                0.20                0.26   0.39   1.00   0.04           0.02          -0.01',
+        'smoking_status        0.08                0.11   0.05   0.04   1.00           0.01           0.00',
       ]);
 
       // Verify the content of the page 2.
 
-      // TODO 20240902 kev HOW TO CONFIRM THE IMAGE?
-      //
-      // Must be something we can do to confirm the image. Not sure what yet!
-
       await navigateToPage(
         tester,
         2,
-        back: 1,
         title: 'Variable Correlation Plot',
       );
 
-      // Now set the dataset role of gender from TARGET to IGNORE to test when
-      // there is no target. (gjw 20250403)
+      //  20250403 gjw Set the dataset role of gender from TARGET to IGNORE to
+      //  test when there is no target.
 
       await navigateToTab(tester, 'Dataset');
       await navigateToPage(tester, 1, back: 1);
@@ -88,11 +86,11 @@ void main() {
       await navigateToTab(tester, 'Explore');
       await navigateToFeature(tester, 'Correlation');
       await tapButton(tester, 'Perform Correlation Analysis');
-      await navigateToPage(tester, 1, back: 2);
+      await navigateToPage(tester, 4, back: 2);
       await verifySelectableText(tester, [
-        'smoking_status        0.00              0.01           1.00           0.04   0.05',
-        'bmi                  -0.01              0.03           0.05           0.39   1.00',
-        'age_at_consultation   0.00              0.06           0.08           0.20   0.24',
+        'bmi                   0.24                0.12   1.00   0.39   0.05           0.03          -0.01',
+        'weight                0.20                0.26   0.39   1.00   0.04           0.02          -0.01',
+        'smoking_status        0.08                0.11   0.05   0.04   1.00           0.01           0.00',
       ]);
     });
   });

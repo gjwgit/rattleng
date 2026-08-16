@@ -1,24 +1,46 @@
-# RattleNG Changelog
+# Rattle Changelog
 
-Recorded here are the high level changes for the RattleNG app.
+Recorded here are the high level changes for the Rattle app.
 
-Guide: Each version update is recorded here with a short user-oriented
-description of the update. Updates in the 6.5.n series are heading
-toward a 6.6 release.  The `[version timestamp user]` string is
-utilised by the flutter version_widget package.
+Each version update is recorded here with a short user-oriented
+description of the update.
 
 To download the latest version of the app: GNU/Linux
 [**deb**](https://access.togaware.com/rattle_amd64.deb) or
-[**zip**](https://access.togaware.com/rattle-dev-linux.zip) - MacOS
-[**zip**](https://access.togaware.com/rattle-dev-macos.zip) - Windows
-[**zip**](https://access.togaware.com/rattle-dev-windows.zip) or
-[**exe**](https://access.togaware.com/rattle-dev-windows-inno.exe)
+[**zip**](https://access.togaware.com/rattle-linux.zip) - MacOS
+[**zip**](https://access.togaware.com/rattle-macos.zip) - Windows
+[**zip**](https://access.togaware.com/rattle-windows.zip) or
+[**exe**](https://access.togaware.com/rattle-windows-inno.exe)
 (self installing).
 
 Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ EVALUATE: No measures for a loaded dataset with no target [6.5.44 20260817 gjw]
++ EVALUATE: Export the results to CSV, a column per model [6.5.43 20260817 gjw]
++ Traffic light label to its left so the light stays put [6.5.42 20260816 gjw]
++ EVALUATE: Load a dataset to evaluate the model against [6.5.41 20260816 gjw]
++ Traffic light in the app bar showing what R is doing [6.5.40 20260816 gjw]
++ EVALUATE: Interactive prediction of an observation [6.5.39 20260816 gjw]
++ Centre the plot and restore its footer [6.5.38 20260815 gjw]
++ Fix blurry plots and enlarge the plot display [6.5.37 20260815 gjw]
++ BUG: Fix startup exception loading max factor [6.5.36 20260815 gjw]
++ Load a dataset named on the command line [6.5.35 20260815 gjw]
++ Update tooltips to current style TITLE\n\nTEXT [6.5.34 20260630 gjw]
++ Improve parsing of `print(form)` [6.5.33 20260630 gjw]
++ rpart tree print SVG not supported, use PNG [6.5.32 20260630 gjw]
++ Identify when a package is missing and popup [6.5.31 20260630 gjw]
++ CLUSTER HIERACHICAL with no IDENT use row numbers [6.5.30 20260505 gjw]
++ Add support for evaluation of regression models [6.5.29 20260504 gjw]
++ Hard load caret for nueralnet buld [6.5.28 20260504 gjw]
++ Add x labels to dendrogram [6.5.27 20260422 gjw]
++ Remove R's biclust package - archived [6.5.26 20260324 gjw]
++ Fix title overflow on narrow window [6.5.25 20260306 castropy]
++ Include numeric target in correlation plots [6.5.24 20260106 gjw]
++ Refine the visual missing data plot [6.5.23 20251224 gjw]
++ BUG: Missing histogram when group by is none [6.5.22 20251221 gjw]
++ MISSING: Bug fix for VIM::aggr() warning [6.5.21 20251001 gjw]
 + Update file_picker resolve custom issue - labs [6.5.20 20250929 gjw]
 + Update inno build for windows-latest [6.5.19 20250929 gjw]
 + Lint clean. VersionWidget update [6.5.18 20250928 gjw]

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Sunday 2025-08-17 06:13:41 +1000 Graham Williams>
+# Time-stamp: <Sunday 2025-12-21 10:52:40 +1100 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -94,7 +94,7 @@ tds %>%
 dev.off()
 
 ########################################################################
-# <HISTOGRAM>
+# HISTOGRAM
 ########################################################################
 
 svg("<TEMPDIR>/explore_visual_histogram.svg", width=10)
@@ -109,7 +109,7 @@ tds %>%
 dev.off()
 
 ########################################################################
-# <DENSITY>
+# DENSITY
 ########################################################################
 # TODO 20241120 gjw ADD ALL TO <LEGEND>
 
@@ -127,7 +127,7 @@ tds %>%
 dev.off()
 
 ########################################################################
-# <EMPIRICAL> <CUMULATIVE> <DISTRIBUTION> <FUNCTION>
+# EMPIRICAL CUMULATIVE DISTRIBUTION FUNCTION
 ########################################################################
 
 svg("<TEMPDIR>/explore_visual_ecdf.svg", width=10)
@@ -136,7 +136,7 @@ tds %>%
   dplyr::select(<SELECTED_VAR>, <GROUP_BY_VAR>) %>%
   ggplot2::ggplot() +
   # Overall ECDF
-  ggplot2::stat_ecdf(aes(x = <SELECTED_VAR>), geom = "step", color = "black", size = 1) +
+  ggplot2::stat_ecdf(aes(x = <SELECTED_VAR>), geom = "step", color = "black", linewidth = 1) +
   # Group ECDFs
   ggplot2::stat_ecdf(aes(x = <SELECTED_VAR>, color = <GROUP_BY_VAR>), geom = "step") +
   ggplot2::xlab(paste("<SELECTED_VAR>\n\n", paste("<TIMESTAMP>", username), sep="")) +
@@ -146,7 +146,7 @@ tds %>%
 dev.off()
 
 ########################################################################
-# <BENFORD>'S LAW
+# BENFORD'S LAW
 ########################################################################
 
 # Initialies the parameters.
@@ -213,7 +213,7 @@ p +
 dev.off()
 
 ## ########################################################################
-## # <PAIRS> - <REQUIRES> TWO <VARIABLES>
+## # PAIRS - REQUIRES TWO VARIABLES
 ## ########################################################################
 ##
 ## # Display a pairs plot for the selected variables.

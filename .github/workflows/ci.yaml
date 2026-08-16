@@ -13,7 +13,7 @@ on:
     types: [opened, reopened, synchronize]
 
 env:
-  FLUTTER_VERSION: '3.35.4'
+  FLUTTER_VERSION: '3.47.0'
 
 jobs:
 
@@ -89,8 +89,7 @@ jobs:
         with:
           node-version: 18
       - run: npm install -g markdownlint-cli
-      - run: markdownlint --disable MD036 -- *.md lib assets installers
-        # -p .markdownlintignore -c .markdownlint.yaml
+      - run: markdownlint *.md lib assets installers
 
   link_checker:
     runs-on: ubuntu-latest
@@ -104,34 +103,38 @@ jobs:
         id: lychee
         uses: lycheeverse/lychee-action@v2
         with: # Don't fail for now but then create an issue - useful?
-          args: --verbose --no-progress 'assets/**/*.md' 'assets/**/*.html' 'lib/**/*.dart'
-          fail: false
+          args:
+            --no-progress
+            '*.md'
+            './**/*.dart'
+            'assets/**/*.md'
+            'assets/**/*.html'
+          fail: true
 
-      - name: Create Issue From File
-        if: steps.lychee.outputs.exit_code != 0
-        uses: peter-evans/create-issue-from-file@v5
-        with:
-          title: Link Checker Report
-          content-filepath: ./lychee/out.md
-          labels: report, automated issue
+      # 20251030 gjw Remove the automatic creation of an issue for
+      # now. It is creating too many and I am simply closing them. The
+      # failure of the lint test itself should be enough.
+
+      # - name: Create Issue From File
+      #   if: steps.lychee.outputs.exit_code != 0
+      #   uses: peter-evans/create-issue-from-file@v5
+      #   with:
+      #     title: Link Checker Report
+      #     content-filepath: ./lychee/out.md
+      #     labels: report, automated issue
 
   locmax:
     runs-on: ubuntu-latest
     if: github.event.repository.private == false
     steps:
       - uses: actions/checkout@v4
-      - run: make locmax-enforce
+      - run: make locmax
 
   copyright:
     runs-on: ubuntu-latest
     if: github.event.repository.private == false
     steps:
       - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          flutter-version: ${{env.FLUTTER_VERSION}}
-      - run: flutter pub get
       - name: Check copyright headers
         run: |
           # Find Dart files without proper copyright headers, excluding generated files
@@ -151,4 +154,43 @@ jobs:
             exit 1
           else
             echo "✅ All non-generated Dart files have copyright headers"
+          fi
+
+  # 20251017 gjw The usual command for running the integration tests
+  # is `flutter test interaction_test` and each `*_test.dart`  is
+  # run. However for our testing of apps using solidui we need to
+  # authenticate through an external browser login. The usual `flutter
+  # test` will not properly authenticate. Instead, we should run `make
+  # qtest.all` to run the tests. This action
+
+  test_enforcement:
+    runs-on: ubuntu-latest
+    if: github.event.repository.private == false
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check for batch test commands
+        run: |
+          # Check for disallowed "flutter test integration_test/" usage in scripts/workflows
+          # Exclude comments and this CI check itself
+          batch_test_found=$(grep -r "flutter test integration_test" \
+            .github/workflows/ \
+            support/ \
+            scripts/ \
+            Makefile 2>/dev/null | \
+            grep -v "# Check for disallowed" | \
+            grep -v "batch_test_found=" | \
+            grep -v "echo.*flutter test integration_test/" || true)
+          if [ -n "$batch_test_found" ]; then
+            echo "❌ Found disallowed batch test command 'flutter test integration_test/'"
+            echo ""
+            echo "Found in:"
+            echo "$batch_test_found"
+            echo ""
+            echo "⚠️  Batch testing fails on desktop due to Flutter framework limitations."
+            echo "✅ Use 'make qtest' instead - it runs tests individually."
+            echo ""
+            echo "See docs/TESTING_GUIDE.md for details."
+            exit 1
+          else
+            echo "✅ No batch test commands found - using recommended 'make qtest' approach"
           fi

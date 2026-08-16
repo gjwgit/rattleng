@@ -30,7 +30,7 @@ import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 import 'package:rattle/constants/keys.dart';
 import 'package:rattle/constants/status.dart';
-import 'package:rattle/features/dataset/popup.dart';
+import 'package:rattle/features/dataset/load_path.dart';
 import 'package:rattle/providers/dataset_loaded.dart';
 import 'package:rattle/providers/page_controller.dart';
 import 'package:rattle/providers/path.dart';
@@ -93,7 +93,9 @@ class DatasetTextFieldState extends ConsumerState<DatasetTextField> {
       child: MarkdownTooltip(
         message: '''
 
-        **Path:** You can paste or type the path to a file containing your
+        **Path**
+
+        You can paste or type the path to a file containing your
         dataset. It is expected to be a **csv** or **txt** file, or the name of
         a package dataset, like rattle::wattle.
 

@@ -129,7 +129,9 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               key: const Key('Build Neural Network'),
               tooltip: '''
 
-              **Build:** Tap here to build a Neural Network model using the
+              **Build**
+
+              Tap here to build a Neural Network model using the
               parameter values set here.
 
               ''',
@@ -240,7 +242,9 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               key: const Key('nnet_trace'),
               tooltip: '''
 
-              **Trace:** Tap here to enable/disable tracing optimization for the
+              **Trace**
+
+              Tap here to enable/disable tracing optimization for the
               **single layer neural network**. The prediction error is provided
               after every 10 training iterations in the Console.
 
@@ -252,7 +256,9 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
             LabelledCheckbox(
               tooltip: '''
 
-              **Skip:** Add skip-layer connections from input to output for the
+              **Skip**
+
+              Add skip-layer connections from input to output for the
               **single layer neural network**.
 
               ''',
@@ -264,7 +270,9 @@ class NeuralConfigState extends ConsumerState<NeuralConfig> {
               key: const Key('Neural Ignore Categoric'),
               tooltip: '''
 
-              **Ignore Categoirc:** Build the model ignoring the categoric
+              **Ignore Categoirc**
+
+              Build the model ignoring the categoric
               variables. Categoric variables are handled by the neural net
               models by enumerating their levels across the other
               variables. Because this can result in many introduced variables we

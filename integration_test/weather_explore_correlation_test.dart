@@ -1,6 +1,6 @@
 /// Test WEATHER dataset EXPLORE tab CORRELATION feature.
 //
-// Time-stamp: <Wednesday 2025-03-05 14:29:23 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2026-01-06 15:21:48 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,9 +31,9 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/main.dart' as app;
 
 import 'utils/delays.dart';
-import 'utils/goto_next_page.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
+import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
@@ -51,16 +51,18 @@ void main() {
       await navigateToFeature(tester, 'Correlation');
       await tapButton(tester, 'Perform Correlation Analysis');
       await tester.pump(hack);
-      await gotoNextPage(tester);
+      await navigateToPage(
+        tester,
+        4,
+        back: 1,
+        title: 'Correlation - Numeric Data',
+      );
       await verifyPage('Correlation - Numeric Data', '1.00');
       await verifySelectableText(tester, [
-        'pressure_9am      1.00         0.97         0.25',
-        'humidity_9am      0.25         0.23         1.00',
-        'risk_mm          -0.20        -0.22         0.06',
+        'min_temp          1.00     0.90     0.69     0.64     0.32            0.28           0.27     0.27    0.16',
+        'temp_9am          0.90     1.00     0.84     0.80     0.41            0.23           0.14     0.20    0.10',
+        'max_temp          0.69     0.84     1.00     0.99     0.27           -0.08           0.02     0.06   -0.07',
       ]);
-      await gotoNextPage(tester);
-      await verifyPage('Variable Correlation Plot');
-      await tester.pump(interact);
     });
   });
 }

@@ -29,6 +29,8 @@ import 'package:flutter/foundation.dart';
 
 import 'package:file_picker/file_picker.dart';
 
+import 'package:rattle/constants/app.dart';
+
 /// Select a file for dataset loading using a file picker dialog.
 Future<String> datasetSelectFile() async {
   // Use the [FilePicker] to select a file asynchronously so as not to block the
@@ -37,7 +39,7 @@ Future<String> datasetSelectFile() async {
   FilePickerResult? result = await FilePicker.platform.pickFiles(
     dialogTitle: 'Choose a file to load as your dataset.',
     type: FileType.custom,
-    allowedExtensions: ['csv', 'xlsx', 'txt'],
+    allowedExtensions: datasetExtensions,
   );
 
   String path = '';

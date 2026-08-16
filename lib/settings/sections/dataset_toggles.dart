@@ -133,12 +133,14 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
     return Column(
       children: [
-        Row(
+        const Row(
           children: [
             MarkdownTooltip(
               message: '''
 
-              **Dataset Toggles Setting:** The default setting of
+              **Dataset Toggles Setting**
+
+              The default setting of
               the dataset toggles, on starting up Rattle, is set
               here. During a session with Rattle the toggles may be
               changed by the user. If the *Sync* option is set, then
@@ -146,7 +148,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
               on the next time Rattle is run.
 
               ''',
-              child: const Text(
+              child: Text(
                 'Dataset',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
@@ -179,7 +181,8 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
                 },
                 tooltipMessage: '''
 
-                **Cleanse Toggle:**
+                **Cleanse Toggle**
+
 
                 Cleansing prepares the dataset by:
 
@@ -202,7 +205,8 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
                 },
                 tooltipMessage: '''
 
-                **Unify Toggle:**
+                **Unify Toggle**
+
 
                 Unifies dataset column names by:
 
@@ -225,7 +229,8 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
                 },
                 tooltipMessage: '''
 
-                **Partition Toggle:**
+                **Partition Toggle**
+
 
                 Splits the dataset into subsets for predictive modeling:
 
@@ -240,22 +245,24 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
                 ''',
               ),
             ),
-            MarkdownTooltip(
+            const MarkdownTooltip(
               message: '''
 
-              **Keep in Sync Toggle:**
+              **Keep in Sync Toggle**
+
 
               - **On:** Saves toggle changes for current sessions.
 
               - **Off:** Changes are only recovered on restart.
 
               ''',
-              child: const Text('Keep in Sync', style: TextStyle(fontSize: 16)),
+              child: Text('Keep in Sync', style: TextStyle(fontSize: 16)),
             ),
             MarkdownTooltip(
               message: '''
 
-              **Keep in Sync Toggle:**
+              **Keep in Sync Toggle**
+
 
               - **On:** Saves toggle changes for current sessions.
 
@@ -277,7 +284,9 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
             MarkdownTooltip(
               message: '''
 
-              **Reset Toggles:** Tap here to reset the Dataset Toggles
+              **Reset Toggles**
+
+              Tap here to reset the Dataset Toggles
                 setting to the default for Rattle.
 
               ''',
@@ -294,7 +303,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
 
         settingsGroupGap,
 
-        Partition(),
+        const Partition(),
         settingsGroupGap,
 
         // Ignore Missing Target row.
@@ -319,7 +328,9 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
                   MarkdownTooltip(
                     message: '''
 
-                    **Reset Toggles:** Tap here to reset the Max Factor to the default value
+                    **Reset Toggles**
+
+                    Tap here to reset the Max Factor to the default value
 
                     ''',
                     child: ElevatedButton(
@@ -334,7 +345,7 @@ class _DatasetTogglesState extends ConsumerState<DatasetToggles> {
         ),
         settingsGroupGap,
 
-        Divider(),
+        const Divider(),
       ],
     );
   }

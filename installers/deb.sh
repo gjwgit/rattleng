@@ -27,8 +27,10 @@ Architecture: amd64
 Depends: libgtk-3-0, libblkid1, liblzma5
 Maintainer: Graham Williams <graham.williams@togaware.com>
 Description: R Analytic Tool To Learn Easily - Rattle
- A detailed description of Rattle
- spanning multiple lines if needed.
+ Rattle is a Flutter-based app for the Data Scientist. Utilising the power of the
+ R statistical language, you are able to quickly load, explore, wrangle, and visualise
+ your data. Once the data is in shape you can apply machine learning models to build AI
+ applications.
 EOL
 
 # Create desktop entry.

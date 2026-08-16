@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-05-07 08:48:30 +1000 Graham Williams>
+# Time-stamp: <Sunday 2026-01-18 13:47:10 +1100 Graham Williams>
 #
 # Rattle version <VERSION>.
 #
@@ -80,6 +80,9 @@ library(lubridate)    # Check if variable is a date.
 # A function to provide the dataset summary as JSON which can then be
 # parsed by Rattle as the dataset summary from which Rattle gets all
 # of it's meta data.
+## 20260118 gjw MOVED TO R RATTLE PACKAGE
+##
+## Once 5.5.2 is released then REMOVE THESE FROM HERE
 
 meta_data <- function(df) {
   summary_list <- lapply(names(df), function(var_name) {
@@ -148,25 +151,9 @@ if (username == "") username <- Sys.getenv("USERNAME")  # On Windows
 ##
 rat <- cat
 
-# Check if values in a column are unique.
-
-check_unique <- function(x) {
-  !any(duplicated(x))
-}
-
-# Check if the numbers in the column are real numbers and if so return
-# FALSe so they are not included in the potentiasl <IDENT>.
-
-check_not_real <- function(x) {
-  if (! is.numeric(x)) {
-    return(TRUE)
-  } else {
-    return(! any(x != round(x)))
-  }
-}
-
 # Identify columns (except real numbers) with unique values to treat
 # as identifiers. (20250311 gjw)
+## 20260118 gjw MOVED TO R RATTLE PACKAGE
 
 unique_columns <- function(tbl) {
   tbl %>%
@@ -181,6 +168,7 @@ unique_columns <- function(tbl) {
   return(unique_non_real_cols)
 }
 
+## 20260118 gjw MOVED TO R RATTLE PACKAGE
 find_fewest_levels <- function(df) {
   # Select only the categoric (factor) columns from the data frame
   cat_vars <- df[, sapply(df, is.factor), drop = FALSE]
@@ -210,11 +198,13 @@ find_fewest_levels <- function(df) {
 ####################################
 
 # A palette for rattle!
+## 20260118 gjw MOVED TO R RATTLE PACKAGE
 
 rattlePalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442",
                    "#0072B2", "#D55E00", "#CC79A7", "#000000")
 
 # A ggplot2 theme for rattle.
+## 20260118 gjw MOVED TO R RATTLE PACKAGE
 
 theme_rattle <- function(base_size = 11, base_family = "") {
   theme_grey(base_size = base_size, base_family = base_family) +

@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://opensource.org/license/gpl-3-0
 //
-// Time-stamp: "Saturday 2025-04-19 14:33:45 +1000 Graham Williams"
+// Time-stamp: "Tuesday 2026-03-24 12:45:57 +1100 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -80,12 +80,15 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
       algorithm is deterministic and so not depenendent on the random seed.
 
       ''',
-    'BiCluster': '''
-
-      Cluster by identifying suitable subsets of both the variables and the
-      observations, rather than just the observations as in kmeans.
-
-      ''',
+    // 20260324 gjw biclust has been removed from CRAN. We might try biclustermd
+    // some time.
+    //
+    // 'BiCluster': '''
+    //
+    //   Cluster by identifying suitable subsets of both the variables and the
+    //   observations, rather than just the observations as in kmeans.
+    //
+    //   ''',
   };
 
   final TextEditingController _pairSizeController = TextEditingController();
@@ -225,7 +228,9 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
               key: const Key('re_scale'),
               tooltip: '''
 
-              **Re-Scale:** Distance based cluster analysis is heavily affected
+              **Re-Scale**
+
+              Distance based cluster analysis is heavily affected
               by variables with larger magnitudes (like salary, e.g., 45,000 and
               50,000 has a distance of 5,000) compared to those with smaller
               magnitudes (like age, e.g., 45 and 50 has a distance of 5). We
@@ -241,7 +246,9 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
               key: const Key('cluster_pair_size'),
               tooltip: '''
 
-              **Pair Size:** Set the number of pairs to display in the pairwise
+              **Pair Size**
+
+              Set the number of pairs to display in the pairwise
               plot.
 
               ''',
