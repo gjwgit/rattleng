@@ -143,7 +143,17 @@ create_md_pattern_plot <- function(data) {
   # Get just the pattern matrix without totals.
 
   patterns <- pattern_matrix[1:n_patterns, 1:n_vars]
-  counts <- pattern_matrix[1:n_patterns, n_vars + 1]
+
+  # 20260817 gjw Two counts come out of `md.pattern()` for each pattern. The
+  # number of observations having the pattern is its row name, and the number
+  # of variables with a missing value in the pattern is the final column.
+  #
+  # The observation count goes along the top, since that is what says how much
+  # of the dataset each pattern accounts for, and the count of variables
+  # missing labels the column itself along the bottom.
+
+  observations <- as.numeric(rownames(pattern_matrix)[1:n_patterns])
+  vars_missing <- pattern_matrix[1:n_patterns, n_vars + 1]
 
   # Create a data frame for ggplot.  Each row represents a variable,
   # each column represents a pattern.
@@ -164,7 +174,7 @@ create_md_pattern_plot <- function(data) {
 
   pattern_counts <- data.frame(
     Pattern = factor(1:n_patterns),
-    Count   = counts,
+    Count   = observations,
     y_pos   = length(colnames(patterns)) + 0.5
   )
 
@@ -174,7 +184,7 @@ create_md_pattern_plot <- function(data) {
 
   geom_tile(color = "white", linewidth = 0.5) +
 
-  # Add count labels at the top.
+  # Add the observation counts along the top.
 
   geom_text(
     data = pattern_counts,
@@ -217,15 +227,18 @@ create_md_pattern_plot <- function(data) {
 
   labs(
     title = "Missing Data Pattern",
-    x = "Missing Data Pattern",
+    x = "Number of Variables Missing in the Pattern",
     y = "Variables",
     fill = "Data Status",
-    caption = "Numbers at top show number of variables with missing, numbers at right show missing count per variable"
+    caption = paste("Numbers at top are the observations having each pattern,",
+                    "numbers at right the missing values for each variable")
   ) +
 
-  # Extend the plot area to accommodate labels
+  # Extend the plot area to accommodate labels, and label each column with the
+  # number of variables it has missing rather than with its position.
 
-  scale_x_discrete(expand = expansion(add = c(0, 1))) +
+  scale_x_discrete(labels = as.character(vars_missing),
+                   expand = expansion(add = c(0, 1))) +
   scale_y_discrete(expand = expansion(add = c(0, 1)))
 
   return(p)
@@ -253,7 +266,17 @@ create_md_pattern_plot_alt <- function(data) {
   n_patterns <- nrow(pattern_matrix) - 1
 
   patterns <- pattern_matrix[1:n_patterns, 1:n_vars]
-  counts <- pattern_matrix[1:n_patterns, n_vars + 1]
+
+  # 20260817 gjw Two counts come out of `md.pattern()` for each pattern. The
+  # number of observations having the pattern is its row name, and the number
+  # of variables with a missing value in the pattern is the final column.
+  #
+  # The observation count goes along the top, since that is what says how much
+  # of the dataset each pattern accounts for, and the count of variables
+  # missing labels the column itself along the bottom.
+
+  observations <- as.numeric(rownames(pattern_matrix)[1:n_patterns])
+  vars_missing <- pattern_matrix[1:n_patterns, n_vars + 1]
 
   plot_data <- expand.grid(
     Variable = factor(colnames(patterns), levels = rev(colnames(patterns))),
@@ -265,7 +288,7 @@ create_md_pattern_plot_alt <- function(data) {
 
   pattern_counts <- data.frame(
     Pattern = factor(1:n_patterns),
-    Count = counts,
+    Count = observations,
     y_pos = length(colnames(patterns)) + 0.5
   )
 
@@ -316,12 +339,13 @@ create_md_pattern_plot_alt <- function(data) {
 
   labs(
     title = "Missing Data Pattern (Alternative Style)",
-    x = "Missing Data Pattern",
+    x = "Number of Variables Missing in the Pattern",
     y = "Variables",
     caption = "X = Missing, • = Observed"
   ) +
 
-  scale_x_discrete(expand = expansion(add = c(0, 1))) +
+  scale_x_discrete(labels = as.character(vars_missing),
+                   expand = expansion(add = c(0, 1))) +
   scale_y_discrete(expand = expansion(add = c(0, 1)))
 
   return(p)
