@@ -131,6 +131,14 @@ open -a rattle --args ~/myData.csv
 When developing from source, pass the filename through to the app with
 `flutter run --dart-entrypoint-args myData.csv`.
 
+Rattle reports its version and exits, without starting up, for either
+`--version` or `-v`:
+
+```bash
+$ rattle --version
+rattle 6.5.46
+```
+
 Currently implemented features include:
 
 + Dataset

@@ -31,6 +31,7 @@ import 'package:flutter/material.dart';
 
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -99,6 +100,19 @@ Future<void> main([List<String> args = const []]) async {
   // (gjw 20260815)
 
   WidgetsFlutterBinding.ensureInitialized();
+
+  // 20260817 gjw Issue #1179. Report the version and exit, without starting up
+  // the app, as any command line program is expected to. Done before anything
+  // else, and in particular before the check for R, so that asking Rattle its
+  // version answers the question rather than reporting on R.
+
+  if (args.contains('--version') || args.contains('-v')) {
+    final PackageInfo info = await PackageInfo.fromPlatform();
+
+    stdout.writeln('${info.appName} ${info.version}');
+
+    exit(0);
+  }
 
   bool isRInstalled = await checkRInstallation();
 

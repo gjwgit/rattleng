@@ -58,6 +58,25 @@ pkg_check_modules(GTK REQUIRED IMPORTED_TARGET gtk+-3.0)
 
 add_definitions(-DAPPLICATION_ID="${APPLICATION_ID}")
 
+# 20260817 gjw Issue #1179. Take the version from pubspec.yaml, the one place
+# it is recorded, so that `rattle --version` can report it from the runner
+# below, before any window is created. Answering from Dart instead means the
+# GTK window is created and shown first, and the user asking a command line
+# program its version sees a window flash up and vanish.
+
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/../pubspec.yaml" PUBSPEC_CONTENTS)
+string(REGEX MATCH "\nversion:[ \t]*([0-9]+\\.[0-9]+\\.[0-9]+)"
+       PUBSPEC_VERSION_MATCH "${PUBSPEC_CONTENTS}")
+set(APP_VERSION "${CMAKE_MATCH_1}")
+
+if(APP_VERSION STREQUAL "")
+  message(WARNING "No version found in pubspec.yaml for --version.")
+  set(APP_VERSION "unknown")
+endif()
+
+add_definitions(-DAPP_VERSION="${APP_VERSION}")
+add_definitions(-DAPP_BINARY_NAME="${BINARY_NAME}")
+
 # Define the application target. To change its name, change BINARY_NAME above,
 # not the value here, or `flutter run` will no longer work.
 #

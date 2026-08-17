@@ -92,6 +92,23 @@ static void my_application_activate(GApplication* application) {
 // Implements GApplication::local_command_line.
 static gboolean my_application_local_command_line(GApplication* application, gchar*** arguments, int* exit_status) {
   MyApplication* self = MY_APPLICATION(application);
+
+  // 20260817 gjw Issue #1179. Report the version and stop here, before the
+  // window is created in my_application_activate() above. `lib/main.dart`
+  // answers --version too, for the other desktops, but by the time Dart runs
+  // the window has been created and shown, and the user asking a command line
+  // program its version sees it flash up and vanish. APP_VERSION comes from
+  // pubspec.yaml by way of CMakeLists.txt.
+
+  for (gchar** arg = *arguments + 1; arg != nullptr && *arg != nullptr; arg++) {
+    if (g_strcmp0(*arg, "--version") == 0 || g_strcmp0(*arg, "-v") == 0) {
+      g_print("%s %s\n", APP_BINARY_NAME, APP_VERSION);
+      *exit_status = 0;
+
+      return TRUE;
+    }
+  }
+
   // Strip out the first argument as it is the binary name.
   self->dart_entrypoint_arguments = g_strdupv(*arguments + 1);
 
