@@ -565,6 +565,8 @@ docs::
 .PHONY: versions
 versions:
 	if [ -d snap ]; then perl -pi -e 's|^version:.*|version: $(VER)|' snap/snapcraft.yaml; fi
+	perl -pi -e 's|^rattle 6.*|rattle $(VER)|' README.md
+
 
 
 BUILD_VER=$(shell grep '^version: ' pubspec.yaml | grep '+' | cut -d'+' -f2)

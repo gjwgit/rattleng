@@ -89,6 +89,26 @@ static void my_application_activate(GApplication* application) {
   gtk_widget_grab_focus(GTK_WIDGET(view));
 }
 
+// What Rattle accepts on the command line.
+//
+// Keep this in step with `usage()` in `lib/main.dart`, which answers for the
+// other desktops. Adding an argument means teaching both anyway.
+// (gjw 20260817)
+
+static const char* kUsage =
+    "Usage: %s [OPTIONS] [FILE]\n"
+    "\n"
+    "Rattle: Data Science with R.\n"
+    "\n"
+    "Options:\n"
+    "  -h, --help     Report this message and exit.\n"
+    "  -v, --version  Report the version and exit.\n"
+    "\n"
+    "FILE is a csv, xlsx, or txt dataset to load on startup, rather\n"
+    "than loading it through the DATASET button.\n"
+    "\n"
+    "Visit https://rattle.togaware.com for details.\n";
+
 // Implements GApplication::local_command_line.
 static gboolean my_application_local_command_line(GApplication* application, gchar*** arguments, int* exit_status) {
   MyApplication* self = MY_APPLICATION(application);
@@ -100,10 +120,36 @@ static gboolean my_application_local_command_line(GApplication* application, gch
   // program its version sees it flash up and vanish. APP_VERSION comes from
   // pubspec.yaml by way of CMakeLists.txt.
 
+  // Help first, so that it wins when both are asked for.
+
+  for (gchar** arg = *arguments + 1; arg != nullptr && *arg != nullptr; arg++) {
+    if (g_strcmp0(*arg, "--help") == 0 || g_strcmp0(*arg, "-h") == 0) {
+      g_print(kUsage, APP_BINARY_NAME);
+      *exit_status = 0;
+
+      return TRUE;
+    }
+  }
+
   for (gchar** arg = *arguments + 1; arg != nullptr && *arg != nullptr; arg++) {
     if (g_strcmp0(*arg, "--version") == 0 || g_strcmp0(*arg, "-v") == 0) {
       g_print("%s %s\n", APP_BINARY_NAME, APP_VERSION);
       *exit_status = 0;
+
+      return TRUE;
+    }
+  }
+
+  // Anything else that looks like an option is a mistake, most likely a typo,
+  // and is better reported than quietly ignored while the app starts up as
+  // though nothing were wrong. The usage goes to stderr along with it, as is
+  // usual for a program complaining about how it was called.
+
+  for (gchar** arg = *arguments + 1; arg != nullptr && *arg != nullptr; arg++) {
+    if ((*arg)[0] == '-') {
+      g_printerr("%s: unrecognised option '%s'\n\n", APP_BINARY_NAME, *arg);
+      g_printerr(kUsage, APP_BINARY_NAME);
+      *exit_status = 2;
 
       return TRUE;
     }

@@ -87,6 +87,39 @@ Future<bool> checkRInstallation() async {
   }
 }
 
+/// What Rattle accepts on the command line.
+///
+/// Keep this in step with the same message in
+/// `linux/my_application.cc`, which answers `--help` there before any window is
+/// created. Adding an argument means teaching both anyway. (gjw 20260817)
+
+String usage(String name) => '''
+Usage: $name [OPTIONS] [FILE]
+
+Rattle: Data Science with R.
+
+Options:
+  -h, --help     Report this message and exit.
+  -v, --version  Report the version and exit.
+
+FILE is a csv, xlsx, or txt dataset to load on startup, rather
+than loading it through the DATASET button.
+
+Visit https://rattle.togaware.com for details.''';
+
+/// Whether [arg] is one that the desktop itself added, rather than the user.
+///
+/// 20260817 gjw macOS hands an app arguments of its own when it is launched
+/// from the Finder or from Xcode, `-psn_0_...` being the process serial number
+/// and `-NSDocumentRevisionsDebugMode` and `-ApplePersistenceIgnoreState` being
+/// debugging settings. Reporting those as a mistake would stop Rattle starting
+/// at all for anyone launching it the ordinary way.
+
+bool isLaunchArgument(String arg) =>
+    arg.startsWith('-psn_') ||
+    arg.startsWith('-NS') ||
+    arg.startsWith('-Apple');
+
 Future<void> main([List<String> args = const []]) async {
   // The `main` entry point into any dart app.
   //
@@ -101,17 +134,44 @@ Future<void> main([List<String> args = const []]) async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  // 20260817 gjw Issue #1179. Report the version and exit, without starting up
-  // the app, as any command line program is expected to. Done before anything
-  // else, and in particular before the check for R, so that asking Rattle its
-  // version answers the question rather than reporting on R.
+  // 20260817 gjw Issue #1179. Report the version, or the usage, and exit,
+  // without starting up the app, as any command line program is expected to.
+  // Done before anything else, and in particular before the check for R, so
+  // that asking Rattle about itself answers the question rather than reporting
+  // on R. On Linux these are answered by the runner before we get here, so that
+  // no window is created for them.
 
-  if (args.contains('--version') || args.contains('-v')) {
+  if (args.any((arg) => arg.startsWith('-'))) {
     final PackageInfo info = await PackageInfo.fromPlatform();
+    final String name = info.appName;
 
-    stdout.writeln('${info.appName} ${info.version}');
+    // Help wins when both are asked for, being the more informative answer.
 
-    exit(0);
+    if (args.contains('--help') || args.contains('-h')) {
+      stdout.writeln(usage(name));
+
+      exit(0);
+    }
+
+    if (args.contains('--version') || args.contains('-v')) {
+      stdout.writeln('$name ${info.version}');
+
+      exit(0);
+    }
+
+    // Anything else that looks like an option is a mistake, most likely a typo,
+    // and is better reported than quietly ignored while the app starts up as
+    // though nothing were wrong.
+
+    for (final String arg in args) {
+      if (!arg.startsWith('-') || isLaunchArgument(arg)) continue;
+
+      stderr.writeln("$name: unrecognised option '$arg'");
+      stderr.writeln();
+      stderr.writeln(usage(name));
+
+      exit(2);
+    }
   }
 
   bool isRInstalled = await checkRInstallation();
