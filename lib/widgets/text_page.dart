@@ -71,13 +71,23 @@ class TextPage extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              MarkdownBody(
-                data: wordWrap(title),
-                selectable: true,
-                onTapLink: (text, href, title) {
-                  final Uri url = Uri.parse(href ?? '');
-                  launchUrl(url);
-                },
+              // 20260817 gjw The title is [Flexible] so that it gives way to
+              // the buttons beside it rather than overflowing the row. The
+              // title is hard wrapped by [wordWrap] to 60 characters, but a
+              // markdown link cannot be broken and so runs as wide as it is,
+              // and a narrow window leaves less room than any wrapping
+              // assumes. Without this a long line is lost off the right hand
+              // edge, with a debug mode overflow to go with it.
+
+              Flexible(
+                child: MarkdownBody(
+                  data: wordWrap(title),
+                  selectable: true,
+                  onTapLink: (text, href, title) {
+                    final Uri url = Uri.parse(href ?? '');
+                    launchUrl(url);
+                  },
+                ),
               ),
 
               // Wrap the buttons in a Row to keep them close together.
@@ -127,50 +137,66 @@ class TextPage extends StatelessWidget {
           configRowGap,
 
           Expanded(
-            child: Scrollbar(
-              thumbVisibility: true,
-              trackVisibility: true,
+            // 20260817 gjw Measure the space this page actually has. What
+            // follows used to size the text to `MediaQuery.size.width`, the
+            // width of the whole window, which is wider than this panel by the
+            // navigation rail and the padding either side. That left the text
+            // permanently wider than its viewport, so it could always be
+            // scrolled sideways even when every line fitted, and any stray
+            // horizontal scroll then hid the left of the table, variable names
+            // and all, with no sign that anything was missing.
+            //
+            // A minimum width rather than a fixed one: the text fills the
+            // panel, so it can be selected across the full width, and content
+            // with lines too long to fit is still as wide as it needs to be and
+            // scrolls.
 
-              // Attach the horizontal controller.
-              controller: horizontalScrollController,
-              child: SingleChildScrollView(
-                // Attach a vertical controller for independent scrolling.
-                key: const PageStorageKey('text_page'),
+            child: LayoutBuilder(
+              builder: (context, viewport) => Scrollbar(
+                thumbVisibility: true,
+                trackVisibility: true,
 
-                controller: ScrollController(),
-                scrollDirection: Axis.vertical,
+                // Attach the horizontal controller.
+                controller: horizontalScrollController,
                 child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  controller: horizontalScrollController,
-                  child: SizedBox(
-                    // Ensure width matches the full container.
-                    width: MediaQuery.of(context).size.width,
-                    child: SelectableText(
-                      content,
-                      style: monoTextStyle,
-                      textAlign: TextAlign.left,
+                  // 20260817 gjw No PageStorageKey here. Every text page used
+                  // the one key `text_page`, so they shared a saved scroll
+                  // offset and moving to a page restored the position of
+                  // whichever page was scrolled last.
 
-                      // Handle text selection changes in the content.
-                      onSelectionChanged: (selection, cause) {
-                        // Only copy text when user long presses or drags to select.
+                  scrollDirection: Axis.vertical,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    controller: horizontalScrollController,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(minWidth: viewport.maxWidth),
+                      child: SelectableText(
+                        content,
+                        style: monoTextStyle,
+                        textAlign: TextAlign.left,
 
-                        if (cause == SelectionChangedCause.longPress ||
-                            cause == SelectionChangedCause.drag) {
-                          // Extract the selected text using the selection range.
+                        // Handle text selection changes in the content.
+                        onSelectionChanged: (selection, cause) {
+                          // Only copy text when user long presses or drags to select.
 
-                          final selectedText = content.substring(
-                            selection.start,
-                            selection.end,
-                          );
-                          // If text was actually selected, copy it to clipboard.
+                          if (cause == SelectionChangedCause.longPress ||
+                              cause == SelectionChangedCause.drag) {
+                            // Extract the selected text using the selection range.
 
-                          if (selectedText.isNotEmpty) {
-                            Clipboard.setData(
-                              ClipboardData(text: selectedText),
+                            final selectedText = content.substring(
+                              selection.start,
+                              selection.end,
                             );
+                            // If text was actually selected, copy it to clipboard.
+
+                            if (selectedText.isNotEmpty) {
+                              Clipboard.setData(
+                                ClipboardData(text: selectedText),
+                              );
+                            }
                           }
-                        }
-                      },
+                        },
+                      ),
                     ),
                   ),
                 ),

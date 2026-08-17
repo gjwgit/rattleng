@@ -48,6 +48,17 @@ void main() {
     await navigateToTab(tester, 'Explore');
     await navigateToFeature(tester, 'Missing');
     await tapButton(tester, 'Perform Missing Analysis');
+
+    // 20260817 gjw Wait for R to finish before looking for the pages. The
+    // missing analysis is a long script, running mice, VIM and corrplot and
+    // drawing half a dozen plots, and none of these pages exist until their
+    // output has come back. The delay below was not enough, so the first page
+    // was looked for before it was there and the test failed on a page that is
+    // produced perfectly well.
+
+    await tester.pump(hack);
+    await tester.pumpAndSettle();
+
     await gotoNextPage(tester);
     // 20250207 gjw Add a delay for ecosysl.
     await tester.pump(delay);

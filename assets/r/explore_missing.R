@@ -52,8 +52,72 @@ tds <- ds[setdiff(vars,ignore)]
 # 20251224 gjw Generate this plot but don't show it as I will show the
 # ggplot2 version instead now.
 
+# Report the patterns of missing values as a table.
+#
+# 20260817 gjw The table is turned on its side from the way `md.pattern()`
+# reports it, one row per variable rather than one column per variable. A
+# dataset of any width has far more variables than fit across a page, and
+# `md.pattern()` printed as it comes wraps into several blocks, each with its
+# own header, which is hard to read. There are only ever a handful of
+# patterns, so a column each for those always fits.
+#
+# The two counts that `md.pattern()` puts at the edges of the table are
+# brought to the top and labelled, since a bare row of numbers with no
+# heading is not much use to anyone.
+#
+# Anyone changing the shape of this table: the description of it in
+# `lib/features/missing/display.dart` names these rows and columns, and has
+# to be changed with it.
+
+missing_pattern_table <- function(md) {
+
+  npat  <- nrow(md) - 1
+  nvars <- ncol(md) - 1
+
+  vars      <- colnames(md)[1:nvars]
+  obs       <- rownames(md)[1:npat]
+  nmiss_pat <- md[1:npat, nvars + 1]
+  nmiss_var <- md[npat + 1, 1:nvars]
+  total     <- md[npat + 1, nvars + 1]
+
+  # One row per variable and one column per pattern.
+
+  grid <- t(md[1:npat, 1:nvars, drop=FALSE])
+
+  labels <- c("Count of Observations", "Number Missing", "", vars)
+
+  cells <- rbind(as.character(obs),
+                 as.character(nmiss_pat),
+                 rep("", npat),
+                 matrix(as.character(grid), nrow=nvars))
+
+  right <- c("", as.character(total), "", as.character(nmiss_var))
+
+  # Widen each column to its widest entry so that the columns line up.
+
+  lw <- max(nchar(labels))
+  cw <- apply(cells, 2, function(column) max(nchar(column)))
+  rw <- max(nchar(right))
+
+  for (i in seq_along(labels))
+  {
+    line <- paste0(formatC(labels[i], width=-lw), "  ",
+                   paste(mapply(function(cell, width)
+                                  formatC(cell, width=width),
+                                cells[i, ], cw), collapse=" "), "  ",
+                   formatC(right[i], width=rw))
+
+    cat(sub("[ ]+$", "", line), "\n", sep="")
+  }
+
+  invisible(md)
+}
+
+# The plot is drawn as a side effect of `md.pattern()` and so goes to the
+# device opened here, while the table it returns is reported above.
+
 svg("<TEMPDIR>/explore_missing_mice_original.svg")
-mice::md.pattern(tds, rotate.names=TRUE) %>% t()
+missing_pattern_table(mice::md.pattern(tds, rotate.names=TRUE))
 dev.off()
 
 ####################################

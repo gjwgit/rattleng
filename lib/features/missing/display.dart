@@ -94,9 +94,24 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     content = lines.join('\n');
 
-    // Rename Count to Proportion!
+    // 20260817 gjw Tidy the layout of what VIM prints. It begins with a blank
+    // line, which lands on top of the blank line that ends the title above and
+    // leaves the report floating well below its heading, and it runs its own
+    // "Variables sorted by ..." heading straight into the table, where a blank
+    // line between the two reads far better.
 
-    content = content.replaceAll('     Count', 'Proportion');
+    lines = content.split('\n');
+
+    while (lines.isNotEmpty && lines.first.trim().isEmpty) {
+      lines.removeAt(0);
+    }
+
+    final int heading =
+        lines.indexWhere((line) => line.contains('sorted by number of'));
+
+    if (heading >= 0) lines.insert(heading + 1, '');
+
+    content = lines.join('\n');
 
     if (content.isNotEmpty) {
       pages.add(
@@ -148,17 +163,19 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
           Generated using
           [mice::md.pattern(ds)](https://www.rdocumentation.org/packages/mice/topics/md.pattern)
 
-          In the table a **1** indicates a value is present and **0** that a
-          value is missing for the variable.
+          Each **column** is a pattern of missing values and, below the two
+          counts, each **row** is a variable. A **1** indicates a value is
+          present and **0** that a value is missing for that variable in that
+          pattern.
 
-          The **first column** is the number of observations with the
-          corresponding pattern.
+          **Count of Observations** is the number of observations having each
+          pattern.
 
-          The **final column** is the count of the number of variables with
-          missing values in the pattern.
+          **Number Missing** is the number of variables with missing values in
+          each pattern, and to its right the total number of missing values.
 
-          The **final row** is the count of the number of missing values for
-          that variable.
+          The **final column** is the number of missing values for that
+          variable.
 
           ''',
           content: '\n$content',

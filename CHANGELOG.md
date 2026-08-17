@@ -15,8 +15,9 @@ To download the latest version of the app: GNU/Linux
 
 Visit [togaware](https://rattle.togaware.com) for details.
 
-## 6.6 Review and Consolidate
+## 6.5 Review and Consolidate
 
++ MISSING: Label the table counts. No lost text region [6.5.50 20260817 gjw]
 + Centre and fit the multi model plots to the panel [6.5.49 20260817 gjw]
 + Command line `--help` and a usage error for a bad option [6.5.48 20260817 gjw]
 + Support command line `--version` and `-v` [6.5.47 20260817 gjw]
