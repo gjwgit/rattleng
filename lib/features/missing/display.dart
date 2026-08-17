@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://opensource.org/license/gpl-3-0
 //
-// Time-stamp: "Wednesday 2025-10-01 16:45:08 +1000 Graham Williams"
+// Time-stamp: "Tuesday 2026-08-18 06:07:16 +1000 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -130,6 +130,32 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
     }
 
     ////////////////////////////////////////////////////////////////////////
+    // COMPARISON OF COUNTS OF MISSING VALUES
+    ////////////////////////////////////////////////////////////////////////
+
+    // 20260818 gjw This sits beside the count of missing values above it, the
+    // two of them being the same figures told as a table and then as a plot,
+    // ahead of the pages that go on to the patterns.
+
+    image = '$tempDir/explore_missing_naniar_ggmissvar.svg';
+
+    if (imageExists(image)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+        # Comparison of Counts of Missing Values
+
+        Generated using
+        [naniar::gg_miss_var(ds)](https://www.rdocumentation.org/packages/naniar/topics/gg_miss_var).
+
+        ''',
+          path: image,
+        ),
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////
     // PATTERN OF MISSING VALUES - TEXTUAL
     ////////////////////////////////////////////////////////////////////////
 
@@ -155,7 +181,7 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
         TextPage(
           title: '''
 
-          # Patterns of Missing Data - Textual
+          # Patterns of Missing Values - Textual
 
           Visit the [Survival
           Guide](https://survivor.togaware.com/datascience/missing-values-in-rattle.html).
@@ -163,16 +189,15 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
           Generated using
           [mice::md.pattern(ds)](https://www.rdocumentation.org/packages/mice/topics/md.pattern)
 
-          Each **column** is a pattern of missing values and, below the two
-          counts, each **row** is a variable. A **1** indicates a value is
-          present and **0** that a value is missing for that variable in that
-          pattern.
+          Each **column** is a pattern of missing values across the different variabels.
 
-          **Count of Observations** is the number of observations having each
-          pattern.
+          The **Count of Observations** is the number of observations having
+          that particular pattern of missing values.
 
-          **Number Missing** is the number of variables with missing values in
-          each pattern, and to its right the total number of missing values.
+          The **Number Missing** is the number of variables with missing values
+          in each pattern.
+
+          For each **row** a **1** indicates present and **0** missing value.
 
           The **final column** is the number of missing values for that
           variable.
@@ -207,28 +232,27 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
-    image = '$tempDir/explore_missing_correlation.svg';
+    // Naniar gg miss var
+
+    image = '$tempDir/explore_missing_naniar_ggmissupset.svg';
 
     if (imageExists(image)) {
       pages.add(
         ImagePage(
           title: '''
 
-        # Correlation of Missing Values - Visual
+        # Patterns of Missingness
 
         Generated using
-        [stats::cor())](https://www.rdocumentation.org/packages/stats/topics/cor) and
-        [corrplot::corrplot())](https://www.rdocumentation.org/packages/corrplot/topics/corrplot).
-
-        Considering only the variables with missing values, this plot identifies
-        correlations between the missingness of values for variables across the
-        same observations.
+        [naniar::gg_miss_upset(ds)](https://www.rdocumentation.org/packages/naniar/topics/gg_miss_upset).
 
         ''',
           path: image,
         ),
       );
     }
+
+    ////////////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////////////
 
@@ -252,6 +276,41 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
     ////////////////////////////////////////////////////////////////////////
 
+// 20260818 gjw Correlation of the missingness itself is the last of
+    // the summaries, before the observation by observation picture.
+
+    image = '$tempDir/explore_missing_correlation.svg';
+
+    if (imageExists(image)) {
+      pages.add(
+        ImagePage(
+          title: '''
+
+        # Correlation of Missing Values - Visual
+
+        Generated using
+        [stats::cor()](https://www.rdocumentation.org/packages/stats/topics/cor) and
+        [corrplot::corrplot()](https://www.rdocumentation.org/packages/corrplot/topics/corrplot).
+
+        Only the variables with missing values are considered here.
+
+        Identify correlations between missingness of values across variables.
+
+        ''',
+          path: image,
+        ),
+      );
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////////////////////////
+
+    // 20260818 gjw This one goes last. It is a picture of every observation of
+    // every variable, so it is the most detailed and the least summarised of
+    // the missing value displays, and it reads better after the summaries than
+    // in among them.
+
     image = '$tempDir/explore_missing_naniar_vismiss.svg';
 
     if (imageExists(image)) {
@@ -263,50 +322,6 @@ class _MissingDisplayState extends ConsumerState<MissingDisplay> {
 
         Generated using
         [naniar::vis_miss(ds)](https://www.rdocumentation.org/packages/naniar).
-
-        ''',
-          path: image,
-        ),
-      );
-    }
-
-    ////////////////////////////////////////////////////////////////////////
-
-    // Naniar gg miss var
-
-    image = '$tempDir/explore_missing_naniar_ggmissvar.svg';
-
-    if (imageExists(image)) {
-      pages.add(
-        ImagePage(
-          title: '''
-
-        # Comparison of Counts of Missing Values
-
-        Generated using
-        [naniar::gg_miss_var(ds)](https://www.rdocumentation.org/packages/naniar/topics/gg_miss_var).
-
-        ''',
-          path: image,
-        ),
-      );
-    }
-
-    ////////////////////////////////////////////////////////////////////////
-
-    // Naniar gg miss var
-
-    image = '$tempDir/explore_missing_naniar_ggmissupset.svg';
-
-    if (imageExists(image)) {
-      pages.add(
-        ImagePage(
-          title: '''
-
-        # Patterns of Missingness
-
-        Generated using
-        [naniar::gg_miss_upset(ds)](https://www.rdocumentation.org/packages/naniar/topics/gg_miss_upset).
 
         ''',
           path: image,

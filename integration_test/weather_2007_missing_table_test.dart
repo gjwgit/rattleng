@@ -61,9 +61,10 @@ void main() {
       await tester.pump(hack);
       await tester.pumpAndSettle();
 
-      // Walk on to the Patterns of Missing Data page.
+      // Walk on to the Patterns of Missing Values page, which is the fourth
+      // dot: the introduction, the two counts, then the patterns table.
 
-      for (int page = 0; page < 2; page++) {
+      for (int page = 0; page < 3; page++) {
         await gotoNextPage(tester);
         await tester.pump(delay);
       }

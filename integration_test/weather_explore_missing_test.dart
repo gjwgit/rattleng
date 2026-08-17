@@ -62,20 +62,26 @@ void main() {
     await gotoNextPage(tester);
     // 20250207 gjw Add a delay for ecosysl.
     await tester.pump(delay);
+    // 20260818 gjw The order of the pages, which is the order they are added
+    // in `features/missing/display.dart`. The two counts come first, then the
+    // patterns, then the correlation of the missingness as the last of the
+    // summaries, and the observation by observation picture last of all as the
+    // least summarised of them.
+
     await verifyPage('Count of Missing Values - Textual');
-    await gotoNextPage(tester);
-    await verifyPage('Patterns of Missing Data - Textual');
-    await gotoNextPage(tester);
-    await verifyPage('Patterns of Missing Values - Visual');
-    await gotoNextPage(tester);
-    await verifyPage('Correlation of Missing Values - Visual');
-    await gotoNextPage(tester);
-    await verifyPage('Aggregation of Missing Values - Visual');
-    await gotoNextPage(tester);
-    await verifyPage('Visualisation of Observations with Missing Values');
     await gotoNextPage(tester);
     await verifyPage('Comparison of Counts of Missing Values');
     await gotoNextPage(tester);
+    await verifyPage('Patterns of Missing Values - Textual');
+    await gotoNextPage(tester);
+    await verifyPage('Patterns of Missing Values - Visual');
+    await gotoNextPage(tester);
     await verifyPage('Patterns of Missingness');
+    await gotoNextPage(tester);
+    await verifyPage('Aggregation of Missing Values - Visual');
+    await gotoNextPage(tester);
+    await verifyPage('Correlation of Missing Values - Visual');
+    await gotoNextPage(tester);
+    await verifyPage('Visualisation of Observations with Missing Values');
   });
 }

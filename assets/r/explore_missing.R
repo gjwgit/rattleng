@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Wednesday 2025-12-24 09:48:39 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2026-08-18 05:53:55 +1000 Graham Williams>
 #
 # Licensed under the GNU General Public License, Version 3 (the "License");
 #
@@ -230,8 +230,8 @@ create_md_pattern_plot <- function(data) {
     x = "Number of Variables Missing in the Pattern",
     y = "Variables",
     fill = "Data Status",
-    caption = paste("Numbers at top are the observations having each pattern,",
-                    "numbers at right the missing values for each variable")
+    caption = paste("Top: observations having each pattern.",
+                    "Right: Observations with missing values.")
   ) +
 
   # Extend the plot area to accommodate labels, and label each column with the
@@ -385,9 +385,36 @@ dev.off()
 
 # Visualize a heatmap of missing values
 
-svg("<TEMPDIR>/explore_missing_naniar_vismiss.svg", width=16)
-tds %>%
-  naniar::vis_miss()
+# 20260818 gjw The variable names were being chopped off. `vis_miss()`
+# writes them above the plot at 45 degrees, and a name of any length then
+# runs off the top of the figure with no room to draw it in.
+#
+# Turned to 90 degrees they take only their height, not their length,
+# across the plot, so neighbouring names cannot collide however many
+# variables there are, and `hjust=0` starts each one at the plot edge so
+# they all begin on the same line. The figure is taller to leave room for
+# the names, and the top margin larger again for the longest of them.
+
+# 20260818 gjw `vis_miss()` draws its columns with `geom_raster()`, a bitmap
+# scaled to the panel, which smears each missing value sideways across its
+# neighbours so it is hard to tell which variable a mark belongs to. Swapping
+# the layer to `geom_tile()` draws real rectangles instead, and a width of
+# half a column keeps every mark inside its own column with a clear gap to
+# the next. The slight overlap in height keeps the rows of a column joined up.
+
+vismiss <- tds %>%
+  naniar::vis_miss() +
+  ggplot2::theme(
+    axis.text.x = ggplot2::element_text(angle=90, hjust=0, vjust=0.5),
+    plot.margin = ggplot2::margin(t=10, r=10, b=10, l=10)
+  )
+
+vismiss$layers[[1]]$geom <- ggplot2::GeomTile
+vismiss$layers[[1]]$aes_params$width <- 0.5
+vismiss$layers[[1]]$aes_params$height <- 1.05
+
+svg("<TEMPDIR>/explore_missing_naniar_vismiss.svg", width=16, height=10)
+print(vismiss)
 dev.off()
 
 # 20240815 gjw Visualize the proportion of missing values in each

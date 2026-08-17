@@ -17,6 +17,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.5 Review and Consolidate
 
++ MISSING: Legible variable names and reordered pages [6.5.52 20260818 gjw]
 + MISSING: Observation counts atop the pattern plot [6.5.51 20260817 gjw]
 + MISSING: Label the table counts. No lost text region [6.5.50 20260817 gjw]
 + Centre and fit the multi model plots to the panel [6.5.49 20260817 gjw]
