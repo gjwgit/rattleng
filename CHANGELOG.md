@@ -17,6 +17,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.6 Review and Consolidate
 
++ Centre and fit the multi model plots to the panel [6.5.49 20260817 gjw]
 + Command line `--help` and a usage error for a bad option [6.5.48 20260817 gjw]
 + Support command line `--version` and `-v` [6.5.47 20260817 gjw]
 + Traffic light to the right of the version, fixed width [6.5.46 20260817 gjw]

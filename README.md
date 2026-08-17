@@ -136,7 +136,7 @@ exits without starting up:
 
 ```bash
 $ rattle --version
-rattle 6.5.48
+rattle 6.5.49
 
 $ rattle --help
 Usage: rattle [OPTIONS] [FILE]

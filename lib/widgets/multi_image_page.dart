@@ -179,76 +179,89 @@ class MultiImagePage extends ConsumerWidget {
               radius: const Radius.circular(
                 4,
               ), // Optional: customize scrollbar appearance
-              child: ListView.builder(
-                controller: scrollController,
-                scrollDirection: Axis.horizontal,
-                itemCount: paths.length,
-                itemBuilder: (context, index) {
-                  return FutureBuilder<Uint8List?>(
-                    future: _loadImageBytes(paths[index]),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return Center(child: Text('Error: ${snapshot.error}'));
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.data == null ||
-                          snapshot.data!.isEmpty) {
-                        return const Center(
-                          child: Text(
-                            'Image not (yet) available',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.redAccent,
-                            ),
-                          ),
-                        );
-                      } else {
-                        final bytes = snapshot.data!;
+              child: LayoutBuilder(
+                builder: (context, viewport) => ListView.builder(
+                  controller: scrollController,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: paths.length,
+                  itemBuilder: (context, index) {
+                    // 20260817 gjw Give each plot the full width of the
+                    // viewport. A horizontal list hands its items unbounded
+                    // width, so without this each plot is only as wide as it
+                    // wants to be and sits against the left hand edge, with
+                    // the rest of the panel left empty.
 
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Flexible(
-                                      fit: FlexFit.loose,
-                                      child: MarkdownBody(
-                                        data: wordWrap(titles[index]),
-                                        selectable: true,
-                                        onTapLink: (text, href, title) {
-                                          final Uri url = Uri.parse(href ?? '');
-                                          launchUrl(url);
-                                        },
+                    return SizedBox(
+                      width: viewport.maxWidth,
+                      child: FutureBuilder<Uint8List?>(
+                        future: _loadImageBytes(paths[index]),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return Center(
+                              child: Text('Error: ${snapshot.error}'),
+                            );
+                          } else if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.data == null ||
+                              snapshot.data!.isEmpty) {
+                            return const Center(
+                              child: Text(
+                                'Image not (yet) available',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.redAccent,
+                                ),
+                              ),
+                            );
+                          } else {
+                            final bytes = snapshot.data!;
+
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Flexible(
+                                        fit: FlexFit.loose,
+                                        child: MarkdownBody(
+                                          data: wordWrap(titles[index]),
+                                          selectable: true,
+                                          onTapLink: (text, href, title) {
+                                            final Uri url =
+                                                Uri.parse(href ?? '');
+                                            launchUrl(url);
+                                          },
+                                        ),
                                       ),
-                                    ),
-                                    const Gap(8),
-                                    MarkdownTooltip(
-                                      message: '''
+                                      const Gap(8),
+                                      MarkdownTooltip(
+                                        message: '''
                                                 **Enlarge**
 
                                                 Tap here to view the plot enlarged to the
                                                 maximum size within the app.
                                                 ''',
-                                      child: IconButton(
-                                        icon: const Icon(
-                                          Icons.zoom_out_map,
-                                          color: Colors.blue,
+                                        child: IconButton(
+                                          icon: const Icon(
+                                            Icons.zoom_out_map,
+                                            color: Colors.blue,
+                                          ),
+                                          onPressed: () {
+                                            showImageDialog(context, bytes);
+                                          },
                                         ),
-                                        onPressed: () {
-                                          showImageDialog(context, bytes);
-                                        },
                                       ),
-                                    ),
-                                    const Gap(8),
-                                    MarkdownTooltip(
-                                      message: '''
+                                      const Gap(8),
+                                      MarkdownTooltip(
+                                        message: '''
                                                 **Open**
 
                                                 Tap here to open the plot in a separate window
@@ -261,53 +274,54 @@ class MultiImagePage extends ConsumerWidget {
                                                 on your operating system settings and can be overridden
                                                 in the Rattle **Settings**.
                                                 ''',
-                                      child: IconButton(
-                                        icon: const Icon(
-                                          Icons.open_in_new,
-                                          color: Colors.blue,
-                                        ),
-                                        onPressed: () async {
-                                          String fileName =
-                                              'plot_${Random().nextInt(10000)}.svg';
-                                          File tempFile = File(
-                                            '$tempDir/$fileName',
-                                          );
+                                        child: IconButton(
+                                          icon: const Icon(
+                                            Icons.open_in_new,
+                                            color: Colors.blue,
+                                          ),
+                                          onPressed: () async {
+                                            String fileName =
+                                                'plot_${Random().nextInt(10000)}.svg';
+                                            File tempFile = File(
+                                              '$tempDir/$fileName',
+                                            );
 
-                                          await File(
-                                            paths[index],
-                                          ).copy(tempFile.path);
+                                            await File(
+                                              paths[index],
+                                            ).copy(tempFile.path);
 
-                                          final prefs = await SharedPreferences
-                                              .getInstance();
-                                          final savedImageViewer =
-                                              prefs.getString('imageViewerApp');
+                                            final prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            final savedImageViewer = prefs
+                                                .getString('imageViewerApp');
 
-                                          // If the shared preferences image viewer app is null(not set),
-                                          // use the provider default.
+                                            // If the shared preferences image viewer app is null(not set),
+                                            // use the provider default.
 
-                                          final imageViewerApp =
-                                              savedImageViewer ??
-                                                  ref.read(
-                                                    imageViewerSettingProvider,
-                                                  );
+                                            final imageViewerApp =
+                                                savedImageViewer ??
+                                                    ref.read(
+                                                      imageViewerSettingProvider,
+                                                    );
 
-                                          Platform.isWindows
-                                              ? Process.run(
-                                                  imageViewerApp!,
-                                                  [
+                                            Platform.isWindows
+                                                ? Process.run(
+                                                    imageViewerApp!,
+                                                    [
+                                                      tempFile.path,
+                                                    ],
+                                                    runInShell: true,
+                                                  )
+                                                : Process.run(imageViewerApp!, [
                                                     tempFile.path,
-                                                  ],
-                                                  runInShell: true,
-                                                )
-                                              : Process.run(imageViewerApp!, [
-                                                  tempFile.path,
-                                                ]);
-                                        },
+                                                  ]);
+                                          },
+                                        ),
                                       ),
-                                    ),
-                                    const Gap(8),
-                                    MarkdownTooltip(
-                                      message: '''
+                                      const Gap(8),
+                                      MarkdownTooltip(
+                                        message: '''
                                                 **Save**
 
                                                 Tap here to save the plot in your preferred
@@ -320,86 +334,103 @@ class MultiImagePage extends ConsumerWidget {
                                                 as you can edit all details of the plot with an
                                                 application like **Inkscape**.
                                                 ''',
-                                      child: IconButton(
-                                        icon: const Icon(
-                                          Icons.save,
-                                          color: Colors.blue,
-                                        ),
-                                        onPressed: () async {
-                                          String fileName =
-                                              paths[index].split('/').last;
-                                          String? pathToSave = await selectFile(
-                                            defaultFileName: fileName,
-                                            allowedExtensions: [
-                                              'svg',
-                                              'pdf',
-                                              'png',
-                                            ],
-                                          );
-                                          if (pathToSave != null) {
-                                            String extension = pathToSave
-                                                .split('.')
-                                                .last
-                                                .toLowerCase();
-                                            if (extension == 'svg') {
-                                              await File(
-                                                paths[index],
-                                              ).copy(pathToSave);
-                                            } else if (extension == 'pdf') {
-                                              await _exportToPdf(
-                                                paths[index],
-                                                pathToSave,
-                                              );
-                                            } else if (extension == 'png') {
-                                              await _exportToPng(
-                                                paths[index],
-                                                pathToSave,
-                                              );
-                                            } else if (context.mounted) {
-                                              showOk(
-                                                title: 'Error',
-                                                context: context,
-                                                content: '''
+                                        child: IconButton(
+                                          icon: const Icon(
+                                            Icons.save,
+                                            color: Colors.blue,
+                                          ),
+                                          onPressed: () async {
+                                            String fileName =
+                                                paths[index].split('/').last;
+                                            String? pathToSave =
+                                                await selectFile(
+                                              defaultFileName: fileName,
+                                              allowedExtensions: [
+                                                'svg',
+                                                'pdf',
+                                                'png',
+                                              ],
+                                            );
+                                            if (pathToSave != null) {
+                                              String extension = pathToSave
+                                                  .split('.')
+                                                  .last
+                                                  .toLowerCase();
+                                              if (extension == 'svg') {
+                                                await File(
+                                                  paths[index],
+                                                ).copy(pathToSave);
+                                              } else if (extension == 'pdf') {
+                                                await _exportToPdf(
+                                                  paths[index],
+                                                  pathToSave,
+                                                );
+                                              } else if (extension == 'png') {
+                                                await _exportToPng(
+                                                  paths[index],
+                                                  pathToSave,
+                                                );
+                                              } else if (context.mounted) {
+                                                showOk(
+                                                  title: 'Error',
+                                                  context: context,
+                                                  content: '''
                                               An unsupported filename extension was
                                               provided: .$extension. Please try again
                                               and select a filename with one of the
                                               supported extensions: .svg, .pdf, or .png.
                                               ''',
-                                              );
-                                            } else {
-                                              return;
+                                                );
+                                              } else {
+                                                return;
+                                              }
                                             }
-                                          }
-                                        },
+                                          },
+                                        ),
+                                      ),
+                                      const Gap(5),
+                                    ],
+                                  ),
+                                  const Gap(8),
+
+                                  // 20260817 gjw The plot takes the height that
+                                  // the title above it leaves, rather than the
+                                  // fixed 450 it used to be given. That height
+                                  // was both too little on a large window, the
+                                  // plot staying small in the space, and too
+                                  // much on a small one, where the bottom of the
+                                  // plot was scrolled out of sight. BoxFit
+                                  // .contain then centres it, and unlike the
+                                  // scaleDown it replaces it also scales the
+                                  // plot up to fill the space available.
+
+                                  Expanded(
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: InteractiveViewer(
+                                        maxScale: 5,
+                                        alignment: Alignment.center,
+                                        child: svgImage
+                                            ? SvgPicture.memory(
+                                                bytes,
+                                                fit: BoxFit.contain,
+                                              )
+                                            : Image.memory(
+                                                bytes,
+                                                fit: BoxFit.contain,
+                                              ),
                                       ),
                                     ),
-                                    const Gap(5),
-                                  ],
-                                ),
-                                const Gap(8),
-                                Container(
-                                  constraints: const BoxConstraints(
-                                    maxHeight: 450,
                                   ),
-                                  child: InteractiveViewer(
-                                    maxScale: 5,
-                                    alignment: Alignment.topCenter,
-                                    child: svgImage
-                                        ? SvgPicture.memory(
-                                            bytes,
-                                            fit: BoxFit.scaleDown,
-                                          )
-                                        : Image.memory(bytes),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                  );
-                },
+                                ],
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ),
