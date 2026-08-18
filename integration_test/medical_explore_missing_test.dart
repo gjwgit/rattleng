@@ -37,6 +37,7 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -49,36 +50,31 @@ void main() {
     await navigateToTab(tester, 'Explore');
     await navigateToFeature(tester, 'Missing');
     await tapButton(tester, 'Perform Missing Analysis');
-    // 20250123 gjw I had to add this delay in order to ensure the R script had
-    // finished generating the various analyses.
-    await tester.pump(delay);
-    // 20260106 gjw This test started failing agin, fixed by added further
-    // delay!
-    await tester.pump(delay);
+
+    // 20260818 gjw Wait for R rather than for a guessed number of seconds. This
+    // replaces five separate delays that had been added here one at a time as
+    // the test failed on one machine or another. See `utils/wait_for_r.dart`.
+
+    await waitForR(tester);
+
+    // The order of the pages is the order they are added in
+    // `features/missing/display.dart`.
+
     await gotoNextPage(tester);
     await verifyPage('Count of Missing Values - Textual');
     await gotoNextPage(tester);
-    await verifyPage('Patterns of Missing Data - Textual');
+    await verifyPage('Comparison of Counts of Missing Values');
+    await gotoNextPage(tester);
+    await verifyPage('Patterns of Missing Values - Textual');
     await gotoNextPage(tester);
     await verifyPage('Patterns of Missing Values - Visual');
-    // 20250810 gjw Add extra wait here for ecosysl to pass the test.
-    await tester.pump(delay);
+    await gotoNextPage(tester);
+    await verifyPage('Patterns of Missingness');
+    await gotoNextPage(tester);
+    await verifyPage('Aggregation of Missing Values - Visual');
     await gotoNextPage(tester);
     await verifyPage('Correlation of Missing Values - Visual');
     await gotoNextPage(tester);
-    await verifyPage('Aggregation of Missing Values - Visual');
-    // 20250211 gjw I added this delay before the move to the next page since
-    // the delay after the goto did not always work. It could be that we just
-    // need this delay and not the one afterwards. For checking.
-    await tester.pump(delay);
-    await gotoNextPage(tester);
-    // 20250211 gjw I added this delay in order to ensure the visualisation is
-    // rendered on the page as I was occasionally getting an exception.
-    await tester.pump(delay);
     await verifyPage('Visualisation of Observations with Missing Values');
-    await gotoNextPage(tester);
-    await verifyPage('Comparison of Counts of Missing Values');
-    await gotoNextPage(tester);
-    await verifyPage('Patterns of Missingness');
   });
 }

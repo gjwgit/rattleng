@@ -37,6 +37,7 @@ import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -50,6 +51,12 @@ void main() {
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Boost');
       await tapButton(tester, 'Build Boosted Trees');
+
+      // 20260818 gjw Wait for R to finish building before looking at the
+      // summary it produces. See `utils/wait_for_r.dart`.
+
+      await waitForR(tester);
+
       await navigateToPage(tester, 1, title: 'XGBoost - Summary', back: 1);
       await verifySelectableText(tester, [
         '          Feature        Gain       Cover   Frequency  Importance',

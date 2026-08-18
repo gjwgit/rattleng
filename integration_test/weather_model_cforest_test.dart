@@ -39,6 +39,7 @@ import 'utils/navigate_to_tab.dart';
 import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -53,7 +54,11 @@ void main() {
       await tester.pump(interact);
       await tapChip(tester, 'Conditional');
       await tapButton(tester, 'Build Random Forest');
-      await addDelay(tester, 2);
+
+      // 20260818 gjw Wait for R. Two seconds was not enough for a conditional
+      // forest of 500 trees. See `utils/wait_for_r.dart`.
+
+      await waitForR(tester);
       await navigateToPage(tester, 1, back: 1, title: 'Random Forest Model');
       await verifySelectableText(tester, [
         'Number of trees:  500',

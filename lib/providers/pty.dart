@@ -81,7 +81,21 @@ final ptyProvider = StateProvider<Pty>((ref) {
 
   Timer? idleTimer;
 
+  // 20260818 gjw Stop the timer if this provider goes away, and check the ref
+  // before using it. The timer fires 400ms after the last output, so it can
+  // easily outlive the provider, and using a disposed ref throws
+  // `UnmountedRefException`. The pty provider is disposed on a RESET of the
+  // app, and at the end of every integration test, where this was showing up
+  // as a failure after the test had already finished.
+
+  ref.onDispose(() => idleTimer?.cancel());
+
   pty.output.cast<List<int>>().transform(const Utf8Decoder()).listen((data) {
+    // Output can arrive after this provider has been disposed, on a RESET or
+    // as a test finishes, and the ref is then no longer ours to use.
+
+    if (!ref.mounted) return;
+
     terminal.write(data);
     // debugPrint('update stdoutProvider');
     final String cleaned = cleanString(data);
@@ -98,6 +112,8 @@ final ptyProvider = StateProvider<Pty>((ref) {
 
     idleTimer?.cancel();
     idleTimer = Timer(rIdleDelay, () {
+      if (!ref.mounted) return;
+
       final bool atPrompt = ref.read(stdoutProvider).endsWith('> ');
 
       if (atPrompt && ref.read(rStatusProvider) == RStatus.running) {
@@ -149,11 +165,14 @@ final ptyProvider = StateProvider<Pty>((ref) {
   });
 
   pty.exitCode.then((code) {
+    idleTimer?.cancel();
+
+    if (!ref.mounted) return;
+
     terminal.write('the process exited with exit code $code');
 
     // R is gone, so nothing can run until the app is restarted or reset.
 
-    idleTimer?.cancel();
     ref.read(rStatusProvider.notifier).state = RStatus.failed;
   });
 

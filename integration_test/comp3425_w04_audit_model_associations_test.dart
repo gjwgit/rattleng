@@ -30,7 +30,6 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
-import 'utils/delays.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
@@ -41,6 +40,7 @@ import 'utils/set_selected_variable.dart';
 import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -61,7 +61,13 @@ void main() {
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Associations');
       await tapButton(tester, 'Build Association Rules');
-      await tester.pump(delay);
+
+      // 20260818 gjw Wait for R to build the rules rather than for a fixed
+      // couple of seconds, which is not long enough on a slower machine and
+      // left the page empty when it was checked. See `utils/wait_for_r.dart`.
+
+      await waitForR(tester);
+
       await navigateToPage(
         tester,
         1,
@@ -114,7 +120,13 @@ void main() {
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Associations');
       await tapButton(tester, 'Build Association Rules');
-      await tester.pump(delay);
+
+      // 20260818 gjw Wait for R to build the rules rather than for a fixed
+      // couple of seconds, which is not long enough on a slower machine and
+      // left the page empty when it was checked. See `utils/wait_for_r.dart`.
+
+      await waitForR(tester);
+
       await navigateToPage(
         tester,
         1,
