@@ -36,6 +36,7 @@ import 'package:rattle/main.dart' as app;
 import 'utils/delays.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -92,7 +93,7 @@ void main() {
       // qtest a undefined ds. As long as we pause, we do get the Dataset
       // Glimpse page.
 
-      await tester.pump(hack);
+      await waitForR(tester);
 
       await verifySelectableText(tester, [
         // Verify the first couple of rec_id values.

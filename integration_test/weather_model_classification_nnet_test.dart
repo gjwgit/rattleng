@@ -31,7 +31,6 @@ import 'package:integration_test/integration_test.dart';
 import 'package:rattle/main.dart' as app;
 import 'package:rattle/widgets/image_page.dart';
 
-import 'utils/add_delay.dart';
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/load_demo_dataset.dart';
@@ -42,6 +41,7 @@ import 'utils/set_dataset_role.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 // List of specific variables that should have their role set to 'Ignore' in
 // demo dataset. These are factors/chars and don't play well with nnet.
@@ -67,7 +67,7 @@ void main() {
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Neural');
       await tapButton(tester, 'Build Neural Network');
-      await addDelay(tester, 2);
+      await waitForR(tester);
       await navigateToPage(
         tester,
         1,
@@ -77,7 +77,7 @@ void main() {
         'A 14-10-1 network with',
         'Options were - skip-layer connections  entropy fitting',
       ]);
-      await addDelay(tester, 2);
+      await waitForR(tester);
       await gotoNextPage(tester);
       await verifyPage('Neural Net Model - Visual');
       expect(find.byType(ImagePage), findsOneWidget);

@@ -38,6 +38,7 @@ import 'navigate_to_page.dart';
 import 'navigate_to_tab.dart';
 import 'set_default_setting.dart';
 import 'test_print.dart';
+import 'wait_for_r.dart';
 
 /// Load the dataset and undertake basic tests that it loaded just fine.
 
@@ -109,9 +110,14 @@ Future<void> loadDemoDataset(
     isTrue,
   );
 
-  // 20241019 gjw Add a delay here. Whilst app and dataset load.
+  // 20241019 gjw Wait here whilst the app and the dataset load.
+  //
+  // 20260818 gjw Wait for R rather than for a fixed 2s. The first page is the
+  // glimpse of the data that R reports, so it is not there until R has
+  // finished. Waiting here means every caller has the dataset in hand and does
+  // not need a wait of its own.
 
-  await tester.pump(delay);
+  await waitForR(tester);
 
   await navigateToPage(tester, 1, back: 0);
 

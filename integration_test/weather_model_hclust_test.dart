@@ -30,7 +30,6 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
-import 'utils/add_delay.dart';
 import 'utils/delays.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
@@ -39,6 +38,7 @@ import 'utils/navigate_to_tab.dart';
 import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -52,7 +52,7 @@ void main() {
     await navigateToFeature(tester, 'Cluster');
     await tapChip(tester, 'Hierarchical');
     await tapButton(tester, 'Build Clustering');
-    await addDelay(tester, 10);
+    await waitForR(tester);
     await navigateToPage(tester, 1, title: 'Cluster Analysis');
     await verifySelectableText(tester, ['cluster_assignments']);
     await navigateToPage(tester, 2, title: 'Cluster Analysis - Visual');

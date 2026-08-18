@@ -40,6 +40,7 @@ import 'utils/set_dataset_role.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 /// Specific variables with ROLE set to 'Ignore'.
 
@@ -65,7 +66,7 @@ void main() {
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Linear');
       await tapButton(tester, 'Build Linear Model');
-      await tester.pump(delay);
+      await waitForR(tester);
       await navigateToPage(tester, 1, title: 'Linear Model');
       await verifySelectableText(tester, [
         'glm(formula = form, family = binomial(link = "logit"), data = trds)',

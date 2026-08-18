@@ -43,6 +43,7 @@ import 'utils/verify_imputed_variable.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
 import 'utils/verify_transform.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -54,7 +55,6 @@ void main() {
       await tester.pump(interact);
       await unifyOn(tester);
       await loadDemoDataset(tester);
-      await tester.pump(delay);
 
       // 1. Default chip "Recenter". Do not use rescale_tap_chip_verify because
       // it is a special case.
@@ -62,7 +62,7 @@ void main() {
       await navigateToTab(tester, 'Transform');
       await navigateToFeature(tester, 'Rescale');
       await tapButton(tester, 'Rescale Variable Values');
-      await tester.pump(delay);
+      await waitForR(tester);
       await gotoNextPage(tester);
       await verifyPage('Dataset Summary', 'RRC_min_temp');
       // Verify specific statistical values for the imputed 'RRC_min_temp' variable.

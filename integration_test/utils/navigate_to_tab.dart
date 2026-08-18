@@ -29,7 +29,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:rattle/home.dart';
 
-import 'delays.dart';
+import 'wait_for_r.dart';
 
 Future<void> navigateToTab(WidgetTester tester, String tabTitle) async {
   // Find the tab details from homeTabs list using the tabTitle.
@@ -49,5 +49,12 @@ Future<void> navigateToTab(WidgetTester tester, String tabTitle) async {
   await tester.tap(iconFinder);
   await tester.pumpAndSettle();
 
-  await tester.pump(delay);
+  // 20260818 gjw Wait for R rather than for a fixed 2s. Leaving DATASET or
+  // TRANSFORM re-sources the dataset template, so a tab change is often an R
+  // job, and what the tab is showing is not right until that has finished.
+  //
+  // The GUI settle after tapping a feature within a tab is a different thing
+  // and stays a plain delay -- see `navigate_to_feature.dart`.
+
+  await waitForR(tester);
 }

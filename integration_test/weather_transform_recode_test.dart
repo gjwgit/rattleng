@@ -30,7 +30,6 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
-import 'utils/add_delay.dart';
 import 'utils/check_variable_not_missing.dart';
 import 'utils/delays.dart';
 import 'utils/load_demo_dataset.dart';
@@ -44,6 +43,7 @@ import 'utils/unify_on.dart';
 import 'utils/verify_imputed_variable.dart';
 import 'utils/verify_selectable_text.dart';
 import 'utils/verify_transform.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -62,7 +62,7 @@ void main() {
       await navigateToFeature(tester, 'Recode');
       await setSelectedVariable(tester, 'min_temp');
       await tapButton(tester, 'Recode Variable Values');
-      await addDelay(tester, 10);
+      await waitForR(tester);
       await navigateToPage(tester, 1, back: 1, title: 'Dataset Summary');
       await verifySelectableText(tester, [
         'min_temp',

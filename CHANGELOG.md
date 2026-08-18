@@ -17,6 +17,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.5 Review and Consolidate
 
++ TESTS: Wait for R rather than a fixed delay. No more hack [6.5.57 20260818 gjw]
 + TESTS: TRANSFORM tests no longer scroll to a removed key [6.5.56 20260818 gjw]
 + BUG: ASSOCIATIONS is over inputs, not the target [6.5.55 20260818 gjw]
 + BUG: BOOST builds and predicts again with xgboost 3 [6.5.54 20260818 gjw]

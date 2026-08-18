@@ -31,7 +31,6 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
-import 'utils/add_delay.dart';
 import 'utils/delays.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
@@ -45,6 +44,7 @@ import 'utils/tap_chip.dart';
 import 'utils/tap_popup.dart';
 import 'utils/verify_dataset_role.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 /// Specific variables with ROLE set to 'Ignore'.
 
@@ -101,7 +101,7 @@ void main() {
         await tapChip(tester, 'Ignored');
         await tapButton(tester, 'Delete from Dataset');
         await tapPopup(tester, 'Yes');
-        await addDelay(tester, 4);
+        await waitForR(tester);
 
         // MODEL -> CONFIGURE -> NNET
 
@@ -110,7 +110,7 @@ void main() {
         await tapChip(tester, 'neuralnet');
         await setTextField(tester, 'neuralnet_config_hidden_layers', '3,2');
         await tapButton(tester, 'Build Neural Network');
-        await addDelay(tester, 4);
+        await waitForR(tester);
         await navigateToPage(
           tester,
           1,
@@ -129,7 +129,7 @@ void main() {
 
         await navigateToTab(tester, 'Evaluate');
         await tapButton(tester, 'Evaluate');
-        await addDelay(tester, 4);
+        await waitForR(tester);
         await navigateToPage(tester, 1, back: 1, title: 'Error Matrix');
         await verifySelectableText(tester, [
           // This seems wrong - need to check the pred function again. (gjw

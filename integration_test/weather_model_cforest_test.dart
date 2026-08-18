@@ -30,7 +30,6 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
-import 'utils/add_delay.dart';
 import 'utils/delays.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
@@ -94,7 +93,12 @@ void main() {
       // 20250214 gjw Still seeing occasional failure. Add extra delay. Though
       // maybe it's some randomness in the number? Try truncating it to `0.0259`
       // here next time.
-      await addDelay(tester, 4);
+      //
+      // 20260818 gjw Wait for R to finish rather than for 4s, which is what the
+      // occasional failure above looks like: the importance had not been
+      // reported yet. If it still happens then the number really is varying.
+
+      await waitForR(tester);
       await verifySelectableText(tester, [
         '                       Variable    Importance',
         'humidity_3pm       humidity_3pm  5.000000e-02',

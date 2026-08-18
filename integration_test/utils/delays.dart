@@ -50,19 +50,11 @@ final Duration interact = Duration(seconds: int.parse(envINTERACT));
 
 const Duration delay = Duration(seconds: 2);
 
-/// 20240902 gjw There are currently times when we need to wait for the R Script
-/// to finish in the current architecture which needs to be fixed,
-/// eventually. For now we introduce a hack delay. By naming the delay as a
-/// hack we are marking it as a delay that we want to com back and fix some
-/// time.
-
-const Duration hack = Duration(seconds: 10);
-
-/// TODO 20240922 zy DO WE NEED longHack?
+/// 20260818 gjw The `hack` and `longHack` delays are gone. They existed to wait
+/// for an R script to finish, which is now done by `waitForR()` in
+/// `utils/wait_for_r.dart`, watching the same traffic light the app itself
+/// shows. That waits as long as the work takes rather than a fixed 10s or 25s,
+/// so a slow machine is not left short and a fast one is not left waiting. The
+/// note that came with `hack` asked for exactly this.
 ///
-/// 20240922 Rather than introducing a longHack @Zheyuan, unless there is a
-/// good reason that you explain here, please just use multiple hack
-/// delays. Also, please comment when you add things like this to avoid others
-/// having to waste their time.
-
-const Duration longHack = Duration(seconds: 25);
+/// Use [delay] for the GUI and `waitForR()` for R.

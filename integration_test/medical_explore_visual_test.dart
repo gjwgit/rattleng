@@ -30,13 +30,13 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
-import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/load_dataset_by_path.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -44,13 +44,13 @@ void main() {
   testWidgets('Visual feature.', (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
-    await tester.pump(hack);
+    await waitForR(tester);
 
     await loadDatasetByPath(tester, 'integration_test/data/medical.csv');
     await navigateToTab(tester, 'Explore');
     await navigateToFeature(tester, 'Visual');
     await tapButton(tester, 'Generate Plots');
-    await tester.pump(delay);
+    await waitForR(tester);
     await gotoNextPage(tester);
     await verifyPage('Box Plot Notch');
     await gotoNextPage(tester);

@@ -29,8 +29,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'delays.dart';
 import 'set_default_setting.dart';
+import 'wait_for_r.dart';
 
 Future<void> loadDatasetByPath(WidgetTester tester, String path) async {
   await setDefaultSetting(tester);
@@ -49,7 +49,7 @@ Future<void> loadDatasetByPath(WidgetTester tester, String path) async {
   await tester.testTextInput.receiveAction(TextInputAction.done);
   await tester.pumpAndSettle();
 
-  // Additional delay to load the dataset.
+  // Wait for R to load the dataset rather than for a fixed time.
 
-  await tester.pump(delay);
+  await waitForR(tester);
 }

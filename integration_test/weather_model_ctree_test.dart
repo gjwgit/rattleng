@@ -38,6 +38,7 @@ import 'utils/navigate_to_tab.dart';
 import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
 import 'utils/verify_page.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -47,12 +48,11 @@ void main() {
     await tester.pumpAndSettle();
     await tester.pump(interact);
     await loadDemoDataset(tester);
-    await tester.pump(hack);
     await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Tree');
     await tapChip(tester, 'Conditional');
     await tapButton(tester, 'Build Decision Tree');
-    await tester.pump(hack);
+    await waitForR(tester);
     await gotoNextPage(tester);
     await verifyPage('Decision Tree Model');
     await tester.pump(interact);

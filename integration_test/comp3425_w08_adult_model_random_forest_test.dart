@@ -30,7 +30,6 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
-import 'utils/add_delay.dart';
 import 'utils/enter_text.dart';
 import 'utils/load_dataset_by_path.dart';
 import 'utils/navigate_to_feature.dart';
@@ -41,6 +40,7 @@ import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
 import 'utils/verify_dataset_role.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -62,7 +62,7 @@ void main() {
       await navigateToFeature(tester, 'Forest');
       await enterText(tester, 'forest_variables', '4');
       await tapButton(tester, 'Build Random Forest');
-      await addDelay(tester, 55);
+      await waitForR(tester);
 
       await navigateToPage(tester, 1, back: 1, title: 'Random Forest Model');
       await verifySelectableText(tester, [
@@ -150,7 +150,7 @@ void main() {
       await navigateToFeature(tester, 'Boost');
       await tapChip(tester, 'Adaptive');
       await tapButton(tester, 'Build Boosted Trees');
-      await addDelay(tester, 70);
+      await waitForR(tester);
 
       await navigateToPage(tester, 1, back: 2, title: 'AdaBoost - Summary');
       await verifySelectableText(tester, [
@@ -166,7 +166,7 @@ void main() {
 
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
-      await addDelay(tester, 70);
+      await waitForR(tester);
 
       await navigateToPage(tester, 1, back: 1, title: 'Error Matrix');
       await verifySelectableText(tester, [

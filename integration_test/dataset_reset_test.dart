@@ -35,6 +35,7 @@ import 'utils/delays.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_page.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -65,7 +66,7 @@ void main() {
       final demoButton = find.text('Weather');
       await tester.tap(demoButton);
       await tester.pumpAndSettle();
-      await tester.pump(delay);
+      await waitForR(tester);
 
       await navigateToPage(tester, 1);
 

@@ -42,6 +42,7 @@ import 'utils/tap_button.dart';
 import 'utils/verify_dataset_role.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 /// List of specific variables that should have their role automatically set to
 /// 'Ignore' in the DEMO and the LARGE datasets.
@@ -90,9 +91,7 @@ void main() {
       await tapButton(tester, 'Build Decision Tree');
       // 20250203 gjw Had to add three delays on ecosysl to await the
       // model to be built.
-      await tester.pump(delay);
-      await tester.pump(delay);
-      await tester.pump(delay);
+      await waitForR(tester);
       await gotoNextPage(tester);
       // 20250203 gjw Needed another delay on ecosysl after going to
       // the next page.

@@ -30,7 +30,6 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
-import 'utils/add_delay.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
@@ -39,6 +38,7 @@ import 'utils/set_dataset_role.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_dataset_role.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 /// Specific variables with ROLE set to 'Ignore'.
 
@@ -82,7 +82,7 @@ void main() {
 
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
-      await addDelay(tester, 25);
+      await waitForR(tester);
       await navigateToPage(tester, 1, back: 2, title: 'Error Matrix');
       await verifySelectableText(tester, [
         'Error matrix for the SVM model [TUNING] (counts)',
@@ -133,7 +133,7 @@ void main() {
 
       await navigateToTab(tester, 'Evaluate');
       await tapButton(tester, 'Evaluate');
-      await addDelay(tester, 20);
+      await waitForR(tester);
       await navigateToPage(tester, 1, back: 1, title: 'Error Matrix');
       await verifySelectableText(tester, [
         'Error matrix for the SVM model [TUNING] (counts)',

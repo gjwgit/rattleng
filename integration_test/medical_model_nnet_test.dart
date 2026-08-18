@@ -30,7 +30,6 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
-import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/load_dataset_by_path.dart';
 import 'utils/navigate_to_feature.dart';
@@ -40,6 +39,7 @@ import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 /// List of specific variables that should have their role set to 'Ignore' in
 /// the medical dataset. These are factors and don't play well with nnet.
@@ -93,7 +93,7 @@ void main() {
     // That seems to have fixed it. Remove the two of the three delays for now
     // to see if they are needed.
     //
-    await tester.pump(delay);
+    await waitForR(tester);
     try {
       await verifyPage('Neural Net Model - Summary and Weights');
     } catch (e) {

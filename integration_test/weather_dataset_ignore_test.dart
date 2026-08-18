@@ -35,6 +35,7 @@ import 'package:rattle/main.dart' as app;
 import 'utils/delays.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/test_print.dart';
+import 'utils/wait_for_r.dart';
 
 // List of specific variables that should have their role automatically set by
 // the app on loading the data to be 'Ignore'. For the DEMO dataset there are no
@@ -129,6 +130,6 @@ void main() {
     }
 
     await tester.pumpAndSettle();
-    await tester.pump(hack);
+    await waitForR(tester);
   });
 }

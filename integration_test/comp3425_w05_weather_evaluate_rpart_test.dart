@@ -39,6 +39,7 @@ import 'utils/set_text_field.dart';
 import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -64,7 +65,7 @@ void main() {
         await tapChip(tester, 'Validation');
       }
       await tapButton(tester, 'Evaluate');
-      await tester.pump(delay);
+      await waitForR(tester);
       await navigateToPage(tester, 1, back: 1, title: 'Error Matrix');
       await verifySelectableText(tester, [
         'No  41   2   4.7',
@@ -75,7 +76,7 @@ void main() {
       ]);
       await tapChip(tester, 'Training');
       await tapButton(tester, 'Evaluate');
-      await tester.pump(delay);
+      await waitForR(tester);
       await navigateToPage(tester, 1, back: 1, title: 'Error Matrix');
       await verifySelectableText(tester, [
         'No  214   1   0.5',

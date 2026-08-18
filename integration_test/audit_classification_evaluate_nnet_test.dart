@@ -31,7 +31,6 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
-import 'utils/add_delay.dart';
 import 'utils/delays.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
@@ -76,7 +75,6 @@ void main() {
       // DATASET -> AUDIT -> ROLES
 
       await loadDemoDataset(tester, 'Audit');
-      await addDelay(tester, 1);
       for (final v in varsToIgnore) {
         await setDatasetRole(tester, v, 'Ignore');
       }

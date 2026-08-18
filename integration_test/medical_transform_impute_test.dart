@@ -39,6 +39,7 @@ import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   // Ensure that the integration test bindings are initialized before running tests.
@@ -57,7 +58,7 @@ void main() {
       await navigateToFeature(tester, 'Impute');
       await tapChip(tester, 'Constant');
       await tapButton(tester, 'Impute Missing Values');
-      await tester.pump(hack);
+      await waitForR(tester);
       await gotoNextPage(tester);
       await verifyPage('Dataset Summary');
       await verifySelectableText(tester, [
@@ -78,7 +79,7 @@ void main() {
 
       // Allow time for the UI to settle after the tab change.
 
-      await tester.pump(hack);
+      await waitForR(tester);
 
       // Step 3: Verify that the imputed variable 'IZR_middle_name' is present in the dataset.
 

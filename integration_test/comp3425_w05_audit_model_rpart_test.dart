@@ -40,6 +40,7 @@ import 'utils/tap_button.dart';
 import 'utils/verify_dataset_role.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -55,9 +56,6 @@ void main() {
       // now. Perhaps the ROLES page is not yet ready sometimes (20250131 gjw).
       //
       // Add a third delay which seemed to finally work reliably (20250209 gjw).
-      await tester.pump(delay);
-      await tester.pump(delay);
-      await tester.pump(delay);
       await verifyDatasetRole('adjusted', 'Target');
       await verifyDatasetRole('adjustment', 'Input');
       await verifyDatasetRole('id', 'Ident');
@@ -77,7 +75,7 @@ void main() {
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Tree');
       await tapButton(tester, 'Build Decision Tree');
-      await tester.pump(delay);
+      await waitForR(tester);
       await navigateToPage(tester, 1, title: 'Decision Tree Model');
       await verifyPage('Decision Tree Model', 'Observations = 1400');
       await verifySelectableText(tester, [

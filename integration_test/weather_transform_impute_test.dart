@@ -44,6 +44,7 @@ import 'utils/verify_dataset_role.dart';
 import 'utils/verify_imputed_variable.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -62,7 +63,7 @@ void main() {
 
       await tapButton(tester, 'Impute Missing Values');
 
-      await tester.pump(delay);
+      await waitForR(tester);
       await gotoNextPage(tester);
 
       // Verify that the page content includes the expected dataset summary with
@@ -87,7 +88,7 @@ void main() {
 
       await tapButton(tester, 'Impute Missing Values');
 
-      await tester.pump(delay);
+      await waitForR(tester);
 
       await verifyPage('Dataset Summary', 'IMD_rainfall');
 
@@ -106,7 +107,7 @@ void main() {
 
       await tapButton(tester, 'Impute Missing Values');
 
-      await tester.pump(delay);
+      await waitForR(tester);
 
       await verifyPage('Dataset Summary', 'IMO_rainfall');
 

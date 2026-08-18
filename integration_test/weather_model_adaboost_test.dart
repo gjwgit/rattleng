@@ -38,6 +38,7 @@ import 'utils/navigate_to_tab.dart';
 import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
 import 'utils/verify_page.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -48,12 +49,11 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(interact);
       await loadDemoDataset(tester);
-      await tester.pump(delay);
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Boost');
       await tapChip(tester, 'Adaptive');
       await tapButton(tester, 'Build Boosted Trees');
-      await tester.pump(delay);
+      await waitForR(tester);
       await gotoNextPage(tester);
       await verifyPage(
         'AdaBoost - Summary',

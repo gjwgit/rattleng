@@ -41,6 +41,7 @@ import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/tap_button.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -65,8 +66,7 @@ void main() {
       // The popup asks R to describe the input variables, which takes a moment
       // to come back through the console.
 
-      await tester.pump(hack);
-      await tester.pumpAndSettle();
+      await waitForR(tester);
 
       // A field per input variable, each with its value from the dataset, so
       // that a prediction can be made without entering anything.
@@ -74,8 +74,7 @@ void main() {
       expect(find.byType(InteractiveField), findsWidgets);
 
       await tapButton(tester, 'Predict');
-      await tester.pump(hack);
-      await tester.pumpAndSettle();
+      await waitForR(tester);
 
       // The model describes itself through `mdesc` in the reported prediction.
 

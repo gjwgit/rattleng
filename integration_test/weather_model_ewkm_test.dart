@@ -37,6 +37,7 @@ import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/tap_button.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -53,7 +54,7 @@ void main() {
     await tester.tap(ewkmaChip);
     await tester.pumpAndSettle();
     await tapButton(tester, 'Build Clustering');
-    await tester.pump(delay);
+    await waitForR(tester);
     await tapButton(tester, 'Build Clustering');
     await tester.pump(interact);
 

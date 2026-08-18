@@ -41,6 +41,7 @@ import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/tap_button.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -58,8 +59,7 @@ void main() {
       await navigateToTab(tester, 'Explore');
       await navigateToFeature(tester, 'Missing');
       await tapButton(tester, 'Perform Missing Analysis');
-      await tester.pump(hack);
-      await tester.pumpAndSettle();
+      await waitForR(tester);
 
       // Walk on to the Patterns of Missing Values page, which is the fourth
       // dot: the introduction, the two counts, then the patterns table.

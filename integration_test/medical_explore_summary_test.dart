@@ -30,7 +30,6 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
-import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/load_dataset_by_path.dart';
 import 'utils/navigate_to_feature.dart';
@@ -38,6 +37,7 @@ import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -49,7 +49,7 @@ void main() {
     await navigateToTab(tester, 'Explore');
     await navigateToFeature(tester, 'Summary');
     await tapButton(tester, 'Generate Dataset Summary');
-    await tester.pump(hack);
+    await waitForR(tester);
     await navigateToPage(tester, 1, title: 'Summary of the Dataset');
     await verifySelectableText(tester, ['Length:20000', 'f:12435']);
     await gotoNextPage(tester, title: 'Dataset Glimpse');

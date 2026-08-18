@@ -35,6 +35,7 @@ import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/tap_button.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -48,7 +49,7 @@ void main() {
     await navigateToFeature(tester, 'SVM');
     await tester.pump(interact);
     await tapButton(tester, 'Build SVM Model');
-    await tester.pump(delay);
+    await waitForR(tester);
     await tapButton(tester, 'Build SVM Model');
     await tester.pump(interact);
     final titleFinder = find.textContaining(

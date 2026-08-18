@@ -40,6 +40,7 @@ import 'utils/tap_checkbox.dart';
 import 'utils/tap_chip.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -56,9 +57,7 @@ void main() {
       await tapChip(tester, 'neuralnet');
       await tapCheckbox(tester, 'Neural Ignore Categoric');
       await tapButton(tester, 'Build Neural Network');
-      await tester.pump(delay);
-      await tester.pump(delay);
-      await tester.pump(delay);
+      await waitForR(tester);
       await navigateToPage(tester, 1);
       await verifySelectableText(tester, ['data = ds_final']);
     });

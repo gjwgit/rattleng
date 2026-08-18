@@ -41,6 +41,7 @@ import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/tap_button.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -52,25 +53,24 @@ void main() {
       await tester.pump(interact);
 
       await loadDemoDataset(tester);
-      await tester.pump(hack);
 
       await navigateToTab(tester, 'Model');
 
       await navigateToFeature(tester, 'Tree');
 
       await tapButton(tester, 'Build Decision Tree');
-      await tester.pump(hack);
+      await waitForR(tester);
 
       final rightArrowButton = find.byIcon(Icons.arrow_right_rounded);
 
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
-      await tester.pump(hack);
+      await tester.pump(delay);
 
       await tester.tap(rightArrowButton);
       await tester.pumpAndSettle();
 
-      await tester.pump(hack);
+      await tester.pump(delay);
 
       // Tap the right arrow to go to the forth page.
 
@@ -90,18 +90,18 @@ void main() {
       final datasetButton = find.byType(DatasetButton);
       await tester.tap(datasetButton);
       await tester.pumpAndSettle();
-      await tester.pump(hack);
+      await tester.pump(delay);
 
       final resetDatasetButton = find.text('Yes');
       await tester.tap(resetDatasetButton);
       await tester.pumpAndSettle();
-      await tester.pump(hack);
+      await waitForR(tester);
 
       final cancelButton = find.text('Cancel');
 
       await tester.tap(cancelButton);
       await tester.pumpAndSettle();
-      await tester.pump(hack);
+      await tester.pump(delay);
 
       await navigateToTab(tester, 'Model');
 
@@ -129,7 +129,7 @@ void main() {
     await navigateToTab(tester, 'Model');
     await navigateToFeature(tester, 'Tree');
     await tapButton(tester, 'Build Decision Tree');
-    await tester.pump(hack);
+    await waitForR(tester);
     await gotoNextPage(tester);
     await gotoNextPage(tester);
 
@@ -143,21 +143,21 @@ void main() {
     final datasetButton = find.byType(DatasetButton);
     await tester.tap(datasetButton);
     await tester.pumpAndSettle();
-    await tester.pump(hack);
+    await tester.pump(delay);
 
     final resetDatasetButton = find.text('Yes');
     await tester.tap(resetDatasetButton);
     await tester.pumpAndSettle();
-    await tester.pump(hack);
+    await waitForR(tester);
 
     final cancelButton = find.text('Cancel');
 
     await tester.tap(cancelButton);
     await tester.pumpAndSettle();
-    await tester.pump(hack);
+    await tester.pump(delay);
 
     await navigateToTab(tester, 'Model');
-    await tester.pump(hack);
+    await tester.pump(delay);
 
     await navigateToFeature(tester, 'Tree');
 

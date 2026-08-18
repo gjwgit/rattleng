@@ -41,6 +41,7 @@ import 'utils/tap_button.dart';
 import 'utils/unify_on.dart';
 import 'utils/verify_page.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -56,7 +57,7 @@ void main() {
       await navigateToFeature(tester, 'Impute');
       await setSelectedVariable(tester, 'occupation');
       await tapButton(tester, 'Impute Missing Values');
-      await tester.pump(delay);
+      await waitForR(tester);
       await gotoNextPage(tester);
       await verifyPage('Dataset Summary', 'IMO_occupation');
       await verifySelectableText(tester, [

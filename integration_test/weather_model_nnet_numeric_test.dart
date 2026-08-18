@@ -39,6 +39,7 @@ import 'utils/navigate_to_page.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -67,7 +68,7 @@ void main() {
       // Simulate the presence of a neural network being built.
 
       await tapButton(tester, 'Build Neural Network');
-      await tester.pump(hack);
+      await waitForR(tester);
       await navigateToPage(tester, 1);
       await verifySelectableText(tester, [
         'A 14-10-1 network with',

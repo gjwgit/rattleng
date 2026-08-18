@@ -30,7 +30,6 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
-import 'utils/add_delay.dart';
 import 'utils/enter_text.dart';
 import 'utils/goto_next_page.dart';
 import 'utils/load_demo_dataset.dart';
@@ -42,6 +41,7 @@ import 'utils/tap_button.dart';
 import 'utils/verify_checkbox.dart';
 import 'utils/verify_dataset_role.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -139,7 +139,7 @@ void main() {
       );
       await verifySelectableText(tester, ['support = 0.001']);
       await verifySelectableText(tester, ['44']);
-      await addDelay(tester, 10);
+      await waitForR(tester);
     });
   });
 }

@@ -39,6 +39,7 @@ import 'utils/set_partition.dart';
 import 'utils/tap_button.dart';
 import 'utils/unify_on.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -54,7 +55,7 @@ void main() {
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Tree');
       await tapButton(tester, 'Build Decision Tree');
-      await tester.pump(delay); // 20250131 gjw Could not find '254'
+      await waitForR(tester); // 20250131 gjw Could not find '254'
       await gotoNextPage(tester);
       await tester.pump(delay); // 20250212 gjw Could not find '254'
       await verifySelectableText(tester, ['254']);
@@ -72,7 +73,7 @@ void main() {
       await navigateToTab(tester, 'Model');
       await navigateToFeature(tester, 'Tree');
       await tapButton(tester, 'Build Decision Tree');
-      await tester.pump(delay); // 20250212 gjw Could not find '363'
+      await waitForR(tester); // 20250212 gjw Could not find '363'
       await gotoNextPage(tester);
       await verifySelectableText(tester, ['363']);
     },

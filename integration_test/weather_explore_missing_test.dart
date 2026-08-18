@@ -37,6 +37,7 @@ import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/tap_button.dart';
 import 'utils/verify_page.dart';
+import 'utils/wait_for_r.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -56,8 +57,7 @@ void main() {
     // was looked for before it was there and the test failed on a page that is
     // produced perfectly well.
 
-    await tester.pump(hack);
-    await tester.pumpAndSettle();
+    await waitForR(tester);
 
     await gotoNextPage(tester);
     // 20250207 gjw Add a delay for ecosysl.

@@ -32,7 +32,6 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:rattle/main.dart' as app;
 
-import 'utils/add_delay.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_page.dart';
@@ -42,6 +41,7 @@ import 'utils/tap_button.dart';
 import 'utils/tap_chip.dart';
 import 'utils/verify_dataset_role.dart';
 import 'utils/verify_selectable_text.dart';
+import 'utils/wait_for_r.dart';
 
 // List of specific variables that should have their role set to 'Ignore' in the
 // Weather dataset. These are factors/chars and don't play well with nnet.
@@ -102,7 +102,7 @@ void main() {
       // We need quite a long delay here to have the model built. On Kadesh it
       // required 6s delay but on ecosysl it required 18s or more! (gjw
       // 20250323)
-      await addDelay(tester, 20);
+      await waitForR(tester);
       await navigateToPage(
         tester,
         1,
