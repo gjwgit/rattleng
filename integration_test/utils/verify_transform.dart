@@ -28,7 +28,6 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 
 import 'navigate_to_page.dart';
-import 'scroll_until_find_key.dart';
 import 'tap_button.dart';
 import 'tap_chip.dart';
 import 'verify_page.dart';
@@ -57,8 +56,14 @@ Future<void> verifyTransform(
   await navigateToPage(tester, 1, back: 2, title: 'Dataset Summary');
   await verifyPage('Dataset Summary', variableName);
 
-  // Scroll to find and verify the statistical summary.
+  // Verify the statistical summary.
+  //
+  // 20260818 gjw No scrolling first. `verifySelectableText()` reads the text
+  // from the widget, which holds all of it whether or not it is on screen, so
+  // scrolling proved nothing. It scrolled to a `PageStorageKey('text_page')`
+  // that `widgets/text_page.dart` no longer sets, having been the one key
+  // shared by every text page, and scrolling to a key that is not there threw
+  // "Bad state: No element".
 
-  await scrollUntilFindKey(tester, 'text_page');
   await verifySelectableText(tester, expectedStats);
 }

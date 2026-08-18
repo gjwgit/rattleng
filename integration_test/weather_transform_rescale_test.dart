@@ -37,7 +37,6 @@ import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
 import 'utils/scroll_down.dart';
-import 'utils/scroll_until_find_key.dart';
 import 'utils/tap_button.dart';
 import 'utils/unify_on.dart';
 import 'utils/verify_imputed_variable.dart';
@@ -66,8 +65,6 @@ void main() {
       await tester.pump(delay);
       await gotoNextPage(tester);
       await verifyPage('Dataset Summary', 'RRC_min_temp');
-      await scrollUntilFindKey(tester, 'text_page');
-
       // Verify specific statistical values for the imputed 'RRC_min_temp' variable.
 
       await verifySelectableText(tester, [
