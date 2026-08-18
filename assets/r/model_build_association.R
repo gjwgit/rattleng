@@ -70,7 +70,18 @@ if(<ASSOCIATION_BASKETS>) {
   # assigns `model_arules`, surfacing as `object 'model_arules' not
   # found`. Recompute the categoric columns locally from `trds`.
 
-  catc <- names(trds)[sapply(trds, is.factor)]
+  # 20260818 gjw Recompute it as `dataset_template.R` defines it, which is the
+  # categoric INPUT variables. The target and the identifiers are not inputs,
+  # and the ignored variables are already absent from `trds`. Recomputing it as
+  # simply the factors of `trds` left the target in, so it became an item like
+  # any other and the rules included `{gender=Male} => {adjusted=No}`, which is
+  # a prediction rather than an association. On the audit data that took the
+  # rules found from 19 to 65. Both names come from the roles rather than from
+  # the R session, so this does not reintroduce the dependence the note above
+  # describes.
+
+  catc <- setdiff(names(trds)[sapply(trds, is.factor)],
+                  c(<TARGET_VAR>, <IDENT_VARS>))
 
   transactions <- as(trds[catc], "transactions")
 
