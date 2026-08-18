@@ -17,6 +17,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.5 Review and Consolidate
 
++ BUG: BOOST builds and predicts again with xgboost 3 [6.5.54 20260818 gjw]
 + BUG: R status timer outliving the R session. Tests wait on it [6.5.53 20260818 gjw]
 + MISSING: Legible variable names and reordered pages [6.5.52 20260818 gjw]
 + MISSING: Observation counts atop the pattern plot [6.5.51 20260817 gjw]

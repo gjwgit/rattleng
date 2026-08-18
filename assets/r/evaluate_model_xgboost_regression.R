@@ -19,6 +19,6 @@ mdesc <- "Extreme Boost (Regression)"
 # For regression XGBoost (objective="reg:squarederror"), predict() returns
 # a plain numeric vector.
 
-pred_ra <- function(model, data) as.numeric(predict(model, data))
+pred_ra <- function(model, data) as.numeric(xgb_predict(model, data))
 
-prob_ra <- function(model, data) as.numeric(predict(model, data))
+prob_ra <- function(model, data) as.numeric(xgb_predict(model, data))

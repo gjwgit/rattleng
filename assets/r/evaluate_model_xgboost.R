@@ -45,8 +45,17 @@ mdesc <- "Extreme Boost"
 
 pred_ra <- function(model, data) {
 
-  lvls <- levels(as.factor(data[[target]]))
-  pr <- factor(ifelse(predict(model, data) > 0.5, lvls[2], lvls[1]))
+  # 20260818 gjw The classes come from `xgb_levels`, remembered when the model
+  # was built, rather than from `data[[target]]`. The data is not always the
+  # training data and does not always have a target column at all: an
+  # interactive prediction supplies just the inputs, and so may a dataset
+  # loaded on EVALUATE, and there the levels were read from nothing and every
+  # prediction came back missing.
+
+  pr <- factor(ifelse(xgb_predict(model, data) > 0.5,
+                      xgb_levels[2],
+                      xgb_levels[1]),
+               levels=xgb_levels)
 
   return(pr)
 }
@@ -100,4 +109,4 @@ pred_ra <- function(model, data) {
 ##
 ## return(mapped_values_factor)
 ## }
-prob_ra <- function(model, data) predict(model, newdata=data, type="prob")
+prob_ra <- function(model, data) xgb_predict(model, data)
