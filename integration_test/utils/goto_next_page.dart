@@ -30,6 +30,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'delays.dart';
+import 'goto_page.dart';
 
 /// Move to the next page and optionally check the [title].
 
@@ -49,9 +50,14 @@ Future<void> gotoNextPage(WidgetTester tester, {String? title}) async {
   await tester.pump(interact);
 
   // Check for the expected title.
+  //
+  // 20260819 gjw Where the caller named the page, make sure that is the page we
+  // are on, and go and find it by name if not. Counting arrow taps assumes we
+  // knew which page we started from, and a panel that has just rebuilt after an
+  // R run can be showing a different page to the one the arrows think it is on.
+  // See `utils/goto_page.dart`.
 
   if (title != null && title.isNotEmpty) {
-    final titleFinder = find.text(title);
-    expect(titleFinder, findsOneWidget);
+    await gotoPage(tester, title);
   }
 }

@@ -33,6 +33,7 @@ import 'package:rattle/main.dart' as app;
 import 'utils/check_variable_not_missing.dart';
 import 'utils/delays.dart';
 import 'utils/goto_next_page.dart';
+import 'utils/goto_page.dart';
 import 'utils/load_demo_dataset.dart';
 import 'utils/navigate_to_feature.dart';
 import 'utils/navigate_to_tab.dart';
@@ -90,6 +91,14 @@ void main() {
 
       await waitForR(tester);
 
+      // 20260819 gjw Ask for the page rather than assuming we are still on the
+      // one Step 1 navigated to. Imputing again rebuilds the pages, and the
+      // panel does not always come back showing the same one, so under load
+      // this checked whichever page it happened to be on and failed on a
+      // summary that R had reported perfectly well.
+
+      await gotoPage(tester, 'Dataset Summary');
+
       await verifyPage('Dataset Summary', 'IMD_rainfall');
 
       await verifySelectableText(tester, [
@@ -108,6 +117,8 @@ void main() {
       await tapButton(tester, 'Impute Missing Values');
 
       await waitForR(tester);
+
+      await gotoPage(tester, 'Dataset Summary');
 
       await verifyPage('Dataset Summary', 'IMO_rainfall');
 
