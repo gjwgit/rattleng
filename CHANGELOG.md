@@ -17,6 +17,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.5 Review and Consolidate
 
++ TESTS: Report the R console tail when a wait times out [6.5.59 20260819 gjw]
 + TESTS: Find a page by its title, not by counting taps [6.5.58 20260819 gjw]
 + TESTS: Wait for R rather than a fixed delay. No more hack [6.5.57 20260818 gjw]
 + TESTS: TRANSFORM tests no longer scroll to a removed key [6.5.56 20260818 gjw]

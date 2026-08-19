@@ -32,6 +32,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:rattle/providers/r_status.dart';
+import 'package:rattle/providers/stdout.dart';
 
 /// Wait until R is finished and its output has arrived.
 ///
@@ -90,6 +91,19 @@ Future<void> waitForR(
     await tester.pump(interval);
   }
 
+  // 20260819 gjw Report what R last said. The light turns green once the
+  // console has gone quiet AND ends at R's prompt (see `providers/pty.dart`),
+  // and the check for the prompt is on the very end of the output, so the tail
+  // is what decides the question -- down to the whitespace, which is why it is
+  // escaped here rather than printed as it is. A hang of this kind happens
+  // perhaps once in a hundred runs and cannot be asked for, so the failure has
+  // to carry its own evidence.
+
+  final String out = container.read(stdoutProvider);
+  final String tail = out.length > 300 ? out.substring(out.length - 300) : out;
+
   fail('R was still running after ${timeout.inSeconds}s. '
-      'The traffic light never turned green.');
+      'The traffic light never turned green.\n'
+      'The R console ended as follows, with | marking the very end:\n'
+      '${tail.replaceAll('\n', r'\n').replaceAll('\r', r'\r')}|');
 }
