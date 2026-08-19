@@ -18,7 +18,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 ## 6.5 Review and Consolidate
 
 + Remove the last of the retired biclust support [6.5.65 20260819 gjw]
-+ TESTS: R update drops apostrophe from NAs [6.5.64 20260819 gjw] 
++ TESTS: R update drops apostrophe from NAs [6.5.64 20260819 gjw]
 + Advise about a missing R package for each action [6.5.63 20260819 gjw]
 + BUG: A missing R package no longer leaves a dead window [6.5.62 20260819 gjw]
 + TESTS: Summary label padding varies by R version [6.5.61 20260819 gjw]
