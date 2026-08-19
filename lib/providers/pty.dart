@@ -60,8 +60,15 @@ final ptyProvider = StateProvider<Pty>((ref) {
   // Guard so we only pop up the missing-package advice once per episode rather
   // than on every subsequent chunk of output that still contains the error
   // text in the accumulated stdout. (gjw 20260630)
+  //
+  // 20260819 gjw An episode is one R action, marked by where `rSource()`
+  // recorded the console length as it submitted. Holding the episode rather
+  // than a plain "already advised" flag means the advice comes back for the
+  // next action: a user who installs the package Rattle asked for and runs into
+  // a second one used to be told nothing at all the second time, and was left
+  // with a blank panel and no reason for it.
 
-  bool missingPackageNotified = false;
+  int advisedForEpisode = -1;
 
   // Drive the traffic light of the app bar from what R actually reports, which
   // is the only honest account of what R is doing: `rSource()` hands the code
@@ -126,13 +133,22 @@ final ptyProvider = StateProvider<Pty>((ref) {
     // (the "grey screen"), or throws in debug mode. Catch that here, where all
     // R output flows through, and advise the user to install the required R
     // packages, just as the PACKAGE INSTALLATIONS button does. We scan the
-    // accumulated output (the error phrase can straddle two pty chunks) and the
-    // `missingPackageNotified` guard ensures we pop up only once. (gjw 20260630)
+    // accumulated output from the start of this action (the error phrase can
+    // straddle two pty chunks) and advise at most once for it. (gjw 20260630)
 
-    if (!missingPackageNotified) {
-      final String? missing = detectMissingPackage(accumulated);
-      if (missing != null) {
-        missingPackageNotified = true;
+    final int episode =
+        ref.read(rEpisodeStartProvider).clamp(0, accumulated.length);
+
+    if (advisedForEpisode != episode) {
+      final List<String> missing = detectMissingPackages(
+        accumulated.substring(episode),
+      );
+
+      if (missing.isNotEmpty) {
+        advisedForEpisode = episode;
+
+        final String names = missing.map((p) => '**$p**').join(', ');
+        final bool single = missing.length == 1;
 
         // Show the advice via the global navigator. We use `currentState` and
         // its `mounted` check (rather than a captured `BuildContext`) so the
@@ -143,12 +159,14 @@ final ptyProvider = StateProvider<Pty>((ref) {
         if (nav != null && nav.mounted) {
           showOk(
             context: nav.context,
-            title: 'R Package Not Installed',
+            title:
+                single ? 'R Package Not Installed' : 'R Packages Not Installed',
             content: '''
 
-            Rattle tried to use the R package **$missing** but it is not
-            installed (or failed to load) on your system. The current action
-            could not complete and so the panel may remain blank.
+            Rattle tried to use the R ${single ? 'package' : 'packages'} $names
+            but ${single ? 'it is' : 'they are'} not installed (or failed to
+            load) on your system. The current action could not complete and so
+            the panel may remain blank.
 
             Please install the required **R Packages** and then try again. You
             can do this from the **R Package Installations** button (the

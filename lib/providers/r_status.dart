@@ -49,6 +49,16 @@ enum RStatus {
 
 final rStatusProvider = StateProvider<RStatus>((ref) => RStatus.running);
 
+/// Where in the console the output of the current R action begins.
+///
+/// `rSource()` records the length of the console here as it submits, so that
+/// what R says about this action can be told apart from everything it has said
+/// before. Used to advise about a missing R package once per action: scanning
+/// the whole console instead would keep matching the same old error and pop the
+/// advice up again on every script that followed. (gjw 20260819)
+
+final rEpisodeStartProvider = StateProvider<int>((ref) => 0);
+
 /// How long R has to be quiet before we call it finished.
 ///
 /// Long enough that the gap between R printing a prompt and echoing the next

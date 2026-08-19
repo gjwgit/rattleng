@@ -165,6 +165,13 @@ Future<void> rSource(
   ref.read(rStatusProvider.notifier).state = RStatus.running;
 
   String stdout = ref.read(stdoutProvider);
+
+  // Mark where this action's output begins so that a missing R package reported
+  // by THIS action can be told from one reported earlier. See
+  // `providers/pty.dart`. (gjw 20260819)
+
+  ref.read(rEpisodeStartProvider.notifier).state = stdout.length;
+
   if (stdout.isNotEmpty && stdout.substring(stdout.length - 2) != '> ') {
     debugText('  TRACE **', 'CONSOLE **IS NOT** READY ***************');
     // LOOP HERE FOR 5 SECONDS  WAITING FOR THE '> ' THEN FAIL WITH POPUP

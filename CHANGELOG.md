@@ -17,6 +17,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.5 Review and Consolidate
 
++ Advise about a missing R package for each action [6.5.63 20260819 gjw]
 + BUG: A missing R package no longer leaves a dead window [6.5.62 20260819 gjw]
 + TESTS: Summary label padding varies by R version [6.5.61 20260819 gjw]
 + BUG: Traffic light yellow as soon as R work is asked for [6.5.60 20260819 gjw]
@@ -26,7 +27,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 + TESTS: TRANSFORM tests no longer scroll to a removed key [6.5.56 20260818 gjw]
 + BUG: ASSOCIATIONS is over inputs, not the target [6.5.55 20260818 gjw]
 + BUG: BOOST builds and predicts again with xgboost 3 [6.5.54 20260818 gjw]
-+ BUG: R status timer outliving the R session. Tests wait on it [6.5.53 20260818 gjw]
++ BUG: R status timer outliving R session. Tests wait on it [6.5.53 20260818 gjw]
 + MISSING: Legible variable names and reordered pages [6.5.52 20260818 gjw]
 + MISSING: Observation counts atop the pattern plot [6.5.51 20260817 gjw]
 + MISSING: Label the table counts. No lost text region [6.5.50 20260817 gjw]

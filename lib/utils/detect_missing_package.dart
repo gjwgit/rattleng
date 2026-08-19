@@ -35,10 +35,15 @@ library;
 /// accumulated R console output for this signature so the app can advise the
 /// user to install the required R packages.
 ///
-/// Returns the name of the first missing package found, or `null` if the
-/// output does not contain a missing-package error.
+/// Returns the names of every missing package found, in the order R reported
+/// them and without repeats, or an empty list where the output holds no
+/// missing-package error.
+///
+/// 20260819 gjw All of them rather than just the first. One script can want
+/// several packages, and naming them together means the user installs the lot
+/// in one go instead of finding the next one missing on every retry.
 
-String? detectMissingPackage(String stdout) {
+List<String> detectMissingPackages(String stdout) {
   // The canonical phrase R uses, regardless of whether the failure came via
   // `library()`, `require()`, or `requireNamespace()`. Capture the quoted
   // package name. R uses ASCII single quotes here.
@@ -46,9 +51,6 @@ String? detectMissingPackage(String stdout) {
   final RegExp noPackage = RegExp(
     r"there is no package called ['\u2018]([A-Za-z0-9._]+)['\u2019]",
   );
-
-  final Match? m = noPackage.firstMatch(stdout);
-  if (m != null) return m.group(1);
 
   // A namespace load failure also indicates an unusable/missing package. This
   // is a softer signal (the package may exist but fail to load) but from the
@@ -58,8 +60,14 @@ String? detectMissingPackage(String stdout) {
     r"package or namespace load failed for ['\u2018]([A-Za-z0-9._]+)['\u2019]",
   );
 
-  final Match? m2 = loadFailed.firstMatch(stdout);
-  if (m2 != null) return m2.group(1);
+  final List<String> found = [];
 
-  return null;
+  for (final RegExp pattern in [noPackage, loadFailed]) {
+    for (final Match m in pattern.allMatches(stdout)) {
+      final String name = m.group(1)!;
+      if (!found.contains(name)) found.add(name);
+    }
+  }
+
+  return found;
 }
