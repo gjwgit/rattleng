@@ -17,6 +17,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.5 Review and Consolidate
 
++ BUG: A missing R package no longer leaves a dead window [6.5.62 20260819 gjw]
 + TESTS: Summary label padding varies by R version [6.5.61 20260819 gjw]
 + BUG: Traffic light yellow as soon as R work is asked for [6.5.60 20260819 gjw]
 + TESTS: Report the R console tail when a wait times out [6.5.59 20260819 gjw]

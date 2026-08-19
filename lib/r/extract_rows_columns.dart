@@ -35,9 +35,20 @@ String rExtractRowsColumns(String txt) {
   if (txt.isEmpty) return '';
 
   // Split the string into lines.
+  //
+  // 20260819 gjw The dimensions R reports are spread across the first two lines
+  // of the glimpse, so there have to be two lines to read. Where R produced no
+  // glimpse there is only the one, and asking for the second threw a
+  // RangeError. This is built by the status bar, which is on screen whatever the
+  // user is doing, so that throw came back on every frame and left the whole
+  // window unusable -- the grey screen behind the advice to install a missing R
+  // package, with nothing to do but dismiss it and find the app dead.
+  //
+  // Having nothing to report is not an error. Take what there is and let the
+  // check below find no numbers in it.
 
   List<String> lines = txt.split('\n');
-  txt = '${lines.first} ${lines[1]}';
+  txt = lines.length > 1 ? '${lines.first} ${lines[1]}' : lines.first;
 
   RegExp regExp = RegExp(r'[\d,]+');
   Iterable<Match> matches = regExp.allMatches(txt);
