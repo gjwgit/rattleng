@@ -48,9 +48,11 @@ import 'package:rattle/providers/stdout.dart';
 /// turns [RStatus.ready] once R has gone quiet at its prompt, so a test can
 /// wait for exactly as long as the work takes. See `providers/r_status.dart`.
 ///
-/// [RStatus.failed] also ends the wait. R reported an error, so nothing more is
-/// coming, and the test should get on and fail on what it was checking rather
-/// than sit here until the timeout.
+/// An error does not end the wait. R carries on with the rest of the code it
+/// was given after an error at the top level, so there is still output to come,
+/// and the light stays red for the user to see rather than turning green. So on
+/// [RStatus.failed] we wait on the console itself going quiet at a prompt, which
+/// is the condition the light is built on. See `providers/pty.dart`.
 
 Future<void> waitForR(
   WidgetTester tester, {
@@ -77,15 +79,41 @@ Future<void> waitForR(
 
   // Then wait for R to finish.
 
+  String previous = '';
+  int quiet = 0;
+
   for (int waited = 0;
       waited < timeout.inMilliseconds;
       waited += interval.inMilliseconds) {
-    if (container.read(rStatusProvider) != RStatus.running) {
+    final RStatus status = container.read(rStatusProvider);
+
+    if (status == RStatus.ready) {
       // Let the panels rebuild with what R reported.
 
       await tester.pumpAndSettle();
 
       return;
+    }
+
+    if (status == RStatus.failed) {
+      // 20260819 gjw R reported an error, and the light stays red so the user
+      // can see it, so it will not turn green for us to wait on. R does not
+      // stop at an error though: it carries on with the rest of the code it was
+      // given. So wait on what the light itself waits on, the console going
+      // quiet at a prompt. Returning as soon as the light went red let the test
+      // run on while R was still working, and whether that mattered came down
+      // to how fast the machine was.
+
+      final String out = container.read(stdoutProvider);
+
+      quiet = out == previous ? quiet + interval.inMilliseconds : 0;
+      previous = out;
+
+      if (quiet >= rIdleDelay.inMilliseconds && out.endsWith('> ')) {
+        await tester.pumpAndSettle();
+
+        return;
+      }
     }
 
     await tester.pump(interval);

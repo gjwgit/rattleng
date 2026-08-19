@@ -149,6 +149,21 @@ Future<void> rSource(
   // automatically while we can override it if it is problematic in specific
   // cases. (gjw 20250511)
 
+  // 20260819 gjw The traffic light goes yellow here, at the start, rather than
+  // further down where the code is handed to R. Getting from here to there
+  // means reading the shared preferences, loading each script from the assets
+  // and substituting through it, all of which is awaited, so the light was
+  // still showing green from the last script for as long as that took. A user
+  // pressing a button had no sign that anything was happening yet, and a test
+  // that asks whether R is busy was told it was not and went on to read a page
+  // R had not filled in yet. On a quick machine that gap is nothing; on a
+  // slower one it is not, which is where it showed up.
+  //
+  // There is no early return between here and the write below, so the light
+  // cannot be left yellow by this.
+
+  ref.read(rStatusProvider.notifier).state = RStatus.running;
+
   String stdout = ref.read(stdoutProvider);
   if (stdout.isNotEmpty && stdout.substring(stdout.length - 2) != '> ') {
     debugText('  TRACE **', 'CONSOLE **IS NOT** READY ***************');
@@ -636,12 +651,9 @@ Future<void> rSource(
   // was 286 lines of code. It may be char length rather than line count that is
   // important though. (gjw 20250513)
 
-  // 20260816 gjw The traffic light of the app bar goes yellow from here, being
-  // the moment the code is handed to R, and `providers/pty.dart` turns it green
-  // again when R settles back at its prompt, or red if R reports an error. This
-  // also clears a red left by a previous script.
-
-  ref.read(rStatusProvider.notifier).state = RStatus.running;
+  // 20260816 gjw The traffic light of the app bar went yellow at the top of this
+  // function, when the work was asked for. `providers/pty.dart` turns it green
+  // again when R settles back at its prompt, or red if R reports an error.
 
   if (lines.length > 200) {
     String code1 = '${lines.take(200).join('\n')}\n';
