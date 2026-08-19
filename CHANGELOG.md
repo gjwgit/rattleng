@@ -17,6 +17,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.5 Review and Consolidate
 
++ TESTS: R update drops apostrophe from NAs [6.5.64 20260819 gjw] 
 + Advise about a missing R package for each action [6.5.63 20260819 gjw]
 + BUG: A missing R package no longer leaves a dead window [6.5.62 20260819 gjw]
 + TESTS: Summary label padding varies by R version [6.5.61 20260819 gjw]
