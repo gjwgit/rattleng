@@ -51,7 +51,17 @@ void main() {
     await tapButton(tester, 'Generate Dataset Summary');
     await waitForR(tester);
     await navigateToPage(tester, 1, title: 'Summary of the Dataset');
-    await verifySelectableText(tester, ['Length:20000', 'f:12435']);
+
+    // 20260819 gjw Compare without the spacing. R pads the labels of the
+    // summary of a character column and the width differs by R version, so this
+    // read `Length:20000` on one machine and `Length   :20000` on another. The
+    // count against the label is what matters here, not the padding.
+
+    await verifySelectableText(
+      tester,
+      ['Length:20000', 'f:12435'],
+      ignoreSpacing: true,
+    );
     await gotoNextPage(tester, title: 'Dataset Glimpse');
     await verifySelectableText(tester, ['Rows: 20,000']);
     await gotoNextPage(tester, title: 'Skim the Dataset');

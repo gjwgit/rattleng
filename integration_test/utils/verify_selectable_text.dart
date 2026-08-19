@@ -37,11 +37,24 @@ import 'package:flutter_test/flutter_test.dart';
 ///
 /// We needed to define this separately from verifyText because XXXX?
 
+/// Set [ignoreSpacing] where the layout of the text is not the point.
+///
+/// 20260819 gjw R pads the labels of a `summary()` to a common width, and the
+/// width it chooses has changed between R versions: a character column reads
+/// `Length:20000` under one and `Length   :20000` under another. A test that
+/// wants the count that goes with the label, rather than the spacing around it,
+/// compares with the whitespace taken out of both sides. Leave it off where the
+/// layout IS the point, as it is for the tables of the MISSING feature.
+
 Future<void> verifySelectableText(
   WidgetTester tester,
   List<String> texts, {
   bool present = true,
+  bool ignoreSpacing = false,
 }) async {
+  String flatten(String text) =>
+      ignoreSpacing ? text.replaceAll(RegExp(r'\s+'), '') : text;
+
   // Find all SelectableText widgets in the widget tree.
 
   final textFinder = find.byType(SelectableText);
@@ -63,7 +76,7 @@ Future<void> verifySelectableText(
       if (widget.data != null) {
         // Check if widget text contains our search string.
 
-        if (widget.data!.contains(text)) {
+        if (flatten(widget.data!).contains(flatten(text))) {
           foundText = true;
           break;
         }

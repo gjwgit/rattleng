@@ -17,6 +17,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.5 Review and Consolidate
 
++ TESTS: Summary label padding varies by R version [6.5.61 20260819 gjw]
 + BUG: Traffic light yellow as soon as R work is asked for [6.5.60 20260819 gjw]
 + TESTS: Report the R console tail when a wait times out [6.5.59 20260819 gjw]
 + TESTS: Find a page by its title, not by counting taps [6.5.58 20260819 gjw]
