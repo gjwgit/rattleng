@@ -188,7 +188,7 @@ class _ClusterSettingState extends ConsumerState<ClusterSetting> {
 
               ''',
               controller: _runController,
-              enabled: type != 'Hierarchical' && type != 'BiCluster',
+              enabled: type != 'Hierarchical',
               inputFormatter: FilteringTextInputFormatter.digitsOnly,
               validator: (value) => validateInteger(value, min: 1),
               stateProvider: runClusterProvider,

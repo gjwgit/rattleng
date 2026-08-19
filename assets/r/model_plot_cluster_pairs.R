@@ -25,8 +25,8 @@
 # <TIMESTAMP>
 #
 # This script generates a scatterplot matrix (pairs plot) for any
-# clustering model.  It works with KMeans, EWKM, Hierarchical, and
-# BiCluster models. We first identify the type of cluster we want a
+# clustering model.  It works with KMeans, EWKM and Hierarchical
+# models. We first identify the type of cluster we want a
 # pairs plot for. (zh 20250417)
 
 # Select a sample from the dataset to make the plot more readable.

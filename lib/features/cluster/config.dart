@@ -58,7 +58,9 @@ class ClusterConfig extends ConsumerStatefulWidget {
 }
 
 class ClusterConfigState extends ConsumerState<ClusterConfig> {
-  // 'Hierarchical' and 'BiCluster' are not implemented.
+  // 20260819 gjw The cluster types offered, which is what the chips below are
+  // built from. A note said that 'Hierarchical' and 'BiCluster' were not
+  // implemented; Hierarchical has been for a while, and BiCluster is gone.
 
   Map<String, String> clusterTypes = {
     'KMeans': '''
@@ -83,12 +85,15 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
     // 20260324 gjw biclust has been removed from CRAN. We might try biclustermd
     // some time.
     //
-    // 'BiCluster': '''
-    //
-    //   Cluster by identifying suitable subsets of both the variables and the
-    //   observations, rather than just the observations as in kmeans.
-    //
-    //   ''',
+    // 20260819 gjw The rest of the BiCluster support is gone with this release,
+    // being code that could not be reached now that the type cannot be chosen
+    // here: the branch below that sourced it, `model_build_bicluster.R` with its
+    // `library(biclust)`, the summary extraction in `r/extract_cluster.dart` and
+    // the plot path in `cluster/display.dart`. Restoring it means writing it
+    // against whatever package replaces biclust rather than reviving this, so
+    // there is nothing to keep beyond this note. Cluster by identifying subsets
+    // of both the variables and the observations, rather than just the
+    // observations as in kmeans, is what it offered.
   };
 
   final TextEditingController _pairSizeController = TextEditingController();
@@ -178,7 +183,6 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                 String km = 'model_build_kmeans';
                 String ew = 'model_build_ewkm';
                 String hi = 'model_build_hclust';
-                String bi = 'model_build_bicluster';
                 String pp = 'model_plot_cluster_pairs';
 
                 // Check if the widget is still in the tree before using its context.
@@ -198,8 +202,6 @@ class ClusterConfigState extends ConsumerState<ClusterConfig> {
                   if (context.mounted) {
                     await rSource(context, ref, [mt, hi, pp]);
                   }
-                } else if (type == 'BiCluster') {
-                  if (context.mounted) await rSource(context, ref, [mt, bi]);
                 }
 
                 await ref.read(clusterPageControllerProvider).animateToPage(

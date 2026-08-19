@@ -51,10 +51,6 @@ final Map<String, Map<String, String>> clusterMethods = {
   'KMeans': {'functionName': 'kmeans', 'package': 'stats'},
   'Ewkm': {'functionName': 'ewkm', 'package': 'wskm'},
   'Hierarchical': {'functionName': 'hclust', 'package': 'stats'},
-  // 20260324 gjw biclust has been removed from CRAN. We might try biclustermd
-  // some time.
-  //
-  // 'BiCluster': {'functionName': 'biclust', 'package': 'biclust'},
 };
 
 /// The CLUSTER panel displays the tree instructions or the tree biuld output.
@@ -156,9 +152,6 @@ class _ClusterDisplayState extends ConsumerState<ClusterDisplay> {
       'KMeans' => '$tempDir/model_cluster_pairs_kmeans.svg',
       'Ewkm' => '$tempDir/model_cluster_pairs_ewkm.svg',
       'Hierarchical' => '$tempDir/model_cluster_pairs_hierarchical.svg',
-      // 20260324 gjw biclust has been removed from CRAN. We might try biclustermd
-      // some time.
-      // 'BiCluster' => '$tempDir/model_cluster_pairs_bicluster.svg',
       _ => '',
     };
 

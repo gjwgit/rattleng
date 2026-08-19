@@ -131,7 +131,7 @@ void main() {
           'Mean   : 1.857', // Mean value of 'RLG_min_temp'.
           '3rd Qu.: 2.588', // Third quartile value of 'RLG_min_temp'.
           'Max.   : 3.035', // Maximum value of 'RLG_min_temp'.
-          'NAs    :71',     // Number of missing values in 'RLG_min_temp'.
+          'NAs    :71', // Number of missing values in 'RLG_min_temp'.
         ],
       );
 
