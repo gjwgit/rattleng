@@ -28,7 +28,6 @@ library;
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
-import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -38,15 +37,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rattle/constants/temp_dir.dart';
 import 'package:rattle/providers/settings.dart';
-import 'package:rattle/utils/select_file.dart';
+import 'package:rattle/utils/save_plot.dart';
 import 'package:rattle/utils/show_image_dialog.dart';
-import 'package:rattle/utils/show_ok.dart';
 
 class MultiImagePage extends ConsumerWidget {
   final List<String> titles;
@@ -82,57 +79,6 @@ class MultiImagePage extends ConsumerWidget {
     }
 
     return await imageFile.readAsBytes();
-  }
-
-  /// Convert the file [svgPath] return [Future] image bytes in PNG format.
-  ///
-  /// Throws an [Exception] if the conversion fails.
-
-  Future<ByteData> _svgToImageBytes(String svgPath) async {
-    final svgString = await File(svgPath).readAsString();
-    final pictureInfo = await vg.loadPicture(SvgStringLoader(svgString), null);
-
-    final recorder = ui.PictureRecorder();
-    final canvas = ui.Canvas(recorder);
-    final size = pictureInfo.size;
-
-    canvas.scale(1.0, 1.0);
-    final image = await pictureInfo.picture.toImage(
-      size.width.toInt(),
-      size.height.toInt(),
-    );
-    final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-
-    if (byteData == null) {
-      throw Exception('Failed to convert SVG to image bytes');
-    }
-
-    return byteData;
-  }
-
-  Future<void> _exportToPdf(String svgPath, String pdfPath) async {
-    final pngBytes = await _svgToImageBytes(svgPath);
-
-    final pdf = pw.Document();
-    pdf.addPage(
-      pw.Page(
-        build: (pw.Context context) {
-          return pw.Center(
-            child: pw.Image(pw.MemoryImage(pngBytes.buffer.asUint8List())),
-          );
-        },
-      ),
-    );
-
-    final file = File(pdfPath);
-    await file.writeAsBytes(await pdf.save());
-  }
-
-  Future<void> _exportToPng(String svgPath, String pngPath) async {
-    final pngBytes = await _svgToImageBytes(svgPath);
-
-    final file = File(pngPath);
-    await file.writeAsBytes(pngBytes.buffer.asUint8List());
   }
 
   @override
@@ -339,53 +285,10 @@ class MultiImagePage extends ConsumerWidget {
                                             Icons.save,
                                             color: Colors.blue,
                                           ),
-                                          onPressed: () async {
-                                            String fileName =
-                                                paths[index].split('/').last;
-                                            String? pathToSave =
-                                                await selectFile(
-                                              defaultFileName: fileName,
-                                              allowedExtensions: [
-                                                'svg',
-                                                'pdf',
-                                                'png',
-                                              ],
-                                            );
-                                            if (pathToSave != null) {
-                                              String extension = pathToSave
-                                                  .split('.')
-                                                  .last
-                                                  .toLowerCase();
-                                              if (extension == 'svg') {
-                                                await File(
-                                                  paths[index],
-                                                ).copy(pathToSave);
-                                              } else if (extension == 'pdf') {
-                                                await _exportToPdf(
-                                                  paths[index],
-                                                  pathToSave,
-                                                );
-                                              } else if (extension == 'png') {
-                                                await _exportToPng(
-                                                  paths[index],
-                                                  pathToSave,
-                                                );
-                                              } else if (context.mounted) {
-                                                showOk(
-                                                  title: 'Error',
-                                                  context: context,
-                                                  content: '''
-                                              An unsupported filename extension was
-                                              provided: .$extension. Please try again
-                                              and select a filename with one of the
-                                              supported extensions: .svg, .pdf, or .png.
-                                              ''',
-                                                );
-                                              } else {
-                                                return;
-                                              }
-                                            }
-                                          },
+                                          onPressed: () => savePlot(
+                                            context,
+                                            paths[index],
+                                          ),
                                         ),
                                       ),
                                       const Gap(5),
