@@ -3,9 +3,9 @@
 To install Rattle you can follow the specific instructions available
 for each of the major computer operating systems:
 
-- [**GNU/Linux**](https://survivor.togaware.com/datascience/installing-rattle-on-linux.html);
-- [**MacOS**](https://survivor.togaware.com/datascience/installing-rattle-on-macos.html);
-- [**Windows**](https://survivor.togaware.com/datascience/installing-rattle-on-windows.html).
+- [**GNU/Linux**](https://survivor.togaware.com/datascience/install-rattle-linux.html);
+- [**MacOS**](https://survivor.togaware.com/datascience/install-rattle-macos.html);
+- [**Windows**](https://survivor.togaware.com/datascience/install-rattle-windows.html).
 
 You can visit the [survival
 guide](https://survivor.togaware.com/datascience/installing-rattle.html)
@@ -16,10 +16,10 @@ with the back-end implemented in [R](https://r-project.org/). You will
 need to install R on your computer to be able to run Rattle, as
 covered in the above instructions. To install R in general please
 visit the guide to [installing
-R](https://survivor.togaware.com/datascience/installing-r.html). If
+R](https://survivor.togaware.com/datascience/install-r.html). If
 you are on Gnu?Linux and particularly Ubuntu then visit the guide to
 [installing R on
-Ubuntu](https://survivor.togaware.com/datascience/installing-r-with-cran-on-ubuntu.html).
+Ubuntu](https://survivor.togaware.com/datascience/install-r-ubuntu.html).
 
 ## Source Install
 

@@ -5,7 +5,7 @@
 # License: GNU General Public License, Version 3 (the "License")
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 #
-# Time-stamp: <Tuesday 2026-03-24 12:23:54 +1100 Graham Williams>
+# Time-stamp: <Thursday 2026-08-20 07:20:36 +1000 Graham Williams>
 #
 # Rattle version <VERSION>.
 #
@@ -142,14 +142,13 @@ for (p in pkgs) {
   # require(p, character.only=TRUE)
 }
 
-# Special case for Text Mining
-
-if (!requireNamespace('Rgraphviz')) {
-  BiocManager::install("Rgraphviz")
-}
-
 # Sepcial case for Text Mining using word2vec
 
 if (!requireNamespace('Rgraphviz')) {
   devtools::install_github("bmschmidt/wordVectors")
+}
+# Special case for Text Mining
+
+if (!requireNamespace('Rgraphviz')) {
+  BiocManager::install("Rgraphviz")
 }

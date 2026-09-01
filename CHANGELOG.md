@@ -17,6 +17,7 @@ Visit [togaware](https://rattle.togaware.com) for details.
 
 ## 6.5 Review and Consolidate
 
++ RESCALE INTERVAL: remove dead code, correct comment [6.5.66 20260901 gjw]
 + Remove the last of the retired biclust support [6.5.65 20260819 gjw]
 + TESTS: R update drops apostrophe from NAs [6.5.64 20260819 gjw]
 + Advise about a missing R package for each action [6.5.63 20260819 gjw]

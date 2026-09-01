@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Monday 2026-08-03 05:30:27 +1000 Graham Williams>
+# Time-stamp: <Thursday 2026-08-20 07:14:52 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -77,6 +77,7 @@ define HELP
 $(APP):
 
   ginstall   After a github build download bundles and upload to $(REPO)
+  dinstall   Get $(DWLD)$(APP)_amd64.deb and install locally.
 
   local	     Install to $(HOME)/.local/share/$(APP)
     tgz	     Upload the installer to $(REPO)
