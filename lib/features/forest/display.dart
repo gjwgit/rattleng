@@ -5,7 +5,7 @@
 /// License: GNU General Public License, Version 3 (the "License")
 /// https://opensource.org/license/gpl-3-0
 //
-// Time-stamp: "Saturday 2025-09-27 07:42:57 +1000 Graham Williams"
+// Time-stamp: "Tuesday 2026-09-01 16:30:45 +1000 Graham Williams"
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -302,7 +302,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
 
             # Random Forest Model
 
-            Built using `cforest()`. [party::cforest()](https://www.rdocumentation.org/packages/party/topics/cforest)
+            Built using `cforest()`. [party::cforest()](https://www.rdocumentation.org/packages/party/versions/1.1-0/topics/cforest)
 
             ''',
             content: content,
@@ -330,7 +330,7 @@ class _ForestDisplayState extends ConsumerState<ForestDisplay> {
             # Sample Rules
 
             Built using
-            [party::prettytree()](https://www.rdocumentation.org/packages/party/topics/prettytree).
+            [party::prettytree()](https://www.rdocumentation.org/packages/party/versions/1.1-0/topics/prettytree).
 
             ''',
             content: content,
